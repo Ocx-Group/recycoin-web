@@ -1,11 +1,10 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {getDownloadURL, ref, Storage, uploadBytesResumable} from "@angular/fire/storage";
 
 import {ToastrService} from "ngx-toastr";
-import {concatAll, from, Observable} from "rxjs";
-import {toArray} from "rxjs/operators";
+import {concatAll, from} from "rxjs";
+import {map, toArray} from "rxjs/operators";
 import {TicketCategories} from "../../../core/models/ticket-categories-model/ticket-categories.model";
 import {TicketRequest} from "../../../core/models/ticket-model/ticketRequest.model";
 import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
@@ -15,6 +14,7 @@ import {AffiliateService} from "../../../core/service/affiliate-service/affiliat
 import {TicketImagesRequest} from "../../../core/models/ticket-model/ticket-images-request.model";
 import {NgClass} from "@angular/common";
 import {NgxDropzoneModule} from "ngx-dropzone";
+import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";
 
 @Component({
   selector: 'app-create-admin-modal',
@@ -43,7 +43,7 @@ export class CreateAdminModalComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private ticketCategoriesService: TicketCategoriesService,
-              private storage: Storage,
+              private objectStorageService: ObjectStorageService,
               private toast: ToastrService,
               private ticketHubService: TicketHubService,
               private affiliateService: AffiliateService,
@@ -108,35 +108,16 @@ export class CreateAdminModalComponent implements OnInit {
   }
 
   startTicketImageUpload(): void {
-    const filePathBase = `tickets/${this.user.user_name}/${this.user.id}/`;
-    const uploads = this.files.map(file => {
-      const fileRef = ref(this.storage, `${filePathBase}${file.name}`);
-      const uploadTask = uploadBytesResumable(fileRef, file);
-
-      return new Observable<TicketImagesRequest>((subscriber) => {
-        uploadTask.on(
-          'state_changed',
-          () => {
-          },
-          (error) => {
-            subscriber.error(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              (downloadURL) => {
-                let imageRequest = new TicketImagesRequest();
-                imageRequest.imagePath = downloadURL;
-                subscriber.next(imageRequest);
-                subscriber.complete();
-              },
-              (error) => {
-                subscriber.error(error);
-              }
-            );
-          }
-        );
-      });
-    });
+    const filePathBase = `tickets/${this.user.user_name}/${this.user.id}`;
+    const uploads = this.files.map(file =>
+      this.objectStorageService.uploadAccountImage(file, filePathBase, file.name).pipe(
+        map((downloadURL) => {
+          let imageRequest = new TicketImagesRequest();
+          imageRequest.imagePath = downloadURL;
+          return imageRequest;
+        })
+      )
+    );
 
     from(uploads).pipe(
       concatAll(),

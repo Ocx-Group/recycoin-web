@@ -1,9 +1,8 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Storage, ref, uploadBytesResumable, getDownloadURL} from '@angular/fire/storage';
-import {concatAll, from, Observable} from 'rxjs';
-import {toArray} from 'rxjs/operators';
+import {concatAll, from} from 'rxjs';
+import {map, toArray} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
 
 import {TicketCategoriesService} from '@app/core/service/ticket-categories-service/ticket-categories.service';
@@ -16,6 +15,7 @@ import {TicketImagesRequest} from "@app/core/models/ticket-model/ticket-images-r
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {TranslatePipe} from "@ngx-translate/core";
+import {ObjectStorageService} from '@app/core/service/object-storage-service/object-storage.service';
 
 @Component({
     selector: 'app-create-ticket-modal',
@@ -37,7 +37,7 @@ export class CreateTicketModalComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private ticketCategoriesService: TicketCategoriesService,
-              private storage: Storage,
+              private objectStorageService: ObjectStorageService,
               private authService: AuthService,
               private toast: ToastrService,
               private ticketHubService: TicketHubService
@@ -100,35 +100,16 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   startTicketImageUpload(): void {
-    const filePathBase = `tickets/${this.user.user_name}/${this.user.id}/`;
-    const uploads = this.files.map(file => {
-      const fileRef = ref(this.storage, `${filePathBase}${file.name}`);
-      const uploadTask = uploadBytesResumable(fileRef, file);
-
-      return new Observable<TicketImagesRequest>((subscriber) => {
-        uploadTask.on(
-          'state_changed',
-          () => {
-          },
-          (error) => {
-            subscriber.error(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              (downloadURL) => {
-                let imageRequest = new TicketImagesRequest();
-                imageRequest.imagePath = downloadURL;
-                subscriber.next(imageRequest);
-                subscriber.complete();
-              },
-              (error) => {
-                subscriber.error(error);
-              }
-            );
-          }
-        );
-      });
-    });
+    const filePathBase = `tickets/${this.user.user_name}/${this.user.id}`;
+    const uploads = this.files.map(file =>
+      this.objectStorageService.uploadAccountImage(file, filePathBase, file.name).pipe(
+        map((downloadURL) => {
+          let imageRequest = new TicketImagesRequest();
+          imageRequest.imagePath = downloadURL;
+          return imageRequest;
+        })
+      )
+    );
 
     from(uploads).pipe(
       concatAll(),

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recycoin-web
+  namespace: ecosystem
+  labels:
+    app: recycoin-web
+spec:
+  type: ClusterIP
+  selector:
+    app: recycoin-web
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

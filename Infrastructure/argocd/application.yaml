@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: recycoin-web
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: app=registry.digitalocean.com/ocx-registry/recycoin-web
+    argocd-image-updater.argoproj.io/app.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/app.allow-tags: regexp:^(sha-[a-f0-9]{8}|v\d+\.\d+\.\d+)$
+    argocd-image-updater.argoproj.io/app.pull-secret: pullsecret:ecosystem/ocx-registry
+    argocd-image-updater.argoproj.io/app.kustomize.image-name: registry.digitalocean.com/ocx-registry/recycoin-web
+    argocd-image-updater.argoproj.io/write-back-method: argocd
+spec:
+  project: recycoin-frontends
+  source:
+    repoURL: https://github.com/Ocx-Group/recycoin-web
+    targetRevision: main
+    path: Infrastructure/k8s/recycoin-web
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ecosystem
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

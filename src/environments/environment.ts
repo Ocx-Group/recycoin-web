@@ -12,7 +12,7 @@ export const environment = {
     coinPayment: 'https://www.coinpayments.net/index.php',
   },
   openAI: {
-    apiKey: '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',
+    apiKey: '',
   },
   tokens: {
     coinPayment: 'bfd40db8f711397a6c5b7653175afc38',

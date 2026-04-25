@@ -1,0 +1,167 @@
+# =============================================================================
+# Deploy Production
+# Trigger: push a 'main' o tag vX.Y.Z (o manual via workflow_dispatch)
+# =============================================================================
+
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+concurrency:
+  group: prod-deploy-recycoin-web
+  cancel-in-progress: false
+
+env:
+  REGISTRY: registry.digitalocean.com/ocx-registry
+  IMAGE_NAME: recycoin-web
+  K8S_NAMESPACE: ecosystem
+  CLUSTER_NAME: ecosystem-prod-k8s
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Pull LFS files
+        run: git lfs pull
+
+      - name: Compute image tag
+        id: version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="sha-$(echo "$GITHUB_SHA" | cut -c1-8)"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building production with tag: $VERSION"
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+
+      - name: Log in to DOCR
+        run: doctl registry login --expiry-seconds 3600
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Push recycoin-web
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+
+  deploy-via-argocd:
+    name: Deploy via ArgoCD
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    env:
+      VERSION: ${{ needs.build-and-push.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+
+      - name: Configure kubectl
+        run: doctl kubernetes cluster kubeconfig save ${{ env.CLUSTER_NAME }}
+
+      - name: Ensure ArgoCD project and application
+        run: |
+          kubectl apply -f Infrastructure/argocd/project.yaml
+          kubectl apply -f Infrastructure/argocd/application.yaml
+
+      - name: Request ArgoCD refresh
+        run: |
+          kubectl annotate application recycoin-web \
+            -n argocd \
+            argocd.argoproj.io/refresh=hard \
+            --overwrite
+
+      - name: Wait for deployment to be created
+        shell: bash
+        run: |
+          for i in $(seq 1 40); do
+            if kubectl get deployment recycoin-web -n "${K8S_NAMESPACE}" >/dev/null 2>&1; then
+              echo "Deployment recycoin-web exists."
+              exit 0
+            fi
+            echo "[$i/40] Waiting for ArgoCD to create deployment recycoin-web..."
+            sleep 15
+          done
+          echo "::error::Deployment recycoin-web was not created in time."
+          exit 1
+
+      - name: Wait for rollout
+        run: kubectl rollout status deployment/recycoin-web -n ${{ env.K8S_NAMESPACE }} --timeout=300s
+
+      - name: Observe deployed image
+        shell: bash
+        run: |
+          for i in $(seq 1 20); do
+            IMAGE=$(kubectl get deployment recycoin-web -n "${K8S_NAMESPACE}" -o jsonpath='{.spec.template.spec.containers[0].image}')
+            echo "[$i/20] recycoin-web image = $IMAGE"
+            if echo "$IMAGE" | grep -Eq ":(${VERSION}|latest)$"; then
+              echo "Deployment is using image: $IMAGE"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::warning::Deployment did not converge to tag ${VERSION} during the wait window. Review ArgoCD Image Updater logs if needed."
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build-and-push, deploy-via-argocd]
+    if: success()
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build-and-push.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: "Release ${{ needs.build-and-push.outputs.version }}"
+          body: |
+            ## Deploy Production - ${{ needs.build-and-push.outputs.version }}
+
+            **Commit:** ${{ github.sha }}
+            **Deployed by:** ${{ github.actor }}
+            **Trigger:** ${{ github.event_name }}
+
+            ### Image pushed to DOCR
+            - `recycoin-web:${{ needs.build-and-push.outputs.version }}`
+
+            ArgoCD sincroniza el deployment `recycoin-web` en el namespace `ecosystem`.
+          generate_release_notes: true
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

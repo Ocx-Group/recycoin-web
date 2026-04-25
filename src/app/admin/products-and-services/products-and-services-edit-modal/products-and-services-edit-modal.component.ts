@@ -26,7 +26,6 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
-import {Storage, ref, uploadBytesResumable, getDownloadURL} from '@angular/fire/storage';
 
 import {ProductAttributeService} from '../../../core/service/product-attribute/product-attribute.service';
 import {Product} from "../../../core/models/product-model/product.model";
@@ -48,6 +47,7 @@ import {NgClass} from "@angular/common";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {TranslatePipe} from "@ngx-translate/core";
+import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";
 
 
 @Component({
@@ -125,7 +125,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     private productAttributeService: ProductAttributeService,
     private productCombinationService: ProductCombinationService,
     private productInventoryService: ProductInventoryService,
-    private storage: Storage
+    private objectStorageService: ObjectStorageService
   ) {
   }
 
@@ -583,9 +583,6 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     const file = event.addedFiles[0];
     this.files.push(file);
 
-    const filePath = 'products/' + `${this.product.id}` + '.jpg';
-    this.fileRef = ref(this.storage, filePath);
-
     this.startUpload();
 
   }
@@ -596,8 +593,6 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
       return;
     }
 
-    this.uploadTask = uploadBytesResumable(this.fileRef, this.files[0]);
-
     let toastReference = this.toastr.info('Upload started...', 'Progress', {
       progressBar: true,
       progressAnimation: 'increasing',
@@ -607,34 +602,26 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
       tapToDismiss: false
     });
 
-    this.uploadTask.on('state_changed',
-      snapshot => {
-        this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${this.progress}% done`);
-
-        toastReference.toastRef.componentInstance.progress = this.progress;
-      },
-      error => {
-        console.error('Upload failed:', error);
-        this.toastr.error('Upload failed');
-      },
-      () => {
-        getDownloadURL(this.uploadTask.snapshot.ref)
-          .then(downloadURL => {
-            this.product.image = downloadURL;
-            return this.productService.updateProduct(this.product).toPromise();
-          })
-          .then(() => {
+    this.objectStorageService.uploadProductImage(this.files[0], this.product.id).subscribe({
+      next: (downloadURL) => {
+        this.product.image = downloadURL;
+        this.productService.updateProduct(this.product).subscribe({
+          next: () => {
             this.toastr.clear(toastReference.toastId);
             this.toastr.success('Image updated successfully');
             this.files = [];
-          })
-          .catch(err => {
+          },
+          error: (err) => {
             console.error('Error updating product:', err);
             this.toastr.error('Error updating product');
-          });
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Upload failed:', error);
+        this.toastr.error('Upload failed');
       }
-    );
+    });
   }
 
   deleteImage() {

@@ -17,13 +17,17 @@ COPY . .
 RUN npm run build:prod
 
 # Usa una imagen de Nginx para servir la aplicación
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
 # Copia los archivos de construcción al contenedor de Nginx
 COPY --from=build /app/dist/main/browser /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Expone el puerto 80
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget -qO- http://127.0.0.1/healthz || exit 1
 
 # Inicia Nginx
 CMD ["nginx", "-g", "daemon off;"]

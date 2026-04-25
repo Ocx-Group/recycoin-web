@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: recycoin-frontends
+  namespace: argocd
+spec:
+  description: RecyCoin frontend workloads for the Ecosystem cluster
+  sourceRepos:
+    - https://github.com/Ocx-Group/recycoin-web
+  destinations:
+    - namespace: ecosystem
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

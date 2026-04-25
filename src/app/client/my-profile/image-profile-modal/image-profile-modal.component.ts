@@ -10,16 +10,11 @@ import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
 import { UpdateImageProfile } from '../../../core/models/user-affiliate-model/update-image-profile.model';
-import {
-  Storage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from '@angular/fire/storage';
 import { AuthService } from '../../../core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TranslateModule } from '@ngx-translate/core';
+import { ObjectStorageService } from '../../../core/service/object-storage-service/object-storage.service';
 
 @Component({
   selector: 'app-image-profile-modal',
@@ -40,7 +35,7 @@ export class ImageProfileModalComponent implements OnInit {
     private readonly modalService: NgbModal,
     private readonly toastr: ToastrService,
     private readonly affiliateService: AffiliateService,
-    private readonly storage: Storage,
+    private readonly objectStorageService: ObjectStorageService,
     private readonly authService: AuthService,
   ) {}
 
@@ -73,39 +68,29 @@ export class ImageProfileModalComponent implements OnInit {
   onFileSelected(event: any): void {
     this.file = event.addedFiles[0];
 
-    const filePath =
-      'affiliates/profile/' + `${this.user.user_name}/` + `${this.user.id}`;
-    this.fileRef = ref(this.storage, filePath);
-    const uploadTask = uploadBytesResumable(this.fileRef, this.file);
-
-    uploadTask.on(
-      'state_changed',
-      snapshot => {},
-      error => {
-        console.log(error);
+    const folder = `affiliates/profile/${this.user.user_name}`;
+    this.objectStorageService.uploadAccountImage(this.file, folder, `${this.user.id}`).subscribe({
+      next: (downloadURL) => {
+        let updateImage = new UpdateImageProfile();
+        updateImage.image_profile_url = downloadURL;
+        this.affiliateService
+          .updateImageProfile(this.user.id, updateImage)
+          .subscribe({
+            next: (value: UserAffiliate) => {
+              if (value) {
+                this.authService.setUserAffiliateValue(value);
+                this.user.image_profile_url = value.image_profile_url;
+                this.getInfo.emit();
+                this.showSuccess('Imagen actualizada correctamente');
+              }
+            },
+            error: () => {
+              this.showError('No se pudo actualizar la imagen de perfil');
+            },
+          });
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-          let updateImage = new UpdateImageProfile();
-          updateImage.image_profile_url = downloadURL;
-          this.affiliateService
-            .updateImageProfile(this.user.id, updateImage)
-            .subscribe({
-              next: (value: UserAffiliate) => {
-                if (value) {
-                  this.authService.setUserAffiliateValue(value);
-                  this.user.image_profile_url = value.image_profile_url;
-                  this.getInfo.emit();
-                  this.showSuccess('Imagen actualizada correctamente');
-                }
-              },
-              error: () => {
-                this.showError('No se pudo actualizar la imagen de perfil');
-              },
-            });
-        });
-      },
-    );
+      error: () => this.showError('No se pudo cargar la imagen')
+    });
   }
 
   removeImage(): void {
