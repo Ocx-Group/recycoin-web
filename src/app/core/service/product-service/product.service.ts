@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -19,13 +19,48 @@ const httpOptions = {
 })
 export class ProductService {
   private urlApi: string;
+  private readonly paymentGroups = {
+    ecoPools: 2,
+    services: 3,
+    fundingAccounts: 5,
+    tradingAcademy: 14,
+    savingsPlans: 7,
+    savingsPlansOneB: 8,
+    alternativeHealth: 9,
+    alternativeHealthForEurope: 10,
+    recyCoin: 11,
+  };
 
   constructor(private router: Router, private http: HttpClient) {
     this.urlApi = environment.apis.inventoryService;
   }
 
-  getAllEcoPooles() {
-    return this.http.get<Response>(this.urlApi.concat('/product'), httpOptions).pipe(
+  getProductsByBrand(filters: {
+    productIds?: number[];
+    paymentGroupIds?: number[];
+    productType?: boolean;
+    state?: boolean;
+    visible?: boolean;
+    visiblePublic?: boolean;
+    includeDeleted?: boolean;
+  } = {}) {
+    let params = new HttpParams();
+
+    filters.productIds?.forEach(id => {
+      params = params.append('productIds', id.toString());
+    });
+
+    filters.paymentGroupIds?.forEach(id => {
+      params = params.append('paymentGroupIds', id.toString());
+    });
+
+    if (filters.productType !== undefined) params = params.set('productType', String(filters.productType));
+    if (filters.state !== undefined) params = params.set('state', String(filters.state));
+    if (filters.visible !== undefined) params = params.set('visible', String(filters.visible));
+    if (filters.visiblePublic !== undefined) params = params.set('visiblePublic', String(filters.visiblePublic));
+    if (filters.includeDeleted !== undefined) params = params.set('includeDeleted', String(filters.includeDeleted));
+
+    return this.http.get<Response>(this.urlApi.concat('/product/by-brand'), { ...httpOptions, params }).pipe(
       map((response) => {
         if (response.success) return response.data;
         else {
@@ -34,42 +69,22 @@ export class ProductService {
         }
       })
     );
+  }
+
+  getAllEcoPooles() {
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.ecoPools] });
   }
 
   getAllServices() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_services'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.services] });
   }
 
   getAllProductsAdmin() {
-    return this.http.get<Response>(this.urlApi.concat('/product/getAllProductsAdmin'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ productType: false });
   }
 
   getAllMembership() {
-    return this.http.get<Response>(this.urlApi.concat('/product/membership'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ productType: true });
   }
 
   createProduct(product: Product) {
@@ -107,86 +122,30 @@ export class ProductService {
   }
 
   getAllFundingAccounts() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_funding_accounts'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.fundingAccounts] });
   }
 
   getAllTradingAcademy() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_trading_academy'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.tradingAcademy] });
   }
 
   getAllSavingsPlans() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_savings_plans'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.savingsPlans] });
   }
 
   getAllSavingsPlansOneB() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_savings_plans_one_b'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      })
-    );
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.savingsPlansOneB] });
   }
 
   getAllAlternativeHealth() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_alternative_health'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR' + response);
-          return null;
-        }
-      })
-    )
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.alternativeHealth] });
   }
 
   getAllAlternativeHealthForEurope() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_alternative_health_for_europe'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR' + response);
-          return null;
-        }
-      })
-    )
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.alternativeHealthForEurope] });
   }
 
   getAllRecyCoin() {
-    return this.http.get<Response>(this.urlApi.concat('/product/get_all_recycoin'), httpOptions).pipe(
-      map((response) => {
-        if (response.success) return response.data;
-        else {
-          console.error('ERROR' + response);
-          return null;
-        }
-      })
-    )
+    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.recyCoin] });
   }
 }
