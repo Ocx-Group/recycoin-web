@@ -43,7 +43,11 @@ export class TicketHubService {
 
   public async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.urlApi, {withCredentials: true})
+      .withUrl(this.urlApi, {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+        withCredentials: true
+      })
       .withAutomaticReconnect()
       .build();
 

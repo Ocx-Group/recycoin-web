@@ -1,0 +1,8 @@
+{
+  "/api/v1": {
+    "target": "https://api.ecosystemfx.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

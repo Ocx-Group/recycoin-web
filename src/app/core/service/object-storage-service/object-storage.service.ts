@@ -17,7 +17,7 @@ export class ObjectStorageService {
 
   uploadProductImage(file: File, productId: number): Observable<string> {
     return this.upload(
-      `${environment.apis.inventoryService}/storage/upload`,
+      `${environment.apis.inventoryService}/inventory-storage/upload`,
       environment.tokens.inventoryService,
       file,
       'products',
@@ -31,7 +31,7 @@ export class ObjectStorageService {
     fileName?: string,
   ): Observable<string> {
     return this.upload(
-      `${environment.apis.accountService}/storage/upload`,
+      `${environment.apis.accountService}/account-storage/upload`,
       environment.tokens.accountService,
       file,
       folder,

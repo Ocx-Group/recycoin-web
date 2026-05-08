@@ -4,6 +4,7 @@ import {
   provideAppInitializer,
   inject,
 } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
@@ -36,8 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
-    // Note: Animations are now handled through animate.enter/animate.leave APIs in components
-    // No global provider needed in Angular 20+
+    provideAnimations(),
     provideHttpClient(),
     provideToastr({
       timeOut: 3000,

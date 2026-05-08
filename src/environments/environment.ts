@@ -3,14 +3,14 @@ import { FirebaseOptions } from '@firebase/app-types';
 const gatewayBaseUrl = 'https://api.ecosystemfx.net';
 
 export const environment = {
-  production: true,
+  production: false,
   apis: {
     apiUrl: 'https://recycoin.net/',
-    accountService: `${gatewayBaseUrl}/api/v1`,
+    accountService: '/api/v1',
     accountServiceSignalR: `${gatewayBaseUrl}/hubs/tickets`,
-    systemConfigurationService: `${gatewayBaseUrl}/api/v1`,
-    inventoryService: `${gatewayBaseUrl}/api/v1`,
-    walletService: `${gatewayBaseUrl}/api/v1`,
+    systemConfigurationService: '/api/v1',
+    inventoryService: '/api/v1',
+    walletService: '/api/v1',
     coinPayment: 'https://www.coinpayments.net/index.php',
   },
   openAI: {
