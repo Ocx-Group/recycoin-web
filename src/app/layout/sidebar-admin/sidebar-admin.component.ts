@@ -19,7 +19,7 @@ import { ROUTESADMIN } from './sidebar-admin-items';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { User } from '@app/core/models/user-model/user.model';
 import { RouteInfo } from './sidebar-admin.metadata';
-import { ImgProfileComponent } from '../img-profile/img-profile.component';
+import { ImageProfileModalComponent } from '@app/shared/components/image-profile-modal/image-profile-modal.component';
 import { IconsModule } from '@app/shared';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -31,7 +31,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [
     CommonModule,
     RouterLink,
-    ImgProfileComponent,
+    ImageProfileModalComponent,
     IconsModule,
     TranslatePipe,
     RouterLinkActive,

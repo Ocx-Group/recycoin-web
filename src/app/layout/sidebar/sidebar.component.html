@@ -12,10 +12,11 @@
 
       >
         <li class="sidebar-user-panel">
-          <div role="button" class="user-panel" (click)="profileImgComponent.openProfileImgModal()">
+          <div role="button" class="user-panel" (click)="profileImgComponent.openImageProfileModal()">
             <div class=" image">
-              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
-                class="img-fluid img-circle user-img-circle" alt="User Image" />
+              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
+                (error)="$any($event.target).src='assets/images/user.svg'"
+                class="img-fluid img-circle user-img-circle" alt="Foto de perfil del usuario" />
             </div>
           </div>
           <div class="profile-usertitle">
@@ -80,4 +81,4 @@
   </aside>
   <!-- #END# Left Sidebar -->
 </div>
-<app-img-profile #profileImgComponent></app-img-profile>
+<app-image-profile-modal (getInfo)="refreshUserInfoData(user.id)" #profileImgComponent></app-image-profile-modal>

@@ -64,7 +64,8 @@
                 <button type="button" class="profile-picture-btn" (click)="openImageProfileModal()"
                   aria-label="Cambiar foto de perfil">
                   <img alt="Foto de perfil del usuario"
-                    [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.png'"
+                    [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.svg'"
+                    (error)="$any($event.target).src='assets/images/user.svg'"
                     class="profile-picture-modern" />
                 </button>
               </div> <!-- User Info -->

@@ -31,8 +31,9 @@
                           </button>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                          <div class="card-body media-list position-relative scrollable-container"
-                            style="overflow-y: auto;">
+                          <div #panBox class="card-body media-list position-relative scrollable-container"
+                            (mousedown)="startPan($event, panBox)" (mousemove)="onPan($event, panBox)"
+                            (mouseup)="endPan(panBox)" (mouseleave)="endPan(panBox)">
                             <div *ngIf="showDiv">
                               <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
                                 (loadFamilyTree)="onloadFamilyTree($event)">
@@ -85,8 +86,9 @@
 
                     <div class="row">
                       <div class="col-12 col-md-12 col-lg-12">
-                        <div class="card-body media-list position-relative scrollable-container"
-                          style="overflow-y: auto;">
+                        <div #panBox class="card-body media-list position-relative scrollable-container"
+                          (mousedown)="startPan($event, panBox)" (mousemove)="onPan($event, panBox)"
+                          (mouseup)="endPan(panBox)" (mouseleave)="endPan(panBox)">
                           <div *ngIf="showDiv">
                             <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
                               (loadFamilyTree)="onloadFamilyTree($event)">

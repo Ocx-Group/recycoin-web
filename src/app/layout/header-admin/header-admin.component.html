@@ -102,7 +102,8 @@
       >
         <img
           alt="image"
-          [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.png'"
+          [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.svg'"
+          (error)="$any($event.target).src='assets/images/user.svg'"
           class="user-img-radious-style collapse-btn"/>
         <span class="d-sm-none d-lg-inline-block"></span
         ></a>

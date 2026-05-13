@@ -2732,6 +2732,26 @@
       "TEXT": "Wallet Withdrawal"
     }
   },
+  "IMAGE-PROFILE-MODAL": {
+    "TITLE": {
+      "TEXT": "Change profile picture"
+    },
+    "SUBTITLE": {
+      "TEXT": "Upload a new image for your profile"
+    },
+    "DROPZONE": {
+      "TEXT": "Drag and drop your image here or click to select"
+    },
+    "FILE-HINT": {
+      "TEXT": "JPG, PNG, GIF, WEBP (max. 5MB)"
+    },
+    "BTN-REMOVE": {
+      "TEXT": "Remove image"
+    },
+    "BTN-CANCEL": {
+      "TEXT": "Cancel"
+    }
+  },
   "COMMON": {
     "ACTIONS": {
       "TEXT": "Actions"

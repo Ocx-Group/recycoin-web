@@ -1,0 +1,52 @@
+<ng-template #imageProfileModal let-modal>
+  <div class="modern-image-modal">
+    <div class="modal-modern-header">
+      <div class="header-content">
+        <h4 class="modal-modern-title" id="modal-basic-title">
+          {{ 'IMAGE-PROFILE-MODAL.TITLE.TEXT' | translate }}
+        </h4>
+        <p class="modal-modern-subtitle">
+          {{ 'IMAGE-PROFILE-MODAL.SUBTITLE.TEXT' | translate }}
+        </p>
+      </div>
+      <button type="button" class="modal-close-btn" aria-label="Close" (click)="modal.dismiss()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12 text-center">
+          <div *ngIf="currentImageUrl" class="image-preview-container">
+            <button class="btn-modern btn-remove-image" (click)="removeImage()">
+              <i class="bi bi-trash"></i>
+              {{ 'IMAGE-PROFILE-MODAL.BTN-REMOVE.TEXT' | translate }}
+            </button>
+            <div class="image-wrapper">
+              <img [src]="currentImageUrl" alt="Foto de perfil del usuario" class="profile-image-preview" />
+            </div>
+          </div>
+
+          <ngx-dropzone
+            *ngIf="!currentImageUrl"
+            (change)="onFileSelected($event)"
+            [accept]="'image/jpeg,image/jpg,image/png,image/gif,image/webp'"
+            [maxFileSize]="5 * 1024 * 1024"
+            [multiple]="false">
+            <ngx-dropzone-label>
+              <span class="dz-icon"><i class="bi bi-cloud-arrow-up-fill"></i></span>
+              <span class="dz-title">{{ 'IMAGE-PROFILE-MODAL.DROPZONE.TEXT' | translate }}</span>
+              <span class="dz-hint">{{ 'IMAGE-PROFILE-MODAL.FILE-HINT.TEXT' | translate }}</span>
+            </ngx-dropzone-label>
+          </ngx-dropzone>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer modern-modal-footer">
+      <button type="button" class="btn-modern btn-cancel" (click)="modal.close('Close click')">
+        {{ 'IMAGE-PROFILE-MODAL.BTN-CANCEL.TEXT' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

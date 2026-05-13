@@ -22,7 +22,7 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { GradingService } from '@app/core/service/grading-service/grading.service';
 import { Grading } from '@app/core/models/grading-model/grading.model';
 import { LogoComponent } from '../logo/logo.component';
-import { ImgProfileComponent } from '../img-profile/img-profile.component';
+import { ImageProfileModalComponent } from '@app/shared/components/image-profile-modal/image-profile-modal.component';
 import { IconsModule } from '@app/shared';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -35,7 +35,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     CommonModule,
     RouterLink,
     LogoComponent,
-    ImgProfileComponent,
+    ImageProfileModalComponent,
     IconsModule,
     TranslatePipe,
     RouterLinkActive,

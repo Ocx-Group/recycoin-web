@@ -2729,6 +2729,26 @@
       "TEXT": "Retiro de Billetera"
     }
   },
+  "IMAGE-PROFILE-MODAL": {
+    "TITLE": {
+      "TEXT": "Cambiar foto de perfil"
+    },
+    "SUBTITLE": {
+      "TEXT": "Sube una nueva imagen para tu perfil"
+    },
+    "DROPZONE": {
+      "TEXT": "Arrastra y suelta tu imagen aqui o haz clic para seleccionar"
+    },
+    "FILE-HINT": {
+      "TEXT": "JPG, PNG, GIF, WEBP (max. 5MB)"
+    },
+    "BTN-REMOVE": {
+      "TEXT": "Eliminar imagen"
+    },
+    "BTN-CANCEL": {
+      "TEXT": "Cancelar"
+    }
+  },
   "COMMON": {
     "ACTIONS": {
       "TEXT": "Acciones"

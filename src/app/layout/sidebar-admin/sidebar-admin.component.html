@@ -16,10 +16,12 @@
           'overflow-y': 'auto'
         }" >
         <li class="sidebar-user-panel">
-          <div role="button" class="user-panel" (click)="profileImgComponent.openProfileImgModal()">
+          <div role="button" class="user-panel" (click)="profileImgComponent.openImageProfileModal()">
           <div class="user-panel">
             <div class=" image">
-              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'" class="img-circle user-img-circle" alt="User Image" />
+              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
+                (error)="$any($event.target).src='assets/images/user.svg'" class="img-circle user-img-circle"
+                alt="Foto de perfil del usuario" />
             </div>
           </div>
           </div>
@@ -97,4 +99,4 @@
   </aside>
   <!-- #END# Left Sidebar -->
 </div>
-<app-img-profile #profileImgComponent></app-img-profile>
+<app-image-profile-modal (getInfo)="getUserInfo()" #profileImgComponent></app-image-profile-modal>

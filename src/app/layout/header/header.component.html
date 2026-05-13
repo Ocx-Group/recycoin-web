@@ -74,7 +74,8 @@
     <li ngbDropdown>
       <a ngbDropdownToggle data-toggle="dropdown"
         class="nav-link dropdown-toggle nav-link-lg nav-link-user d-flex align-items-center">
-        <img alt="User profile" [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.png'"
+        <img alt="Foto de perfil del usuario" [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.svg'"
+          (error)="$any($event.target).src='assets/images/user.svg'"
           class="rounded flex-shrink-0 me-2" width="32" height="32" />
         <span class="d-sm-none d-lg-inline-block"></span>
       </a>

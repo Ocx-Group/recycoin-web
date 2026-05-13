@@ -25,7 +25,7 @@ import { MyProfileEditPasswordModalComponent } from './my-profile-edit-password-
 import { MyProfileEditPersonalInfoModalComponent } from './my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component';
 import { EditSecurityPinModalComponent } from './edit-security-pin-modal/edit-security-pin-modal.component';
 import { SecretQuestionModalComponent } from './secret-question-modal/secret-question-modal.component';
-import { ImageProfileModalComponent } from './image-profile-modal/image-profile-modal.component';
+import { ImageProfileModalComponent } from '@app/shared/components/image-profile-modal/image-profile-modal.component';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -109,10 +109,7 @@ export class MyProfileComponent implements OnInit {
 
   openImageProfileModal() {
     if (this.modalChildImageProfile) {
-      this.modalChildImageProfile.openImageProfileModal(
-        this.modalChildImageProfile['imageProfileModal'],
-        this.user,
-      );
+      this.modalChildImageProfile.openImageProfileModal();
     }
   }
 
