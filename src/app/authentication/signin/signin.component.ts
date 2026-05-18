@@ -177,6 +177,38 @@ export class SigninComponent implements OnInit, OnDestroy {
     });
   }
 
+  googleLoginSubmitted() {
+    const deviceInfo = this.deviceService.getDeviceInfo();
+    this.loading = true;
+
+    this.authService.fetchIpAddress().subscribe(ip => {
+      this.authService
+        .loginWithGoogle({
+          browserInfo: deviceInfo.browser,
+          operatingSystem: deviceInfo.os,
+          ipAddress: ip,
+        })
+        .subscribe({
+          next: (response: Response) => {
+            if (response.success) {
+              if (response.data.is_affiliate) {
+                this.router.navigate(['/app/home']).then();
+              } else {
+                this.router.navigate(['admin/home-admin']).then();
+              }
+            } else {
+              this.showError(response.message);
+            }
+            this.loading = false;
+          },
+          error: () => {
+            this.showError('No fue posible iniciar sesión con Google.');
+            this.loading = false;
+          },
+        });
+    });
+  }
+
   showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }

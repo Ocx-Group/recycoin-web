@@ -42,6 +42,10 @@
           </output>
           {{ signin }}
         </button>
+        <button class="login-button mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
+          <i class="bi bi-google"></i>
+          Google
+        </button>
       </div>
       <div *ngIf="error !== ''" class="alert alert-danger">
         {{ error }}

@@ -11,6 +11,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Country} from '@app/core/models/country-model/country.model';
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import {LogoService} from '@app/core/service/logo-service/logo.service';
 import {PdfViewerService} from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
 import {ToastrService} from 'ngx-toastr';
@@ -18,6 +19,7 @@ import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affi
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-signup',
@@ -43,9 +45,11 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private affiliateService: AffiliateService,
+    private authService: AuthService,
     private toastr: ToastrService,
     private logoService: LogoService,
-    private pdfViewerService: PdfViewerService
+    private pdfViewerService: PdfViewerService,
+    private deviceService: DeviceDetectorService
   ) {
     this.key = this.activatedRoute.snapshot.params.key || '';
     this.side = this.user.side?.toString() || '';
@@ -171,6 +175,46 @@ export class SignupComponent implements OnInit {
       } else {
         this.showError(response.message);
       }
+    });
+  }
+
+  onGoogleSignup() {
+    this.submitted = true;
+    this.error = '';
+
+    if (!this.registerForm.value.country) {
+      this.showError('El país es requerido para registrarse con Google.');
+      return;
+    }
+
+    if (!this.registerForm.value.terms_conditions) {
+      this.showError('Los términos y condiciones son requeridos.');
+      return;
+    }
+
+    const deviceInfo = this.deviceService.getDeviceInfo();
+    this.authService.fetchIpAddress().subscribe(ip => {
+      this.authService
+        .loginWithGoogle({
+          referralUserName: this.key,
+          country: Number(this.registerForm.value.country),
+          phone: this.registerForm.value.phone,
+          termsConditions: this.registerForm.value.terms_conditions,
+          browserInfo: deviceInfo.browser,
+          operatingSystem: deviceInfo.os,
+          ipAddress: ip,
+        })
+        .subscribe({
+          next: response => {
+            if (response.success) {
+              this.showSuccess(response.message || 'Registro completado.');
+              this.router.navigate(['/app/home']).then();
+            } else {
+              this.showError(response.message);
+            }
+          },
+          error: () => this.showError('No fue posible registrarse con Google.'),
+        });
     });
   }
 
