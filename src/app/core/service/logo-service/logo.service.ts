@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { BrandingService } from '../branding-service/branding.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class LogoService {
   private isDarkTheme = new BehaviorSubject<boolean>(false);
   isDarkTheme$ = this.isDarkTheme.asObservable();
 
-  constructor() {
+  constructor(private readonly brandingService: BrandingService) {
     const savedTheme = localStorage.getItem('isDarkTheme') === 'true';
     this.isDarkTheme.next(savedTheme);
   }
@@ -19,6 +20,7 @@ export class LogoService {
   }
 
   getLogoSrc(): string {
-    return this.isDarkTheme.value ? 'assets/images/logo-dark.png' : 'assets/images/logo-white.png';
+    return this.brandingService.logoUrl
+      ?? (this.isDarkTheme.value ? 'assets/images/logo-dark.png' : 'assets/images/logo-white.png');
   }
 }

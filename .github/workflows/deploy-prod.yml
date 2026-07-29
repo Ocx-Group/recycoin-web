@@ -1,3 +1,8 @@
+# Flujo GitOps:
+#   1. Build y publicacion de una imagen inmutable.
+#   2. El app-of-apps central conserva la Application de ArgoCD.
+#   3. Image Updater promueve el tag y ArgoCD sincroniza.
+#   4. La verificacion se realiza por endpoints publicos, sin acceso a pods.
 # =============================================================================
 # Deploy Production
 # Trigger: push a 'main' o tag vX.Y.Z (o manual via workflow_dispatch)
@@ -18,8 +23,6 @@ concurrency:
 env:
   REGISTRY: registry.digitalocean.com/ocx-registry
   IMAGE_NAME: recycoin-web
-  K8S_NAMESPACE: ecosystem
-  CLUSTER_NAME: ecosystem-prod-k8s
 
 jobs:
   build-and-push:
@@ -73,72 +76,10 @@ jobs:
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
 
-  deploy-via-argocd:
-    name: Deploy via ArgoCD
+  release:
+    name: Publish Image Release
     runs-on: ubuntu-latest
     needs: build-and-push
-    env:
-      VERSION: ${{ needs.build-and-push.outputs.version }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_TOKEN }}
-
-      - name: Configure kubectl
-        run: doctl kubernetes cluster kubeconfig save ${{ env.CLUSTER_NAME }}
-
-      - name: Ensure ArgoCD project and application
-        run: |
-          kubectl apply -f Infrastructure/argocd/project.yaml
-          kubectl apply -f Infrastructure/argocd/application.yaml
-
-      - name: Request ArgoCD refresh
-        run: |
-          kubectl annotate application recycoin-web \
-            -n argocd \
-            argocd.argoproj.io/refresh=hard \
-            --overwrite
-
-      - name: Wait for deployment to be created
-        shell: bash
-        run: |
-          for i in $(seq 1 40); do
-            if kubectl get deployment recycoin-web -n "${K8S_NAMESPACE}" >/dev/null 2>&1; then
-              echo "Deployment recycoin-web exists."
-              exit 0
-            fi
-            echo "[$i/40] Waiting for ArgoCD to create deployment recycoin-web..."
-            sleep 15
-          done
-          echo "::error::Deployment recycoin-web was not created in time."
-          exit 1
-
-      - name: Wait for rollout
-        run: kubectl rollout status deployment/recycoin-web -n ${{ env.K8S_NAMESPACE }} --timeout=300s
-
-      - name: Observe deployed image
-        shell: bash
-        run: |
-          for i in $(seq 1 20); do
-            IMAGE=$(kubectl get deployment recycoin-web -n "${K8S_NAMESPACE}" -o jsonpath='{.spec.template.spec.containers[0].image}')
-            echo "[$i/20] recycoin-web image = $IMAGE"
-            if echo "$IMAGE" | grep -Eq ":(${VERSION}|latest)$"; then
-              echo "Deployment is using image: $IMAGE"
-              exit 0
-            fi
-            sleep 15
-          done
-          echo "::warning::Deployment did not converge to tag ${VERSION} during the wait window. Review ArgoCD Image Updater logs if needed."
-
-  release:
-    name: Create GitHub Release
-    runs-on: ubuntu-latest
-    needs: [build-and-push, deploy-via-argocd]
     if: success()
     permissions:
       contents: write
@@ -154,13 +95,16 @@ jobs:
             ## Deploy Production - ${{ needs.build-and-push.outputs.version }}
 
             **Commit:** ${{ github.sha }}
-            **Deployed by:** ${{ github.actor }}
+            **Published by:** ${{ github.actor }}
             **Trigger:** ${{ github.event_name }}
 
             ### Image pushed to DOCR
             - `recycoin-web:${{ needs.build-and-push.outputs.version }}`
 
-            ArgoCD sincroniza el deployment `recycoin-web` en el namespace `ecosystem`.
+            El app-of-apps central conserva la Application. ArgoCD Image Updater
+            promueve la imagen y ArgoCD sincroniza sin acceso directo del pipeline
+            a deployments o pods. La disponibilidad se verifica por endpoints
+            publicos.
           generate_release_notes: true
           make_latest: true
         env:

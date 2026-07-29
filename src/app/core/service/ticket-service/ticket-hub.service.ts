@@ -8,6 +8,7 @@ import {TicketMessageRequest} from '../../models/ticket-model/ticket-message-req
 import {Ticket} from '../../models/ticket-model/ticket.model';
 import {environment} from '@environments/environment';
 import {TicketSummary} from '../../models/ticket-model/ticket-summary.model'
+import { BrandingService } from '../branding-service/branding.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,15 @@ export class TicketHubService {
   public connectionEstablished = new BehaviorSubject<boolean>(false);
   private urlApi: string;
   public ticketSummaries = new BehaviorSubject<TicketSummary[]>([]);
-  private brandId: number;
+  private get brandId(): number {
+    const brandId = this.brandingService.brandId;
+    if (brandId === null) {
+      throw new Error('Branding must be loaded before using ticket operations.');
+    }
+    return brandId;
+  }
 
-  constructor() {
-    this.brandId = 2;
+  constructor(private readonly brandingService: BrandingService) {
     this.urlApi = environment.apis.accountServiceSignalR;
     this.startConnection().then();
     const savedTicket = localStorage.getItem('ticket');

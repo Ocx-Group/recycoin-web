@@ -4,7 +4,7 @@
   </div>
 
   <div class="login-card">
-    <img src="assets/images/logo-yellow.png" alt="RecyCoin" class="signin-logo mb-3">
+    <img [src]="logoUrl || 'assets/images/logo-yellow.png'" alt="Logo" class="signin-logo mb-3">
     <form class="validate-form" [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
       <div class="login-input-group">
 

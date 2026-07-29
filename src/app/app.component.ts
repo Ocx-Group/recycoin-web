@@ -11,6 +11,7 @@ import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { SessionService } from './core/service/session-service/session.service';
 import { PageLoaderComponent } from './layout/page-loader/page-loader.component';
 import { PdfViewerComponent } from './shared/components/pdf-viewer/pdf-viewer.component';
+import { BrandingService } from './core/service/branding-service/branding.service';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
     public _router: Router,
     location: PlatformLocation,
     private sessionService: SessionService,
+    private readonly brandingService: BrandingService,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
   ) {
@@ -42,7 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.changeFavicon('assets/images/favicon.ico');
+    this.brandingService.applyToDocument();
   }
 
   changeFavicon(url: string): void {
