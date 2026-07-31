@@ -1,5 +1,19 @@
 # RecyCoin - Angular 20 Application
 
+## Alcance del producto
+
+`recycoin` es una de las tres webs activas del sistema. Conserva sus vistas,
+funciones y dashboard administrativo propios.
+
+Decisión vigente desde el 2026-07-31:
+
+- no se crearán nuevas webs ni un frontend único;
+- este dashboard administrará los detalles de su propia marca;
+- el branding publicado seguirá teniendo a `ConfigurationService` como fuente
+  central;
+- el navegador nunca debe escribir directamente en la base de datos ni confiar
+  en un `BrandId` para autorizar cambios.
+
 > ⚠️ **Importante**: Esta aplicación ha sido migrada completamente a la arquitectura **Standalone** de Angular 20.
 > No utiliza módulos tradicionales (`NgModule`). Ver [MIGRATION-TO-STANDALONE.md](./MIGRATION-TO-STANDALONE.md) para más detalles.
 
