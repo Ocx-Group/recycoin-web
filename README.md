@@ -14,6 +14,19 @@ Decisión vigente desde el 2026-07-31:
 - el navegador nunca debe escribir directamente en la base de datos ni confiar
   en un `BrandId` para autorizar cambios.
 
+Implementación administrativa local:
+
+- `Administración > Configuración > Identidad de marca` permite consultar,
+  previsualizar y guardar nombre, empresa, dominio, soporte, logo y colores;
+- las llamadas usan exclusivamente el JWT del administrador para
+  `brandconfiguration/admin/current`; no se habilitó un interceptor JWT global;
+- el backend deriva la marca desde el token firmado y el request no contiene
+  `BrandId`;
+- el guardado actual publica inmediatamente. Borradores, carga de archivos y
+  rollback todavía no forman parte de la interfaz;
+- después de desplegar el backend, una sesión administrativa antigua debe
+  cerrarse e iniciarse nuevamente para recibir el JWT.
+
 > ⚠️ **Importante**: Esta aplicación ha sido migrada completamente a la arquitectura **Standalone** de Angular 20.
 > No utiliza módulos tradicionales (`NgModule`). Ver [MIGRATION-TO-STANDALONE.md](./MIGRATION-TO-STANDALONE.md) para más detalles.
 
