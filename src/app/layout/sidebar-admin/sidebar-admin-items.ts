@@ -560,6 +560,17 @@ export const ROUTESADMIN: RouteInfo[] = [
         submenu: [],
       },
       {
+        path: '/admin/branding',
+        title: 'Identidad de marca',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: [],
+      },
+      {
         path: '/admin/walkways-benches',
         title: 'Pasarelas y bancos',
         iconType: '',

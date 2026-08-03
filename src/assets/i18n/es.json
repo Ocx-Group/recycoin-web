@@ -656,6 +656,131 @@
       "TEXT": "Árbol Sistema 1B"
     }
   },
+  "BRANDING-PAGE": {
+    "MODULE": {
+      "TEXT": "Módulo configuración"
+    },
+    "BREADCRUMB": {
+      "TEXT": "Identidad de marca"
+    },
+    "TITLE": {
+      "TEXT": "Identidad de marca"
+    },
+    "NOTICE": {
+      "TEXT": "Esta configuración afecta únicamente a la marca del administrador autenticado. El cambio se guarda de inmediato y se aplica en esta sesión; otros navegadores pueden ver los valores anteriores hasta cinco minutos."
+    },
+    "BRAND-ID": {
+      "TEXT": "Marca"
+    },
+    "NAME": {
+      "TEXT": "Nombre comercial"
+    },
+    "COMPANY-NAME": {
+      "TEXT": "Razón social"
+    },
+    "COMPANY-IDENTIFIER": {
+      "TEXT": "Identificación empresarial"
+    },
+    "DOCUMENT-TYPE": {
+      "TEXT": "Tipo de documento"
+    },
+    "CLIENT-URL": {
+      "TEXT": "URL pública de la marca"
+    },
+    "CLIENT-URL-HELP": {
+      "TEXT": "Este dominio es el que identifica a la marca cuando la web arranca. Si se escribe uno incorrecto o que ya pertenece a otra marca, el sitio dejará de recibir su identidad visual."
+    },
+    "SUPPORT-EMAIL": {
+      "TEXT": "Correo de soporte"
+    },
+    "SUPPORT-PHONE": {
+      "TEXT": "Teléfono de soporte"
+    },
+    "LOGO-URL": {
+      "TEXT": "URL del logo"
+    },
+    "LOGO-UPLOAD": {
+      "TEXT": "Subir imagen"
+    },
+    "LOGO-UPLOADING": {
+      "TEXT": "Subiendo..."
+    },
+    "NO-LOGO": {
+      "TEXT": "Sin logo configurado"
+    },
+    "PRIMARY-COLOR": {
+      "TEXT": "Color primario"
+    },
+    "SECONDARY-COLOR": {
+      "TEXT": "Color secundario"
+    },
+    "BACKGROUND-COLOR": {
+      "TEXT": "Color de fondo"
+    },
+    "PREVIEW": {
+      "TEXT": "Vista previa"
+    },
+    "LOADING": {
+      "TEXT": "Cargando identidad de marca..."
+    },
+    "UPDATED-AT": {
+      "TEXT": "Última actualización:"
+    },
+    "RELOAD": {
+      "TEXT": "Recargar"
+    },
+    "SAVE": {
+      "TEXT": "Guardar identidad de marca"
+    },
+    "SAVING": {
+      "TEXT": "Guardando..."
+    },
+    "INVALID-NAME": {
+      "TEXT": "Ingrese un nombre válido."
+    },
+    "INVALID-COMPANY-NAME": {
+      "TEXT": "Ingrese la razón social."
+    },
+    "INVALID-URL": {
+      "TEXT": "Ingrese una URL http o https válida."
+    },
+    "INVALID-EMAIL": {
+      "TEXT": "Ingrese un correo válido."
+    },
+    "INVALID-PHONE": {
+      "TEXT": "Ingrese un teléfono válido."
+    },
+    "OK-SAVE": {
+      "TEXT": "La identidad de marca se actualizó correctamente."
+    },
+    "OK-LOGO": {
+      "TEXT": "El logo se subió correctamente."
+    },
+    "ERR-LOAD": {
+      "TEXT": "No se pudo cargar la identidad de marca."
+    },
+    "ERR-SAVE": {
+      "TEXT": "No se pudo actualizar la identidad de marca."
+    },
+    "ERR-SESSION": {
+      "TEXT": "La sesión administrativa expiró. Cierre sesión e ingrese nuevamente."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "El usuario actual no tiene permiso para editar la marca."
+    },
+    "ERR-CONFLICT": {
+      "TEXT": "El dominio ya pertenece a otra marca activa. Confirme con negocio a qué marca corresponde antes de reintentar."
+    },
+    "ERR-LOGO-TYPE": {
+      "TEXT": "El archivo debe ser una imagen."
+    },
+    "ERR-LOGO-SIZE": {
+      "TEXT": "La imagen no debe superar 2 MB."
+    },
+    "ERR-LOGO-UPLOAD": {
+      "TEXT": "No se pudo subir el logo."
+    }
+  },
   "CALCULATE-COMMISSIONS": {
     "BTN-RECURRING-CHARGES": {
       "TEXT": "Ejecutar cobros recurrentes"

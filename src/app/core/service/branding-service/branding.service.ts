@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { BehaviorSubject, firstValueFrom, timeout } from 'rxjs';
+import { BrandingAdministration } from '@app/core/models/branding-model/branding-administration.model';
 import { RuntimeTenantService } from './runtime-tenant.service';
 
 export interface PublicBranding {
@@ -77,6 +78,32 @@ export class BrandingService {
       this.reportBootstrap('fallback', startedAt, null);
       console.warn('Dynamic branding is unavailable; local visual assets will be used.', error);
     }
+  }
+
+  /**
+   * Reflects an administrative save in the running application.
+   *
+   * The public contract answers with `Cache-Control: max-age=300`, so calling
+   * `load()` again right after saving would very likely return the previous
+   * values. The saved payload is authoritative, so it is merged directly.
+   */
+  applyAdministrativeUpdate(saved: BrandingAdministration): void {
+    const current = this.current;
+    this.brandingSubject.next({
+      brandId: saved.brandId,
+      clientId: current?.clientId ?? this.runtimeTenant.clientId ?? '',
+      name: saved.name,
+      companyName: saved.companyName,
+      clientUrl: saved.clientUrl,
+      supportEmail: saved.supportEmail,
+      supportPhone: saved.supportPhone,
+      documentType: saved.documentType,
+      logoUrl: saved.logoUrl,
+      primaryColor: saved.primaryColor,
+      secondaryColor: saved.secondaryColor,
+      backgroundColor: saved.backgroundColor,
+    });
+    this.applyToDocument();
   }
 
   applyToDocument(): void {

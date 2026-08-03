@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuardAdmin } from '@app/core/guard/auth.guard.admin';
+import { BrandAdministratorGuard } from '@app/core/guard/brand-administrator.guard';
 import { MaintenanceGuard } from '@app/core/guard/maintenance.guard';
 
 export const ADMIN_ROUTES: Routes = [
@@ -62,6 +63,11 @@ export const ADMIN_ROUTES: Routes = [
     path: 'settings',
     loadComponent: () => import('./settings/settings.component').then(m => m.SettingsComponent),
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
+  },
+  {
+    path: 'branding',
+    loadComponent: () => import('./branding/branding.component').then(m => m.BrandingComponent),
+    canActivate: [AuthGuardAdmin, BrandAdministratorGuard, MaintenanceGuard],
   },
   {
     path: 'tickets-for-admin',

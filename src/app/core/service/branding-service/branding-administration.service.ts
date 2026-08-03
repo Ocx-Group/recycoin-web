@@ -46,14 +46,38 @@ export class BrandingAdministrationService {
 
   private authorizedOptions(): { headers: HttpHeaders } | null {
     const token = this.authService.currentUserAdminValue?.token;
-    return token
-      ? {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          }),
-        }
-      : null;
+    if (!token || this.isExpired(token)) return null;
+
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+  }
+
+  /**
+   * The administrative JWT is short lived and there is no refresh endpoint, so a
+   * stale session is the normal end state of a long editing session. Detecting it
+   * here turns a confusing 401 into the same explicit re-login message.
+   */
+  private isExpired(token: string): boolean {
+    const expiresAt = this.readExpiry(token);
+    return expiresAt !== null && expiresAt <= Date.now();
+  }
+
+  private readExpiry(token: string): number | null {
+    const payload = token.split('.')[1];
+    if (!payload) return null;
+
+    try {
+      const normalized = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const claims = JSON.parse(atob(normalized));
+      return typeof claims?.exp === 'number' ? claims.exp * 1000 : null;
+    } catch {
+      // An unreadable token is left to the server, which is the only authority.
+      return null;
+    }
   }
 
   private unwrap(

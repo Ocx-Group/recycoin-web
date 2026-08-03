@@ -17,8 +17,8 @@ export class LogoComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private logoService: LogoService) {
-    this.subscription = this.logoService.isDarkTheme$.subscribe(isDark => {
-      this.logoSrc = this.logoService.getLogoSrc();
+    this.subscription = this.logoService.logoSrc$.subscribe(src => {
+      this.logoSrc = src;
     });
   }
 

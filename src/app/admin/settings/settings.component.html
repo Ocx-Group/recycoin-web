@@ -34,8 +34,7 @@
                                       ocultar modelos:</label>
                                     <div class="col-sm-8">
                                       <input id="paymentModelCutoffDate" type="date"
-                                             class="form-control form-control-sm"
-                                             formControlName="paymentModelCutoffDate">
+                                        class="form-control form-control-sm" formControlName="paymentModelCutoffDate">
                                     </div>
                                   </div>
                                 </div>
@@ -48,7 +47,7 @@
                                     <div class="col-sm-8">
                                       <div class="form-check">
                                         <input id="isUnderMaintenance" type="checkbox" class="form-check-input"
-                                               formControlName="isUnderMaintenance">
+                                          formControlName="isUnderMaintenance">
                                         <label class="form-check-label" for="isUnderMaintenance">
                                           Activar modo mantenimiento
                                         </label>
@@ -60,8 +59,7 @@
                               <div class="row">
                                 <div class="col-md-2 mx-auto">
                                   <button type="button" class="btn btn-primary btn-sm w-100"
-                                          (click)="saveGeneralConfiguration()"
-                                          [disabled]="generalConfigurationForm.invalid">
+                                    (click)="saveGeneralConfiguration()" [disabled]="generalConfigurationForm.invalid">
                                     Guardar configuración
                                   </button>
                                 </div>
@@ -72,107 +70,6 @@
                       </ng-template>
                     </li>
                     <li [ngbNavItem]="2">
-                      <a ngbNavLink>Identidad de marca</a>
-                      <ng-template ngbNavContent>
-                        <div class="card-body">
-                          <div *ngIf="loadingBranding" class="text-center py-5">
-                            <div class="spinner-border text-primary" role="status"></div>
-                            <p class="mt-3 mb-0">Cargando identidad de marca...</p>
-                          </div>
-
-                          <form *ngIf="!loadingBranding" [formGroup]="brandingForm" (ngSubmit)="saveBranding()">
-                            <div class="alert alert-light border d-flex justify-content-between flex-wrap gap-2">
-                              <span>Esta configuración afecta únicamente la marca del administrador autenticado. Los cambios se publican inmediatamente.</span>
-                              <small *ngIf="currentBrandId">Marca #{{ currentBrandId }}</small>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-lg-8">
-                                <div class="row">
-                                  <div class="col-md-6 mb-3">
-                                    <label for="brandName" class="form-label">Nombre comercial *</label>
-                                    <input id="brandName" class="form-control" formControlName="name" maxlength="150">
-                                    <small class="text-danger" *ngIf="brandingForm.get('name')?.touched && brandingForm.get('name')?.invalid">Ingrese un nombre válido.</small>
-                                  </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="companyName" class="form-label">Razón social *</label>
-                                    <input id="companyName" class="form-control" formControlName="companyName" maxlength="200">
-                                    <small class="text-danger" *ngIf="brandingForm.get('companyName')?.touched && brandingForm.get('companyName')?.invalid">Ingrese la razón social.</small>
-                                  </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="companyIdentifier" class="form-label">Identificación empresarial</label>
-                                    <input id="companyIdentifier" class="form-control" formControlName="companyIdentifier" maxlength="100">
-                                  </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="documentType" class="form-label">Tipo de documento</label>
-                                    <input id="documentType" class="form-control" formControlName="documentType" maxlength="50">
-                                  </div>
-                                  <div class="col-12 mb-3">
-                                    <label for="clientUrl" class="form-label">URL pública de la marca *</label>
-                                    <input id="clientUrl" type="url" class="form-control" formControlName="clientUrl" maxlength="500" placeholder="https://ejemplo.com">
-                                    <small class="text-danger" *ngIf="brandingForm.get('clientUrl')?.touched && brandingForm.get('clientUrl')?.invalid">Ingrese una URL http o https válida.</small>
-                                  </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="supportEmail" class="form-label">Correo de soporte *</label>
-                                    <input id="supportEmail" type="email" class="form-control" formControlName="supportEmail" maxlength="254">
-                                    <small class="text-danger" *ngIf="brandingForm.get('supportEmail')?.touched && brandingForm.get('supportEmail')?.invalid">Ingrese un correo válido.</small>
-                                  </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="supportPhone" class="form-label">Teléfono de soporte</label>
-                                    <input id="supportPhone" type="tel" class="form-control" formControlName="supportPhone" maxlength="50">
-                                  </div>
-                                  <div class="col-12 mb-3">
-                                    <label for="logoUrl" class="form-label">URL del logo</label>
-                                    <input id="logoUrl" type="url" class="form-control" formControlName="logoUrl" maxlength="1000" placeholder="https://cdn.ejemplo.com/logo.png">
-                                    <small class="text-danger" *ngIf="brandingForm.get('logoUrl')?.touched && brandingForm.get('logoUrl')?.invalid">Ingrese una URL http o https válida.</small>
-                                  </div>
-                                  <div class="col-md-4 mb-3">
-                                    <label for="primaryColor" class="form-label">Color primario</label>
-                                    <input id="primaryColor" type="color" class="form-control form-control-color w-100" formControlName="primaryColor">
-                                    <small>{{ brandingForm.get('primaryColor')?.value }}</small>
-                                  </div>
-                                  <div class="col-md-4 mb-3">
-                                    <label for="secondaryColor" class="form-label">Color secundario</label>
-                                    <input id="secondaryColor" type="color" class="form-control form-control-color w-100" formControlName="secondaryColor">
-                                    <small>{{ brandingForm.get('secondaryColor')?.value }}</small>
-                                  </div>
-                                  <div class="col-md-4 mb-3">
-                                    <label for="backgroundColor" class="form-label">Color de fondo</label>
-                                    <input id="backgroundColor" type="color" class="form-control form-control-color w-100" formControlName="backgroundColor">
-                                    <small>{{ brandingForm.get('backgroundColor')?.value }}</small>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-lg-4 mb-3">
-                                <div class="card h-100 border" [style.backgroundColor]="brandingForm.get('backgroundColor')?.value">
-                                  <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
-                                    <img *ngIf="brandingForm.get('logoUrl')?.value && brandingForm.get('logoUrl')?.valid"
-                                      [src]="brandingForm.get('logoUrl')?.value" alt="Vista previa del logo"
-                                      class="img-fluid mb-3" style="max-height: 120px; max-width: 220px;">
-                                    <div *ngIf="!brandingForm.get('logoUrl')?.value" class="mb-3 text-muted">Sin logo configurado</div>
-                                    <h4 [style.color]="brandingForm.get('primaryColor')?.value">{{ brandingForm.get('name')?.value || 'Nombre de la marca' }}</h4>
-                                    <p class="mb-3">{{ brandingForm.get('companyName')?.value || 'Razón social' }}</p>
-                                    <span class="badge px-3 py-2" [style.backgroundColor]="brandingForm.get('secondaryColor')?.value">Vista previa</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                              <small *ngIf="brandingUpdatedAt">Última actualización: {{ brandingUpdatedAt | date:'medium' }}</small>
-                              <div class="ms-auto d-flex gap-2">
-                                <button type="button" class="btn btn-outline-secondary" (click)="loadBranding()" [disabled]="savingBranding">Recargar</button>
-                                <button type="submit" class="btn btn-primary" [disabled]="brandingForm.invalid || savingBranding">
-                                  {{ savingBranding ? 'Guardando...' : 'Guardar identidad de marca' }}
-                                </button>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </ng-template>
-                    </li>
-                    <li [ngbNavItem]="3">
                       <a ngbNavLink>Datos de Facturación</a>
                       <ng-template ngbNavContent>
                         <form [formGroup]="additionalParameters">
@@ -182,7 +79,7 @@
                         </form>
                       </ng-template>
                     </li>
-                    <li [ngbNavItem]="4">
+                    <li [ngbNavItem]="3">
                       <a ngbNavLink>Datos Administración</a>
                       <ng-template ngbNavContent>
                         <form [formGroup]="additionalParameters">
@@ -192,7 +89,7 @@
                         </form>
                       </ng-template>
                     </li>
-                    <li [ngbNavItem]="5">
+                    <li [ngbNavItem]="4">
                       <a ngbNavLink>Página Perfil Afiliado</a>
                       <ng-template ngbNavContent>
                         <form [formGroup]="additionalParameters">

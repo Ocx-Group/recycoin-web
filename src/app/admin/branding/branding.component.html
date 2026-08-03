@@ -1,0 +1,194 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">{{ 'BRANDING-PAGE.MODULE.TEXT' | translate }}</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">{{ 'BRANDING-PAGE.BREADCRUMB.TEXT' | translate }}</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>{{ 'BRANDING-PAGE.TITLE.TEXT' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div *ngIf="loading" class="text-center py-5">
+              <div class="spinner-border text-primary" role="status"></div>
+              <p class="mt-3 mb-0">{{ 'BRANDING-PAGE.LOADING.TEXT' | translate }}</p>
+            </div>
+
+            <form *ngIf="!loading" [formGroup]="brandingForm" (ngSubmit)="save()">
+              <div class="alert alert-light border d-flex justify-content-between flex-wrap gap-2">
+                <span>{{ 'BRANDING-PAGE.NOTICE.TEXT' | translate }}</span>
+                <small *ngIf="currentBrandId">
+                  {{ 'BRANDING-PAGE.BRAND-ID.TEXT' | translate }} #{{ currentBrandId }}
+                </small>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-8">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="brandName" class="form-label">
+                        {{ 'BRANDING-PAGE.NAME.TEXT' | translate }} *
+                      </label>
+                      <input id="brandName" class="form-control" formControlName="name" maxlength="150">
+                      <small class="text-danger" *ngIf="showsError('name')">
+                        {{ serverError('name') || ('BRANDING-PAGE.INVALID-NAME.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="companyName" class="form-label">
+                        {{ 'BRANDING-PAGE.COMPANY-NAME.TEXT' | translate }} *
+                      </label>
+                      <input id="companyName" class="form-control" formControlName="companyName" maxlength="200">
+                      <small class="text-danger" *ngIf="showsError('companyName')">
+                        {{ serverError('companyName') || ('BRANDING-PAGE.INVALID-COMPANY-NAME.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="companyIdentifier" class="form-label">
+                        {{ 'BRANDING-PAGE.COMPANY-IDENTIFIER.TEXT' | translate }}
+                      </label>
+                      <input id="companyIdentifier" class="form-control" formControlName="companyIdentifier"
+                        maxlength="100">
+                      <small class="text-danger" *ngIf="serverError('companyIdentifier')">
+                        {{ serverError('companyIdentifier') }}
+                      </small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="documentType" class="form-label">
+                        {{ 'BRANDING-PAGE.DOCUMENT-TYPE.TEXT' | translate }}
+                      </label>
+                      <input id="documentType" class="form-control" formControlName="documentType" maxlength="50">
+                      <small class="text-danger" *ngIf="serverError('documentType')">
+                        {{ serverError('documentType') }}
+                      </small>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label for="clientUrl" class="form-label">
+                        {{ 'BRANDING-PAGE.CLIENT-URL.TEXT' | translate }} *
+                      </label>
+                      <input id="clientUrl" type="url" class="form-control" formControlName="clientUrl" maxlength="500"
+                        placeholder="https://ejemplo.com">
+                      <small class="form-text text-muted d-block">
+                        {{ 'BRANDING-PAGE.CLIENT-URL-HELP.TEXT' | translate }}
+                      </small>
+                      <small class="text-danger" *ngIf="showsError('clientUrl')">
+                        {{ serverError('clientUrl') || ('BRANDING-PAGE.INVALID-URL.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="supportEmail" class="form-label">
+                        {{ 'BRANDING-PAGE.SUPPORT-EMAIL.TEXT' | translate }} *
+                      </label>
+                      <input id="supportEmail" type="email" class="form-control" formControlName="supportEmail"
+                        maxlength="254">
+                      <small class="text-danger" *ngIf="showsError('supportEmail')">
+                        {{ serverError('supportEmail') || ('BRANDING-PAGE.INVALID-EMAIL.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="supportPhone" class="form-label">
+                        {{ 'BRANDING-PAGE.SUPPORT-PHONE.TEXT' | translate }}
+                      </label>
+                      <input id="supportPhone" type="tel" class="form-control" formControlName="supportPhone"
+                        maxlength="50">
+                      <small class="text-danger" *ngIf="showsError('supportPhone')">
+                        {{ serverError('supportPhone') || ('BRANDING-PAGE.INVALID-PHONE.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label for="logoUrl" class="form-label">
+                        {{ 'BRANDING-PAGE.LOGO-URL.TEXT' | translate }}
+                      </label>
+                      <div class="input-group">
+                        <input id="logoUrl" type="url" class="form-control" formControlName="logoUrl" maxlength="1000"
+                          placeholder="https://cdn.ejemplo.com/logo.png" (input)="onLogoUrlInput()">
+                        <label class="btn btn-outline-secondary mb-0" for="logoFile">
+                          {{ (uploadingLogo ? 'BRANDING-PAGE.LOGO-UPLOADING.TEXT' : 'BRANDING-PAGE.LOGO-UPLOAD.TEXT') | translate }}
+                        </label>
+                        <input id="logoFile" type="file" class="d-none" accept="image/*" [disabled]="uploadingLogo"
+                          (change)="uploadLogo($event)">
+                      </div>
+                      <small class="text-danger" *ngIf="showsError('logoUrl')">
+                        {{ serverError('logoUrl') || ('BRANDING-PAGE.INVALID-URL.TEXT' | translate) }}
+                      </small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="primaryColor" class="form-label">
+                        {{ 'BRANDING-PAGE.PRIMARY-COLOR.TEXT' | translate }}
+                      </label>
+                      <input id="primaryColor" type="color" class="form-control form-control-color w-100"
+                        formControlName="primaryColor">
+                      <small>{{ control('primaryColor')?.value }}</small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="secondaryColor" class="form-label">
+                        {{ 'BRANDING-PAGE.SECONDARY-COLOR.TEXT' | translate }}
+                      </label>
+                      <input id="secondaryColor" type="color" class="form-control form-control-color w-100"
+                        formControlName="secondaryColor">
+                      <small>{{ control('secondaryColor')?.value }}</small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="backgroundColor" class="form-label">
+                        {{ 'BRANDING-PAGE.BACKGROUND-COLOR.TEXT' | translate }}
+                      </label>
+                      <input id="backgroundColor" type="color" class="form-control form-control-color w-100"
+                        formControlName="backgroundColor">
+                      <small>{{ control('backgroundColor')?.value }}</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 mb-3">
+                  <div class="card h-100 border" [style.backgroundColor]="control('backgroundColor')?.value">
+                    <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+                      <img *ngIf="control('logoUrl')?.value && control('logoUrl')?.valid && !logoPreviewFailed"
+                        [src]="control('logoUrl')?.value" alt="Logo" class="img-fluid mb-3"
+                        style="max-height: 120px; max-width: 220px;" (error)="onLogoPreviewError()">
+                      <div *ngIf="!control('logoUrl')?.value || logoPreviewFailed" class="mb-3 text-muted">
+                        {{ 'BRANDING-PAGE.NO-LOGO.TEXT' | translate }}
+                      </div>
+                      <h4 [style.color]="control('primaryColor')?.value">
+                        {{ control('name')?.value || ('BRANDING-PAGE.NAME.TEXT' | translate) }}
+                      </h4>
+                      <p class="mb-3">
+                        {{ control('companyName')?.value || ('BRANDING-PAGE.COMPANY-NAME.TEXT' | translate) }}
+                      </p>
+                      <span class="badge px-3 py-2" [style.backgroundColor]="control('secondaryColor')?.value">
+                        {{ 'BRANDING-PAGE.PREVIEW.TEXT' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <small *ngIf="updatedAt">
+                  {{ 'BRANDING-PAGE.UPDATED-AT.TEXT' | translate }} {{ updatedAt | date:'medium' }}
+                </small>
+                <div class="ms-auto d-flex gap-2">
+                  <button type="button" class="btn btn-outline-secondary" (click)="load()"
+                    [disabled]="saving || uploadingLogo">
+                    {{ 'BRANDING-PAGE.RELOAD.TEXT' | translate }}
+                  </button>
+                  <button type="submit" class="btn btn-primary"
+                    [disabled]="brandingForm.invalid || saving || uploadingLogo">
+                    {{ (saving ? 'BRANDING-PAGE.SAVING.TEXT' : 'BRANDING-PAGE.SAVE.TEXT') | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

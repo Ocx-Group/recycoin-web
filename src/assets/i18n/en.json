@@ -659,6 +659,131 @@
       "TEXT": "Binary Genealogical tree"
     }
   },
+  "BRANDING-PAGE": {
+    "MODULE": {
+      "TEXT": "Configuration module"
+    },
+    "BREADCRUMB": {
+      "TEXT": "Brand identity"
+    },
+    "TITLE": {
+      "TEXT": "Brand identity"
+    },
+    "NOTICE": {
+      "TEXT": "These settings only affect the brand of the signed-in administrator. Changes are saved immediately and applied to this session; other browsers may keep the previous values for up to five minutes."
+    },
+    "BRAND-ID": {
+      "TEXT": "Brand"
+    },
+    "NAME": {
+      "TEXT": "Trade name"
+    },
+    "COMPANY-NAME": {
+      "TEXT": "Legal name"
+    },
+    "COMPANY-IDENTIFIER": {
+      "TEXT": "Company identifier"
+    },
+    "DOCUMENT-TYPE": {
+      "TEXT": "Document type"
+    },
+    "CLIENT-URL": {
+      "TEXT": "Public brand URL"
+    },
+    "CLIENT-URL-HELP": {
+      "TEXT": "This domain is what identifies the brand when the website starts. Entering a wrong domain, or one that already belongs to another brand, stops this site from receiving its visual identity."
+    },
+    "SUPPORT-EMAIL": {
+      "TEXT": "Support email"
+    },
+    "SUPPORT-PHONE": {
+      "TEXT": "Support phone"
+    },
+    "LOGO-URL": {
+      "TEXT": "Logo URL"
+    },
+    "LOGO-UPLOAD": {
+      "TEXT": "Upload image"
+    },
+    "LOGO-UPLOADING": {
+      "TEXT": "Uploading..."
+    },
+    "NO-LOGO": {
+      "TEXT": "No logo configured"
+    },
+    "PRIMARY-COLOR": {
+      "TEXT": "Primary color"
+    },
+    "SECONDARY-COLOR": {
+      "TEXT": "Secondary color"
+    },
+    "BACKGROUND-COLOR": {
+      "TEXT": "Background color"
+    },
+    "PREVIEW": {
+      "TEXT": "Preview"
+    },
+    "LOADING": {
+      "TEXT": "Loading brand identity..."
+    },
+    "UPDATED-AT": {
+      "TEXT": "Last updated:"
+    },
+    "RELOAD": {
+      "TEXT": "Reload"
+    },
+    "SAVE": {
+      "TEXT": "Save brand identity"
+    },
+    "SAVING": {
+      "TEXT": "Saving..."
+    },
+    "INVALID-NAME": {
+      "TEXT": "Enter a valid name."
+    },
+    "INVALID-COMPANY-NAME": {
+      "TEXT": "Enter the legal name."
+    },
+    "INVALID-URL": {
+      "TEXT": "Enter a valid http or https URL."
+    },
+    "INVALID-EMAIL": {
+      "TEXT": "Enter a valid email address."
+    },
+    "INVALID-PHONE": {
+      "TEXT": "Enter a valid phone number."
+    },
+    "OK-SAVE": {
+      "TEXT": "Brand identity updated successfully."
+    },
+    "OK-LOGO": {
+      "TEXT": "Logo uploaded successfully."
+    },
+    "ERR-LOAD": {
+      "TEXT": "Could not load the brand identity."
+    },
+    "ERR-SAVE": {
+      "TEXT": "Could not update the brand identity."
+    },
+    "ERR-SESSION": {
+      "TEXT": "The administrative session expired. Sign out and sign in again."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "The current user is not allowed to edit the brand."
+    },
+    "ERR-CONFLICT": {
+      "TEXT": "That domain already belongs to another active brand. Confirm which brand owns it before retrying."
+    },
+    "ERR-LOGO-TYPE": {
+      "TEXT": "The file must be an image."
+    },
+    "ERR-LOGO-SIZE": {
+      "TEXT": "The image must not exceed 2 MB."
+    },
+    "ERR-LOGO-UPLOAD": {
+      "TEXT": "Could not upload the logo."
+    }
+  },
   "CALCULATE-COMMISSIONS": {
     "BTN-RECURRING-CHARGES": {
       "TEXT": "Run recurring charges"
