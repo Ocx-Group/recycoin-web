@@ -10,13 +10,14 @@ import { Subscription, switchMap, timer } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-coinpay-modal',
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, QrcodeModule]
+    imports: [CommonModule, ReactiveFormsModule, QrcodeModule, TranslateModule]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;
