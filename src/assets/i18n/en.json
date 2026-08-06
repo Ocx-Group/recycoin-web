@@ -328,6 +328,9 @@
     "COL-FATHER": {
       "TEXT": "Father"
     },
+    "COL-PHONE": {
+      "TEXT": "Phone"
+    },
     "COL-SPONSOR": {
       "TEXT": "Sponsor"
     },
@@ -357,6 +360,12 @@
     },
     "REMOVE-AFFILIATE": {
       "TEXT": "Remove Affiliate"
+    },
+    "STATUS-ACTIVE": {
+      "TEXT": "Active"
+    },
+    "STATUS-INACTIVE": {
+      "TEXT": "Inactive"
     },
     "TITLE": {
       "TEXT": "List of Affiliates"

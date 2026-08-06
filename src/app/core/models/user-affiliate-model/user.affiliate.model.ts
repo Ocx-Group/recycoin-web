@@ -32,6 +32,10 @@ export class UserAffiliate {
   father: number;
   sponsor: number;
   binary_sponsor: number;
+  father_user_name?: string;
+  sponsor_user_name?: string;
+  binary_sponsor_user_name?: string;
+  status_activation?: string;
   binary_matrix_side: number;
   side: number;
   created_at: Date;

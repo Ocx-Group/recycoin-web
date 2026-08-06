@@ -58,7 +58,9 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                               [count]="totalElements" [offset]="currentPage - 1" [limit]="pageSize"
+                               [externalPaging]="true" (page)="onPage($event)"
                                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-USER.TEXT' | translate
@@ -71,29 +73,24 @@
                       'AFFILIATES-LIST-PAGE.COL-STATUS.TEXT' | translate
                     }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.status == 'Active'" class="badge-outline col-green">
-                        {{ row.status }}
+                      <div class="badge-outline" [ngClass]="row.status === 1 ? 'col-green' : 'col-red'">
+                        {{
+                          (row.status === 1
+                            ? 'AFFILIATES-LIST-PAGE.STATUS-ACTIVE.TEXT'
+                            : 'AFFILIATES-LIST-PAGE.STATUS-INACTIVE.TEXT'
+                          ) | translate
+                        }}
                       </div>
-                      <div *ngIf="row.status == 'Inactiva'" class="badge-outline col-red">
-                        {{ row.status }}
-                      </div>
-                      <div *ngIf="row.status == 'Pending'" class="badge-outline col-indigo">
-                        {{ row.status }}
-                      </div>
+                      <small *ngIf="row.status_activation" class="d-block text-muted">
+                        {{ formatStatusActivation(row) }}
+                      </small>
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{
-                      'AFFILIATES-LIST-PAGE.COL-AFFILIATE-MODE.TEXT' | translate
+                      'AFFILIATES-LIST-PAGE.COL-PHONE.TEXT' | translate
                     }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.affiliate_mode }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{
-                      'AFFILIATES-LIST-PAGE.COL-CALIFICATION.TEXT' | translate
-                    }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.calification }}
+                      {{ row.phone }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{
@@ -114,21 +111,21 @@
                       'AFFILIATES-LIST-PAGE.COL-FATHER.TEXT' | translate
                     }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.father }}
+                      {{ row.father_user_name }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-SPONSOR.TEXT' | translate
                     }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.sponsor }}
+                      {{ row.sponsor_user_name }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-BINARY-SPONSOR.TEXT' | translate
                     }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.binary_sponsor }}
+                      {{ row.binary_sponsor_user_name }}
                     </ng-template>
                   </ngx-datatable-column>
 

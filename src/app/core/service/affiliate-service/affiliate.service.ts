@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '@environments/environment';
 import { map, catchError } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { PagedResult } from '@app/core/interfaces/paged-result';
+import { PaginationRequest } from '@app/core/interfaces/pagination-request';
 import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
 import { SecretQuestion } from '@app/core/models/secret-question-model/secret.question.model';
 
@@ -52,6 +54,31 @@ export class AffiliateService {
             console.error('ERROR: ' + response);
             return null;
           }
+        }),
+      );
+  }
+
+  getAllPaged(
+    request: PaginationRequest,
+  ): Observable<Response<PagedResult<UserAffiliate>> | null> {
+    const params = new HttpParams({
+      fromObject: {
+        pageSize: request.pageSize.toString(),
+        pageNumber: request.pageNumber.toString(),
+        ...(request.search && { search: request.search }),
+      },
+    });
+
+    return this.http
+      .get<Response<PagedResult<UserAffiliate>>>(
+        `${this.urlApi}/userAffiliateInfo/get_all_paged`,
+        { ...httpOptions, params },
+      )
+      .pipe(
+        map(response => response || null),
+        catchError(error => {
+          console.error('Error getting affiliates:', error);
+          return of(null);
         }),
       );
   }

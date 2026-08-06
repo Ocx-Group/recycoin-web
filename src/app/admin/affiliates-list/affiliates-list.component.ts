@@ -2,6 +2,9 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
+import { NgClass, NgIf } from '@angular/common';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import {Router, RouterLink} from '@angular/router';
 import Swal from 'sweetalert2';
@@ -19,13 +22,13 @@ import {WalletModel1AService} from "../../core/service/wallet-model-1a-service/w
 import {WalletModel1BService} from "../../core/service/wallet-model-1b-service/wallet-model-1b.service";
 import {UserAffiliate} from "../../core/models/user-affiliate-model/user.affiliate.model";
 import {CreditTransactionAdminRequest} from "../../core/models/wallet-model/creditTransactionAdminRequest.mode";
+import {PaginationRequest} from "../../core/interfaces/pagination-request";
 
 
 const header = [
   'Usuario',
   'Estado',
-  'Modo Afiliado',
-  'Calificación',
+  'Teléfono',
   'Correo',
   'Fecha Registro',
   'Padre',
@@ -52,7 +55,9 @@ const header = [
     NgbDropdownMenu,
     NgbDropdown,
     DataTableColumnCellDirective,
-    NgbDropdownToggle
+    NgbDropdownToggle,
+    NgIf,
+    NgClass
   ]
 })
 export class AffiliatesListComponent implements OnInit {
@@ -61,6 +66,11 @@ export class AffiliatesListComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
+  totalElements = 0;
+  pageSize = 10;
+  currentPage = 1;
+  searchTerm = '';
+  private readonly searchTerms = new Subject<string>();
   @ViewChild(BalanceInformationModalComponent)
   private balanceInformationModalComponent: BalanceInformationModalComponent;
   @ViewChild('table') table: DatatableComponent;
@@ -79,6 +89,14 @@ export class AffiliatesListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.searchTerms
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(term => {
+        this.searchTerm = term;
+        this.currentPage = 1;
+        this.loadAffiliateList();
+      });
+
     this.loadAffiliateList();
   }
 
@@ -101,15 +119,35 @@ export class AffiliatesListComponent implements OnInit {
   // }
 
   loadAffiliateList() {
-    this.affiliateService.getAll().subscribe((affiliates: UserAffiliate[]) => {
-      if (affiliates !== null) {
-        this.temp = [...affiliates];
-        this.rows = affiliates;
-      }
-      setTimeout(() => {
+    const request: PaginationRequest = {
+      pageSize: this.pageSize,
+      pageNumber: this.currentPage,
+      ...(this.searchTerm && { search: this.searchTerm }),
+    };
+
+    this.loadingIndicator = true;
+    this.affiliateService.getAllPaged(request).subscribe({
+      next: response => {
+        if (response?.success && response.data) {
+          this.rows = response.data.items;
+          this.temp = response.data.items;
+          this.totalElements = response.data.totalCount;
+          this.pageSize = response.data.pageSize;
+          this.currentPage = response.data.currentPage;
+        }
         this.loadingIndicator = false;
-      }, 500);
+      },
+      error: error => {
+        console.error(error);
+        this.loadingIndicator = false;
+        this.showError('Error al cargar los datos');
+      },
     });
+  }
+
+  onPage(event: any) {
+    this.currentPage = event.offset + 1;
+    this.loadAffiliateList();
   }
 
   getRowHeight(row: { height: any }) {
@@ -118,12 +156,13 @@ export class AffiliatesListComponent implements OnInit {
 
   updateFilter(event: Event) {
     const target = event.target as HTMLInputElement;
-    const val = target.value.toLowerCase();
+    this.searchTerms.next(target.value.trim());
+  }
 
-    this.rows = this.temp.filter(function (d) {
-      return d.user_name.toLowerCase().includes(val) || !val;
-    });
-    this.table.offset = 0;
+  formatStatusActivation(row: UserAffiliate) {
+    return row.status_activation
+      ? row.status_activation.replace(/_/g, ' ')
+      : '';
   }
 
   clipBoardCopy() {
@@ -149,13 +188,12 @@ export class AffiliatesListComponent implements OnInit {
       return [
         items.user_name,
         items.status,
-        items.affiliate_mode,
-        items.external_grading_id,
+        items.phone,
         items.email,
         items.created_at,
-        items.father,
-        items.sponsor,
-        items.binary_sponsor,
+        items.father_user_name,
+        items.sponsor_user_name,
+        items.binary_sponsor_user_name,
       ];
     });
 
