@@ -668,6 +668,110 @@
       "TEXT": "Binary Genealogical tree"
     }
   },
+  "COMMISSIONS-CONFIGURATION-PAGE": {
+    "MODULE": {
+      "TEXT": "Configuration module"
+    },
+    "BREADCRUMB": {
+      "TEXT": "Purchase bonus"
+    },
+    "TITLE": {
+      "TEXT": "Purchase bonus (daily bonus)"
+    },
+    "LOADING": {
+      "TEXT": "Loading the configuration..."
+    },
+    "NOTICE": {
+      "TEXT": "These percentages are paid to the upline every time an affiliate makes a purchase. They only affect the brand of the authenticated administrator and apply from the next purchase on."
+    },
+    "BRAND-ID": {
+      "TEXT": "Brand"
+    },
+    "ENABLED": {
+      "TEXT": "Pay purchase bonus"
+    },
+    "ENABLED-HELP": {
+      "TEXT": "While this is off no bonus is distributed, regardless of the configured levels."
+    },
+    "ALWAYS-DISTRIBUTE": {
+      "TEXT": "Pay on every purchase"
+    },
+    "ALWAYS-DISTRIBUTE-HELP": {
+      "TEXT": "While this is off the bonus is only paid for purchases that explicitly activated the daily bonus option."
+    },
+    "LEVELS": {
+      "TEXT": "Levels and percentages"
+    },
+    "LEVEL": {
+      "TEXT": "Level"
+    },
+    "ADD-LEVEL": {
+      "TEXT": "Add level"
+    },
+    "REMOVE-LEVEL": {
+      "TEXT": "Remove level"
+    },
+    "NO-LEVELS": {
+      "TEXT": "No levels configured yet."
+    },
+    "INVALID-LEVEL": {
+      "TEXT": "The percentage must be between 0 and 100."
+    },
+    "ERR-LEVELS-REQUIRED": {
+      "TEXT": "Add at least one level to enable the bonus."
+    },
+    "ERR-TOTAL-EXCEEDED": {
+      "TEXT": "The levels cannot add up to more than"
+    },
+    "SUMMARY": {
+      "TEXT": "Distribution summary"
+    },
+    "SUMMARY-DISABLED": {
+      "TEXT": "The purchase bonus is disabled for this brand."
+    },
+    "TOTAL": {
+      "TEXT": "Total"
+    },
+    "MAX-LEVELS": {
+      "TEXT": "Maximum levels:"
+    },
+    "CONFIRM-REMOVE": {
+      "TEXT": "Remove this level?"
+    },
+    "CONFIRM-REMOVE-DETAIL": {
+      "TEXT": "The bonus for that level stops being paid as soon as you save."
+    },
+    "CONFIRM-YES": {
+      "TEXT": "Yes, remove it"
+    },
+    "UPDATED-AT": {
+      "TEXT": "Last updated:"
+    },
+    "RELOAD": {
+      "TEXT": "Reload"
+    },
+    "SAVE": {
+      "TEXT": "Save"
+    },
+    "SAVING": {
+      "TEXT": "Saving..."
+    },
+    "OK-SAVE": {
+      "TEXT": "The bonus configuration was saved successfully."
+    },
+    "ERR-LOAD": {
+      "TEXT": "The bonus configuration could not be loaded."
+    },
+    "ERR-SAVE": {
+      "TEXT": "The bonus configuration could not be saved."
+    },
+    "ERR-SESSION": {
+      "TEXT": "Your administrator session expired. Please sign in again."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "You are not allowed to configure the commissions of this brand."
+    }
+  },
   "BRANDING-PAGE": {
     "MODULE": {
       "TEXT": "Configuration module"

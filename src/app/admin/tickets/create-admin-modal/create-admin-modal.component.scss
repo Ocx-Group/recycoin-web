@@ -1,19 +1,58 @@
-.suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  background: white;
-  border: 1px solid #ccc;
-  border-top: none;
-  max-height: 200px;
-  overflow-y: auto;
+// El contenido del modal se mueve al <body> (NgbModal), por lo que la encapsulación
+// del componente no alcanza al skin `.dark`. Se namespacea con la clase del modal.
+::ng-deep .create-admin-modal-body {
+  .suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #c2c8ce;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    li {
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f6f7f9;
+      }
+    }
+  }
+
+  // El dropzone trae sus propios estilos por defecto y no toma los del sistema.
+  // Se alinea con la altura y el borde de `textarea.custom-control`.
+  ngx-dropzone {
+    width: 100%;
+    height: 183px;
+    border: 2px dashed #c2c8ce;
+    border-radius: 3px;
+    background-color: #f6f7f9;
+    color: #6c757d;
+  }
 }
 
-.suggestions-list li {
-  padding: 8px;
-  cursor: pointer;
-}
+::ng-deep .dark .create-admin-modal-body {
+  .suggestions-list {
+    background-color: #16192a;
+    border-color: #979da6;
+    color: #96a2b4;
 
-.suggestions-list li:hover {
-  background-color: #f0f0f0;
+    li:hover {
+      background-color: #0b0c15;
+    }
+  }
+
+  ngx-dropzone {
+    border-color: #96a2b4;
+    background-color: #16192a;
+    color: #96a2b4;
+  }
+
+  ngx-dropzone-label {
+    color: #96a2b4;
+  }
 }

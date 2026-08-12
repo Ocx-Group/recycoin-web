@@ -197,6 +197,17 @@ export const ROUTESADMIN: RouteInfo[] = [
     roles: ['Administrador'],
     submenu: [
       {
+        path: '/admin/commissions-configuration',
+        title: 'COMMISSIONS-CONFIGURATION-PAGE.BREADCRUMB.TEXT',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: [],
+      },
+      {
         path: '/admin/calculate-commissions',
         title: 'CALCULATE-COMMISSIONS.TITLE.TEXT',
         iconType: '',

@@ -12,7 +12,7 @@ import {TicketCategoriesService} from "../../../core/service/ticket-categories-s
 import {TicketHubService} from "../../../core/service/ticket-service/ticket-hub.service";
 import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
 import {TicketImagesRequest} from "../../../core/models/ticket-model/ticket-images-request.model";
-import {NgClass} from "@angular/common";
+import {CommonModule} from "@angular/common";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";
 
@@ -23,7 +23,7 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgClass,
+    CommonModule,
     NgxDropzoneModule
   ]
 })

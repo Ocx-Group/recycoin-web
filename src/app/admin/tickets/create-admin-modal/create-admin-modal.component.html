@@ -13,84 +13,90 @@
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
-  <form class="register-form" [formGroup]="createTicketForm" (ngSubmit)="createTicket()">
-    <div class="modal-body">
+  <div class="modal-body create-admin-modal-body">
+    <form class="register-form" autocomplete="off" [formGroup]="createTicketForm" (ngSubmit)="createTicket()">
       <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-1">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
           <div class="form-group">
-            <div class="form-line"
-                 [ngClass]="{'error': createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)}">
-              <label for="subject_ticket">Asunto</label>
-              <input type="text" id="subject_ticket" class="form-control" placeholder="Asunto"
-                     formControlName="subject_ticket">
-            </div>
-            <div
-              *ngIf="createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)">
-              <small class="text-danger">El asunto es obligatorio.</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <div class="form-line"
-                 [ngClass]="{'error': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)}">
-              <label for="category_ticket">Categoría</label>
-              <select id="category_ticket" class="form-control" formControlName="category">
-                <option value="">Seleccione una opción</option>
-                <option *ngFor="let item of categories" [value]="item.id">
-                  {{ item.categoryName }}
-                </option>
-              </select>
-            </div>
-            <div
-              *ngIf="createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)">
-              <small class="text-danger">Debe seleccionar una categoría.</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <div class="form-line">
-              <label for="userSearch">Buscar Usuario:</label>
-              <input placeholder="Escriba el username" type="text" id="userSearch" class="form-control"
-                     formControlName="userSearch"
-                     (input)="updateFilteredUsers()"
-                     (focus)="showSuggestions = true"
-                     (blur)="hideSuggestions()">
-              <ul *ngIf="showSuggestions && filteredUsers.length" class="suggestions-list">
-                <li *ngFor="let user of filteredUsers" (click)="selectUser(user)">
-                  {{ user.user_name }}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <div class="form-line"
-                 [ngClass]="{'error': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)}">
-              <label for="description">Explicación</label>
-              <textarea type="text" id="description" class="form-control custom-control" placeholder="Explicación"
-                        formControlName="description"></textarea>
-            </div>
-            <div
-              *ngIf="createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)">
-              <small class="text-danger" *ngIf="createTicketForm.get('description').errors?.required">La descripción es
-                requerida.</small>
-              <small class="text-danger" *ngIf="createTicketForm.get('description').errors?.maxlength">La descripción no
-                puede exceder los 255 caracteres.</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <label for="ticket_image">
-              Agregar Imagen
+            <label for="subject_ticket">
+              Asunto
               <span class="text-danger">*</span>
             </label>
+            <input type="text" id="subject_ticket" class="form-control" placeholder="Asunto"
+                   formControlName="subject_ticket" [ngClass]="{
+                     'is-invalid': createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)
+                   }" />
+            <div class="invalid-feedback">
+              El asunto es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label for="category_ticket">
+              Categoría
+              <span class="text-danger">*</span>
+            </label>
+            <select id="category_ticket" class="form-control" formControlName="category" [ngClass]="{
+                      'is-invalid': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)
+                    }">
+              <option value="">Seleccione una opción</option>
+              <option *ngFor="let item of categories" [value]="item.id">
+                {{ item.categoryName }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              Debe seleccionar una categoría.
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label for="userSearch">
+              Buscar Usuario
+              <span class="text-danger">*</span>
+            </label>
+            <input placeholder="Escriba el username" type="text" id="userSearch" class="form-control"
+                   formControlName="userSearch"
+                   (input)="updateFilteredUsers()"
+                   (focus)="showSuggestions = true"
+                   (blur)="hideSuggestions()"
+                   [ngClass]="{
+                     'is-invalid': createTicketForm.get('userId').invalid && (createTicketForm.get('userSearch').touched || submitted)
+                   }">
+            <div class="invalid-feedback">
+              Debe seleccionar un usuario de la lista.
+            </div>
+            <ul *ngIf="showSuggestions && filteredUsers.length" class="suggestions-list">
+              <li *ngFor="let user of filteredUsers" (click)="selectUser(user)">
+                {{ user.user_name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label for="description">
+              Explicación
+              <span class="text-danger">*</span>
+            </label>
+            <textarea id="description" class="form-control custom-control" placeholder="Explicación"
+                      formControlName="description" [ngClass]="{
+                        'is-invalid': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)
+                      }"></textarea>
+            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.required">
+              La descripción es requerida.
+            </div>
+            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.maxlength">
+              La descripción no puede exceder los 255 caracteres.
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label>Agregar Imagen</label>
             <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
               <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
               <ngx-dropzone-preview *ngFor="let f of files let i = index;" [removable]="true" (removed)="deleteFile(i)">
@@ -100,14 +106,14 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        Enviar
-      </button>
-      <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">
-        Descartar
-      </button>
-    </div>
-  </form>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+          Enviar
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+          Descartar
+        </button>
+      </div>
+    </form>
+  </div>
 </ng-template>

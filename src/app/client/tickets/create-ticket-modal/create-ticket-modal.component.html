@@ -13,65 +13,68 @@
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
-  <form class="register-form" [formGroup]="createTicketForm" (ngSubmit)="createTicket()">
-    <div class="modal-body">
+  <div class="modal-body create-ticket-modal-body">
+    <form class="register-form" autocomplete="off" [formGroup]="createTicketForm" (ngSubmit)="createTicket()">
       <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <div class="form-group">
-            <div class="form-line"
-              [ngClass]="{'error': createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)}">
-              <label for="subject_ticket">{{ 'TICKETS-PAGE.SUBJECT.LABEL' | translate }}</label>
-              <input type="text" id="subject_ticket" class="form-control"
-                placeholder="{{ 'TICKETS-PAGE.SUBJECT.PLACEHOLDER' | translate }}" formControlName="subject_ticket">
-            </div>
-            <div
-              *ngIf="createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)">
-              <small class="text-danger">{{ 'TICKETS-PAGE.SUBJECT.REQUIRED-ERROR' | translate }}</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <div class="form-line"
-              [ngClass]="{'error': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)}">
-              <label for="category_ticket">{{ 'TICKETS-PAGE.CATEGORY.LABEL' | translate }}</label>
-              <select id="category_ticket" class="form-control" formControlName="category">
-                <option value="">{{ 'TICKETS-PAGE.CATEGORY.DEFAULT-OPTION' | translate }}</option>
-                <option *ngFor="let item of categories" [value]="item.id">
-                  {{ item.categoryName }}
-                </option>
-              </select>
-            </div>
-            <div
-              *ngIf="createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)">
-              <small class="text-danger">{{ 'TICKETS-PAGE.CATEGORY.REQUIRED-ERROR' | translate }}</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <div class="form-line"
-              [ngClass]="{'error': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)}">
-              <label for="description">{{ 'TICKETS-PAGE.DESCRIPTION.LABEL' | translate }}</label>
-              <textarea id="description" class="form-control custom-control"
-                placeholder="{{ 'TICKETS-PAGE.DESCRIPTION.PLACEHOLDER' | translate }}"
-                formControlName="description"></textarea>
-            </div>
-            <div
-              *ngIf="createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)">
-              <small class="text-danger" *ngIf="createTicketForm.get('description').errors?.required">{{
-                'TICKETS-PAGE.DESCRIPTION.REQUIRED-ERROR' | translate }}</small>
-              <small class="text-danger" *ngIf="createTicketForm.get('description').errors?.maxlength">{{
-                'TICKETS-PAGE.DESCRIPTION.MAXLENGTH-ERROR' | translate }}</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-1">
-          <div class="form-group">
-            <label for="ticket_image">
-              {{ 'TICKETS-PAGE.ADD-IMAGE.LABEL' | translate }}
+            <label for="subject_ticket">
+              {{ 'TICKETS-PAGE.SUBJECT.LABEL' | translate }}
               <span class="text-danger">*</span>
             </label>
+            <input type="text" id="subject_ticket" class="form-control"
+              placeholder="{{ 'TICKETS-PAGE.SUBJECT.PLACEHOLDER' | translate }}" formControlName="subject_ticket"
+              [ngClass]="{
+                'is-invalid': createTicketForm.get('subject_ticket').invalid && (createTicketForm.get('subject_ticket').touched || submitted)
+              }" />
+            <div class="invalid-feedback">
+              {{ 'TICKETS-PAGE.SUBJECT.REQUIRED-ERROR' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label for="category_ticket">
+              {{ 'TICKETS-PAGE.CATEGORY.LABEL' | translate }}
+              <span class="text-danger">*</span>
+            </label>
+            <select id="category_ticket" class="form-control" formControlName="category" [ngClass]="{
+                'is-invalid': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)
+              }">
+              <option value="">{{ 'TICKETS-PAGE.CATEGORY.DEFAULT-OPTION' | translate }}</option>
+              <option *ngFor="let item of categories" [value]="item.id">
+                {{ item.categoryName }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              {{ 'TICKETS-PAGE.CATEGORY.REQUIRED-ERROR' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label for="description">
+              {{ 'TICKETS-PAGE.DESCRIPTION.LABEL' | translate }}
+              <span class="text-danger">*</span>
+            </label>
+            <textarea id="description" class="form-control custom-control"
+              placeholder="{{ 'TICKETS-PAGE.DESCRIPTION.PLACEHOLDER' | translate }}" formControlName="description"
+              [ngClass]="{
+                'is-invalid': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)
+              }"></textarea>
+            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.required">
+              {{ 'TICKETS-PAGE.DESCRIPTION.REQUIRED-ERROR' | translate }}
+            </div>
+            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.maxlength">
+              {{ 'TICKETS-PAGE.DESCRIPTION.MAXLENGTH-ERROR' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <label>{{ 'TICKETS-PAGE.ADD-IMAGE.LABEL' | translate }}</label>
             <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
               <ngx-dropzone-label>{{ 'TICKETS-PAGE.ADD-IMAGE.DROPZONE' | translate }}</ngx-dropzone-label>
               <ngx-dropzone-preview *ngFor="let f of files let i = index;" [removable]="true" (removed)="deleteFile(i)">
@@ -81,14 +84,14 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'TICKETS-PAGE.SUBMIT-BTN.TEXT' | translate }}
-      </button>
-      <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">
-        {{ 'TICKETS-PAGE.DISCARD-BTN.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+          {{ 'TICKETS-PAGE.SUBMIT-BTN.TEXT' | translate }}
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+          {{ 'TICKETS-PAGE.DISCARD-BTN.TEXT' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
 </ng-template>

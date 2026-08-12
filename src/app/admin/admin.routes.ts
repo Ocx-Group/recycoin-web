@@ -70,6 +70,13 @@ export const ADMIN_ROUTES: Routes = [
     canActivate: [AuthGuardAdmin, BrandAdministratorGuard, MaintenanceGuard],
   },
   {
+    path: 'commissions-configuration',
+    loadComponent: () =>
+      import('./commissions-configuration/commissions-configuration.component')
+        .then(m => m.CommissionsConfigurationComponent),
+    canActivate: [AuthGuardAdmin, BrandAdministratorGuard, MaintenanceGuard],
+  },
+  {
     path: 'tickets-for-admin',
     loadComponent: () => import('./tickets/tickets-admin.component').then(m => m.TicketsAdminComponent),
     canActivate: [AuthGuardAdmin, MaintenanceGuard],

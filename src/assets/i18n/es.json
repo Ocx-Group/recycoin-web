@@ -665,6 +665,110 @@
       "TEXT": "Árbol Sistema 1B"
     }
   },
+  "COMMISSIONS-CONFIGURATION-PAGE": {
+    "MODULE": {
+      "TEXT": "Módulo configuración"
+    },
+    "BREADCRUMB": {
+      "TEXT": "Bono por compra"
+    },
+    "TITLE": {
+      "TEXT": "Bono por compra (bono diario)"
+    },
+    "LOADING": {
+      "TEXT": "Cargando la configuración..."
+    },
+    "NOTICE": {
+      "TEXT": "Estos porcentajes se pagan a la línea ascendente cada vez que un afiliado hace una compra. Afectan únicamente a la marca del administrador autenticado y se aplican en la siguiente compra."
+    },
+    "BRAND-ID": {
+      "TEXT": "Marca"
+    },
+    "ENABLED": {
+      "TEXT": "Pagar bono por compra"
+    },
+    "ENABLED-HELP": {
+      "TEXT": "Si está desactivado no se reparte ningún bono, sin importar los niveles configurados."
+    },
+    "ALWAYS-DISTRIBUTE": {
+      "TEXT": "Pagar en todas las compras"
+    },
+    "ALWAYS-DISTRIBUTE-HELP": {
+      "TEXT": "Si está desactivado, el bono sólo se paga en las compras donde se activó explícitamente la opción de bonos diarios."
+    },
+    "LEVELS": {
+      "TEXT": "Niveles y porcentajes"
+    },
+    "LEVEL": {
+      "TEXT": "Nivel"
+    },
+    "ADD-LEVEL": {
+      "TEXT": "Agregar nivel"
+    },
+    "REMOVE-LEVEL": {
+      "TEXT": "Quitar nivel"
+    },
+    "NO-LEVELS": {
+      "TEXT": "Todavía no hay niveles configurados."
+    },
+    "INVALID-LEVEL": {
+      "TEXT": "El porcentaje debe estar entre 0 y 100."
+    },
+    "ERR-LEVELS-REQUIRED": {
+      "TEXT": "Agrega al menos un nivel para poder activar el bono."
+    },
+    "ERR-TOTAL-EXCEEDED": {
+      "TEXT": "La suma de los niveles no puede superar"
+    },
+    "SUMMARY": {
+      "TEXT": "Resumen del reparto"
+    },
+    "SUMMARY-DISABLED": {
+      "TEXT": "El bono por compra está desactivado para esta marca."
+    },
+    "TOTAL": {
+      "TEXT": "Total"
+    },
+    "MAX-LEVELS": {
+      "TEXT": "Máximo de niveles:"
+    },
+    "CONFIRM-REMOVE": {
+      "TEXT": "¿Quitar este nivel?"
+    },
+    "CONFIRM-REMOVE-DETAIL": {
+      "TEXT": "Dejará de pagarse el bono en ese nivel en cuanto guardes."
+    },
+    "CONFIRM-YES": {
+      "TEXT": "Sí, quitarlo"
+    },
+    "UPDATED-AT": {
+      "TEXT": "Última actualización:"
+    },
+    "RELOAD": {
+      "TEXT": "Recargar"
+    },
+    "SAVE": {
+      "TEXT": "Guardar"
+    },
+    "SAVING": {
+      "TEXT": "Guardando..."
+    },
+    "OK-SAVE": {
+      "TEXT": "La configuración del bono se guardó correctamente."
+    },
+    "ERR-LOAD": {
+      "TEXT": "No se pudo cargar la configuración del bono."
+    },
+    "ERR-SAVE": {
+      "TEXT": "No se pudo guardar la configuración del bono."
+    },
+    "ERR-SESSION": {
+      "TEXT": "Tu sesión de administrador expiró. Vuelve a iniciar sesión."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "No tienes permisos para configurar las comisiones de esta marca."
+    }
+  },
   "BRANDING-PAGE": {
     "MODULE": {
       "TEXT": "Módulo configuración"
