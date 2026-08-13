@@ -895,8 +895,23 @@
     }
   },
   "CALCULATE-COMMISSIONS": {
+    "AFFILIATES": {
+      "TEXT": "Afiliados"
+    },
+    "BTN-CANCEL": {
+      "TEXT": "Cancelar"
+    },
     "BTN-RECURRING-CHARGES": {
       "TEXT": "Ejecutar cobros recurrentes"
+    },
+    "BTN-RUN": {
+      "TEXT": "Ejecutar liquidación"
+    },
+    "BTN-SAVE": {
+      "TEXT": "Guardar configuración"
+    },
+    "BTN-SIMULATE": {
+      "TEXT": "Simular liquidación"
     },
     "BTN-UPDATE-VOLUME": {
       "TEXT": "Actualizar Volumen"
@@ -904,17 +919,194 @@
     "BTN-WITHOUT-UPDATE": {
       "TEXT": "Continuar sin actualizar"
     },
+    "COL-AFFILIATE": {
+      "TEXT": "Afiliado"
+    },
+    "COL-AFFILIATE-ID": {
+      "TEXT": "ID"
+    },
+    "COL-CREDIT": {
+      "TEXT": "Crédito"
+    },
+    "CONFIRM-RUN": {
+      "TEXT": "Va a <strong>ejecutar</strong> la liquidación del período {{startDate}} al {{endDate}}<br>Porcentaje: <strong>{{rate}}%</strong><br>Días de espera: <strong>{{days}}</strong><br>Esta acción acredita saldo real."
+    },
+    "CONFIRM-SIMULATE": {
+      "TEXT": "Va a <strong>simular</strong> la liquidación del período {{startDate}} al {{endDate}}<br>Porcentaje: <strong>{{rate}}%</strong><br>Días de espera: <strong>{{days}}</strong>"
+    },
+    "CONFIRM-TITLE": {
+      "TEXT": "¿Está seguro?"
+    },
+    "ENABLED": {
+      "TEXT": "Liquidación habilitada"
+    },
+    "ENABLED-HELP": {
+      "TEXT": "Mientras esté deshabilitada el servidor rechaza cualquier liquidación de esta marca."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "No tiene permisos para gestionar la liquidación de comisiones"
+    },
+    "ERR-GROUP-REQUIRED": {
+      "TEXT": "Debe elegir un grupo de pago para habilitar la liquidación"
+    },
+    "ERR-LOAD": {
+      "TEXT": "No se pudo cargar la configuración de la liquidación"
+    },
+    "ERR-RUN": {
+      "TEXT": "No se pudo procesar la liquidación"
+    },
+    "ERR-SAVE": {
+      "TEXT": "No se pudo guardar la configuración"
+    },
+    "ERR-SESSION": {
+      "TEXT": "Su sesión de administrador expiró. Vuelva a iniciar sesión."
+    },
     "FIRST-MSJ": {
       "TEXT": "Importante: Antes de calcular los conceptos de pago asegúrese de haber actualizado antes los Volúmenes de puntos y compras."
     },
+    "INFO": {
+      "TEXT": "La liquidación acredita las comisiones del período seleccionado. Puede simular el proceso antes de ejecutar el cálculo final."
+    },
+    "MODE": {
+      "TEXT": "Modo de cálculo"
+    },
+    "MODE-FINAL": {
+      "TEXT": "Cálculo final"
+    },
+    "MODE-HELP": {
+      "TEXT": "La simulación no modifica ningún registro."
+    },
+    "MODE-SIMULATE": {
+      "TEXT": "Simular"
+    },
+    "MONTH": {
+      "TEXT": "Mes a liquidar"
+    },
+    "MONTH-1": {
+      "TEXT": "Enero"
+    },
+    "MONTH-10": {
+      "TEXT": "Octubre"
+    },
+    "MONTH-11": {
+      "TEXT": "Noviembre"
+    },
+    "MONTH-12": {
+      "TEXT": "Diciembre"
+    },
+    "MONTH-2": {
+      "TEXT": "Febrero"
+    },
+    "MONTH-3": {
+      "TEXT": "Marzo"
+    },
+    "MONTH-4": {
+      "TEXT": "Abril"
+    },
+    "MONTH-5": {
+      "TEXT": "Mayo"
+    },
+    "MONTH-6": {
+      "TEXT": "Junio"
+    },
+    "MONTH-7": {
+      "TEXT": "Julio"
+    },
+    "MONTH-8": {
+      "TEXT": "Agosto"
+    },
+    "MONTH-9": {
+      "TEXT": "Septiembre"
+    },
+    "MONTH-HELP": {
+      "TEXT": "Sólo se puede liquidar un mes que ya haya terminado."
+    },
+    "OK-EMPTY": {
+      "TEXT": "El proceso terminó sin afiliados a liquidar"
+    },
+    "OK-LIQUIDATED": {
+      "TEXT": "Liquidación completada: {{count}} afiliados acreditados, {{total}} en total"
+    },
+    "OK-SAVE": {
+      "TEXT": "Configuración guardada"
+    },
+    "OK-SIMULATED": {
+      "TEXT": "Simulación completada: {{count}} afiliados, {{total}} en total"
+    },
+    "OVERRIDE-HELP": {
+      "TEXT": "Estos tres valores vienen de la configuración de la marca. Cambiarlos aquí sólo afecta a esta corrida."
+    },
+    "PAYMENT-GROUP": {
+      "TEXT": "Grupo de pago"
+    },
+    "PAYMENT-GROUP-HELP": {
+      "TEXT": "Grupo de pago del producto que liquida esta marca."
+    },
+    "PAYMENT-GROUP-NONE": {
+      "TEXT": "Sin grupo de pago"
+    },
+    "PERIOD": {
+      "TEXT": "Período seleccionado"
+    },
+    "PERIOD-TO": {
+      "TEXT": "a"
+    },
+    "PROCESSING-DETAIL": {
+      "TEXT": "Por favor espere mientras se procesa la liquidación.<br>Este proceso puede tardar varios minutos."
+    },
+    "PROCESSING-TITLE": {
+      "TEXT": "Procesando..."
+    },
+    "RATE": {
+      "TEXT": "Porcentaje a pagar (%)"
+    },
+    "RATE-HELP": {
+      "TEXT": "Porcentaje del total facturado que se paga por un período completo."
+    },
+    "RESULT-EMPTY": {
+      "TEXT": "No hay afiliados a liquidar en este período. Puede que ya se haya liquidado o que ninguna factura califique."
+    },
+    "RESULT-LIQUIDATED": {
+      "TEXT": "Resultado de la liquidación"
+    },
+    "RESULT-PREVIEW-NOTE": {
+      "TEXT": "Esta es una previsualización: todavía no se ha acreditado nada."
+    },
+    "RESULT-SIMULATED": {
+      "TEXT": "Resultado de la simulación"
+    },
+    "RUN-TITLE": {
+      "TEXT": "Liquidación de comisiones"
+    },
     "SECOND-MSJ": {
       "TEXT": "Este proceso puede tardar varios minutos, por favor luego de iniciar el proceso espere a que este finalize y no cierre la ventana."
+    },
+    "SETTINGS-HELP": {
+      "TEXT": "Estos valores son los que usa la liquidación mensual de esta marca. Se guardan por marca y quedan como valores por defecto del formulario de abajo."
+    },
+    "SETTINGS-TITLE": {
+      "TEXT": "Configuración de la marca"
     },
     "SUBTITLE": {
       "TEXT": "Procesar Calculos"
     },
     "TITLE": {
-      "TEXT": "Calcular Comisiones"
+      "TEXT": "Liquidar Comisiones"
+    },
+    "TOTAL": {
+      "TEXT": "Total"
+    },
+    "UPDATED-AT": {
+      "TEXT": "Última actualización:"
+    },
+    "WAITING-DAYS": {
+      "TEXT": "Días de espera"
+    },
+    "WAITING-DAYS-HELP": {
+      "TEXT": "Días que espera una factura creada dentro del período antes de empezar a generar."
+    },
+    "WARNING": {
+      "TEXT": "Este proceso puede tardar varios minutos. Espere a que finalice y no cierre la ventana."
     }
   },
   "CALCULATED-COMMISSIONS": {

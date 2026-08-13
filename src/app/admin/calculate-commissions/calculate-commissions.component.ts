@@ -1,167 +1,363 @@
-import {Component, OnInit} from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import {WalletService} from "../../core/service/wallet-service/wallet.service";
-import {TranslatePipe} from "@ngx-translate/core";
-import {RouterLink} from "@angular/router";
-import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
-import {NgClass} from "@angular/common";
 
+import {
+  MONTHLY_COMMISSION_MAX_INTEREST_RATE,
+  MONTHLY_COMMISSION_MAX_WAITING_DAYS,
+  MonthlyCommissionResult,
+  MonthlyCommissionSettings,
+  UpdateMonthlyCommissionSettingsRequest,
+} from '@app/core/models/monthly-commission-model/monthly-commission.model';
+import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
+import { MonthlyCommissionService } from '@app/core/service/monthly-commission-service/monthly-commission.service';
+import { MonthlyCommissionSettingsService } from '@app/core/service/monthly-commission-service/monthly-commission-settings.service';
+import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
+
+/**
+ * Monthly commission liquidation.
+ *
+ * Two things live on this screen on purpose. The upper panel edits the brand's own
+ * defaults — rate, waiting days and the payment group of the product it liquidates —
+ * because those differ per website and used to be hardcoded here. The lower form runs
+ * one liquidation, pre-filled from those defaults and overridable for a single run.
+ *
+ * The brand and the administrator name are never sent: the server derives both from
+ * the admin session.
+ */
 @Component({
   selector: 'app-calculate-commissions',
   templateUrl: './calculate-commissions.component.html',
   standalone: true,
-  imports: [
-    TranslatePipe,
-    RouterLink,
-    NgbAlert,
-    FormsModule,
-    NgClass
-  ]
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgbAlert, TranslatePipe],
 })
 export class CalculateCommissionsComponent implements OnInit {
-  // Campos para liquidación
-  selectedMonth: number;
-  selectedYear: number;
-  startDate: string;
-  endDate: string;
-  commissionType: string = 'residual'; // 'residual' o 'pasivo'
-  calculationMode: string = 'simulate'; // 'simulate' o 'final'
-  isProcessing: boolean = false;
+  settingsForm: FormGroup;
+  runForm: FormGroup;
 
-  // Nuevos campos
-  percentageToPay: number = 4; // Porcentaje a pagar (por defecto 4%)
-  waitingDays: number = 2; // Días de espera (por defecto 2)
+  loadingSettings = false;
+  savingSettings = false;
+  processing = false;
 
-  months: { value: number, label: string }[] = [
-    {value: 1, label: 'Enero'},
-    {value: 2, label: 'Febrero'},
-    {value: 3, label: 'Marzo'},
-    {value: 4, label: 'Abril'},
-    {value: 5, label: 'Mayo'},
-    {value: 6, label: 'Junio'},
-    {value: 7, label: 'Julio'},
-    {value: 8, label: 'Agosto'},
-    {value: 9, label: 'Septiembre'},
-    {value: 10, label: 'Octubre'},
-    {value: 11, label: 'Noviembre'},
-    {value: 12, label: 'Diciembre'}
+  currentBrandId: number | null = null;
+  settingsUpdatedAt: string | null = null;
+  paymentGroups: PaymentGroup[] = [];
+
+  /** Result of the last run; drives the preview/outcome table. */
+  result: MonthlyCommissionResult | null = null;
+
+  readonly maxInterestRate = MONTHLY_COMMISSION_MAX_INTEREST_RATE;
+  readonly maxWaitingDays = MONTHLY_COMMISSION_MAX_WAITING_DAYS;
+
+  readonly months: { value: number; labelKey: string }[] = [
+    { value: 1, labelKey: 'CALCULATE-COMMISSIONS.MONTH-1.TEXT' },
+    { value: 2, labelKey: 'CALCULATE-COMMISSIONS.MONTH-2.TEXT' },
+    { value: 3, labelKey: 'CALCULATE-COMMISSIONS.MONTH-3.TEXT' },
+    { value: 4, labelKey: 'CALCULATE-COMMISSIONS.MONTH-4.TEXT' },
+    { value: 5, labelKey: 'CALCULATE-COMMISSIONS.MONTH-5.TEXT' },
+    { value: 6, labelKey: 'CALCULATE-COMMISSIONS.MONTH-6.TEXT' },
+    { value: 7, labelKey: 'CALCULATE-COMMISSIONS.MONTH-7.TEXT' },
+    { value: 8, labelKey: 'CALCULATE-COMMISSIONS.MONTH-8.TEXT' },
+    { value: 9, labelKey: 'CALCULATE-COMMISSIONS.MONTH-9.TEXT' },
+    { value: 10, labelKey: 'CALCULATE-COMMISSIONS.MONTH-10.TEXT' },
+    { value: 11, labelKey: 'CALCULATE-COMMISSIONS.MONTH-11.TEXT' },
+    { value: 12, labelKey: 'CALCULATE-COMMISSIONS.MONTH-12.TEXT' },
   ];
 
-  constructor(private walletService: WalletService) {
-    // Inicializar con el mes anterior (último mes completo)
+  startDate = '';
+  endDate = '';
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly settingsService: MonthlyCommissionSettingsService,
+    private readonly monthlyCommissionService: MonthlyCommissionService,
+    private readonly paymentGroupsService: PaymentGroupsService,
+    private readonly toastrService: ToastrService,
+    private readonly translate: TranslateService,
+  ) {}
+
+  ngOnInit(): void {
+    // The last complete month is the only one that can be liquidated, so it is also
+    // the sensible default.
     const today = new Date();
     const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-    this.selectedMonth = lastMonth.getMonth() + 1;
-    this.selectedYear = lastMonth.getFullYear();
-  }
 
-  ngOnInit() {
+    this.settingsForm = this.fb.group({
+      enabled: [false],
+      interestRate: [0, [Validators.required, Validators.min(0), Validators.max(this.maxInterestRate)]],
+      waitingDays: [0, [Validators.required, Validators.min(0), Validators.max(this.maxWaitingDays)]],
+      paymentGroupId: [null as number | null],
+    });
+
+    this.runForm = this.fb.group({
+      month: [lastMonth.getMonth() + 1, Validators.required],
+      year: [lastMonth.getFullYear(), Validators.required],
+      interestRate: [0, [Validators.required, Validators.min(0), Validators.max(this.maxInterestRate)]],
+      waitingDays: [0, [Validators.required, Validators.min(0), Validators.max(this.maxWaitingDays)]],
+      paymentGroupId: [null as number | null, Validators.required],
+      dryRun: [true],
+    });
+
     this.updateDateRange();
+    this.runForm.get('month')?.valueChanges.subscribe(() => this.updateDateRange());
+    this.runForm.get('year')?.valueChanges.subscribe(() => this.updateDateRange());
+
+    this.loadPaymentGroups();
+    this.loadSettings();
   }
 
-
-  onMonthChange() {
-    this.updateDateRange();
+  get isSimulation(): boolean {
+    return !!this.runForm?.get('dryRun')?.value;
   }
 
-  updateDateRange() {
-    // Calcular primer y último día del mes seleccionado
-    const firstDay = new Date(this.selectedYear, this.selectedMonth - 1, 1);
-    const lastDay = new Date(this.selectedYear, this.selectedMonth, 0);
-
-    this.startDate = this.formatDate(firstDay);
-    this.endDate = this.formatDate(lastDay);
+  get selectedYear(): number {
+    return Number(this.runForm?.get('year')?.value);
   }
 
-  formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
+  /**
+   * A month can only be liquidated once it is over, so anything from the current month
+   * onwards is closed off.
+   */
   isMonthDisabled(monthValue: number): boolean {
     const today = new Date();
-    const currentMonth = today.getMonth() + 1;
-    const currentYear = today.getFullYear();
+    const lastComplete = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const selectedYear = this.selectedYear;
 
-    // Calcular el mes mínimo permitido (mes anterior al actual)
-    const minMonth = currentMonth - 1;
-
-    // Si el año seleccionado es menor al actual
-    if (this.selectedYear < currentYear) {
-      // Solo permitir diciembre si es el mes anterior permitido
-      if (this.selectedYear === currentYear - 1 && currentMonth === 1) {
-        return monthValue !== 12;
-      }
-      return true;
-    }
-
-    // Si el año seleccionado es mayor al actual, deshabilitar
-    if (this.selectedYear > currentYear) {
-      return true;
-    }
-
-    // Si es el año actual, deshabilitar meses anteriores al mes permitido (mes anterior al actual)
-    return monthValue < minMonth;
+    if (selectedYear > lastComplete.getFullYear()) return true;
+    if (selectedYear < lastComplete.getFullYear()) return false;
+    return monthValue > lastComplete.getMonth() + 1;
   }
 
-  processLiquidation() {
-    if (this.isProcessing) {
-      return;
-    }
-
-    const actionText = this.calculationMode === 'simulate' ? 'simular' : 'ejecutar';
-    const typeText = this.commissionType === 'residual' ? 'Residuales' : 'Pasivo';
-
-    Swal.fire({
-      title: '¿Está seguro?',
-      html: `Está a punto de <strong>${actionText}</strong> la liquidación de comisiones <strong>${typeText}</strong><br>` +
-        `Período: ${this.startDate} al ${this.endDate}<br>` +
-        `Porcentaje a pagar: <strong>${this.percentageToPay}%</strong><br>` +
-        `Días de espera: <strong>${this.waitingDays} días</strong>`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: this.calculationMode === 'simulate' ? 'Simular' : 'Liquidar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.executeLiquidation();
-      }
+  loadPaymentGroups(): void {
+    this.paymentGroupsService.getAll().subscribe({
+      next: groups => (this.paymentGroups = (groups as PaymentGroup[]) || []),
+      // A failure here only costs the operator the friendly names in the dropdown, so
+      // it must not block the screen.
+      error: () => (this.paymentGroups = []),
     });
   }
 
-  executeLiquidation() {
-    this.isProcessing = true;
+  loadSettings(): void {
+    this.loadingSettings = true;
+    this.settingsService.getCurrent()
+      .pipe(finalize(() => (this.loadingSettings = false)))
+      .subscribe({
+        next: settings => this.applySettings(settings),
+        error: error => this.reportError(error, 'CALCULATE-COMMISSIONS.ERR-LOAD.TEXT'),
+      });
+  }
 
-    // Mostrar loading
+  saveSettings(): void {
+    this.settingsForm.markAllAsTouched();
+    if (this.settingsForm.invalid || this.savingSettings) return;
+
+    const enabled = !!this.settingsForm.get('enabled')?.value;
+    const paymentGroupId = toNullableId(this.settingsForm.get('paymentGroupId')?.value);
+
+    // Mirrors the server rule, so the operator is told before the round trip.
+    if (enabled && paymentGroupId === null) {
+      this.toastrService.error(
+        this.translate.instant('CALCULATE-COMMISSIONS.ERR-GROUP-REQUIRED.TEXT'));
+      return;
+    }
+
+    const request: UpdateMonthlyCommissionSettingsRequest = {
+      enabled,
+      interestRate: toNumber(this.settingsForm.get('interestRate')?.value),
+      waitingDays: toNumber(this.settingsForm.get('waitingDays')?.value),
+      paymentGroupId,
+    };
+
+    this.savingSettings = true;
+    this.settingsService.updateCurrent(request)
+      .pipe(finalize(() => (this.savingSettings = false)))
+      .subscribe({
+        next: settings => {
+          this.applySettings(settings);
+          this.toastrService.success(
+            this.translate.instant('CALCULATE-COMMISSIONS.OK-SAVE.TEXT'));
+        },
+        error: error => this.reportError(error, 'CALCULATE-COMMISSIONS.ERR-SAVE.TEXT'),
+      });
+  }
+
+  processLiquidation(): void {
+    this.runForm.markAllAsTouched();
+    if (this.runForm.invalid || this.processing) return;
+
+    const simulation = this.isSimulation;
+
     Swal.fire({
-      title: 'Procesando...',
-      html: 'Por favor espere mientras se procesa la liquidación.<br>Este proceso puede tardar varios minutos.',
+      title: this.translate.instant('CALCULATE-COMMISSIONS.CONFIRM-TITLE.TEXT'),
+      html: this.translate.instant(
+        simulation
+          ? 'CALCULATE-COMMISSIONS.CONFIRM-SIMULATE.TEXT'
+          : 'CALCULATE-COMMISSIONS.CONFIRM-RUN.TEXT',
+        {
+          startDate: this.startDate,
+          endDate: this.endDate,
+          rate: toNumber(this.runForm.get('interestRate')?.value),
+          days: toNumber(this.runForm.get('waitingDays')?.value),
+        }),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8963ff',
+      cancelButtonColor: '#fb7823',
+      confirmButtonText: this.translate.instant(
+        simulation
+          ? 'CALCULATE-COMMISSIONS.BTN-SIMULATE.TEXT'
+          : 'CALCULATE-COMMISSIONS.BTN-RUN.TEXT'),
+      cancelButtonText: this.translate.instant('CALCULATE-COMMISSIONS.BTN-CANCEL.TEXT'),
+    }).then(confirmation => {
+      if (confirmation.isConfirmed) this.executeLiquidation(simulation);
+    });
+  }
+
+  private executeLiquidation(simulation: boolean): void {
+    this.processing = true;
+    this.result = null;
+
+    Swal.fire({
+      title: this.translate.instant('CALCULATE-COMMISSIONS.PROCESSING-TITLE.TEXT'),
+      html: this.translate.instant('CALCULATE-COMMISSIONS.PROCESSING-DETAIL.TEXT'),
       allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      didOpen: () => Swal.showLoading(),
     }).then();
 
-    // Por ahora simulo una llamada con timeout
-    setTimeout(() => {
-      this.isProcessing = false;
+    this.monthlyCommissionService.calculate({
+      startDate: this.startDate,
+      endDate: this.endDate,
+      interestRate: toNumber(this.runForm.get('interestRate')?.value),
+      waitingDays: toNumber(this.runForm.get('waitingDays')?.value),
+      paymentGroupId: toNullableId(this.runForm.get('paymentGroupId')?.value) ?? undefined,
+      dryRun: simulation,
+    })
+      .pipe(finalize(() => (this.processing = false)))
+      .subscribe({
+        next: result => {
+          this.result = result;
+          Swal.close();
 
-      Swal.fire({
-        title: this.calculationMode === 'simulate' ? 'Simulación Completada' : 'Liquidación Completada',
-        html: `<strong>Tipo:</strong> ${this.commissionType === 'residual' ? 'Residuales' : 'Pasivo'}<br>` +
-          `<strong>Período:</strong> ${this.startDate} al ${this.endDate}<br>` +
-          `<strong>Porcentaje:</strong> ${this.percentageToPay}%<br>` +
-          `<strong>Días de espera:</strong> ${this.waitingDays} días<br>` +
-          `<strong>Modo:</strong> ${this.calculationMode === 'simulate' ? 'Simulación' : 'Cálculo Final'}`,
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      }).then();
-    }, 2000);
+          // Zero rows is a legitimate outcome — nobody qualified, or the period was
+          // already liquidated — and reporting it as success would read as if money
+          // had moved.
+          if (result.rowsAffected === 0) {
+            this.toastrService.info(
+              this.translate.instant('CALCULATE-COMMISSIONS.OK-EMPTY.TEXT'));
+            return;
+          }
+
+          this.toastrService.success(this.translate.instant(
+            result.dryRun
+              ? 'CALCULATE-COMMISSIONS.OK-SIMULATED.TEXT'
+              : 'CALCULATE-COMMISSIONS.OK-LIQUIDATED.TEXT',
+            { count: result.rowsAffected, total: result.totalCredit }));
+        },
+        error: error => {
+          Swal.close();
+          this.reportError(error, 'CALCULATE-COMMISSIONS.ERR-RUN.TEXT');
+        },
+      });
   }
+
+  private applySettings(settings: MonthlyCommissionSettings): void {
+    this.currentBrandId = settings.brandId;
+    this.settingsUpdatedAt = settings.updatedAt;
+
+    this.settingsForm.patchValue({
+      enabled: settings.enabled,
+      interestRate: settings.interestRate,
+      waitingDays: settings.waitingDays,
+      paymentGroupId: settings.paymentGroupId,
+    }, { emitEvent: false });
+    this.settingsForm.markAsPristine();
+
+    // The run form starts from the saved defaults; the operator can still override
+    // them for a single liquidation without changing what the brand has configured.
+    this.runForm.patchValue({
+      interestRate: settings.interestRate,
+      waitingDays: settings.waitingDays,
+      paymentGroupId: settings.paymentGroupId,
+    }, { emitEvent: false });
+  }
+
+  private updateDateRange(): void {
+    const year = Number(this.runForm.get('year')?.value);
+    const month = Number(this.runForm.get('month')?.value);
+
+    this.startDate = formatDate(new Date(year, month - 1, 1));
+    // Day 0 of the next month is the last day of this one.
+    this.endDate = formatDate(new Date(year, month, 0));
+  }
+
+  paymentGroupName(id: number | null): string {
+    if (id === null) return '';
+    const group = this.paymentGroups.find(candidate => candidate.id === id);
+    return group ? group.name : String(id);
+  }
+
+  /**
+   * The server answers with the camelCase `{success, message}` envelope, the
+   * PascalCase variant produced by `ExceptionMiddleware`, or the stock
+   * `ValidationProblemDetails` from `[ApiController]`. Reading only one of them would
+   * flatten every rejection into the same generic message.
+   */
+  private reportError(error: any, fallbackKey: string): void {
+    if (error?.message === 'ADMIN_TOKEN_REQUIRED' || error?.status === 401) {
+      this.toastrService.error(
+        this.translate.instant('CALCULATE-COMMISSIONS.ERR-SESSION.TEXT'));
+      return;
+    }
+
+    if (error?.status === 403) {
+      this.toastrService.error(
+        this.translate.instant('CALCULATE-COMMISSIONS.ERR-FORBIDDEN.TEXT'));
+      return;
+    }
+
+    const fieldErrors = error?.error?.errors;
+    if (fieldErrors && typeof fieldErrors === 'object') {
+      const first = Object.keys(fieldErrors)
+        .map(key => Array.isArray(fieldErrors[key])
+          ? String(fieldErrors[key][0])
+          : String(fieldErrors[key]))[0];
+      this.toastrService.error(first || this.translate.instant(fallbackKey));
+      return;
+    }
+
+    const body = error?.error;
+    const message = body?.message || body?.Message;
+    this.toastrService.error(message || this.translate.instant(fallbackKey));
+  }
+}
+
+/** Empty inputs must not silently count as 0 in a real payout. */
+function toNumber(value: unknown): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+/** The select yields '' for "none" and strings for real ids. */
+function toNullableId(value: unknown): number | null {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+}
+
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }

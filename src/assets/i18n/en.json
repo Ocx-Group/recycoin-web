@@ -898,8 +898,23 @@
     }
   },
   "CALCULATE-COMMISSIONS": {
+    "AFFILIATES": {
+      "TEXT": "Affiliates"
+    },
+    "BTN-CANCEL": {
+      "TEXT": "Cancel"
+    },
     "BTN-RECURRING-CHARGES": {
       "TEXT": "Run recurring charges"
+    },
+    "BTN-RUN": {
+      "TEXT": "Run liquidation"
+    },
+    "BTN-SAVE": {
+      "TEXT": "Save configuration"
+    },
+    "BTN-SIMULATE": {
+      "TEXT": "Simulate liquidation"
     },
     "BTN-UPDATE-VOLUME": {
       "TEXT": "Update Volume"
@@ -907,17 +922,194 @@
     "BTN-WITHOUT-UPDATE": {
       "TEXT": "Continue without Update"
     },
+    "COL-AFFILIATE": {
+      "TEXT": "Affiliate"
+    },
+    "COL-AFFILIATE-ID": {
+      "TEXT": "ID"
+    },
+    "COL-CREDIT": {
+      "TEXT": "Credit"
+    },
+    "CONFIRM-RUN": {
+      "TEXT": "You are about to <strong>run</strong> the liquidation for {{startDate}} to {{endDate}}<br>Rate: <strong>{{rate}}%</strong><br>Waiting days: <strong>{{days}}</strong><br>This credits real balance."
+    },
+    "CONFIRM-SIMULATE": {
+      "TEXT": "You are about to <strong>simulate</strong> the liquidation for {{startDate}} to {{endDate}}<br>Rate: <strong>{{rate}}%</strong><br>Waiting days: <strong>{{days}}</strong>"
+    },
+    "CONFIRM-TITLE": {
+      "TEXT": "Are you sure?"
+    },
+    "ENABLED": {
+      "TEXT": "Liquidation enabled"
+    },
+    "ENABLED-HELP": {
+      "TEXT": "While disabled the server rejects any liquidation for this brand."
+    },
+    "ERR-FORBIDDEN": {
+      "TEXT": "You are not allowed to manage the commission liquidation"
+    },
+    "ERR-GROUP-REQUIRED": {
+      "TEXT": "Choose a payment group to enable the liquidation"
+    },
+    "ERR-LOAD": {
+      "TEXT": "The liquidation configuration could not be loaded"
+    },
+    "ERR-RUN": {
+      "TEXT": "The liquidation could not be processed"
+    },
+    "ERR-SAVE": {
+      "TEXT": "The configuration could not be saved"
+    },
+    "ERR-SESSION": {
+      "TEXT": "Your administrator session expired. Please sign in again."
+    },
     "FIRST-MSJ": {
       "TEXT": "Important: Before calculating the payment concepts, make sure that you have previously updated the Volume of points and purchases."
     },
+    "INFO": {
+      "TEXT": "The liquidation credits the commissions of the selected period. You can simulate the process before running the final calculation."
+    },
+    "MODE": {
+      "TEXT": "Calculation mode"
+    },
+    "MODE-FINAL": {
+      "TEXT": "Final calculation"
+    },
+    "MODE-HELP": {
+      "TEXT": "A simulation does not change any record."
+    },
+    "MODE-SIMULATE": {
+      "TEXT": "Simulate"
+    },
+    "MONTH": {
+      "TEXT": "Month to liquidate"
+    },
+    "MONTH-1": {
+      "TEXT": "January"
+    },
+    "MONTH-10": {
+      "TEXT": "October"
+    },
+    "MONTH-11": {
+      "TEXT": "November"
+    },
+    "MONTH-12": {
+      "TEXT": "December"
+    },
+    "MONTH-2": {
+      "TEXT": "February"
+    },
+    "MONTH-3": {
+      "TEXT": "March"
+    },
+    "MONTH-4": {
+      "TEXT": "April"
+    },
+    "MONTH-5": {
+      "TEXT": "May"
+    },
+    "MONTH-6": {
+      "TEXT": "June"
+    },
+    "MONTH-7": {
+      "TEXT": "July"
+    },
+    "MONTH-8": {
+      "TEXT": "August"
+    },
+    "MONTH-9": {
+      "TEXT": "September"
+    },
+    "MONTH-HELP": {
+      "TEXT": "Only a month that has already ended can be liquidated."
+    },
+    "OK-EMPTY": {
+      "TEXT": "The process finished with no affiliates to liquidate"
+    },
+    "OK-LIQUIDATED": {
+      "TEXT": "Liquidation completed: {{count}} affiliates credited, {{total}} in total"
+    },
+    "OK-SAVE": {
+      "TEXT": "Configuration saved"
+    },
+    "OK-SIMULATED": {
+      "TEXT": "Simulation completed: {{count}} affiliates, {{total}} in total"
+    },
+    "OVERRIDE-HELP": {
+      "TEXT": "These three values come from the brand configuration. Changing them here only affects this run."
+    },
+    "PAYMENT-GROUP": {
+      "TEXT": "Payment group"
+    },
+    "PAYMENT-GROUP-HELP": {
+      "TEXT": "Payment group of the product this brand liquidates."
+    },
+    "PAYMENT-GROUP-NONE": {
+      "TEXT": "No payment group"
+    },
+    "PERIOD": {
+      "TEXT": "Selected period"
+    },
+    "PERIOD-TO": {
+      "TEXT": "to"
+    },
+    "PROCESSING-DETAIL": {
+      "TEXT": "Please wait while the liquidation is processed.<br>This process may take several minutes."
+    },
+    "PROCESSING-TITLE": {
+      "TEXT": "Processing..."
+    },
+    "RATE": {
+      "TEXT": "Rate to pay (%)"
+    },
+    "RATE-HELP": {
+      "TEXT": "Percentage of the invoiced total paid for a full period."
+    },
+    "RESULT-EMPTY": {
+      "TEXT": "There are no affiliates to liquidate for this period. It may already have been liquidated, or no invoice qualifies."
+    },
+    "RESULT-LIQUIDATED": {
+      "TEXT": "Liquidation result"
+    },
+    "RESULT-PREVIEW-NOTE": {
+      "TEXT": "This is a preview: nothing has been credited yet."
+    },
+    "RESULT-SIMULATED": {
+      "TEXT": "Simulation result"
+    },
+    "RUN-TITLE": {
+      "TEXT": "Commission liquidation"
+    },
     "SECOND-MSJ": {
       "TEXT": "This process may take several minutes, please wait for it to finish after starting the process and do not close the window."
+    },
+    "SETTINGS-HELP": {
+      "TEXT": "These are the values this brand's monthly liquidation uses. They are stored per brand and pre-fill the form below."
+    },
+    "SETTINGS-TITLE": {
+      "TEXT": "Brand configuration"
     },
     "SUBTITLE": {
       "TEXT": "Process Calculations"
     },
     "TITLE": {
-      "TEXT": "Calculate Commissions"
+      "TEXT": "Liquidate Commissions"
+    },
+    "TOTAL": {
+      "TEXT": "Total"
+    },
+    "UPDATED-AT": {
+      "TEXT": "Last updated:"
+    },
+    "WAITING-DAYS": {
+      "TEXT": "Waiting days"
+    },
+    "WAITING-DAYS-HELP": {
+      "TEXT": "Days an invoice created inside the period waits before it starts earning."
+    },
+    "WARNING": {
+      "TEXT": "This process may take several minutes. Wait for it to finish and do not close the window."
     }
   },
   "CALCULATED-COMMISSIONS": {

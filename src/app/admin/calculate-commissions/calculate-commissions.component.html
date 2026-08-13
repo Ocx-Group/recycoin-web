@@ -9,239 +9,358 @@
       <a routerLink="/dashboard/main"> <i class="fas fa-home font-17"></i></a>
     </li>
     <li class="breadcrumb-item">
-      Liquidar Comisiones
+      {{ 'CALCULATE-COMMISSIONS.TITLE.TEXT' | translate }}
     </li>
   </ul>
+
   <div class="section-body">
+    <!-- Configuración de la marca -->
     <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
+      <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4>Liquidación de Comisiones</h4>
+            <h4>{{ 'CALCULATE-COMMISSIONS.SETTINGS-TITLE.TEXT' | translate }}</h4>
           </div>
           <div class="card-body">
-            <!-- Alertas informativas -->
+            <div *ngIf="loadingSettings" class="text-center py-4">
+              <div class="spinner-border" role="status"></div>
+            </div>
+
+            <form *ngIf="!loadingSettings" [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+              <div class="alert alert-light border">
+                {{ 'CALCULATE-COMMISSIONS.SETTINGS-HELP.TEXT' | translate }}
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-6">
+                  <div class="form-group">
+                    <label>{{ 'CALCULATE-COMMISSIONS.ENABLED.TEXT' | translate }}</label>
+                    <div class="form-check form-switch">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="monthlyEnabled"
+                        formControlName="enabled"
+                      >
+                      <label class="form-check-label" for="monthlyEnabled">
+                        {{ 'CALCULATE-COMMISSIONS.ENABLED-HELP.TEXT' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                  <div class="form-group">
+                    <label for="settingsRate">
+                      {{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}
+                    </label>
+                    <input
+                      type="number"
+                      id="settingsRate"
+                      class="form-control"
+                      formControlName="interestRate"
+                      min="0"
+                      [max]="maxInterestRate"
+                      step="0.01"
+                    >
+                    <small class="form-text text-muted">
+                      {{ 'CALCULATE-COMMISSIONS.RATE-HELP.TEXT' | translate }}
+                    </small>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                  <div class="form-group">
+                    <label for="settingsWaitingDays">
+                      {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}
+                    </label>
+                    <input
+                      type="number"
+                      id="settingsWaitingDays"
+                      class="form-control"
+                      formControlName="waitingDays"
+                      min="0"
+                      [max]="maxWaitingDays"
+                      step="1"
+                    >
+                    <small class="form-text text-muted">
+                      {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS-HELP.TEXT' | translate }}
+                    </small>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                  <div class="form-group">
+                    <label for="settingsPaymentGroup">
+                      {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}
+                    </label>
+                    <select
+                      id="settingsPaymentGroup"
+                      class="form-control"
+                      formControlName="paymentGroupId"
+                    >
+                      <option [ngValue]="null">
+                        {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-NONE.TEXT' | translate }}
+                      </option>
+                      <option *ngFor="let group of paymentGroups" [ngValue]="group.id">
+                        {{ group.name }}
+                      </option>
+                    </select>
+                    <small class="form-text text-muted">
+                      {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-HELP.TEXT' | translate }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary" [disabled]="savingSettings">
+                    <i class="fas fa-save"></i>
+                    {{ 'CALCULATE-COMMISSIONS.BTN-SAVE.TEXT' | translate }}
+                  </button>
+                  <span *ngIf="settingsUpdatedAt" class="text-muted ml-3">
+                    {{ 'CALCULATE-COMMISSIONS.UPDATED-AT.TEXT' | translate }}
+                    {{ settingsUpdatedAt | date: 'short' }}
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liquidación -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>{{ 'CALCULATE-COMMISSIONS.RUN-TITLE.TEXT' | translate }}</h4>
+          </div>
+          <div class="card-body">
             <div class="row mb-3">
               <div class="col-12">
-                <ngb-alert
-                  [dismissible]="false"
-                  class="alert-has-icon"
-                  type="info"
-                >
+                <ngb-alert [dismissible]="false" class="alert-has-icon" type="info">
                   <div class="alert-body">
-                    <strong>Información:</strong> La liquidación procesará los pagos de comisiones para el período seleccionado.
-                    Puede simular el proceso antes de ejecutar el cálculo final.
+                    {{ 'CALCULATE-COMMISSIONS.INFO.TEXT' | translate }}
                   </div>
                 </ngb-alert>
               </div>
-
-              <div class="col-sm-12">
-                <ngb-alert
-                  [dismissible]="false"
-                  class="alert-has-icon"
-                  type="warning"
-                >
-                  <div class="alert-body">
-                    <strong>Importante:</strong> Este proceso puede tardar varios minutos.
-                    Por favor espere a que finalice y no cierre la ventana.
-                  </div>
-                </ngb-alert>
-              </div>
-            </div>
-
-            <!-- Formulario de liquidación -->
-            <div class="row">
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <label for="monthSelect">Mes a Liquidar</label>
-                  <select
-                    id="monthSelect"
-                    class="form-control"
-                    [(ngModel)]="selectedMonth"
-                    (change)="onMonthChange()"
-                  >
-                    <option
-                      *ngFor="let month of months"
-                      [value]="month.value"
-                      [disabled]="isMonthDisabled(month.value)"
-                    >
-                      {{ month.label }} {{ selectedYear }}
-                    </option>
-                  </select>
-                  <small class="form-text text-muted">
-                    Se puede liquidar desde el mes anterior al actual en adelante
-                  </small>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <label for="startDate">Período Seleccionado</label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      [value]="startDate"
-                      readonly
-                      placeholder="Fecha inicio"
-                    >
-                    <div class="input-group-prepend input-group-append">
-                      <span class="input-group-text">a</span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [value]="endDate"
-                      readonly
-                      placeholder="Fecha fin"
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-12">
-                <div class="form-group">
-                  <label for="commissionType">Tipo de Comisión</label>
-                  <div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        type="radio"
-                        id="radioResidual"
-                        name="commissionType"
-                        class="custom-control-input"
-                        [(ngModel)]="commissionType"
-                        value="residual"
-                      >
-                      <label class="custom-control-label" for="radioResidual">
-                        Residuales
-                      </label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        type="radio"
-                        id="radioPasivo"
-                        name="commissionType"
-                        class="custom-control-input"
-                        [(ngModel)]="commissionType"
-                        value="pasivo"
-                      >
-                      <label class="custom-control-label" for="radioPasivo">
-                        Pasivo
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <label for="calculationMode">Modo de Cálculo</label>
-                  <div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        type="radio"
-                        id="radioSimulate"
-                        name="calculationMode"
-                        class="custom-control-input"
-                        [(ngModel)]="calculationMode"
-                        value="simulate"
-                      >
-                      <label class="custom-control-label" for="radioSimulate">
-                        Simular
-                      </label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input
-                        type="radio"
-                        id="radioFinal"
-                        name="calculationMode"
-                        class="custom-control-input"
-                        [(ngModel)]="calculationMode"
-                        value="final"
-                      >
-                      <label class="custom-control-label" for="radioFinal">
-                        Cálculo Final
-                      </label>
-                    </div>
-                  </div>
-                  <small class="form-text text-muted">
-                    La simulación no afecta los registros reales
-                  </small>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <label for="percentageToPay">Porcentaje a Pagar (%)</label>
-                  <input
-                    type="number"
-                    id="percentageToPay"
-                    class="form-control"
-                    [(ngModel)]="percentageToPay"
-                    min="0"
-                    max="100"
-                    step="1"
-                    placeholder="Ingrese el porcentaje"
-                  >
-                  <small class="form-text text-muted">
-                    Ingrese un valor entre 0 y 100
-                  </small>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <label for="waitingDays">Días de Espera</label>
-                  <input
-                    type="number"
-                    id="waitingDays"
-                    class="form-control"
-                    [(ngModel)]="waitingDays"
-                    min="0"
-                    step="1"
-                    placeholder="Ingrese los días de espera"
-                  >
-                  <small class="form-text text-muted">
-                    Días que deben esperar los usuarios para recibir el pago
-                  </small>
-                </div>
-              </div>
-            </div>
-
-            <!-- Resumen -->
-            <div class="row mt-3">
               <div class="col-12">
-                <div class="card bg-light">
-                  <div class="card-body">
-                    <h6 class="mb-2"><i class="fas fa-info-circle"></i> Resumen de Liquidación</h6>
-                    <ul class="mb-0">
-                      <li><strong>Período:</strong> Del {{ startDate }} al {{ endDate }}</li>
-                      <li><strong>Tipo:</strong> {{ commissionType === 'residual' ? 'Comisiones Residuales' : 'Comisiones Pasivo' }}</li>
-                      <li><strong>Porcentaje a Pagar:</strong> {{ percentageToPay }}%</li>
-                      <li><strong>Días de Espera:</strong> {{ waitingDays }} días</li>
-                      <li><strong>Modo:</strong> {{ calculationMode === 'simulate' ? 'Simulación (sin afectar registros)' : 'Cálculo Final (procesará los pagos)' }}</li>
-                    </ul>
+                <ngb-alert [dismissible]="false" class="alert-has-icon" type="warning">
+                  <div class="alert-body">
+                    {{ 'CALCULATE-COMMISSIONS.WARNING.TEXT' | translate }}
                   </div>
-                </div>
+                </ngb-alert>
               </div>
             </div>
 
-            <!-- Botones de acción -->
-            <div class="row mt-3">
-              <div class="col-12 text-center">
-                <button
-                  type="button"
-                  class="btn btn-lg"
-                  [ngClass]="calculationMode === 'simulate' ? 'btn-info' : 'btn-success'"
-                  (click)="processLiquidation()"
-                  [disabled]="isProcessing"
-                >
-                  <i class="fas" [ngClass]="calculationMode === 'simulate' ? 'fa-flask' : 'fa-check-circle'"></i>
-                  {{ calculationMode === 'simulate' ? 'Simular Liquidación' : 'Ejecutar Liquidación' }}
-                </button>
+            <form [formGroup]="runForm">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="monthSelect">
+                      {{ 'CALCULATE-COMMISSIONS.MONTH.TEXT' | translate }}
+                    </label>
+                    <select id="monthSelect" class="form-control" formControlName="month">
+                      <option
+                        *ngFor="let month of months"
+                        [ngValue]="month.value"
+                        [disabled]="isMonthDisabled(month.value)"
+                      >
+                        {{ month.labelKey | translate }} {{ selectedYear }}
+                      </option>
+                    </select>
+                    <small class="form-text text-muted">
+                      {{ 'CALCULATE-COMMISSIONS.MONTH-HELP.TEXT' | translate }}
+                    </small>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="periodStart">
+                      {{ 'CALCULATE-COMMISSIONS.PERIOD.TEXT' | translate }}
+                    </label>
+                    <div class="input-group">
+                      <input id="periodStart" type="text" class="form-control" [value]="startDate" readonly>
+                      <div class="input-group-prepend input-group-append">
+                        <span class="input-group-text">
+                          {{ 'CALCULATE-COMMISSIONS.PERIOD-TO.TEXT' | translate }}
+                        </span>
+                      </div>
+                      <input type="text" class="form-control" [value]="endDate" readonly>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="runMode">
+                      {{ 'CALCULATE-COMMISSIONS.MODE.TEXT' | translate }}
+                    </label>
+                    <select id="runMode" class="form-control" formControlName="dryRun">
+                      <option [ngValue]="true">
+                        {{ 'CALCULATE-COMMISSIONS.MODE-SIMULATE.TEXT' | translate }}
+                      </option>
+                      <option [ngValue]="false">
+                        {{ 'CALCULATE-COMMISSIONS.MODE-FINAL.TEXT' | translate }}
+                      </option>
+                    </select>
+                    <small class="form-text text-muted">
+                      {{ 'CALCULATE-COMMISSIONS.MODE-HELP.TEXT' | translate }}
+                    </small>
+                  </div>
+                </div>
               </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="runRate">
+                      {{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}
+                    </label>
+                    <input
+                      type="number"
+                      id="runRate"
+                      class="form-control"
+                      formControlName="interestRate"
+                      min="0"
+                      [max]="maxInterestRate"
+                      step="0.01"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="runWaitingDays">
+                      {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}
+                    </label>
+                    <input
+                      type="number"
+                      id="runWaitingDays"
+                      class="form-control"
+                      formControlName="waitingDays"
+                      min="0"
+                      [max]="maxWaitingDays"
+                      step="1"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="runPaymentGroup">
+                      {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}
+                    </label>
+                    <select id="runPaymentGroup" class="form-control" formControlName="paymentGroupId">
+                      <option [ngValue]="null">
+                        {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-NONE.TEXT' | translate }}
+                      </option>
+                      <option *ngFor="let group of paymentGroups" [ngValue]="group.id">
+                        {{ group.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-light border">
+                {{ 'CALCULATE-COMMISSIONS.OVERRIDE-HELP.TEXT' | translate }}
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-12 text-center">
+                  <button
+                    type="button"
+                    class="btn btn-lg"
+                    [ngClass]="isSimulation ? 'btn-info' : 'btn-success'"
+                    (click)="processLiquidation()"
+                    [disabled]="processing"
+                  >
+                    <i class="fas" [ngClass]="isSimulation ? 'fa-flask' : 'fa-check-circle'"></i>
+                    {{ (isSimulation
+                        ? 'CALCULATE-COMMISSIONS.BTN-SIMULATE.TEXT'
+                        : 'CALCULATE-COMMISSIONS.BTN-RUN.TEXT') | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="row" *ngIf="result">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>
+              {{ (result.dryRun
+                  ? 'CALCULATE-COMMISSIONS.RESULT-SIMULATED.TEXT'
+                  : 'CALCULATE-COMMISSIONS.RESULT-LIQUIDATED.TEXT') | translate }}
+            </h4>
+          </div>
+          <div class="card-body">
+            <ngb-alert *ngIf="result.dryRun" [dismissible]="false" type="info">
+              <div class="alert-body">
+                {{ 'CALCULATE-COMMISSIONS.RESULT-PREVIEW-NOTE.TEXT' | translate }}
+              </div>
+            </ngb-alert>
+
+            <ul>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.PERIOD.TEXT' | translate }}:</strong>
+                {{ result.startDate }} — {{ result.endDate }}
+              </li>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}:</strong>
+                {{ result.interestRate }}%
+              </li>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}:</strong>
+                {{ result.waitingDays }}
+              </li>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}:</strong>
+                {{ paymentGroupName(result.paymentGroupId) }}
+              </li>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.AFFILIATES.TEXT' | translate }}:</strong>
+                {{ result.rowsAffected }}
+              </li>
+              <li>
+                <strong>{{ 'CALCULATE-COMMISSIONS.TOTAL.TEXT' | translate }}:</strong>
+                {{ result.totalCredit | number: '1.2-4' }}
+              </li>
+            </ul>
+
+            <div *ngIf="result.rowsAffected === 0" class="alert alert-warning">
+              {{ 'CALCULATE-COMMISSIONS.RESULT-EMPTY.TEXT' | translate }}
+            </div>
+
+            <div class="table-responsive" *ngIf="result.items.length">
+              <table class="table table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE-ID.TEXT' | translate }}</th>
+                    <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE.TEXT' | translate }}</th>
+                    <th class="text-right">
+                      {{ 'CALCULATE-COMMISSIONS.COL-CREDIT.TEXT' | translate }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of result.items">
+                    <td>{{ item.affiliateId }}</td>
+                    <td>{{ item.affiliateUserName }}</td>
+                    <td class="text-right">{{ item.credit | number: '1.2-4' }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

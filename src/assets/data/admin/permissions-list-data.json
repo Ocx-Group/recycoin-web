@@ -55,7 +55,6 @@
     "created": "",
     "delete": ""
   },
-
   {
     "id": 7,
     "menu": "Arbol Genealogico",
@@ -121,22 +120,6 @@
     "delete": ""
   },
   {
-    "id": 15,
-    "menu": "Cierre de Conceptos",
-    "read": "",
-    "edit": "",
-    "created": "",
-    "delete": ""
-  },
-  {
-    "id": 16,
-    "menu": "Cierre de Periodo",
-    "read": "",
-    "edit": "",
-    "created": "",
-    "delete": ""
-  },
-  {
     "id": 17,
     "menu": "Comisiones Calculadas",
     "read": "",
@@ -145,32 +128,8 @@
     "delete": ""
   },
   {
-    "id": 18,
-    "menu": "Comisiones Acreditadas",
-    "read": "",
-    "edit": "",
-    "created": "",
-    "delete": ""
-  },
-  {
     "id": 19,
     "menu": "Comisiones Pagadas",
-    "read": "",
-    "edit": "",
-    "created": "",
-    "delete": ""
-  },
-  {
-    "id": 20,
-    "menu": "Incetivos por Entregar",
-    "read": "",
-    "edit": "",
-    "created": "",
-    "delete": ""
-  },
-  {
-    "id": 21,
-    "menu": "Incentivos Entregados",
     "read": "",
     "edit": "",
     "created": "",
@@ -287,7 +246,8 @@
     "edit": "",
     "created": "",
     "delete": ""
-  }, {
+  },
+  {
     "id": 36,
     "menu": "Recarga de Billetera",
     "read": "",
@@ -390,7 +350,8 @@
     "edit": "",
     "created": "",
     "delete": ""
-  }, {
+  },
+  {
     "id": 49,
     "menu": "Compras",
     "read": "",
@@ -493,7 +454,8 @@
     "edit": "",
     "created": "",
     "delete": ""
-  }, {
+  },
+  {
     "id": 62,
     "menu": "Configuración Avanzada",
     "read": "",
@@ -502,4 +464,3 @@
     "delete": ""
   }
 ]
-

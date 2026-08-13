@@ -22,7 +22,7 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'calculate-commissions',
     loadComponent: () => import('./calculate-commissions/calculate-commissions.component').then(m => m.CalculateCommissionsComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
+    canActivate: [AuthGuardAdmin, BrandAdministratorGuard, MaintenanceGuard],
   },
   {
     path: 'compensations-plans-configuration',
@@ -107,38 +107,13 @@ export const ADMIN_ROUTES: Routes = [
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
   },
   {
-    path: 'closure-concepts',
-    loadComponent: () => import('./closure-concepts/closure-concepts.component').then(m => m.ClosureConceptsComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
-  },
-  {
-    path: 'period-closing',
-    loadComponent: () => import('./period-closing/period-closing.component').then(m => m.PeriodClosingComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
-  },
-  {
     path: 'calculated-commissions',
     loadComponent: () => import('./calculated-commissions/calculated-commissions.component').then(m => m.CalculatedCommissionsComponent),
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
   },
   {
-    path: 'accredited-commissions',
-    loadComponent: () => import('./accredited-commissions/accredited-commissions.component').then(m => m.AccreditedCommissionsComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
-  },
-  {
     path: 'commissions-paid',
     loadComponent: () => import('./commissions-paid/commissions-paid.component').then(m => m.CommissionsPaidComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
-  },
-  {
-    path: 'incentives-delivered',
-    loadComponent: () => import('./incentives-delivered/incentives-delivered.component').then(m => m.IncentivesDeliveredComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
-  },
-  {
-    path: 'incentives-for-delivering',
-    loadComponent: () => import('./incentives-for-delivering/incentives-for-delivering.component').then(m => m.IncentivesForDeliveringComponent),
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
   },
   {
