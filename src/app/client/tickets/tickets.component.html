@@ -75,7 +75,7 @@
                   <ng-template let-row="row" ngx-datatable-cell-template>
                     <div *ngIf="row.ticketImages?.length > 0; else noImage">
                       <img [src]="row.ticketImages[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
-                           class="thumbnail" (click)="$event.stopPropagation()"
+                           class="thumbnail" (click)="$event.stopPropagation(); openModal(content, row)"
                            style="cursor: pointer; width: 100px; height: auto;">
                     </div>
                     <ng-template #noImage>
@@ -87,7 +87,7 @@
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
-              <ng-template let-modal>
+              <ng-template #content let-modal>
                 <div class="modal-header">
                   <h4 class="modal-title">{{ 'TICKETS-PAGE.IMAGE-MODAL.TITLE' | translate }}</h4>
                   <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>

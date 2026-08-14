@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { PagedResult } from './../../interfaces/paged-result';
 import { PaginationRequest } from './../../interfaces/pagination-request';
 import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
+import { MonthlyPurchases } from './../../models/invoice-model/monthly-purchases.model';
 
 import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { Response } from '@app/core/models/response-model/response.model';
@@ -74,6 +75,17 @@ export class InvoiceService {
           return of(null);
         }),
       );
+  }
+
+  getMonthlyPurchasesSummary(months = 12): Observable<MonthlyPurchases[]> {
+    const params = new HttpParams().set('months', months.toString());
+
+    return this.http
+      .get<Response<MonthlyPurchases[]>>(
+        `${this.urlApi}/invoice/GetMonthlyPurchasesSummary`,
+        { ...httpOptions, params },
+      )
+      .pipe(map(response => response?.data ?? []));
   }
 
   getAllInvoicesForTradingAcademyPurchases() {
