@@ -13,6 +13,7 @@ import { SecretQuestion } from '@app/core/models/secret-question-model/secret.qu
 
 import { Response } from '@app/core/models/response-model/response.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { MonthlyRegistrations } from '@app/core/models/user-affiliate-model/monthly-registrations.model';
 import { CreateAffiliate } from '@app/core/models/user-affiliate-model/create-affiliate.model';
 import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 import { ContactUsRequest } from '@app/core/models/user-affiliate-model/contactUsRequest.model';
@@ -568,6 +569,17 @@ export class AffiliateService {
           return response;
         }),
       );
+  }
+
+  getMonthlyRegistrationsSummary(months = 12): Observable<MonthlyRegistrations[]> {
+    const params = new HttpParams().set('months', months.toString());
+
+    return this.http
+      .get<Response<MonthlyRegistrations[]>>(
+        `${this.urlApi}/useraffiliateinfo/getMonthlyRegistrationsSummary`,
+        { ...httpOptions, params },
+      )
+      .pipe(map(response => response?.data ?? []));
   }
 
   getLastRegisteredAffiliates(): Observable<Response> {
