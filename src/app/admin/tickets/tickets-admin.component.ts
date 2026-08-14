@@ -17,7 +17,7 @@ import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-
 import {CreateAdminModalComponent} from "./create-admin-modal/create-admin-modal.component";
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
-import {AsyncPipe, NgClass} from "@angular/common";
+import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
 
 @Component({
@@ -30,6 +30,8 @@ import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
     DataTableColumnDirective,
     DataTableColumnCellDirective,
     NgClass,
+    NgIf,
+    NgForOf,
     AdminRespondedPipe,
     AsyncPipe,
     NgbCarousel,
@@ -114,7 +116,7 @@ export class TicketsAdminComponent implements OnInit {
   }
 
   openModal(content: any, ticket: Ticket) {
-    this.selectedTicket.images = ticket.images || [];
+    this.selectedTicket.images = ticket.ticketImages || [];
 
     this.modalService.open(content, {size: 'lg', centered: true}).result.then(() => {
     });

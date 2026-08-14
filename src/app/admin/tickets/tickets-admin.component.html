@@ -86,8 +86,8 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Imagen">
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <div *ngIf="row.images?.length > 0; else noImage">
-                      <img [src]="row.images[0].imagePath" alt="Click to view" class="thumbnail"
+                    <div *ngIf="row.ticketImages?.length > 0; else noImage">
+                      <img [src]="row.ticketImages[0].imagePath" alt="Click to view" class="thumbnail"
                            (click)="openModal(content, row)" style="cursor: pointer; width: 100px; height: auto;">
                     </div>
                     <ng-template #noImage>
@@ -105,7 +105,7 @@
                   <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>
                 </div>
                 <div class="modal-body">
-                  <ngb-carousel *ngIf="selectedTicket.images && selectedTicket.images?.length">
+                  <ngb-carousel *ngIf="selectedTicket.images?.length">
                     <ng-template ngbSlide *ngFor="let img of selectedTicket.images">
                       <img [src]="img.imagePath" alt="Slide image" class="img-fluid">
                     </ng-template>
