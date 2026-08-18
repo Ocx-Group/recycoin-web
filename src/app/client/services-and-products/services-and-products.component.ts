@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,23 +22,6 @@ export class ServicesAndProductsComponent implements OnInit {
 
   ngOnInit(): void {
 
-  }
-
-  showAlert() {
-    Swal.fire({
-      title: 'Novedades en camino',
-      html: `
-            <p>¡Estamos emocionados de anunciar que próximamente estarán disponibles nuevos servicios y productos!</p>
-            <p>Manténgase al tanto para descubrir lo que hemos preparado para usted.</p>
-        `,
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#3085d6',
-      showCancelButton: false,
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-      }
-    });
   }
 
   onTabChange(newActive: number) {

@@ -221,6 +221,11 @@
                       {{ row.userName }}
                     </ng-template>
                   </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-LEVEL.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.level }}
+                    </ng-template>
+                  </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.fullName }}

@@ -2085,6 +2085,9 @@
     "ROW-FULL-NAME": {
       "TEXT": "Nombre completo"
     },
+    "ROW-LEVEL": {
+      "TEXT": "Nivel"
+    },
     "ROW-PHONE": {
       "TEXT": "Teléfono"
     },

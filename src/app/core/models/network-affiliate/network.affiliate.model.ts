@@ -4,6 +4,7 @@ export class NetworkAffiliate {
     email: string;
     userName: string;
     phone: string;
+    level: number;
     externalGradingId: number;
     status: number;
   
@@ -13,8 +14,8 @@ export class NetworkAffiliate {
       this.email = '';
       this.userName = '';
       this.phone = '';
+      this.level = 0;
       this.externalGradingId = 0;
       this.status = 0;
     }
   }
-  
