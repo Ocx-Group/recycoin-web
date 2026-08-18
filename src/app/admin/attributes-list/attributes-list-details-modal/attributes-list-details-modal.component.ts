@@ -14,13 +14,13 @@ import {ProductAttributeService} from "../../../core/service/product-attribute/p
 import {
   ProductAttributeValueService
 } from "../../../core/service/product-attribute-value/product-attribute-value.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-attributes-list-details-modal',
   templateUrl: './attributes-list-details-modal.component.html',
   standalone: true,
-  imports: [DatatableComponent, ReactiveFormsModule, NgbNav, NgbNavItem, NgbNavContent, NgbNavLink, DataTableColumnDirective, DataTableColumnCellDirective, NgClass, NgbNavOutlet],
+  imports: [CommonModule, DatatableComponent, ReactiveFormsModule, NgbNav, NgbNavItem, NgbNavContent, NgbNavLink, DataTableColumnDirective, DataTableColumnCellDirective, NgClass, NgbNavOutlet],
 })
 export class AttributesListDetailsModalComponent implements OnInit {
   active = 1;

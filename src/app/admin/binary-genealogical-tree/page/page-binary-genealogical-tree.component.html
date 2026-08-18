@@ -32,13 +32,15 @@
               </app-binary-genealogical-tree>
               <ng-template #nodeTemplate let-node>
                 <div class="chart-node">
-                  <img [src]="node?.image"/>
+                  <img alt="node"
+                    [src]="node?.imageProfileUrl || node?.image || 'assets/images/user.svg'"
+                    (error)="$any($event.target).src='assets/images/user.svg'" />
                   <div class="name">
                     <span style="font-size: 11px;">
-                      {{ node?.user_name }}
+                      {{ node?.userName || node?.user_name }}
                     </span>
                   </div>
-                  <div *ngIf="node.children.length" (click)="node.hideChildren = !node.hideChildren"
+                  <div *ngIf="node?.children?.length" (click)="node.hideChildren = !node.hideChildren"
                        class="tree-fold-btn">
                     {{ node.hideChildren ? '+' : '-' }}
                   </div>

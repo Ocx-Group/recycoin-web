@@ -15,6 +15,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
 import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -22,7 +23,7 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
   templateUrl: './calculation-groups-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: []
+  imports: [CommonModule]
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
   editCalculationForm: FormGroup;

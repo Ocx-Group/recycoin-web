@@ -12,7 +12,7 @@ import {
   FormGroup, ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {DatePipe, NgClass} from '@angular/common';
+import {DatePipe, NgClass, CommonModule} from '@angular/common';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslatePipe} from "@ngx-translate/core";
@@ -22,6 +22,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   templateUrl: './passive-pack-run-pool-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     NgbAlert,
     ReactiveFormsModule,
     TranslatePipe,

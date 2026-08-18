@@ -10,6 +10,7 @@ import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {PassivePackDetailsComponent} from "./passive-pack-details/passive-pack-details/passive-pack-details.component";
 import {PassivePackRunPoolModalComponent} from "./passive-pack-run-pool-modal/passive-pack-run-pool-modal.component";
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -17,6 +18,7 @@ import {PassivePackRunPoolModalComponent} from "./passive-pack-run-pool-modal/pa
   templateUrl: './passive-pack.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,

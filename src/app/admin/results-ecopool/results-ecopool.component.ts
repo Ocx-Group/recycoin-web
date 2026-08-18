@@ -10,12 +10,13 @@ import {
 import {ResultsEcoPoolService} from "../../core/service/results-ecopool-service/results-ecopool.service";
 import {IconsModule} from "../../shared";
 import {TranslatePipe} from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-results-ecopool',
   templateUrl: './results-ecopool.component.html',
   standalone: true,
-  imports: [DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
+  imports: [CommonModule, DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
   temp = [];

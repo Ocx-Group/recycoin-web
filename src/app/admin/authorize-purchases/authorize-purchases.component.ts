@@ -7,6 +7,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from '@angular/common';
 
 interface Alert {
   type: string;
@@ -35,6 +36,7 @@ const header = [
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,

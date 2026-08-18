@@ -16,13 +16,14 @@ import {ToastrService} from 'ngx-toastr';
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-incentives-list-edit-modal',
   templateUrl: './incentives-list-edit-modal.component.html',
   standalone: true,
-  imports: []
+  imports: [CommonModule]
 })
 export class IncentivesListEditModalComponent implements OnInit {
   editIncentivesForm!: FormGroup;

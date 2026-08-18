@@ -11,6 +11,7 @@ import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {CategoriesCreateModalComponent} from "./categories-create-modal/categories-create-modal.component";
 import {CategoriesEditModalComponent} from "./categories-edit-modal/categories-edit-modal.component";
+import { CommonModule } from '@angular/common';
 
 const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
 
@@ -19,6 +20,7 @@ const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
   templateUrl: './categories.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,

@@ -23,7 +23,7 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 interface Alert {
   type: string;
@@ -42,6 +42,7 @@ const ALERTS: Alert[] = [
   templateUrl: './califications-list-edit-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass,
     NgbNavItem,

@@ -9,12 +9,14 @@ import {IconsModule} from "../../shared";
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-wire-transfer-list',
   templateUrl: './wire-transfer-list.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     IconsModule,
     TranslatePipe,
     DatatableComponent,

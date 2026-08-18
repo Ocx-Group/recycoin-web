@@ -18,7 +18,7 @@ import {UserService} from "../../../core/service/user-service/user.service";
 import {User} from "../../../core/models/user-model/user.model";
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 
 @Component({
@@ -26,6 +26,7 @@ import {NgClass} from "@angular/common";
   templateUrl: './users-list-edit-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     ReactiveFormsModule,
     NgClass

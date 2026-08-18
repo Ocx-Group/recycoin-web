@@ -10,12 +10,14 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {WalletService} from "../../core/service/wallet-service/wallet.service";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-balance-of-wallet',
   templateUrl: './balance-of-wallet.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,

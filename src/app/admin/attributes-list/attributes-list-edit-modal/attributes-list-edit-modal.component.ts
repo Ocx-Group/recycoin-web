@@ -9,13 +9,14 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {ProductAttribute} from "../../../core/models/product-attribute-model/product-attribute.model";
 import {ProductAttributeService} from "../../../core/service/product-attribute/product-attribute.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-attributes-list-edit-modal',
   templateUrl: './attributes-list-edit-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass
   ],

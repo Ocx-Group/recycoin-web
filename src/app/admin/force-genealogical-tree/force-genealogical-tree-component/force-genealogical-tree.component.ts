@@ -5,7 +5,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import {TreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
-import {NgTemplateOutlet} from "@angular/common";
+import {NgTemplateOutlet, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-force-genealogical-tree',
@@ -18,6 +18,7 @@ import {NgTemplateOutlet} from "@angular/common";
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
+    CommonModule,
     NgTemplateOutlet
   ]
 })

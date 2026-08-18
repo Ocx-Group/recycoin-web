@@ -24,7 +24,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 
 @Component({
@@ -32,6 +32,7 @@ import {NgClass} from "@angular/common";
   templateUrl: './incentives-list-create-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass,
     NgbTooltip,

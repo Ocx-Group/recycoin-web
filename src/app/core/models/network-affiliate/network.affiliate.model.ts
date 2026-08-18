@@ -3,6 +3,7 @@ export class NetworkAffiliate {
     fullName: string;
     email: string;
     userName: string;
+    phone: string;
     externalGradingId: number;
     status: number;
   
@@ -11,6 +12,7 @@ export class NetworkAffiliate {
       this.fullName = '';
       this.email = '';
       this.userName = '';
+      this.phone = '';
       this.externalGradingId = 0;
       this.status = 0;
     }

@@ -17,13 +17,14 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-califications-list-create-modal',
   templateUrl: './califications-list-create-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass,
     NgbNav,

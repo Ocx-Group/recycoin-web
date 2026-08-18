@@ -3,6 +3,7 @@ import {TreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {ForceGenealogicalTreeComponent} from "../force-genealogical-tree-component/force-genealogical-tree.component";
+import { CommonModule } from '@angular/common';
 
 
 interface MyTreeNode extends TreeNode {
@@ -18,6 +19,7 @@ interface MyTreeNode extends TreeNode {
   styleUrls: ['./page-force-genealogical-tree.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     ForceGenealogicalTreeComponent

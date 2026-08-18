@@ -2,12 +2,14 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-incentives-list-details-modal',
   templateUrl: './incentives-list-details-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     NgbNav,
     NgbNavItem,
     NgbNavContent,

@@ -43,7 +43,7 @@ import {
 } from "../../../core/service/product-attribute-value/product-attribute-value.service";
 import {ProductCombinationService} from "../../../core/service/product-combination-service/product-combination.service";
 import {ProductInventoryService} from "../../../core/service/product-inventory-service/product-inventory.service";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -55,6 +55,7 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   templateUrl: './products-and-services-edit-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     NgbNavItem,
     NgbNav,
     ReactiveFormsModule,

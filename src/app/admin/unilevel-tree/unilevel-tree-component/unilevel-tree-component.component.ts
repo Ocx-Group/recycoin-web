@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-unilevel-tree-component',
@@ -20,7 +21,8 @@ import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgbPopover
+    NgbPopover,
+    CommonModule
   ]
 })
 export class UnilevelTreeComponentComponent {

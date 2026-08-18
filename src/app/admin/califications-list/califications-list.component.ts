@@ -20,6 +20,7 @@ import {
 import {
   CalificationsListDetailsModalComponent
 } from "./califications-list-details-modal/califications-list-details-modal.component";
+import { CommonModule } from '@angular/common';
 
 const header = [
   'Nombre del Calificación',
@@ -34,6 +35,7 @@ const header = [
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,

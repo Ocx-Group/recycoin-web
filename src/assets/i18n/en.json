@@ -2085,6 +2085,9 @@
     "ROW-FULL-NAME": {
       "TEXT": "Full name"
     },
+    "ROW-PHONE": {
+      "TEXT": "Phone"
+    },
     "ROW-QUALIFICATION": {
       "TEXT": "Qualification"
     },

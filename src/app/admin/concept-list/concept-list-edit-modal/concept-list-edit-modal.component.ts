@@ -19,7 +19,7 @@ import {ConceptList} from "../../../core/models/concept-model/concept-list.model
 import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
 import {ConceptService} from "../../../core/service/concept-service/concept.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 
 @Component({
@@ -27,6 +27,7 @@ import {NgClass} from "@angular/common";
   templateUrl: './concept-list-edit-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     ReactiveFormsModule,
     NgClass,

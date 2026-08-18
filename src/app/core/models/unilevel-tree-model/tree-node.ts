@@ -10,16 +10,24 @@ export interface TreeNode {
 
 export interface MyTreeNode extends TreeNode {
   id: number;
-  user_name: string;
+  userName?: string;
+  /** @deprecated payload legacy en snake_case */
+  user_name?: string;
   description?: string;
+  imageProfileUrl?: string;
+  /** @deprecated el backend nuevo envia imageProfileUrl */
   image?: string;
   children: MyTreeNode[];
 }
 
 export interface MyTreeNodeClient extends TreeNode {
   id: number;
-  userName: string;
+  userName?: string;
+  /** @deprecated payload legacy en snake_case */
+  user_name?: string;
   description?: string;
+  imageProfileUrl?: string;
+  /** @deprecated el backend nuevo envia imageProfileUrl */
   image?: string;
   children: MyTreeNodeClient[];
   qualificationCount?: number;

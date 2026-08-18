@@ -12,6 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {IconsModule} from "../../shared";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-change-model',
@@ -19,6 +20,7 @@ import {IconsModule} from "../../shared";
   styleUrls: ['./change-model.component.css'],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     FormsModule,

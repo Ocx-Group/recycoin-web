@@ -18,7 +18,7 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
 import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
 import {ProductService} from "../../../core/service/product-service/product.service";
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 
 @Component({
@@ -26,6 +26,7 @@ import {NgClass} from "@angular/common";
   templateUrl: './products-and-services-create-modal.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass,
     NgbTooltip

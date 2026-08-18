@@ -6,7 +6,7 @@ import {
   AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
 import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-products-services-configurations-create-carrier-modal',
@@ -16,6 +16,7 @@ import {NgClass} from "@angular/common";
   ],
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NgClass,
     NgbTooltip

@@ -2085,6 +2085,9 @@
     "ROW-FULL-NAME": {
       "TEXT": "Nombre completo"
     },
+    "ROW-PHONE": {
+      "TEXT": "Teléfono"
+    },
     "ROW-QUALIFICATION": {
       "TEXT": "Calificación"
     },

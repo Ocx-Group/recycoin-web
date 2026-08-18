@@ -3,7 +3,7 @@
     class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
     *ngIf="hasParent"
   ></div>
-  <ng-template #popTitle><b>{{data?.user_name}}</b></ng-template>
+  <ng-template #popTitle><b>{{data?.userName || data?.user_name}}</b></ng-template>
   <ng-template #popContent><b>Vol Izq:</b> 0 <br> <b>Vol Der:</b>: 0</ng-template>
   <button
     (click)="onloadFamilyTree(data?.id)"

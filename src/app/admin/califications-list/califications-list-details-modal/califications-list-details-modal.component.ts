@@ -2,12 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-califications-list-details-modal',
   templateUrl: './califications-list-details-modal.component.html',
   standalone: true,
-  imports: []
+  imports: [CommonModule]
 })
 export class CalificationsListDetailsModalComponent implements OnInit {
   active = 1;

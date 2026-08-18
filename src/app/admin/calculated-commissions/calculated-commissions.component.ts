@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {CurrencyPipe, NgClass} from "@angular/common";
+import {CurrencyPipe, NgClass, CommonModule} from "@angular/common";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {WalletService} from "../../core/service/wallet-service/wallet.service";
 
@@ -22,6 +22,7 @@ interface CommissionData {
   templateUrl: './calculated-commissions.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     RouterLink,
     FormsModule,

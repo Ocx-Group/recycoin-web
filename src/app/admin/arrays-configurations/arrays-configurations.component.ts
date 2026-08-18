@@ -10,7 +10,7 @@ import {MatrixConfiguration} from "../../core/models/matrix-configuration-model/
 import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgbAlert, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 import {RouterLink} from "@angular/router";
 
 interface Alert {
@@ -31,6 +31,7 @@ const ALERTS: Alert[] = [
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     ReactiveFormsModule,
     NgbAlert,

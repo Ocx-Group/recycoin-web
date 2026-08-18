@@ -6,7 +6,7 @@ import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliat
 import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {MatrixRequest} from '@app/core/interfaces/matrix-request';
 import {MatrixConfigurationService} from "@app/core/service/matrix-configuration/matrix-configuration.service";
-import {CurrencyPipe} from "@angular/common";
+import {CurrencyPipe, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-matrix-activation-modal',
@@ -14,6 +14,7 @@ import {CurrencyPipe} from "@angular/common";
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     CurrencyPipe
   ]
 })

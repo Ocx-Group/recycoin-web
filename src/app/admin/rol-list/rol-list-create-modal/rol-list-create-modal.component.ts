@@ -17,7 +17,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {RolService} from "../../../core/service/rol-service/rol.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass} from "@angular/common";
+import {NgClass, CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-rol-list-create-modal',
@@ -25,6 +25,7 @@ import {NgClass} from "@angular/common";
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     TranslatePipe,
     ReactiveFormsModule,
     NgClass

@@ -34,7 +34,8 @@
             </app-force-genealogical-tree>
             <ng-template #nodeTemplate let-node>
               <div class="chart-node">
-                <img [src]="node?.image" alt="node"/>
+                <img alt="node" [src]="node?.image || 'assets/images/user.svg'"
+                     (error)="$any($event.target).src='assets/images/user.svg'"/>
                 <div class="name">{{ node?.name }}</div>
                 <div class="description">{{ node?.description }}</div>
                 <!-- An ugly button to fold/unfold -->
