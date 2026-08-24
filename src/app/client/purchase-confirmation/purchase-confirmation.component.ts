@@ -4,14 +4,14 @@ import { InvoiceService } from '@app/core/service/invoice-service/invoice.servic
 import { ToastrService } from 'ngx-toastr';
 import { delay, retryWhen, take } from 'rxjs';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-purchase-confirm',
     templateUrl: './purchase-confirmation.component.html',
     styleUrls: ['./purchase-confirmation.component.sass'],
     standalone: true,
-    imports: [CommonModule]
+    imports: []
 })
 export class PurchaseConfirmationComponent {
   private invoiceDownloaded = false;

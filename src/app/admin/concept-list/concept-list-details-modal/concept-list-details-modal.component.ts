@@ -15,19 +15,18 @@ import {
 } from "../../../core/service/concept-configuration-service/concept-configuration.service";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-concept-list-details-modal',
   templateUrl: './concept-list-details-modal.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective
-  ]
+]
 })
 export class ConceptListDetailsModalComponent implements OnInit {
   submitted = false;

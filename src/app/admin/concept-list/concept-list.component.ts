@@ -20,7 +20,7 @@ import {
 import {
   ConceptListConfigurationModalComponent
 } from "./concept-list-configuration-modal/concept-list-configuration-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = [
   'Nombre del Concepto',
@@ -38,7 +38,6 @@ const header = [
   providers: [ToastrService],
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -54,7 +53,7 @@ const header = [
     ConceptListDetailsModalComponent,
     ConceptListBinaryConfigurationModalComponent,
     ConceptListConfigurationModalComponent
-  ]
+]
 })
 export class ConceptListComponent implements OnInit {
   rows = [];

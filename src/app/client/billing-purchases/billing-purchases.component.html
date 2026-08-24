@@ -50,38 +50,47 @@
 
             <!-- Template personalizado para Estado de Factura -->
             <ng-template #billStateTemplate let-row="row">
-              <div *ngIf="row.status == true" class="badge-outline col-green">
-                {{ 'BILLING-PURCHASES-PAGE.ROW-ACTIVE.TEXT' | translate }}
-              </div>
-              <div *ngIf="row.status == false" class="badge-outline col-red">
-                {{ 'BILLING-PURCHASES-PAGE.ROW-CANCELLED.TEXT' | translate }}
-              </div>
+              @if (row.status == true) {
+                <div class="badge-outline col-green">
+                  {{ 'BILLING-PURCHASES-PAGE.ROW-ACTIVE.TEXT' | translate }}
+                </div>
+              }
+              @if (row.status == false) {
+                <div class="badge-outline col-red">
+                  {{ 'BILLING-PURCHASES-PAGE.ROW-CANCELLED.TEXT' | translate }}
+                </div>
+              }
             </ng-template>
 
             <!-- Template personalizado para Estado de Pago -->
             <ng-template #paidStateTemplate let-row="row">
-              <div *ngIf="row.state == true" class="badge-outline col-green">
-                {{ 'BILLING-PURCHASES-PAGE.ROW-PAID.TEXT' | translate }}
-              </div>
-              <div *ngIf="row.state == false" class="badge-outline col-red">
-                {{ 'BILLING-PURCHASES-PAGE.ROW-NOT-PAID.TEXT' | translate }}
-              </div>
+              @if (row.state == true) {
+                <div class="badge-outline col-green">
+                  {{ 'BILLING-PURCHASES-PAGE.ROW-PAID.TEXT' | translate }}
+                </div>
+              }
+              @if (row.state == false) {
+                <div class="badge-outline col-red">
+                  {{ 'BILLING-PURCHASES-PAGE.ROW-NOT-PAID.TEXT' | translate }}
+                </div>
+              }
             </ng-template>
 
             <!-- Template personalizado para Modelo -->
             <ng-template #modelTemplate let-row="row">
-              <ng-container *ngIf="row.invoicesDetails && row.invoicesDetails.length > 0; else noInvoiceDetail">
-                <ng-container *ngFor="let detail of row.invoicesDetails">
-                  <div *ngIf="detail.productName" class="badge-outline col-blue">
-                    {{ detail.productName }}
-                  </div>
-                </ng-container>
-              </ng-container>
-              <ng-template #noInvoiceDetail>
+              @if (row.invoicesDetails && row.invoicesDetails.length > 0) {
+                @for (detail of row.invoicesDetails; track detail) {
+                  @if (detail.productName) {
+                    <div class="badge-outline col-blue">
+                      {{ detail.productName }}
+                    </div>
+                  }
+                }
+              } @else {
                 <div class="badge-outline col-blue">
                   {{ 'BILLING-PURCHASES-PAGE.RECURRING-MODEL.TEXT' | translate }}
                 </div>
-              </ng-template>
+              }
             </ng-template>
 
             <!-- Template personalizado para Monto Total -->

@@ -46,168 +46,174 @@
                               placeholder="{{
                                 'PURCHASE-ORDER-LIST.SEARCH.TEXT' | translate
                               }}"
-                            />
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          (click)="clipBoardCopy()"
-                        >
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'PURCHASE-ORDER-LIST.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            (click)="clipBoardCopy()"
+                            >
+                            <i class="bi bi-clipboard-check"></i>
+                            {{ 'PURCHASE-ORDER-LIST.BTN-COPY.TEXT' | translate }}
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          (click)="onPrint()"
-                        >
-                          <i class="bi bi-printer"></i>
-                          {{ 'PURCHASE-ORDER-LIST.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            (click)="onPrint()"
+                            >
+                            <i class="bi bi-printer"></i>
+                            {{ 'PURCHASE-ORDER-LIST.BTN-PRINT.TEXT' | translate }}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable
-                  #table
-                  class="material"
-                  [rows]="rows"
-                  [loadingIndicator]="loadingIndicator"
-                  columnMode="force"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  rowHeight="auto"
-                  [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal"
-                  [reorderable]="reorderable"
-                >
-                  <ngx-datatable-column
+                  <ngx-datatable
+                    #table
+                    class="material"
+                    [rows]="rows"
+                    [loadingIndicator]="loadingIndicator"
+                    columnMode="force"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    rowHeight="auto"
+                    [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal"
+                    [reorderable]="reorderable"
+                    >
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-AFFILIATE.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.affiliate }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                      >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.affiliate }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-ORDER.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.order }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'PURCHASE-ORDER-LIST.COL-DATE.TEXT' | translate }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.date }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.order }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
+                      name="{{ 'PURCHASE-ORDER-LIST.COL-DATE.TEXT' | translate }}"
+                      >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.date }}
+                      </ng-template>
+                    </ngx-datatable-column>
 
-                  <ngx-datatable-column
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-PAID-METHOD.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.paidMethod }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'PURCHASE-ORDER-LIST.COL-BANK.TEXT' | translate }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.bank }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                      >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.paidMethod }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
+                      name="{{ 'PURCHASE-ORDER-LIST.COL-BANK.TEXT' | translate }}"
+                      >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.bank }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-STATUS.TEXT' | translate
                     }}"
-                    sortable="false"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div
-                        *ngIf="row.status == 'Aprobada'"
-                        class="badge-outline col-green"
+                      sortable="false"
                       >
-                        {{ row.status }}
-                      </div>
-                      <div
-                        *ngIf="row.status == 'No aprobada'"
-                        class="badge-outline col-red"
-                      >
-                        {{ row.status }}
-                      </div>
-                      <div
-                        *ngIf="row.status == 'Pendiente'"
-                        class="badge-outline col-indigo"
-                      >
-                        {{ row.status }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.status == 'Aprobada') {
+                          <div
+                            class="badge-outline col-green"
+                            >
+                            {{ row.status }}
+                          </div>
+                        }
+                        @if (row.status == 'No aprobada') {
+                          <div
+                            class="badge-outline col-red"
+                            >
+                            {{ row.status }}
+                          </div>
+                        }
+                        @if (row.status == 'Pendiente') {
+                          <div
+                            class="badge-outline col-indigo"
+                            >
+                            {{ row.status }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-STATE.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div
-                        *ngIf="row.state == 'Atendida'"
-                        class="badge-outline col-green"
                       >
-                        {{ row.state }}
-                      </div>
-                      <div
-                        *ngIf="row.state == 'No atendida'"
-                        class="badge-outline col-red"
-                      >
-                        {{ row.state }}
-                      </div>
-                      <div
-                        *ngIf="row.state == 'Pending'"
-                        class="badge-outline col-indigo"
-                      >
-                        {{ row.state }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.state == 'Atendida') {
+                          <div
+                            class="badge-outline col-green"
+                            >
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'No atendida') {
+                          <div
+                            class="badge-outline col-red"
+                            >
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'Pending') {
+                          <div
+                            class="badge-outline col-indigo"
+                            >
+                            {{ row.state }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column
                     name="{{
                       'PURCHASE-ORDER-LIST.COL-DETAIL.TEXT' | translate
                     }}"
-                    sortable="false"
-                  >
-                    <ng-template
-                      ngx-datatable-cell-template
-                    >
-                      <a class="msr-2 h-auto tblEditBtn">
-                        <i class="bi bi-pencil-square">{{
-                          'PURCHASE-ORDER-LIST.BTN-SEE-DETAIL.TEXT' | translate
-                        }}</i>
-                      </a>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                      sortable="false"
+                      >
+                      <ng-template
+                        ngx-datatable-cell-template
+                        >
+                        <a class="msr-2 h-auto tblEditBtn">
+                          <i class="bi bi-pencil-square">{{
+                            'PURCHASE-ORDER-LIST.BTN-SEE-DETAIL.TEXT' | translate
+                          }}</i>
+                        </a>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

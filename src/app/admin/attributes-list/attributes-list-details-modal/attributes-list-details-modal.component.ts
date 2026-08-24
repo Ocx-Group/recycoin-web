@@ -14,7 +14,7 @@ import {ProductAttributeService} from "../../../core/service/product-attribute/p
 import {
   ProductAttributeValueService
 } from "../../../core/service/product-attribute-value/product-attribute-value.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-attributes-list-details-modal',

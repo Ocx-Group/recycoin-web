@@ -4,7 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
 import {ProductCategory} from "../../../core/models/product-category-model/product-category.model";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-categories-edit-modal',

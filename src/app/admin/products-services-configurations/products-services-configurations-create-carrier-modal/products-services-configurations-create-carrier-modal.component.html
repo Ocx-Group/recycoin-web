@@ -29,198 +29,218 @@
                 </ul>
                 <!-- fieldsets -->
 
-                <fieldset *ngIf="step == 1">
-
-                  <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                      <label for="carrier_name">
-                        Nombre del transportista
-                        <span class="text-danger">*</span></label>
+                @if (step == 1) {
+                  <fieldset>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <label for="carrier_name">
+                          Nombre del transportista
+                          <span class="text-danger">*</span></label>
                       <input class="form-control" type="text" formControlName="carrier_name" [ngClass]="{
                         'is-invalid':
                         general_parameters_step && general_parameters_controls.carrier_name.errors
                       }" placeholder="Nombre"/>
-                      <div *ngIf="general_parameters_step && general_parameters_controls.carrier_name.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="general_parameters_controls.carrier_name.errors.required">
-                          El nombre es requerido.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                      <label for="concept_name">
-                        Tiempo de entrega
-                        <span class="text-danger">*</span></label>
-                      <input class="form-control" type="text" formControlName="delivery_time" name="delivery_time"
+                            @if (general_parameters_step && general_parameters_controls.carrier_name.errors) {
+                              <div
+                                class="invalid-feedback">
+                                @if (general_parameters_controls.carrier_name.errors.required) {
+                                  <div>
+                                    El nombre es requerido.
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <label for="concept_name">
+                              Tiempo de entrega
+                              <span class="text-danger">*</span></label>
+                              <input class="form-control" type="text" formControlName="delivery_time" name="delivery_time"
                              [ngClass]="{
                         'is-invalid':
                         general_parameters_step && general_parameters_controls.delivery_time.errors
                       }" placeholder="Tiempo"/>
-                      <div *ngIf="general_parameters_step && general_parameters_controls.delivery_time.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="general_parameters_controls.delivery_time.errors.required">
-                          El tiempo de entrega es requerido.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
-                </fieldset>
-              </form>
-              <form [formGroup]="placeShippingCosts" id="msform">
-                <fieldset *ngIf="step == 2">
-                  <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                      <label for="commission_shipment">
-                        Comisión por envio
-                        <span class="text-danger">*</span></label>
-                      <input class="form-control" type="number" min="0" formControlName="commission_shipment"
-                             name="delivery_time" placeholder="%"/>
-
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                      <label for="out_range">
-                        Fuera del rango
-                        <span class="text-danger">*</span></label>
-                      <select id="out_range" name="out_range" class="form-select form-control">
-                        <option value="">
-                          Seleccione una opción
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
-                      <input class="form-check-input ms-2 me-2" type="checkbox" name="free_delivery"
-                             formControlName="free_delivery" id="free_delivery" value=""/>
-                      <label for="free_delivery" placement="bottom" ngbTooltip="">
-                        Envío gratis
-                        <span class="text-danger">*</span></label>
-
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
-                      <input class="form-check-input ms-2 me-2" type="checkbox" name="include_maintenance_costs"
-                             formControlName="include_maintenance_costs" id="include_maintenance_costs" value=""/>
-                      <label for="include_maintenance_costs" placement="bottom" ngbTooltip="">
-                        Incluir gastos de mantenimiento
-                        <span class="text-danger">*</span></label>
-
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-4">
-                      <label for="billing">
-                        Facturacion
-                        <span class="text-danger">*</span></label>
-                    </div>
-                    <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
-                      <input class="form-check-input ms-2 me-2" type="radio" name="billing" id="billing"
-                             formControlName="billing" value="0"/>
-                      <label for="price"> De acuerdo con el precio total. </label>
-                    </div>
-                    <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
-                      <input class="form-check-input ms-2 me-2" type="radio" name="billing" formControlName="billing"
-                             id="billing" value="1"/>
-                      <label for="weight">De acuerdo con el peso total </label>
-                    </div>
-                  </div>
-                  <h6>Rango</h6>
-                  <hr>
-
-                  <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                      <label for="range_1">
-                        Será aplicado cuando el precio sea >=
-                        <span class="text-danger">*</span></label>
+                                @if (general_parameters_step && general_parameters_controls.delivery_time.errors) {
+                                  <div
+                                    class="invalid-feedback">
+                                    @if (general_parameters_controls.delivery_time.errors.required) {
+                                      <div>
+                                        El tiempo de entrega es requerido.
+                                      </div>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                            <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
+                          </fieldset>
+                        }
+                      </form>
+                      <form [formGroup]="placeShippingCosts" id="msform">
+                        @if (step == 2) {
+                          <fieldset>
+                            <div class="row">
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="commission_shipment">
+                                  Comisión por envio
+                                  <span class="text-danger">*</span></label>
+                                  <input class="form-control" type="number" min="0" formControlName="commission_shipment"
+                                    name="delivery_time" placeholder="%"/>
+                                  </div>
+                                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label for="out_range">
+                                      Fuera del rango
+                                      <span class="text-danger">*</span></label>
+                                      <select id="out_range" name="out_range" class="form-select form-control">
+                                        <option value="">
+                                          Seleccione una opción
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
+                                      <input class="form-check-input ms-2 me-2" type="checkbox" name="free_delivery"
+                                        formControlName="free_delivery" id="free_delivery" value=""/>
+                                        <label for="free_delivery" placement="bottom" ngbTooltip="">
+                                          Envío gratis
+                                          <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
+                                          <input class="form-check-input ms-2 me-2" type="checkbox" name="include_maintenance_costs"
+                                            formControlName="include_maintenance_costs" id="include_maintenance_costs" value=""/>
+                                            <label for="include_maintenance_costs" placement="bottom" ngbTooltip="">
+                                              Incluir gastos de mantenimiento
+                                              <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-4">
+                                              <label for="billing">
+                                                Facturacion
+                                                <span class="text-danger">*</span></label>
+                                              </div>
+                                              <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
+                                                <input class="form-check-input ms-2 me-2" type="radio" name="billing" id="billing"
+                                                  formControlName="billing" value="0"/>
+                                                  <label for="price"> De acuerdo con el precio total. </label>
+                                                </div>
+                                                <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
+                                                  <input class="form-check-input ms-2 me-2" type="radio" name="billing" formControlName="billing"
+                                                    id="billing" value="1"/>
+                                                    <label for="weight">De acuerdo con el peso total </label>
+                                                  </div>
+                                                </div>
+                                                <h6>Rango</h6>
+                                                <hr>
+                                                  <div class="row">
+                                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                      <label for="range_1">
+                                                        Será aplicado cuando el precio sea >=
+                                                        <span class="text-danger">*</span></label>
                       <input class="form-control" type="text" formControlName="range_1" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.range_1.errors
                       }" placeholder="0.00" required="required"/>
-                      <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.range_1.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="place_shipping_costs_controls.range_1.errors.required">
-                          El valor es requerido.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                      <label for="range_2">
-                        Será aplicado cuando el precio sea < <span class="text-danger">*</span></label>
+                                                          @if (place_shipping_costs_step && place_shipping_costs_controls.range_1.errors) {
+                                                            <div
+                                                              class="invalid-feedback">
+                                                              @if (place_shipping_costs_controls.range_1.errors.required) {
+                                                                <div>
+                                                                  El valor es requerido.
+                                                                </div>
+                                                              }
+                                                            </div>
+                                                          }
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                          <label for="range_2">
+                                                            Será aplicado cuando el precio sea < <span class="text-danger">*</span></label>
                       <input class="form-control" type="text" formControlName="range_2" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.range_2.errors
                       }" placeholder="0.00" required="required"/>
-                      <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.range_2.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="place_shipping_costs_controls.range_2.errors.required">
-                          El valor es requerido.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                      <label for="zone">
-                        Zona
-                        <span class="text-danger">*</span></label>
-                      <select class="form-select form-control form-control-sm" type="text" formControlName="zone"
+                                                              @if (place_shipping_costs_step && place_shipping_costs_controls.range_2.errors) {
+                                                                <div
+                                                                  class="invalid-feedback">
+                                                                  @if (place_shipping_costs_controls.range_2.errors.required) {
+                                                                    <div>
+                                                                      El valor es requerido.
+                                                                    </div>
+                                                                  }
+                                                                </div>
+                                                              }
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                              <label for="zone">
+                                                                Zona
+                                                                <span class="text-danger">*</span></label>
+                                                                <select class="form-select form-control form-control-sm" type="text" formControlName="zone"
                               [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.zone.errors
                       }" placeholder="0.00" required="required">
-                        <option value="">Seleccione una opción</option>
-                      </select>
-                      <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.zone.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="place_shipping_costs_controls.zone.errors.required">
-                          El valor es requerido.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                      <label for="cost">
-                        Coste
-                        <span class="text-danger">*</span></label>
+                                                                  <option value="">Seleccione una opción</option>
+                                                                </select>
+                                                                @if (place_shipping_costs_step && place_shipping_costs_controls.zone.errors) {
+                                                                  <div
+                                                                    class="invalid-feedback">
+                                                                    @if (place_shipping_costs_controls.zone.errors.required) {
+                                                                      <div>
+                                                                        El valor es requerido.
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+                                                                }
+                                                              </div>
+                                                              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                                <label for="cost">
+                                                                  Coste
+                                                                  <span class="text-danger">*</span></label>
                       <input class="form-control" type="text" formControlName="cost" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.cost.errors
                       }" placeholder="0.00" required="required"/>
-                      <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.cost.errors"
-                           class="invalid-feedback">
-                        <div *ngIf="place_shipping_costs_controls.cost.errors.required">
-                          El valor es requerido.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                                                                    @if (place_shipping_costs_step && place_shipping_costs_controls.cost.errors) {
+                                                                      <div
+                                                                        class="invalid-feedback">
+                                                                        @if (place_shipping_costs_controls.cost.errors.required) {
+                                                                          <div>
+                                                                            El valor es requerido.
+                                                                          </div>
+                                                                        }
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+                                                                </div>
+                                                                <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
+                                                                  value="Previous"/>
+                                                                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
+                                                                </fieldset>
+                                                              }
+                                                            </form>
+                                                            <form [formGroup]="summary" id="msform">
+                                                              @if (step == 3) {
+                                                                <fieldset>
+                                                                  <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
+                                                                    value="Previous"/>
+                                                                    <input (click)="submit()" type="submit" name="submit" class="submit action-button" value="Submit"/>
+                                                                  </fieldset>
+                                                                }
+                                                              </form>
 
+                                                            </div>
+                                                          </div>
+                                                        </div>
 
-                  <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
-                         value="Previous"/>
-                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
-                </fieldset>
-              </form>
-              <form [formGroup]="summary" id="msform">
-                <fieldset *ngIf="step == 3">
+                                                      </div>
 
-                  <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
-                         value="Previous"/>
-                  <input (click)="submit()" type="submit" name="submit" class="submit action-button" value="Submit"/>
-                </fieldset>
-              </form>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        Guardar
-      </button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-        Cancelar
-      </button>
-    </div>
-  </form>
-</ng-template>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="submit" class="btn btn-primary">
+                                                        Guardar
+                                                      </button>
+                                                      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                                                        Cancelar
+                                                      </button>
+                                                    </div>
+                                                  </form>
+                                                </ng-template>

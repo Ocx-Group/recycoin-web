@@ -8,193 +8,201 @@
     <li class="breadcrumb-item bcrumb-1">
       <a routerLink="/dashboard/main">
         <i class="fas fa-home font-17"></i>{{ 'PRODUCTS-AND-SERVICES.TITLE.TEXT' | translate }}</a>
-    </li>
-    <li class="breadcrumb-item"></li>
-  </ul>
-  <div class="section-body">
-    <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>{{ 'PRODUCTS-AND-SERVICES.SUBTITLE.TEXT' | translate }}</h4>
-          </div>
-          <div class="card-body">
-            <!-- Add content here -->
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <div class="table-search-area">
-                      <div class="form-group">
-                        <div class="input-group mb-2">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                              <i-feather name="search" style="color: #96a2b4"></i-feather>
+      </li>
+      <li class="breadcrumb-item"></li>
+    </ul>
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>{{ 'PRODUCTS-AND-SERVICES.SUBTITLE.TEXT' | translate }}</h4>
+            </div>
+            <div class="card-body">
+              <!-- Add content here -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="table-search-area">
+                        <div class="form-group">
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">
+                                <i-feather name="search" style="color: #96a2b4"></i-feather>
+                              </div>
                             </div>
-                          </div>
-                          <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                            <input style="background-color: white" type="text" class="form-control"
+                              id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                                  placeholder="{{
                               'PRODUCTS-AND-SERVICES.SEARCH.TEXT' | translate
                             }}"/>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
+                      <div class="col-sm-1">
+                        <div class="header-buttons-left">
+                          <div class="tbl-btn-style">
                         <button class="btn btn-icon icon-left btn-primary rounded-button" (click)="
                             createOpenModal(
                               modalChildCreate['createProductModal']
                             )
                           ">
-                          <i class="material-icons">add</i>
-                        </button>
+                              <i class="material-icons">add</i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col align-self-end">
+                        <ul class="nav justify-content-end">
+                          <li class="nav-item m-2">
+                            <button type="button" class="btn btn-primary">
+                              <i class="bi bi-clipboard-check"></i>
+                              {{
+                              'PRODUCTS-AND-SERVICES.BTN-COPY.TEXT' | translate
+                              }}
+                            </button>
+                          </li>
+
+                          <li class="nav-item m-2">
+                            <button type="button" (click)="onPrint()" class="btn btn-primary">
+                              <i class="bi bi-printer"></i>
+                              {{
+                              'PRODUCTS-AND-SERVICES.BTN-PRINT.TEXT' | translate
+                              }}
+                            </button>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{
-                            'PRODUCTS-AND-SERVICES.BTN-COPY.TEXT' | translate
-                          }}
-                        </button>
-                      </li>
-
-                      <li class="nav-item m-2">
-                        <button type="button" (click)="onPrint()" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          {{
-                            'PRODUCTS-AND-SERVICES.BTN-PRINT.TEXT' | translate
-                          }}
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                    <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                      columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                      [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
 
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-PRODUCT-CODE.TEXT' | translate
                     }}" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.productCode }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.productCode }}
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-NAME.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.name }}
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-TYPE.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.productType == true" class="badge-outline col-yellow">
-                        Afiliación
-                      </div>
-                      <div *ngIf="row.productType == false" class="badge-outline col-green">
-                        Producto
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          @if (row.productType == true) {
+                            <div class="badge-outline col-yellow">
+                              Afiliación
+                            </div>
+                          }
+                          @if (row.productType == false) {
+                            <div class="badge-outline col-green">
+                              Producto
+                            </div>
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-IMAGE-REF.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <img style="width: 120px" src="{{ row.image }}" alt="img_product"/>
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <img style="width: 120px" src="{{ row.image }}" alt="img_product"/>
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-VAL-COMMISSIONABLE.TEXT'
                         | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ productConfiguration.symbol_commissionable_value }} {{ row.commissionableValue }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ productConfiguration.symbol_commissionable_value }} {{ row.commissionableValue }}
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-VOL-POINTS.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ productConfiguration.symbol_points_qualify }} {{ row.valuePoints }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ productConfiguration.symbol_points_qualify }} {{ row.valuePoints }}
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-SALE-PRICE.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ productConfiguration.currency_symbol }} {{ row.salePrice }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ productConfiguration.currency_symbol }} {{ row.salePrice }}
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-EXISTENCE.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.inventory == true" class="col-green">
-                        <i class="bi bi-infinity"></i>
-                      </div>
-                      <div *ngIf="row.inventory == false" class="col-red">
-                        0
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          @if (row.inventory == true) {
+                            <div class="col-green">
+                              <i class="bi bi-infinity"></i>
+                            </div>
+                          }
+                          @if (row.inventory == false) {
+                            <div class="col-red">
+                              0
+                            </div>
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'PRODUCTS-AND-SERVICES.COL-ACTIONS.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{
-                            'PRODUCTS-AND-SERVICES.COL-ACTIONS.TEXT' | translate
-                          }}
-                        </button>
-                        <div ngbDropdownMenu>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <div ngbDropdown container="body">
+                            <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                              {{
+                              'PRODUCTS-AND-SERVICES.COL-ACTIONS.TEXT' | translate
+                              }}
+                            </button>
+                            <div ngbDropdownMenu>
                           <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['editProductModal'],row
                               )
                             ">
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">Editar</span>
-                          </a>
+                                <i class="fas fa-edit"></i>
+                                <span style="margin-left: 10px">Editar</span>
+                              </a>
                           <a ngbDropdownItem id="btn-permissions" (click)="
                               modalChildMovements.movementsOpenModal(
                                 modalChildMovements['movementsProductsModal'],row
                               )
                             ">
-                            <i class="bi bi-card-list"></i>
-                            <span style="margin-left: 10px">Movimiento de inventario</span>
-                          </a>
+                                <i class="bi bi-card-list"></i>
+                                <span style="margin-left: 10px">Movimiento de inventario</span>
+                              </a>
 
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">Eliminar</span>
-                          </a>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                              <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                                <i class="fas fa-trash-alt"></i>
+                                <span style="margin-left: 10px">Eliminar</span>
+                              </a>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                    </ngx-datatable>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <app-products-and-services-create-modal #modalChildCreate
-                                          (loadProductList)="loadProductList()"></app-products-and-services-create-modal>
-  <app-products-and-services-movements-modal #modalChildMovements>
-  </app-products-and-services-movements-modal>
-  <app-products-and-services-edit-modal #modalChildEdit (loadProductList)="loadProductList()">
-  </app-products-and-services-edit-modal>
-</section>
+      <app-products-and-services-create-modal #modalChildCreate
+      (loadProductList)="loadProductList()"></app-products-and-services-create-modal>
+      <app-products-and-services-movements-modal #modalChildMovements>
+      </app-products-and-services-movements-modal>
+      <app-products-and-services-edit-modal #modalChildEdit (loadProductList)="loadProductList()">
+      </app-products-and-services-edit-modal>
+    </section>

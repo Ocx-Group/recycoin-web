@@ -20,7 +20,7 @@ import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdraw
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
 import { IconsModule } from '@app/shared';
 import { RouterLink } from '@angular/router';
@@ -36,13 +36,12 @@ import {
   templateUrl: './billing-purchases.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     TranslateModule,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,
-    ReusableDatatableComponent,
-  ],
+    ReusableDatatableComponent
+],
 })
 export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   private user: UserAffiliate = new UserAffiliate();

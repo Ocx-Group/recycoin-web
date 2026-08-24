@@ -10,7 +10,7 @@ import { Response } from '@app/core/models/response-model/response.model';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CommonModule } from '@angular/common';
+
 
 import {
   animate,
@@ -46,7 +46,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     ]),
   ],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
+  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;

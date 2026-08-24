@@ -19,7 +19,7 @@ import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.m
 import { Product } from '@app/core/models/product-model/product.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';

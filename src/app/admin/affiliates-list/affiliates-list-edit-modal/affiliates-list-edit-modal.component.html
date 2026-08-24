@@ -30,186 +30,188 @@
                   </label>
                   <input id="user_name" class="form-control form-control-lg" placeholder="Ingrese el usuario"
                     type="text" formControlName="user_name" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="email" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">email</i>
-                    Correo Electrónico
-                  </label>
-                  <input id="email" class="form-control form-control-lg" placeholder="ejemplo@correo.com" name="email"
-                    type="email" formControlName="email" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="identification" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">badge</i>
-                    Nro de Identificación
-                  </label>
-                  <input id="identification" name="identification" formControlName="identification"
-                    placeholder="Ej: 12345678" class="form-control form-control-lg" type="text" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="father" class="form-label fw-semibold">
-                    <i class="material-icons"
-                      style="font-size: 18px; vertical-align: middle;">supervised_user_circle</i>
-                    Patrocinador
-                  </label>
-                  <input class="form-control form-control-lg" type="text" id="father" name="father"
-                    placeholder="Nombre del patrocinador" formControlName="father" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="created_at" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">event</i>
-                    Fecha de Registro
-                  </label>
-                  <input id="created_at" placeholder="Fecha de Registro" class="form-control form-control-lg"
-                    name="created_at" type="text" formControlName="created_at" />
-                </div>
-                <div class="form-group mb-0">
-                  <label for="status" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">lock</i>
-                    Estado de Acceso
-                  </label>
-                  <div class="card bg-light border-0 p-3">
-                    <label class="custom-switch mb-0">
-                      <input type="checkbox" id="status" formControlName="status" name="custom-switch-checkbox"
-                        class="custom-switch-input">
-                      <span class="custom-switch-indicator"></span>
-                      <span class="custom-switch-description">Bloquear acceso al sistema</span>
-                    </label>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Columna 2: Datos Secundarios -->
-          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-header border-bottom">
-                <h6 class="mb-0 d-flex align-items-center">
-                  <i class="material-icons text-success me-2">contact_mail</i>
-                  <span class="fw-bold">Datos de Contacto</span>
-                </h6>
-              </div>
-              <div class="card-body">
-                <div class="form-group mb-3">
-                  <label for="name" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">person_outline</i>
-                    Nombre
-                  </label>
-                  <input id="name" placeholder="Ingrese el nombre" class="form-control form-control-lg" name="name"
-                    type="text" formControlName="name" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="last_name" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">person_outline</i>
-                    Apellido
-                  </label>
-                  <input id="last_name" placeholder="Ingrese el apellido" class="form-control form-control-lg"
-                    name="last_name" type="text" formControlName="last_name" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="address" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">home</i>
-                    Dirección
-                  </label>
-                  <textarea id="address" formControlName="address" placeholder="Calle, número, ciudad..."
-                    class="form-control" rows="3"></textarea>
-                </div>
-                <div class="form-group mb-3">
-                  <label for="phone" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">phone</i>
-                    Teléfono
-                  </label>
-                  <input id="phone" required placeholder="+1 234 567 8900" class="form-control form-control-lg"
-                    name="phone" type="tel" formControlName="phone" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="zip_code" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">mail_outline</i>
-                    Código Postal
-                  </label>
-                  <input id="zip_code" placeholder="Ej: 10001" class="form-control form-control-lg"
-                    formControlName="zip_code" type="text" />
-                </div>
-                <div class="form-group mb-0">
-                  <label for="country" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">public</i>
-                    País
-                  </label>
-                  <select class="form-select form-select-lg" formControlName="country">
-                    <option value="" disabled selected>Seleccione un país</option>
-                    <option *ngFor="let country of listCountry" [value]="country.id">
-                      {{ country.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Columna 3: Campos Adicionales -->
-          <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-header border-bottom">
-                <h6 class="mb-0 d-flex align-items-center">
-                  <i class="material-icons text-info me-2">description</i>
-                  <span class="fw-bold">Información Adicional</span>
-                </h6>
-              </div>
-              <div class="card-body">
-                <div class="form-group mb-3">
-                  <label for="birthday" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">cake</i>
-                    Fecha de Nacimiento
-                  </label>
-                  <input type="date" id="birthday" formControlName="birthday" class="form-control form-control-lg">
-                </div>
-                <div class="form-group mb-3">
-                  <label for="tax_id" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">receipt</i>
-                    ID Fiscal
-                  </label>
-                  <input id="tax_id" placeholder="Número de identificación fiscal" class="form-control form-control-lg"
-                    formControlName="tax_id" type="text" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="beneficiary_name" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">favorite</i>
-                    Nombre de Beneficiario
-                  </label>
-                  <input id="beneficiary_name" placeholder="Nombre completo del beneficiario"
-                    class="form-control form-control-lg" type="text" formControlName="beneficiary_name" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="legal_authorized_first" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">business_center</i>
-                    Representante Legal 1
-                  </label>
-                  <input id="legal_authorized_first" placeholder="Primer representante legal"
-                    class="form-control form-control-lg" type="text" formControlName="legal_authorized_first" />
-                </div>
-                <div class="form-group mb-0">
-                  <label for="legal_authorized_second" class="form-label fw-semibold">
-                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">business_center</i>
-                    Representante Legal 2
-                  </label>
-                  <input id="legal_authorized_second" placeholder="Segundo representante legal"
-                    class="form-control form-control-lg" type="text" formControlName="legal_authorized_second" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer p-4">
-      <button type="button" class="btn btn-light btn-lg px-4" (click)="modal.close('Close click')">
-        <i class="material-icons me-1" style="font-size: 18px; vertical-align: middle;">close</i>
-        Cancelar
-      </button>
-      <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">
-        <i class="material-icons me-1" style="font-size: 18px; vertical-align: middle;">save</i>
-        Guardar Cambios
-      </button>
-    </div>
-  </form>
-</ng-template>
+                  <div class="form-group mb-3">
+                    <label for="email" class="form-label fw-semibold">
+                      <i class="material-icons" style="font-size: 18px; vertical-align: middle;">email</i>
+                      Correo Electrónico
+                    </label>
+                    <input id="email" class="form-control form-control-lg" placeholder="ejemplo@correo.com" name="email"
+                      type="email" formControlName="email" />
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="identification" class="form-label fw-semibold">
+                        <i class="material-icons" style="font-size: 18px; vertical-align: middle;">badge</i>
+                        Nro de Identificación
+                      </label>
+                      <input id="identification" name="identification" formControlName="identification"
+                        placeholder="Ej: 12345678" class="form-control form-control-lg" type="text" />
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="father" class="form-label fw-semibold">
+                          <i class="material-icons"
+                          style="font-size: 18px; vertical-align: middle;">supervised_user_circle</i>
+                          Patrocinador
+                        </label>
+                        <input class="form-control form-control-lg" type="text" id="father" name="father"
+                          placeholder="Nombre del patrocinador" formControlName="father" />
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="created_at" class="form-label fw-semibold">
+                            <i class="material-icons" style="font-size: 18px; vertical-align: middle;">event</i>
+                            Fecha de Registro
+                          </label>
+                          <input id="created_at" placeholder="Fecha de Registro" class="form-control form-control-lg"
+                            name="created_at" type="text" formControlName="created_at" />
+                          </div>
+                          <div class="form-group mb-0">
+                            <label for="status" class="form-label fw-semibold">
+                              <i class="material-icons" style="font-size: 18px; vertical-align: middle;">lock</i>
+                              Estado de Acceso
+                            </label>
+                            <div class="card bg-light border-0 p-3">
+                              <label class="custom-switch mb-0">
+                                <input type="checkbox" id="status" formControlName="status" name="custom-switch-checkbox"
+                                  class="custom-switch-input">
+                                  <span class="custom-switch-indicator"></span>
+                                  <span class="custom-switch-description">Bloquear acceso al sistema</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Columna 2: Datos Secundarios -->
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                        <div class="card shadow-sm h-100 border-0">
+                          <div class="card-header border-bottom">
+                            <h6 class="mb-0 d-flex align-items-center">
+                              <i class="material-icons text-success me-2">contact_mail</i>
+                              <span class="fw-bold">Datos de Contacto</span>
+                            </h6>
+                          </div>
+                          <div class="card-body">
+                            <div class="form-group mb-3">
+                              <label for="name" class="form-label fw-semibold">
+                                <i class="material-icons" style="font-size: 18px; vertical-align: middle;">person_outline</i>
+                                Nombre
+                              </label>
+                              <input id="name" placeholder="Ingrese el nombre" class="form-control form-control-lg" name="name"
+                                type="text" formControlName="name" />
+                              </div>
+                              <div class="form-group mb-3">
+                                <label for="last_name" class="form-label fw-semibold">
+                                  <i class="material-icons" style="font-size: 18px; vertical-align: middle;">person_outline</i>
+                                  Apellido
+                                </label>
+                                <input id="last_name" placeholder="Ingrese el apellido" class="form-control form-control-lg"
+                                  name="last_name" type="text" formControlName="last_name" />
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="address" class="form-label fw-semibold">
+                                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">home</i>
+                                    Dirección
+                                  </label>
+                                  <textarea id="address" formControlName="address" placeholder="Calle, número, ciudad..."
+                                  class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <label for="phone" class="form-label fw-semibold">
+                                    <i class="material-icons" style="font-size: 18px; vertical-align: middle;">phone</i>
+                                    Teléfono
+                                  </label>
+                                  <input id="phone" required placeholder="+1 234 567 8900" class="form-control form-control-lg"
+                                    name="phone" type="tel" formControlName="phone" />
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label for="zip_code" class="form-label fw-semibold">
+                                      <i class="material-icons" style="font-size: 18px; vertical-align: middle;">mail_outline</i>
+                                      Código Postal
+                                    </label>
+                                    <input id="zip_code" placeholder="Ej: 10001" class="form-control form-control-lg"
+                                      formControlName="zip_code" type="text" />
+                                    </div>
+                                    <div class="form-group mb-0">
+                                      <label for="country" class="form-label fw-semibold">
+                                        <i class="material-icons" style="font-size: 18px; vertical-align: middle;">public</i>
+                                        País
+                                      </label>
+                                      <select class="form-select form-select-lg" formControlName="country">
+                                        <option value="" disabled selected>Seleccione un país</option>
+                                        @for (country of listCountry; track country) {
+                                          <option [value]="country.id">
+                                            {{ country.name }}
+                                          </option>
+                                        }
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- Columna 3: Campos Adicionales -->
+                              <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                <div class="card shadow-sm h-100 border-0">
+                                  <div class="card-header border-bottom">
+                                    <h6 class="mb-0 d-flex align-items-center">
+                                      <i class="material-icons text-info me-2">description</i>
+                                      <span class="fw-bold">Información Adicional</span>
+                                    </h6>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="form-group mb-3">
+                                      <label for="birthday" class="form-label fw-semibold">
+                                        <i class="material-icons" style="font-size: 18px; vertical-align: middle;">cake</i>
+                                        Fecha de Nacimiento
+                                      </label>
+                                      <input type="date" id="birthday" formControlName="birthday" class="form-control form-control-lg">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                      <label for="tax_id" class="form-label fw-semibold">
+                                        <i class="material-icons" style="font-size: 18px; vertical-align: middle;">receipt</i>
+                                        ID Fiscal
+                                      </label>
+                                      <input id="tax_id" placeholder="Número de identificación fiscal" class="form-control form-control-lg"
+                                        formControlName="tax_id" type="text" />
+                                      </div>
+                                      <div class="form-group mb-3">
+                                        <label for="beneficiary_name" class="form-label fw-semibold">
+                                          <i class="material-icons" style="font-size: 18px; vertical-align: middle;">favorite</i>
+                                          Nombre de Beneficiario
+                                        </label>
+                                        <input id="beneficiary_name" placeholder="Nombre completo del beneficiario"
+                                          class="form-control form-control-lg" type="text" formControlName="beneficiary_name" />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                          <label for="legal_authorized_first" class="form-label fw-semibold">
+                                            <i class="material-icons" style="font-size: 18px; vertical-align: middle;">business_center</i>
+                                            Representante Legal 1
+                                          </label>
+                                          <input id="legal_authorized_first" placeholder="Primer representante legal"
+                                            class="form-control form-control-lg" type="text" formControlName="legal_authorized_first" />
+                                          </div>
+                                          <div class="form-group mb-0">
+                                            <label for="legal_authorized_second" class="form-label fw-semibold">
+                                              <i class="material-icons" style="font-size: 18px; vertical-align: middle;">business_center</i>
+                                              Representante Legal 2
+                                            </label>
+                                            <input id="legal_authorized_second" placeholder="Segundo representante legal"
+                                              class="form-control form-control-lg" type="text" formControlName="legal_authorized_second" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer p-4">
+                                  <button type="button" class="btn btn-light btn-lg px-4" (click)="modal.close('Close click')">
+                                    <i class="material-icons me-1" style="font-size: 18px; vertical-align: middle;">close</i>
+                                    Cancelar
+                                  </button>
+                                  <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">
+                                    <i class="material-icons me-1" style="font-size: 18px; vertical-align: middle;">save</i>
+                                    Guardar Cambios
+                                  </button>
+                                </div>
+                              </form>
+                            </ng-template>

@@ -1,8 +1,9 @@
 <div class="ng13-org-chart-entity">
-  <div
-    class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
-    *ngIf="hasParent"
-  ></div>
+  @if (hasParent) {
+    <div
+      class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
+    ></div>
+  }
   <ng-template #popTitle><b>{{data?.userName || data?.user_name}}</b></ng-template>
   <ng-template #popContent><b>Vol Izq:</b> 0 <br> <b>Vol Der:</b>: 0</ng-template>
   <button
@@ -12,46 +13,47 @@
     [style]="data?.css"
     type="button"
     triggers="mouseenter:mouseleave"
-    [ngbPopover]="popContent" 
+    [ngbPopover]="popContent"
     [popoverTitle]="popTitle"
-  >
+    >
     <ng-container
       *ngTemplateOutlet="nodeTemplate; context: { $implicit: data }"
-    >
+      >
     </ng-container>
   </button>
-  <div
-    class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
-    *ngIf="data?.children?.length && !data?.hideChildren"
-  ></div>
+  @if (data?.children?.length && !data?.hideChildren) {
+    <div
+      class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
+    ></div>
+  }
 </div>
 
-<div *ngIf="!data?.hideChildren" class="ng13-org-chart-container">
-  <ng-container
-    *ngFor="let data of data?.children; first as isFirst; last as isLast"
-  >
-    <div class="ng13-org-chart-sub-container">
-      <div class="ng13-org-chart-connector-container">
-        <div
-          class="ng13-org-chart-connector ng13-org-chart-entity-border"
-          [style.border-color]="isFirst ? 'transparent' : ''"
-        ></div>
-        <div class="ng13-org-chart-entity-border"></div>
-        <div
-          class="ng13-org-chart-connector ng13-org-chart-entity-border"
-          [style.border-color]="isLast ? 'transparent' : ''"
-        ></div>
+@if (!data?.hideChildren) {
+  <div class="ng13-org-chart-container">
+    @for (data of data?.children; track data; let isFirst = $first; let isLast = $last) {
+      <div class="ng13-org-chart-sub-container">
+        <div class="ng13-org-chart-connector-container">
+          <div
+            class="ng13-org-chart-connector ng13-org-chart-entity-border"
+            [style.border-color]="isFirst ? 'transparent' : ''"
+          ></div>
+          <div class="ng13-org-chart-entity-border"></div>
+          <div
+            class="ng13-org-chart-connector ng13-org-chart-entity-border"
+            [style.border-color]="isLast ? 'transparent' : ''"
+          ></div>
+        </div>
+        <app-binary-genealogical-tree
+          [data]="data"
+          [hasParent]="true"
+          [nodeTemplate]="nodeTemplate"
+          (loadFamilyTree)="onloadFamilyTree($event)"
+          >
+        </app-binary-genealogical-tree>
       </div>
-      <app-binary-genealogical-tree
-        [data]="data"
-        [hasParent]="true"
-        [nodeTemplate]="nodeTemplate"
-        (loadFamilyTree)="onloadFamilyTree($event)"
-      >
-      </app-binary-genealogical-tree>
-    </div>
-  </ng-container>
-</div>
+    }
+  </div>
+}
 <div class="ng13-org-chart-zoom-button-container">
   <ng-content select="[zoom-button]"></ng-content>
 </div>

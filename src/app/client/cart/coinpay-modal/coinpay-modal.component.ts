@@ -7,7 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import * as QRCode from 'qrcode';
 import { Subscription, switchMap, timer } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, QrcodeModule, TranslateModule]
+    imports: [ReactiveFormsModule, QrcodeModule, TranslateModule]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;

@@ -20,18 +20,20 @@
 
     <div class="products-section">
       <div class="row">
-        <div class="col-12 col-md-4" *ngFor="let item of productList;">
-          <div class="product-card">
-            <img routerLink="/signin" type="button" src="{{item.image}}" class="card-img" alt="Semilla">
-            <div class="card-footer">
-              <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
-              <div class="text-container">
-                <span class="product-name">{{ item.name }}</span>
-                <span class="product-price">${{ item.baseAmount }}</span>
+        @for (item of productList; track item) {
+          <div class="col-12 col-md-4">
+            <div class="product-card">
+              <img routerLink="/signin" type="button" src="{{item.image}}" class="card-img" alt="Semilla">
+              <div class="card-footer">
+                <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
+                <div class="text-container">
+                  <span class="product-name">{{ item.name }}</span>
+                  <span class="product-price">${{ item.baseAmount }}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>

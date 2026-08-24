@@ -6,7 +6,7 @@ import {PrintService} from "../../core/service/print-service/print.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
-import { CommonModule } from '@angular/common';
+
 
 
 const header = [
@@ -24,7 +24,7 @@ const header = [
   templateUrl: './purchase-order-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: [CommonModule, DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class PurchaseOrderListComponent {
   rows = [];

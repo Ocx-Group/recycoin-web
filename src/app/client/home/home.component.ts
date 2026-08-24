@@ -25,7 +25,7 @@ import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
@@ -42,15 +42,14 @@ import {
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     NgApexchartsModule,
     TranslateModule,
     TruncateDecimalsPipe,
     NgxEchartsModule,
     ShareModalComponent,
     RouterLink,
-    WorldMapChartComponent,
-  ],
+    WorldMapChartComponent
+],
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts'),

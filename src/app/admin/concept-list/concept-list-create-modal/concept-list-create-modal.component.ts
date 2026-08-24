@@ -19,7 +19,7 @@ import {ConceptList} from "../../../core/models/concept-model/concept-list.model
 import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
 import {ConceptService} from "../../../core/service/concept-service/concept.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-concept-list-create-modal',

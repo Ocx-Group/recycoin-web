@@ -17,7 +17,7 @@ import {ToastrService} from 'ngx-toastr';
 import {UserService} from "../../../core/service/user-service/user.service";
 import {User} from "../../../core/models/user-model/user.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-users-list-create-modal',

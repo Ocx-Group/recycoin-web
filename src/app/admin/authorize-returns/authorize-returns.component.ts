@@ -8,14 +8,14 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
-import { CommonModule } from '@angular/common';
+
 
 
 @Component({
   selector: 'app-authorize-returns',
   templateUrl: './authorize-returns.component.html',
   standalone: true,
-  imports: [CommonModule, DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
 })
 export class AuthorizeReturnsComponent implements OnInit {
   rows = [];

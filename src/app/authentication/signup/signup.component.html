@@ -7,7 +7,9 @@
         </div>
         <div>
           <h1 class="title neon-text">{{ 'SIGNUP.TITLE' | translate }}</h1>
-          <strong *ngIf="sponsor != ''">{{ 'SIGNUP.SPONSOR' | translate }}</strong>
+          @if (sponsor != '') {
+            <strong>{{ 'SIGNUP.SPONSOR' | translate }}</strong>
+          }
           <label [innerText]="sponsor"></label>
         </div>
       </div>
@@ -23,175 +25,223 @@
               id="user_name"
               formControlName="user_name"
               [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }">
-            <div *ngIf="submitted && f.user_name.errors" class="invalid-feedback">
-              <div *ngIf="f.user_name.errors.required">{{ 'SIGNUP.USERNAME_REQUIRED' | translate }}</div>
-              <div *ngIf="f.user_name.errors.whitespace">{{ 'SIGNUP.USERNAME_WHITESPACE' | translate }}</div>
+              @if (submitted && f.user_name.errors) {
+                <div class="invalid-feedback">
+                  @if (f.user_name.errors.required) {
+                    <div>{{ 'SIGNUP.USERNAME_REQUIRED' | translate }}</div>
+                  }
+                  @if (f.user_name.errors.whitespace) {
+                    <div>{{ 'SIGNUP.USERNAME_WHITESPACE' | translate }}</div>
+                  }
+                </div>
+              }
             </div>
-          </div>
 
-          <!-- Password Field -->
-          <div class="form-group">
-            <label for="password" class="neon-text">{{ 'SIGNUP.PASSWORD' | translate }}</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              formControlName="password"
-              autocomplete="new-password"
-              placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
-              [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">{{ 'SIGNUP.PASSWORD_REQUIRED' | translate }}</div>
-              <div *ngIf="f.password.errors.minlength">{{ 'SIGNUP.PASSWORD_MINLENGTH' | translate }}</div>
-              <div *ngIf="f.password.errors.pattern">{{ 'SIGNUP.PASSWORD_PATTERN' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Repeat Password Field -->
-          <div class="form-group">
-            <label for="repitpassword" class="neon-text">{{ 'SIGNUP.REPEAT_PASSWORD' | translate }}</label>
-            <input
-              type="password"
-              class="form-control"
-              placeholder="{{ 'SIGNUP.REPEAT_PASSWORD' | translate }}"
-              autocomplete="new-password"
-              id="repitpassword"
-              formControlName="repitpassword"
-              [ngClass]="{ 'is-invalid': submitted && (f.repitpassword.errors || registerForm.errors?.passwordMismatch) }">
-            <div *ngIf="submitted && (f.repitpassword.errors || registerForm.errors?.passwordMismatch)" class="invalid-feedback">
-              <div *ngIf="f.repitpassword.errors?.required">{{ 'SIGNUP.REPEAT_PASSWORD_REQUIRED' | translate }}</div>
-              <div *ngIf="registerForm.errors?.passwordMismatch">{{ 'SIGNUP.PASSWORD_MISMATCH' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Name Field -->
-          <div class="form-group">
-            <label for="name" class="neon-text">{{ 'SIGNUP.NAME' | translate }}</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="{{ 'SIGNUP.NAME' | translate }}"
-              id="name"
-              formControlName="name"
-              [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-              <div *ngIf="f.name.errors.required">{{ 'SIGNUP.NAME_REQUIRED' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Last Name Field -->
-          <div class="form-group">
-            <label for="last_name" class="neon-text">{{ 'SIGNUP.LAST_NAME' | translate }}</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="{{ 'SIGNUP.LAST_NAME' | translate }}"
-              id="last_name"
-              formControlName="last_name"
-              [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
-            <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-              <div *ngIf="f.last_name.errors.required">{{ 'SIGNUP.LAST_NAME_REQUIRED' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Country Field -->
-          <div class="form-group">
-            <label for="country" class="neon-text">{{ 'SIGNUP.COUNTRY' | translate }}</label>
-            <select
-              class="form-select form-control"
-              id="country"
-              formControlName="country"
-              (ngModelChange)="onCountrySelected($event)"
-              [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
-              <option value="" disabled selected>Select an option</option>
-              <option *ngFor="let country of listcountry" [value]="country.id">
-                {{ country.name }}
-              </option>
-            </select>
-            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-              <div *ngIf="f.country.errors.required">{{ 'SIGNUP.COUNTRY_REQUIRED' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Phone Field -->
-          <div class="form-group">
-            <label for="phone" class="neon-text">{{ 'SIGNUP.PHONE' | translate }}</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="{{ 'SIGNUP.PHONE' | translate }}"
-              id="phone"
-              formControlName="phone"
-              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
-            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-              <div *ngIf="f.phone.errors.required">{{ 'SIGNUP.PHONE_REQUIRED' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Email Field -->
-          <div class="form-group">
-            <label for="email" class="neon-text">{{ 'SIGNUP.EMAIL' | translate }}</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
-              id="email"
-              formControlName="email"
-              [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-              <div *ngIf="f.email.errors.required">{{ 'SIGNUP.EMAIL_REQUIRED' | translate }}</div>
-            </div>
-          </div>
-
-          <!-- Terms and Conditions Field -->
-          <div class="form-group">
-            <a class="neon-text mb-3" (click)="showTermsAndConditions()" style="cursor: pointer">
-              {{ 'SIGNUP.TERMS_AND_CONDITIONS' | translate }}
-            </a>
-            <div class="form-check mt-3">
+            <!-- Password Field -->
+            <div class="form-group">
+              <label for="password" class="neon-text">{{ 'SIGNUP.PASSWORD' | translate }}</label>
               <input
-                class="form-check-input"
-                type="checkbox"
-                id="checkTerms"
-                formControlName="terms_conditions"
-                [ngClass]="{ 'is-invalid': submitted && f.terms_conditions.errors }">
-              <label class="form-check-label ms-1 neon-text" for="checkTerms">
-                {{ 'SIGNUP.TERMS_AND_CONDITIONS' | translate }}
-              </label>
-            </div>
-            <div *ngIf="submitted && f.terms_conditions.errors" class="invalid-feedback d-block">
-              <div *ngIf="f.terms_conditions.errors.required">
-                {{ 'SIGNUP.TERMS_REQUIRED' | translate }}
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                autocomplete="new-password"
+                placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
+                [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                @if (submitted && f.password.errors) {
+                  <div class="invalid-feedback">
+                    @if (f.password.errors.required) {
+                      <div>{{ 'SIGNUP.PASSWORD_REQUIRED' | translate }}</div>
+                    }
+                    @if (f.password.errors.minlength) {
+                      <div>{{ 'SIGNUP.PASSWORD_MINLENGTH' | translate }}</div>
+                    }
+                    @if (f.password.errors.pattern) {
+                      <div>{{ 'SIGNUP.PASSWORD_PATTERN' | translate }}</div>
+                    }
+                  </div>
+                }
               </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Global error (opcional) -->
-        <div *ngIf="error" class="alert alert-danger mb-3 mt-3">
-          {{ error }}
-        </div>
+              <!-- Repeat Password Field -->
+              <div class="form-group">
+                <label for="repitpassword" class="neon-text">{{ 'SIGNUP.REPEAT_PASSWORD' | translate }}</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="{{ 'SIGNUP.REPEAT_PASSWORD' | translate }}"
+                  autocomplete="new-password"
+                  id="repitpassword"
+                  formControlName="repitpassword"
+                  [ngClass]="{ 'is-invalid': submitted && (f.repitpassword.errors || registerForm.errors?.passwordMismatch) }">
+                  @if (submitted && (f.repitpassword.errors || registerForm.errors?.passwordMismatch)) {
+                    <div class="invalid-feedback">
+                      @if (f.repitpassword.errors?.required) {
+                        <div>{{ 'SIGNUP.REPEAT_PASSWORD_REQUIRED' | translate }}</div>
+                      }
+                      @if (registerForm.errors?.passwordMismatch) {
+                        <div>{{ 'SIGNUP.PASSWORD_MISMATCH' | translate }}</div>
+                      }
+                    </div>
+                  }
+                </div>
 
-        <div class="text-center mt-4">
-          <button class="buy-button neon-text" type="submit">
-            {{ 'SIGNUP.SUBMIT' | translate }}
-          </button>
-          <button class="buy-button neon-text mt-2" type="button" (click)="onGoogleSignup()">
-            <i class="bi bi-google"></i>
-            Google
-          </button>
-        </div>
+                <!-- Name Field -->
+                <div class="form-group">
+                  <label for="name" class="neon-text">{{ 'SIGNUP.NAME' | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'SIGNUP.NAME' | translate }}"
+                    id="name"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    @if (submitted && f.name.errors) {
+                      <div class="invalid-feedback">
+                        @if (f.name.errors.required) {
+                          <div>{{ 'SIGNUP.NAME_REQUIRED' | translate }}</div>
+                        }
+                      </div>
+                    }
+                  </div>
 
-        <div class="text-center mt-4">
-          <p class="mb-0 neon-text">
-            <small>{{ 'SIGNUP.ALREADY_HAVE_ACCOUNT' | translate }}</small>
-            <a routerLink="/signin" class="neon-text fw-bold">
-              {{ 'SIGNUP.SIGN_IN' | translate }}
-            </a>
-          </p>
-        </div>
-      </form>
-    </div>
-  </div>
-  <app-pdf-viewer></app-pdf-viewer>
-</main>
+                  <!-- Last Name Field -->
+                  <div class="form-group">
+                    <label for="last_name" class="neon-text">{{ 'SIGNUP.LAST_NAME' | translate }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'SIGNUP.LAST_NAME' | translate }}"
+                      id="last_name"
+                      formControlName="last_name"
+                      [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+                      @if (submitted && f.last_name.errors) {
+                        <div class="invalid-feedback">
+                          @if (f.last_name.errors.required) {
+                            <div>{{ 'SIGNUP.LAST_NAME_REQUIRED' | translate }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <!-- Country Field -->
+                    <div class="form-group">
+                      <label for="country" class="neon-text">{{ 'SIGNUP.COUNTRY' | translate }}</label>
+                      <select
+                        class="form-select form-control"
+                        id="country"
+                        formControlName="country"
+                        (ngModelChange)="onCountrySelected($event)"
+                        [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                        <option value="" disabled selected>Select an option</option>
+                        @for (country of listcountry; track country) {
+                          <option [value]="country.id">
+                            {{ country.name }}
+                          </option>
+                        }
+                      </select>
+                      @if (submitted && f.country.errors) {
+                        <div class="invalid-feedback">
+                          @if (f.country.errors.required) {
+                            <div>{{ 'SIGNUP.COUNTRY_REQUIRED' | translate }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="form-group">
+                      <label for="phone" class="neon-text">{{ 'SIGNUP.PHONE' | translate }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="{{ 'SIGNUP.PHONE' | translate }}"
+                        id="phone"
+                        formControlName="phone"
+                        [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+                        @if (submitted && f.phone.errors) {
+                          <div class="invalid-feedback">
+                            @if (f.phone.errors.required) {
+                              <div>{{ 'SIGNUP.PHONE_REQUIRED' | translate }}</div>
+                            }
+                          </div>
+                        }
+                      </div>
+
+                      <!-- Email Field -->
+                      <div class="form-group">
+                        <label for="email" class="neon-text">{{ 'SIGNUP.EMAIL' | translate }}</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
+                          id="email"
+                          formControlName="email"
+                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                          @if (submitted && f.email.errors) {
+                            <div class="invalid-feedback">
+                              @if (f.email.errors.required) {
+                                <div>{{ 'SIGNUP.EMAIL_REQUIRED' | translate }}</div>
+                              }
+                            </div>
+                          }
+                        </div>
+
+                        <!-- Terms and Conditions Field -->
+                        <div class="form-group">
+                          <a class="neon-text mb-3" (click)="showTermsAndConditions()" style="cursor: pointer">
+                            {{ 'SIGNUP.TERMS_AND_CONDITIONS' | translate }}
+                          </a>
+                          <div class="form-check mt-3">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="checkTerms"
+                              formControlName="terms_conditions"
+                              [ngClass]="{ 'is-invalid': submitted && f.terms_conditions.errors }">
+                              <label class="form-check-label ms-1 neon-text" for="checkTerms">
+                                {{ 'SIGNUP.TERMS_AND_CONDITIONS' | translate }}
+                              </label>
+                            </div>
+                            @if (submitted && f.terms_conditions.errors) {
+                              <div class="invalid-feedback d-block">
+                                @if (f.terms_conditions.errors.required) {
+                                  <div>
+                                    {{ 'SIGNUP.TERMS_REQUIRED' | translate }}
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </div>
+                        </div>
+
+                        <!-- Global error (opcional) -->
+                        @if (error) {
+                          <div class="alert alert-danger mb-3 mt-3">
+                            {{ error }}
+                          </div>
+                        }
+
+                        <div class="text-center mt-4">
+                          <button class="buy-button neon-text" type="submit">
+                            {{ 'SIGNUP.SUBMIT' | translate }}
+                          </button>
+                          <button class="buy-button neon-text mt-2" type="button" (click)="onGoogleSignup()">
+                            <i class="bi bi-google"></i>
+                            Google
+                          </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                          <p class="mb-0 neon-text">
+                            <small>{{ 'SIGNUP.ALREADY_HAVE_ACCOUNT' | translate }}</small>
+                            <a routerLink="/signin" class="neon-text fw-bold">
+                              {{ 'SIGNUP.SIGN_IN' | translate }}
+                            </a>
+                          </p>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <app-pdf-viewer></app-pdf-viewer>
+                </main>

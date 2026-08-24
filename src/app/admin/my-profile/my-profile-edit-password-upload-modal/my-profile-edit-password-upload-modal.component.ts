@@ -8,7 +8,7 @@ import {
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-my-profile-edit-password-upload-modal',

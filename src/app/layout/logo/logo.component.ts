@@ -1,7 +1,7 @@
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-logo',
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./logo.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [CommonModule]
+    imports: []
 })
 export class LogoComponent implements OnInit, OnDestroy {
   logoSrc: string;

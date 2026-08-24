@@ -4,21 +4,20 @@ import {ToastrService} from 'ngx-toastr';
 import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
 import {GeneralConfiguration} from "../../core/models/general-configuration/general-configuration.model";
 import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-bootstrap/ng-bootstrap";
-import {CommonModule} from '@angular/common';
+
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     NgbNav,
     NgbNavItem,
     NgbNavContent,
     NgbNavLink,
     ReactiveFormsModule,
     NgbNavOutlet
-  ]
+]
 })
 export class SettingsComponent implements OnInit {
   generalConfigurationForm: FormGroup;

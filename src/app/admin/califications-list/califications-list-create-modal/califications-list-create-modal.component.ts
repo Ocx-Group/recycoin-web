@@ -17,7 +17,7 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-califications-list-create-modal',

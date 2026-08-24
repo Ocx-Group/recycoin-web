@@ -27,21 +27,21 @@
                       {{
                       'ADMIN-MY-PROFILE.LBL-CHANGE-PASSWORD.TEXT'
                       | translate
-                      }}</span>
+                    }}</span>
                   </a>
                   <a ngbDropdownItem id="btn-edit-question" (click)="openSecretQuestionModal()">
                     <i class="bi bi-question-diamond-fill"></i>
                     <span style="margin-left: 5px">{{
                       'ADMIN-MY-PROFILE.LBL-CHANGE-SECRET-QUESTION.TEXT'
                       | translate
-                      }}</span>
+                    }}</span>
                   </a>
                   <a ngbDropdownItem id="btn-edit-personal-info" (click)="openEditPersonalInfoModal()">
                     <i class="fas fa-edit"></i>
                     <span style="margin-left: 5px">{{
                       'ADMIN-MY-PROFILE.BTN-EDIT-PERSONAL-INFO.TEXT'
                       | translate
-                      }}</span>
+                    }}</span>
                   </a>
 
                   <a ngbDropdownItem id="btn-change-image-profile" (click)="openImageProfileModal()">
@@ -81,21 +81,29 @@
 
                 <!-- Status Badges -->
                 <div class="profile-badges">
-                  <span *ngIf="user.card_id_authorization == true" class="badge-modern badge-success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    Autorizado
-                  </span>
-                  <span *ngIf="user.card_id_authorization == false" class="badge-modern badge-danger">
-                    <i class="bi bi-x-circle-fill"></i>
-                    No Autorizado
-                  </span>
+                  @if (user.card_id_authorization == true) {
+                    <span class="badge-modern badge-success">
+                      <i class="bi bi-check-circle-fill"></i>
+                      Autorizado
+                    </span>
+                  }
+                  @if (user.card_id_authorization == false) {
+                    <span class="badge-modern badge-danger">
+                      <i class="bi bi-x-circle-fill"></i>
+                      No Autorizado
+                    </span>
+                  }
 
-                  <span *ngIf="user.status == 1" class="badge-modern badge-active">
-                    Activo
-                  </span>
-                  <span *ngIf="user.status == 0" class="badge-modern badge-inactive">
-                    Inactivo
-                  </span>
+                  @if (user.status == 1) {
+                    <span class="badge-modern badge-active">
+                      Activo
+                    </span>
+                  }
+                  @if (user.status == 0) {
+                    <span class="badge-modern badge-inactive">
+                      Inactivo
+                    </span>
+                  }
 
                   <span class="badge-modern badge-warning">
                     <i class="bi bi-star-fill"></i>
@@ -204,7 +212,7 @@
 </section>
 
 <app-my-profile-edit-password-modal [getCurrentUser]="user"
-  #modalChildChangePassword></app-my-profile-edit-password-modal>
+#modalChildChangePassword></app-my-profile-edit-password-modal>
 
 <app-my-profile-edit-personal-info-modal #modalChildEditPersonalInfo [personalInfo]="user">
 </app-my-profile-edit-personal-info-modal>

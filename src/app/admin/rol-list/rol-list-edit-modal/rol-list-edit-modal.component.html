@@ -15,7 +15,7 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
@@ -24,73 +24,79 @@
     [formGroup]="updateRolForm"
     [autocomplete]="off"
     (ngSubmit)="updateRol()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="rol_name">
             {{ 'ROL-LIST-EDIT-MODAL.LBL-ROL-NAME.TEXT' | translate }}
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="rol_name"
-            autocomplete="new-rol_name"
-            formControlName="rol_name"
-            placeholder="Rol"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="rol_name"
+              autocomplete="new-rol_name"
+              formControlName="rol_name"
+              placeholder="Rol"
+              required="required"
             [ngClass]="{
               'is-invalid': submitted && update_rol_controls.rol_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && update_rol_controls.rol_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="update_rol_controls.rol_name.errors.required">
-              {{ 'ROL-LIST-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+              />
+              @if (submitted && update_rol_controls.rol_name.errors) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (update_rol_controls.rol_name.errors.required) {
+                    <div>
+                      {{ 'ROL-LIST-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="description">
-            {{ 'ROL-LIST-EDIT-MODAL.LBL-DESCRIPTION.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="description"
-            id="description"
-            placeholder="Descripción"
-            required="required"
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="description">
+                {{ 'ROL-LIST-EDIT-MODAL.LBL-DESCRIPTION.TEXT' | translate }}
+                <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  id="description"
+                  placeholder="Descripción"
+                  required="required"
             [ngClass]="{
               'is-invalid': submitted && update_rol_controls.description.errors
             }"
-          />
-          <div
-            *ngIf="submitted && update_rol_controls.description.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="update_rol_controls.description.errors.required">
-              {{ 'ROL-LIST-EDIT-MODAL.MSJ-ERROR-DESCRIPTION.TEXT' | translate }}
+                  />
+                  @if (submitted && update_rol_controls.description.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (update_rol_controls.description.errors.required) {
+                        <div>
+                          {{ 'ROL-LIST-EDIT-MODAL.MSJ-ERROR-DESCRIPTION.TEXT' | translate }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'ROL-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        {{ 'ROL-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
-</ng-template>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                {{ 'ROL-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="modal.close('Close click')"
+                >
+                {{ 'ROL-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
+              </button>
+            </div>
+          </form>
+        </ng-template>

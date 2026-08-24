@@ -9,32 +9,34 @@
     <p>Bienvenido al sitio web de recycoinfx.net, este sitio es propiedad de recycoin OCX SHARING EVOLUTION SOCIEDAD
       ANONIMA, por este medio la empresa les notifica a nuestros clientes los nuevos términos y condiciones que rigen a
       partir del 1 de enero de 2024 para los servicios en las adquisiciones de EcoPooles y productos; con pago de
-      comisiones voluntarias y residuales.</p>
+    comisiones voluntarias y residuales.</p>
 
     <p>En consecuencia, a partir de este sábado 20 de enero de 2024, los clientes actuales y aquellos antes de diciembre
       de 2023, tendrán diez días hábiles para seleccionar el nuevo modelo de su preferencia para sus ecopooles, que se
       les informó por medio del sitio web. En caso de no elegir ningún modelo de manera manual en este plazo, los
       ecopooles actuales pasarán de manera automática al modelo número dos y el cliente se dará por notificado y
       enterado, absteniéndose de todo tipo de reclamo ya que se tendrá por aceptado de forma tácita los nuevos TÉRMINOS
-      Y CONDICIONES.</p>
+    Y CONDICIONES.</p>
 
     <p>Por favor revisa los siguientes TÉRMINOS Y CONDICIONES que rigen el uso del sitio web recycoinfx.net, Al
       realizar una compra o adquisición, significa que has leído, entendido y aceptas en su totalidad los
       términos y condiciones del mismo. Estos términos serán aplicables para todos y cada uno de nuestros clientes de
       antes del mes de diciembre de 2023, actuales y nuevos. Por favor revisa periódicamente nuestros Términos de
-      Uso para cualquier cambio.</p>
+    Uso para cualquier cambio.</p>
 
     <p>Si desea más información por favor diríjase a nuestro sitio web. <a rel="noopener"
-        href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">Términos y
-        Condiciones.</a>
-    </p>
+      href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">Términos y
+    Condiciones.</a>
+  </p>
 
-    <p><a rel="noopener" href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf"
-        target="_blank">https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf</a></p>
+  <p><a rel="noopener" href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf"
+  target="_blank">https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf</a></p>
 
-  </div>
-  <div class="modal-footer justify-content-center">
-    <button #acceptButton type="button" class="btn btn-primary" *ngIf="showButton"
-      (click)="acceptTerms()">Aceptar</button>
-  </div>
+</div>
+<div class="modal-footer justify-content-center">
+  @if (showButton) {
+    <button #acceptButton type="button" class="btn btn-primary"
+    (click)="acceptTerms()">Aceptar</button>
+  }
+</div>
 </ng-template>

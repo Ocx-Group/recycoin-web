@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+
 
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
     selector: 'app-email-confirmation',
     templateUrl: './email.confirmation.component.html',
     standalone: true,
-    imports: [CommonModule]
+    imports: []
 })
 export class EmailConfirmationComponent {
 

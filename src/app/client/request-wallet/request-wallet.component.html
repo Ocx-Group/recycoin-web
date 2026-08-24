@@ -41,182 +41,188 @@
                             <input style="background-color: white;" type="text" class="form-control"
                               id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
                               placeholder="{{'REQUESTS-WALLET.SEARCH.TEXT' | translate}}">
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
-                        <button class="btn btn-icon icon-left btn-primary rounded-button" (click)='addRow(addRecord)'>
-                          <i class="material-icons">add</i>
-                        </button>
+                    <div class="col-sm-1">
+                      <div class="header-buttons-left">
+                        <div class="tbl-btn-style">
+                          <button class="btn btn-icon icon-left btn-primary rounded-button" (click)='addRow(addRecord)'>
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <h6>
-                    {{
-                    'REQUESTS-WALLET.TITTLE-TABLE.TEXT'
-                    | translate
-                    }}
-                  </h6>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <div class="row">
+                    <h6>
+                      {{
+                      'REQUESTS-WALLET.TITTLE-TABLE.TEXT'
+                      | translate
+                      }}
+                    </h6>
+                  </div>
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'REQUESTS-WALLET.ORDER-NUM-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.id }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.id }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.DATE-COLUMN.TEXT' | translate
                   }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.affiliate }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.affiliate }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.CREDIT-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.credit }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.credit }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.PAYMENT-METHOD-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.credit }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.credit }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.BANK-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.credit }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.credit }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.SUPPORT-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.credit }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.credit }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.TRASACTION-DATE-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.credit }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.credit }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'REQUESTS-WALLET.STATUS-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.state == 'Atendida'" class="badge-outline col-green">
-                        {{ row.state }}
-                      </div>
-                      <div *ngIf="row.state == 'Inactiva'" class="badge-outline col-red">
-                        {{ row.state }}
-                      </div>
-                      <div *ngIf="row.state == 'Pending'" class="badge-outline col-indigo">
-                        {{ row.state }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
-                <ng-template #addRecord let-modal>
-                  <div class="modal-header editRowModal">
-                    <h4 class="modal-title" id="modal-basic-title">
-                      <div class="table-modal-header">
-                        <div class="modal-about">
-                          <div class="fw-bold p-t-10 font-17">
-                            {{
-                            'REQUESTS-PAGE.SEND-REQUEST.TEXT' | translate
-                            }}
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.state == 'Atendida') {
+                          <div class="badge-outline col-green">
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'Inactiva') {
+                          <div class="badge-outline col-red">
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'Pending') {
+                          <div class="badge-outline col-indigo">
+                            {{ row.state }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                  <ng-template #addRecord let-modal>
+                    <div class="modal-header editRowModal">
+                      <h4 class="modal-title" id="modal-basic-title">
+                        <div class="table-modal-header">
+                          <div class="modal-about">
+                            <div class="fw-bold p-t-10 font-17">
+                              {{
+                              'REQUESTS-PAGE.SEND-REQUEST.TEXT' | translate
+                              }}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </h4>
-                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                      <span aria-hidden="true"><i class="material-icons">close</i></span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form class="register-form" [autocomplete]="off" [formGroup]="register"
-                      (ngSubmit)="onAddRowSave(register)">
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="amount_requested"> {{
-                            'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate
-                            }}
-                            <span class="text-danger">*</span></label>
+                      </h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true"><i class="material-icons">close</i></span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="register-form" [autocomplete]="off" [formGroup]="register"
+                        (ngSubmit)="onAddRowSave(register)">
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <label for="amount_requested"> {{
+                              'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate
+                              }}
+                              <span class="text-danger">*</span></label>
                           <input type="text" class="form-control" formControlName="amount_requested" placeholder="{{
                             'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate
                             }}" required>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="access_key"> {{
-                            'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate
-                            }}
-                            <span class="text-danger">*</span></label>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="access_key"> {{
+                                  'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate
+                                  }}
+                                  <span class="text-danger">*</span></label>
                           <input type="password" class="form-control" formControlName="access_key" placeholder="{{
                             'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate
                             }}" required>
 
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                          <label for="observation">{{
-                            'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate
-                            }}<span class="text-danger"></span></label>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                    <label for="observation">{{
+                                      'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate
+                                      }}<span class="text-danger"></span></label>
                           <textarea type="textarea" class="form-control" placeholder="{{
                             'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate
                             }}" formControlName="observation"></textarea>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="generation_code">{{
-                            'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate
-                            }}<span class="text-danger">*</span></label>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                      <label for="generation_code">{{
+                                        'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate
+                                        }}<span class="text-danger">*</span></label>
                           <input type="number" class="form-control" placeholder="{{
                             'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate
                             }}" formControlName="generation_code" required>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="generation_code">{{
-                            'REQUESTS-PAGE.SEGURITY-PIN.TEXT' | translate
-                            }}<span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                          <label for="generation_code">{{
+                                            'REQUESTS-PAGE.SEGURITY-PIN.TEXT' | translate
+                                            }}<span class="text-danger">*</span></label>
                           <input type="number" class="form-control" placeholder="{{
                             'REQUESTS-PAGE.SEGURITY-PIN.TEXT' | translate
                             }}" formControlName="generation_code" required>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">{{
+                                              'REQUESTS-PAGE.SUBMIT-BTN.TEXT' | translate
+                                            }}</button>
+                                            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{
+                                              'REQUESTS-PAGE.CLOSE-BTN.TEXT' | translate
+                                            }}</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </ng-template>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{
-                          'REQUESTS-PAGE.SUBMIT-BTN.TEXT' | translate
-                          }}</button>
-                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{
-                          'REQUESTS-PAGE.CLOSE-BTN.TEXT' | translate
-                          }}</button>
-                      </div>
-                    </form>
-                  </div>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                    </section>

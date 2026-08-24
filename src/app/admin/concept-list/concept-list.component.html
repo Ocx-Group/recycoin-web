@@ -34,191 +34,211 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                                  placeholder="{{
                               'CONCEPT-LIST-PAGE.BTN-SEARCH.TEXT' | translate
                             }}"/>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
+                    <div class="col-sm-1">
+                      <div class="header-buttons-left">
+                        <div class="tbl-btn-style">
                         <button class="btn btn-icon icon-left btn-primary rounded-button" (click)="
                             createOpenModal(
                               modalChildCreate['conceptCreateModal']
                             )
                           ">
-                          <i class="material-icons">add</i>
-                        </button>
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" (click)="clipBoardCopy()" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'CONCEPT-LIST-PAGE.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button type="button" (click)="clipBoardCopy()" class="btn btn-primary">
+                            <i class="bi bi-clipboard-check"></i>
+                            {{ 'CONCEPT-LIST-PAGE.BTN-COPY.TEXT' | translate }}
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button type="button" (click)="onPrint()" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          {{ 'CONCEPT-LIST-PAGE.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button type="button" (click)="onPrint()" class="btn btn-primary">
+                            <i class="bi bi-printer"></i>
+                            {{ 'CONCEPT-LIST-PAGE.BTN-PRINT.TEXT' | translate }}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-CONCEPT-NAME.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.name }}
+                      </ng-template>
+                    </ngx-datatable-column>
 
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-CONCEPT-STATUS.TEXT' | translate
                     }}" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.active == true" class="badge-outline col-green">
-                        Activo
-                      </div>
-                      <div *ngIf="row.active == false" class="badge-outline col-red">
-                        Inactivo
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.active == true) {
+                          <div class="badge-outline col-green">
+                            Activo
+                          </div>
+                        }
+                        @if (row.active == false) {
+                          <div class="badge-outline col-red">
+                            Inactivo
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-CALCULATE-GROUP.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.paymentGroup.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.paymentGroup.name }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-PAID-CONCEPT.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.payConcept == 1">
-                        Patrocinador Personal(Matrix Unilevel)
-                      </div>
-                      <div *ngIf="row.payConcept == 2">
-                        Patrocinador de Ubicación(Matrix Forzada)
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.payConcept == 1) {
+                          <div>
+                            Patrocinador Personal(Matrix Unilevel)
+                          </div>
+                        }
+                        @if (row.payConcept == 2) {
+                          <div>
+                            Patrocinador de Ubicación(Matrix Forzada)
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-CALCULATE-CONCEPT.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.calculateBy == 1">
-                        Calificación Igual (==)
-                      </div>
-                      <div *ngIf="row.calculateBy == 2">
-                        Calificación ó Mayor (>=)
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.calculateBy == 1) {
+                          <div>
+                            Calificación Igual (==)
+                          </div>
+                        }
+                        @if (row.calculateBy == 2) {
+                          <div>
+                            Calificación ó Mayor (>=)
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-POSITION-COMPRESSION.TEXT'
                         | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.compression == true" class="badge-outline col-green">
-                        Activo
-                      </div>
-                      <div *ngIf="row.compression == false" class="badge-outline col-red">
-                        Inactivo
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.compression == true) {
+                          <div class="badge-outline col-green">
+                            Activo
+                          </div>
+                        }
+                        @if (row.compression == false) {
+                          <div class="badge-outline col-red">
+                            Inactivo
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-EQUALIZATION.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.equalization == true" class="badge-outline col-green">
-                        Activo
-                      </div>
-                      <div *ngIf="row.equalization == false" class="badge-outline col-red">
-                        Inactivo
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.equalization == true) {
+                          <div class="badge-outline col-green">
+                            Activo
+                          </div>
+                        }
+                        @if (row.equalization == false) {
+                          <div class="badge-outline col-red">
+                            Inactivo
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'CONCEPT-LIST-PAGE.COL-ACTIONS.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{ 'CONCEPT-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
-                        </button>
-                        <div ngbDropdownMenu>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div ngbDropdown container="body">
+                          <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                            {{ 'CONCEPT-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
+                          </button>
+                          <div ngbDropdownMenu>
                           <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['conceptEditModal'],
                                 row
                               )
                             ">
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">{{
+                              <i class="fas fa-edit"></i>
+                              <span style="margin-left: 10px">{{
                                 'CONCEPT-LIST-PAGE.BTN-EDIT.TEXT' | translate
                               }}</span>
-                          </a>
+                            </a>
                           <a ngbDropdownItem id="btn-permissions" (click)="
                               modalChildDetails.detailsOpenModal(
                                 modalChildDetails['conceptDetailsModal'],
                                 row
                               )
                             ">
-                            <i class="bi bi-eye-fill"></i>
-                            <span style="margin-left: 10px">{{
+                              <i class="bi bi-eye-fill"></i>
+                              <span style="margin-left: 10px">{{
                                 'CONCEPT-LIST-PAGE.BTN-DETAILS.TEXT' | translate
                               }}</span>
-                          </a>
+                            </a>
                           <a ngbDropdownItem id="btn-detail" (click)="
                               modalChildConfiguration.configurationOpenModal(
                                 modalChildConfiguration['configurationModal'],
                                 row
                               )
                             ">
-                            <i class="fas fa-file-import"></i>
+                              <i class="fas fa-file-import"></i>
 
-                            <span style="margin-left: 10px">{{
+                              <span style="margin-left: 10px">{{
                                 'CONCEPT-LIST-PAGE.BTN-CONFIGURATIONS.TEXT'
-                                  | translate
+                                | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">{{
+                            </a>
+                            <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                              <i class="fas fa-trash-alt"></i>
+                              <span style="margin-left: 10px">{{
                                 'CONCEPT-LIST-PAGE.BTN-DELETE.TEXT' | translate
                               }}</span>
-                          </a>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <app-concept-list-create-modal #modalChildCreate
-                                 (loadConceptList)="loadConceptList()"></app-concept-list-create-modal>
-  <app-concept-list-edit-modal #modalChildEdit (loadConceptList)="loadConceptList()">
-  </app-concept-list-edit-modal>
-  <app-concept-list-details-modal #modalChildDetails></app-concept-list-details-modal>
-  <app-concept-list-binary-configuration-modal #modalChildConfigBinary></app-concept-list-binary-configuration-modal>
-  <app-concept-list-configuration-modal #modalChildConfiguration></app-concept-list-configuration-modal>
-</section>
+    <app-concept-list-create-modal #modalChildCreate
+    (loadConceptList)="loadConceptList()"></app-concept-list-create-modal>
+    <app-concept-list-edit-modal #modalChildEdit (loadConceptList)="loadConceptList()">
+    </app-concept-list-edit-modal>
+    <app-concept-list-details-modal #modalChildDetails></app-concept-list-details-modal>
+    <app-concept-list-binary-configuration-modal #modalChildConfigBinary></app-concept-list-binary-configuration-modal>
+    <app-concept-list-configuration-modal #modalChildConfiguration></app-concept-list-configuration-modal>
+  </section>

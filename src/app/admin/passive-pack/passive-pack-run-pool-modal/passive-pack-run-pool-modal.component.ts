@@ -12,7 +12,7 @@ import {
   FormGroup, ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {DatePipe, NgClass, CommonModule} from '@angular/common';
+import { DatePipe, NgClass, CommonModule } from '@angular/common';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslatePipe} from "@ngx-translate/core";

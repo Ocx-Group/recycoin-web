@@ -6,7 +6,7 @@
           data-toggle="sidebar"
           class="nav-link nav-link-lg collapse-btn"
           (click)="mobileMenuSidebarOpen($event, 'overlay-open')"
-        >
+          >
           <i-feather name="menu"></i-feather>
         </a>
       </li>
@@ -18,79 +18,87 @@
         data-toggle="dropdown"
         class="nav-link nav-link-lg lang-toggle remove-caret"
         ngbDropdownToggle
-      >
-        <img
-          *ngIf="flagvalue !== undefined"
-          src="{{ flagvalue }}"
-          alt="Header Language"
-          height="16"
-        />
-        <img
-          *ngIf="flagvalue === undefined"
-          src="{{ defaultFlag }}"
-          alt="Header Language"
-          height="16"
-        />
+        >
+        @if (flagvalue !== undefined) {
+          <img
+            src="{{ flagvalue }}"
+            alt="Header Language"
+            height="16"
+            />
+        }
+        @if (flagvalue === undefined) {
+          <img
+            src="{{ defaultFlag }}"
+            alt="Header Language"
+            height="16"
+            />
+        }
       </a>
       <div
         class="dropdown-menu header-dropdown dropdown-menu-right lang-dropdown-list pullDown"
         ngbDropdownMenu
-      >
-        <a
-          href="javascript:void(0);"
-          class="dropdown-item lang-item-list"
-          *ngFor="let item of listLang"
-          (click)="setLanguage(item.text, item.lang, item.flag)"
-          [ngClass]="{ active: langStoreValue === item.lang }"
         >
-          <img
-            src="{{ item.flag }}"
-            alt="user-image"
-            class="msr-1"
-            height="12"
-          />
-          <span class="align-middle">{{ item.text }}</span>
-        </a>
-      </div>
-    </li>
-
-    <li ngbDropdown class="dropdown dropdown-list-toggle">
-      <a ngbDropdownToggle data-toggle="dropdown" class="nav-link nav-link-lg message-toggle remove-caret">
-        <i-feather name="bell" class="bell collapse-btn"></i-feather>
-
-        <span *ngIf="(unreadCount$ | async) as unreadCount" class="badge badge-danger"
-              [class.d-none]="unreadCount === 0">
-          {{ unreadCount }}
-        </span>
-      </a>
-      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right dropdown-list header-dropdown pullDown">
-        <div class="dropdown-header">
-          Messages
-        </div>
-        <div class="dropdown-list-content dropdown-list-icons"
-             style="position: relative; max-width: 600px; max-height: 250px; overflow-y: auto;">
-          <ng-container *ngIf="ticketSummaries$ | async as ticketSummaries">
-            <a *ngFor="let summary of ticketSummaries" href="#"
-               (click)="$event.preventDefault(); onTicketClick(summary.ticketId)" class="dropdown-item"
-               [ngClass]="{'dropdown-item-unread': !summary.isRead}">
-              <span class="dropdown-item-icon l-bg-orange text-white">
-                <i class="far fa-envelope"></i>
-
-                <span class="badge badge-info">{{ summary.unreadMessagesCount }}</span>
-              </span>
-              <span class="dropdown-item-desc">
-                {{ summary.title }}
-                <span class="time">{{ summary.lastUpdated | date:'short' }}</span>
-              </span>
+        @for (item of listLang; track item) {
+          <a
+            href="javascript:void(0);"
+            class="dropdown-item lang-item-list"
+            (click)="setLanguage(item.text, item.lang, item.flag)"
+            [ngClass]="{ active: langStoreValue === item.lang }"
+            >
+            <img
+              src="{{ item.flag }}"
+              alt="user-image"
+              class="msr-1"
+              height="12"
+              />
+              <span class="align-middle">{{ item.text }}</span>
             </a>
-          </ng-container>
-          <div *ngIf="(ticketSummaries$ | async)?.length === 0" class="text-center p-3">
-            <span>No unread messages</span>
-          </div>
+          }
         </div>
-<!--        <div class="dropdown-footer text-center">-->
-<!--          <a href="#" (click)="$event.preventDefault();">View All <i class="fas fa-chevron-right"></i></a>-->
-<!--        </div>-->
+      </li>
+
+      <li ngbDropdown class="dropdown dropdown-list-toggle">
+        <a ngbDropdownToggle data-toggle="dropdown" class="nav-link nav-link-lg message-toggle remove-caret">
+          <i-feather name="bell" class="bell collapse-btn"></i-feather>
+
+          @if ((unreadCount$ | async); as unreadCount) {
+            <span class="badge badge-danger"
+              [class.d-none]="unreadCount === 0">
+              {{ unreadCount }}
+            </span>
+          }
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right dropdown-list header-dropdown pullDown">
+          <div class="dropdown-header">
+            Messages
+          </div>
+          <div class="dropdown-list-content dropdown-list-icons"
+            style="position: relative; max-width: 600px; max-height: 250px; overflow-y: auto;">
+            @if (ticketSummaries$ | async; as ticketSummaries) {
+              @for (summary of ticketSummaries; track summary) {
+                <a href="#"
+                  (click)="$event.preventDefault(); onTicketClick(summary.ticketId)" class="dropdown-item"
+                  [ngClass]="{'dropdown-item-unread': !summary.isRead}">
+                  <span class="dropdown-item-icon l-bg-orange text-white">
+                    <i class="far fa-envelope"></i>
+                    <span class="badge badge-info">{{ summary.unreadMessagesCount }}</span>
+                  </span>
+                  <span class="dropdown-item-desc">
+                    {{ summary.title }}
+                    <span class="time">{{ summary.lastUpdated | date:'short' }}</span>
+                  </span>
+                </a>
+              }
+            }
+            @if ((ticketSummaries$ | async)?.length === 0) {
+              <div class="text-center p-3">
+                <span>No unread messages</span>
+              </div>
+            }
+          </div>
+          <!--        <div class="dropdown-footer text-center">-->
+          <!--          <a href="#" (click)="$event.preventDefault();">View All <i class="fas fa-chevron-right"></i></a>-->
+        <!--        </div>-->
       </div>
     </li>
 
@@ -99,37 +107,37 @@
         ngbDropdownToggle
         data-toggle="dropdown"
         class="nav-link dropdown-toggle nav-link-lg nav-link-user"
-      >
+        >
         <img
           alt="image"
           [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/user.svg'"
           (error)="$any($event.target).src='assets/images/user.svg'"
           class="user-img-radious-style collapse-btn"/>
-        <span class="d-sm-none d-lg-inline-block"></span
-        ></a>
-      <div
-        ngbDropdownMenu
-        class="dropdown-menu dropdown-menu-right header-dropdown pullDown"
-      >
-        <div class="dropdown-title">Bienvenido {{ user.name }}...</div>
-        <a routerLink="admin/my-profile" class="dropdown-item has-icon">
-          <i class="far fa-user"></i>
-          {{ 'HEADER.PROFILE.TEXT' | translate }}
-        </a>
-        <a routerLink="" class="dropdown-item has-icon">
-          <i class="bi bi-gear"></i>
-          {{ 'HEADER.USER-SETTINGS.TEXT' | translate }}
-        </a>
-        <div class="dropdown-divider"></div>
-        <a
-          href="javascript:void(0);"
-          class="dropdown-item has-icon text-danger"
-          (click)="logout()"
-        >
-          <i class="fas fa-sign-out-alt"></i>
-          {{ 'HEADER.LOGOUT.TEXT' | translate }}
-        </a>
-      </div>
-    </li>
-  </ul>
-</nav>
+          <span class="d-sm-none d-lg-inline-block"></span
+          ></a>
+          <div
+            ngbDropdownMenu
+            class="dropdown-menu dropdown-menu-right header-dropdown pullDown"
+            >
+            <div class="dropdown-title">Bienvenido {{ user.name }}...</div>
+            <a routerLink="admin/my-profile" class="dropdown-item has-icon">
+              <i class="far fa-user"></i>
+              {{ 'HEADER.PROFILE.TEXT' | translate }}
+            </a>
+            <a routerLink="" class="dropdown-item has-icon">
+              <i class="bi bi-gear"></i>
+              {{ 'HEADER.USER-SETTINGS.TEXT' | translate }}
+            </a>
+            <div class="dropdown-divider"></div>
+            <a
+              href="javascript:void(0);"
+              class="dropdown-item has-icon text-danger"
+              (click)="logout()"
+              >
+              <i class="fas fa-sign-out-alt"></i>
+              {{ 'HEADER.LOGOUT.TEXT' | translate }}
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>

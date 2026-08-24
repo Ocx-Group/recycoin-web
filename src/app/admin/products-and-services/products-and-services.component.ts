@@ -21,7 +21,7 @@ import {
 import {
   ProductsAndServicesEditModalComponent
 } from "./products-and-services-edit-modal/products-and-services-edit-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = [
   'Código del Producto',
@@ -38,7 +38,6 @@ const header = [
   templateUrl: './products-and-services.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -52,7 +51,7 @@ const header = [
     NgbDropdown,
     NgbDropdownToggle,
     NgbDropdownMenu
-  ]
+]
 })
 export class ProductsAndServicesComponent implements OnInit {
   rows = [];

@@ -6,122 +6,131 @@
     <li class="breadcrumb-item bcrumb-1">
       <a routerLink="/admin/home-admin">
         <i class="fas fa-home font-17"></i></a>
-    </li>
+      </li>
 
-    <li class="breadcrumb-item">Mis tickets</li>
-  </ul>
-  <div class="section-body">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="card">
-          <div class="inbox-header">
-            <div class="mail-option">
-              <div class="email-btn-group m-l-15">
-                <button type="button" class="btn btn-danger waves-effect m-r-20" (click)="openCreateTicketModal()">Crear
-                  Ticket
-                </button>
-                <a onClick="return false;" (click)="onDeleteTickets()" class="col-dark-gray waves-effect m-r-20"
-                   title="Delete" data-toggle="tooltip">
-                  <i class="material-icons">delete</i>
-                </a>
+      <li class="breadcrumb-item">Mis tickets</li>
+    </ul>
+    <div class="section-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="inbox-header">
+              <div class="mail-option">
+                <div class="email-btn-group m-l-15">
+                  <button type="button" class="btn btn-danger waves-effect m-r-20" (click)="openCreateTicketModal()">Crear
+                    Ticket
+                  </button>
+                  <a onClick="return false;" (click)="onDeleteTickets()" class="col-dark-gray waves-effect m-r-20"
+                    title="Delete" data-toggle="tooltip">
+                    <i class="material-icons">delete</i>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="boxs mail_listing">
-            <div class="inbox-center table-responsive">
-              <ngx-datatable #table class="material" [rows]="tickets" [loadingIndicator]="loadingIndicator"
-                             columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
-                             [selected]="selectedTickets"
-                             [limit]="10" [selectionType]="SelectionType.checkbox" [scrollbarH]="scrollBarHorizontal"
-                             [reorderable]="reorderable">
-                <ngx-datatable-column name="Seleccionar">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <label class="form-check-label">
-                      <input type="checkbox" [checked]="isTicketSelected(row)"
-                             (change)="onSelectTicket(row, $event.target.checked)">
-                      <span class="form-check-sign"></span>
-                    </label>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Estado">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <button class="btn"
-                            [ngClass]="{'badge-outline col-green': row.status == true, 'badge-outline col-red': row.status == false}"
-                            [disabled]="true">
-                      {{ row.status == false ? 'Cerrado' : 'Abierto' }}
-                    </button>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Usuario">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <a class="text-decoration-none">{{ row.userName }}</a>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Mensaje">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <a class="text-decoration-none" role="button" (click)="openTicketMessage(row)">{{ row.subject }}</a>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Categoría">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <a routerLink="/email/read-mail">
-                      <span class="badge badge-primary">{{ getCategoryName(row.categoryId) }}</span>
-                    </a>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Respuesta">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <button class="btn"
-                            [ngClass]="{'badge-outline col-green': (row | adminResponded | async), 'badge-outline col-red': !(row | adminResponded | async)}"
-                            [disabled]="true">
-                      <i *ngIf="(row | adminResponded | async)" class="bi bi-check"></i>
-                      <i *ngIf="!(row | adminResponded | async)" class="bi bi-x"></i>
-                    </button>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Fecha">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.createdAt }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Imagen">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <div *ngIf="row.ticketImages?.length > 0; else noImage">
-                      <img [src]="row.ticketImages[0].imagePath" alt="Click to view" class="thumbnail"
-                           (click)="openModal(content, row)" style="cursor: pointer; width: 100px; height: auto;">
-                    </div>
-                    <ng-template #noImage>
-                      <div
-                        style="max-width: 80%; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                        <span>No Image</span>
+            <div class="boxs mail_listing">
+              <div class="inbox-center table-responsive">
+                <ngx-datatable #table class="material" [rows]="tickets" [loadingIndicator]="loadingIndicator"
+                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                  [selected]="selectedTickets"
+                  [limit]="10" [selectionType]="SelectionType.checkbox" [scrollbarH]="scrollBarHorizontal"
+                  [reorderable]="reorderable">
+                  <ngx-datatable-column name="Seleccionar">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <label class="form-check-label">
+                        <input type="checkbox" [checked]="isTicketSelected(row)"
+                          (change)="onSelectTicket(row, $event.target.checked)">
+                          <span class="form-check-sign"></span>
+                        </label>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Estado">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="btn"
+                          [ngClass]="{'badge-outline col-green': row.status == true, 'badge-outline col-red': row.status == false}"
+                          [disabled]="true">
+                          {{ row.status == false ? 'Cerrado' : 'Abierto' }}
+                        </button>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Usuario">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a class="text-decoration-none">{{ row.userName }}</a>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Mensaje">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a class="text-decoration-none" role="button" (click)="openTicketMessage(row)">{{ row.subject }}</a>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Categoría">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a routerLink="/email/read-mail">
+                          <span class="badge badge-primary">{{ getCategoryName(row.categoryId) }}</span>
+                        </a>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Respuesta">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="btn"
+                          [ngClass]="{'badge-outline col-green': (row | adminResponded | async), 'badge-outline col-red': !(row | adminResponded | async)}"
+                          [disabled]="true">
+                          @if ((row | adminResponded | async)) {
+                            <i class="bi bi-check"></i>
+                          }
+                          @if (!(row | adminResponded | async)) {
+                            <i class="bi bi-x"></i>
+                          }
+                        </button>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Fecha">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.createdAt }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Imagen">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.ticketImages?.length > 0) {
+                          <div>
+                            <img [src]="row.ticketImages[0].imagePath" alt="Click to view" class="thumbnail"
+                              (click)="openModal(content, row)" style="cursor: pointer; width: 100px; height: auto;">
+                            </div>
+                          } @else {
+                            <div
+                              style="max-width: 80%; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                              <span>No Image</span>
+                            </div>
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
+                    </ngx-datatable>
+                    <ng-template #content let-modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Imágenes</h4>
+                        <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>
+                      </div>
+                      <div class="modal-body">
+                        @if (selectedTicket.images?.length) {
+                          <ngb-carousel>
+                            @for (img of selectedTicket.images; track img) {
+                              <ng-template ngbSlide>
+                                <img [src]="img.imagePath" alt="Slide image" class="img-fluid">
+                              </ng-template>
+                            }
+                          </ngb-carousel>
+                        }
                       </div>
                     </ng-template>
-                  </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
-              <ng-template #content let-modal>
-                <div class="modal-header">
-                  <h4 class="modal-title">Imágenes</h4>
-                  <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-7 ">
+                      <p class="p-15">Showing - {{ this.tickets.length }}</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  <ngb-carousel *ngIf="selectedTicket.images?.length">
-                    <ng-template ngbSlide *ngFor="let img of selectedTicket.images">
-                      <img [src]="img.imagePath" alt="Slide image" class="img-fluid">
-                    </ng-template>
-                  </ngb-carousel>
-                </div>
-              </ng-template>
-            </div>
-            <div class="row">
-              <div class="col-sm-7 ">
-                <p class="p-15">Showing - {{ this.tickets.length }}</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<app-create-admin-modal></app-create-admin-modal>
+      </section>
+      <app-create-admin-modal></app-create-admin-modal>

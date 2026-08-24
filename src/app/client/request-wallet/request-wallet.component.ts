@@ -2,7 +2,7 @@ import {Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA} from '@angul
 import {DatatableComponent, NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UntypedFormGroup, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+
 import {TranslateModule} from '@ngx-translate/core';
 import {IconsModule} from '@app/shared';
 import {RouterLink} from "@angular/router";
@@ -11,12 +11,7 @@ import {RouterLink} from "@angular/router";
   selector: 'app-request-wallet',
   templateUrl: './request-wallet.component.html',
   standalone: true,
-  imports: [CommonModule,
-    NgxDatatableModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    IconsModule,
-    RouterLink],
+  imports: [NgxDatatableModule, ReactiveFormsModule, TranslateModule, IconsModule, RouterLink],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {

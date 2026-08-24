@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -56,9 +56,8 @@ const header = [
     NgbDropdown,
     DataTableColumnCellDirective,
     NgbDropdownToggle,
-    NgIf,
     NgClass
-  ]
+]
 })
 export class AffiliatesListComponent implements OnInit {
   rows = [];
@@ -100,7 +99,7 @@ export class AffiliatesListComponent implements OnInit {
     this.loadAffiliateList();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();

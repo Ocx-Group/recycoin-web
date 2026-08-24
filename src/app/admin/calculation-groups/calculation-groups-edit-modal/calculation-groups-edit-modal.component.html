@@ -15,7 +15,7 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
@@ -24,90 +24,94 @@
     [formGroup]="editCalculationForm"
     [autocomplete]="off"
     (ngSubmit)="updateCalculationGroup()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="calculation_name">
             {{ 'CALCULATION-GROUPS-EDIT-MODAL.LBL-NAME.TEXT' | translate }}
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="calculation_name"
-            autocomplete="new_calculation_name"
-            formControlName="calculation_name"
-            placeholder="Nombre"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="calculation_name"
+              autocomplete="new_calculation_name"
+              formControlName="calculation_name"
+              placeholder="Nombre"
+              required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_calculation_controls.calculation_name.errors
             }"
-          />
-          <div
-            *ngIf="
-              submitted && edit_calculation_controls.calculation_name.errors
-            "
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="
-                edit_calculation_controls.calculation_name.errors.required
-              "
-            >
-              {{
-                'CALCULATION-GROUPS-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate
-              }}
+              />
+              @if (
+                submitted && edit_calculation_controls.calculation_name.errors
+                ) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (
+                    edit_calculation_controls.calculation_name.errors.required
+                    ) {
+                    <div
+                      >
+                      {{
+                      'CALCULATION-GROUPS-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate
+                      }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="description">
-            {{
-              'CALCULATION-GROUPS-EDIT-MODAL.LBL-DESCRIPTION.TEXT' | translate
-            }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="description"
-            id="description"
-            placeholder="Descripción"
-            required="required"
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="description">
+                {{
+                'CALCULATION-GROUPS-EDIT-MODAL.LBL-DESCRIPTION.TEXT' | translate
+                }}
+                <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  id="description"
+                  placeholder="Descripción"
+                  required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_calculation_controls.description.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_calculation_controls.description.errors"
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="edit_calculation_controls.description.errors.required"
-            >
-              {{
-                'CALCULATION-GROUPS-EDIT-MODAL.MSJ-ERROR-DESCRIPTION.TEXT'
-                  | translate
-              }}
+                  />
+                  @if (submitted && edit_calculation_controls.description.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (edit_calculation_controls.description.errors.required) {
+                        <div
+                          >
+                          {{
+                          'CALCULATION-GROUPS-EDIT-MODAL.MSJ-ERROR-DESCRIPTION.TEXT'
+                          | translate
+                          }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'CALCULATION-GROUPS-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        {{ 'CALCULATION-GROUPS-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
-</ng-template>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                {{ 'CALCULATION-GROUPS-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="modal.close('Close click')"
+                >
+                {{ 'CALCULATION-GROUPS-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
+              </button>
+            </div>
+          </form>
+        </ng-template>

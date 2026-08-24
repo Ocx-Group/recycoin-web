@@ -17,7 +17,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CommonModule } from '@angular/common';
+
 
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
@@ -34,14 +34,13 @@ import {
   templateUrl: './wallet.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     NgxDatatableModule,
     TranslateModule,
     TruncateDecimalsPipe,
     IconsModule,
     RouterLink,
-    ReusableDatatableComponent,
-  ],
+    ReusableDatatableComponent
+],
 })
 export class WalletComponent implements OnInit, AfterViewInit {
   balanceInformation: BalanceInformation = new BalanceInformation();

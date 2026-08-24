@@ -46,157 +46,159 @@
                             placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
                             }}"
-                          />
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
-                        <button
+                    <div class="col-sm-1">
+                      <div class="header-buttons-left">
+                        <div class="tbl-btn-style">
+                          <button
                           (click)="
                             createOpenModal(
                               modalChildCreate['incentivesCreateModal']
                             )
                           "
-                          class="btn btn-icon icon-left btn-primary rounded-button"
-                        >
-                          <i class="material-icons">add</i>
-                        </button>
+                            class="btn btn-icon icon-left btn-primary rounded-button"
+                            >
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2" >
-                        <button type="button" (click)="clipBoardCopy()" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'CLOSURE-CONCEPTS.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2" >
+                          <button type="button" (click)="clipBoardCopy()" class="btn btn-primary">
+                            <i class="bi bi-clipboard-check"></i>
+                            {{ 'CLOSURE-CONCEPTS.BTN-COPY.TEXT' | translate }}
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2" >
-                        <button type="button" (click)="onPrint()" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          {{ 'CLOSURE-CONCEPTS.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2" >
+                          <button type="button" (click)="onPrint()" class="btn btn-primary">
+                            <i class="bi bi-printer"></i>
+                            {{ 'CLOSURE-CONCEPTS.BTN-PRINT.TEXT' | translate }}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable
-                  #table
-                  class="material"
-                  [rows]="rows"
-                  [loadingIndicator]="loadingIndicator"
-                  columnMode="force"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  rowHeight="auto"
-                  [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal"
-                  [reorderable]="reorderable"
-                >
-                  <ngx-datatable-column name="Nombre de Incentivo">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                  <ngx-datatable
+                    #table
+                    class="material"
+                    [rows]="rows"
+                    [loadingIndicator]="loadingIndicator"
+                    columnMode="force"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    rowHeight="auto"
+                    [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal"
+                    [reorderable]="reorderable"
+                    >
+                    <ngx-datatable-column name="Nombre de Incentivo">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.name }}
+                      </ng-template>
+                    </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Descripción" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.description }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Estado de Incentivo">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div
-                        *ngIf="row.status == 1"
-                        class="badge-outline col-green"
-                      >
-                        Activo
-                      </div>
-                      <div
-                        *ngIf="row.status == 0"
-                        class="badge-outline col-red"
-                      >
-                        Inactivo
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Fecha de Registro">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.created_at }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Acciones">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button
-                          type="button"
-                          class="btn btn-outline-primary btn-sm"
-                          ngbDropdownToggle
-                        >
-                          Acciones
-                        </button>
-                        <div ngbDropdownMenu>
-                          <a
-                            ngbDropdownItem
-                            id="btn-edit"
+                    <ngx-datatable-column name="Descripción" sortable="false">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.description }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Estado de Incentivo">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.status == 1) {
+                          <div
+                            class="badge-outline col-green"
+                            >
+                            Activo
+                          </div>
+                        }
+                        @if (row.status == 0) {
+                          <div
+                            class="badge-outline col-red"
+                            >
+                            Inactivo
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Fecha de Registro">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.created_at }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Acciones">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div ngbDropdown container="body">
+                          <button
+                            type="button"
+                            class="btn btn-outline-primary btn-sm"
+                            ngbDropdownToggle
+                            >
+                            Acciones
+                          </button>
+                          <div ngbDropdownMenu>
+                            <a
+                              ngbDropdownItem
+                              id="btn-edit"
                             (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['incentivesEditModal'],
                                 row
                               )
                             "
-                          >
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">Editar</span>
-                          </a>
-                          <a
-                            ngbDropdownItem
-                            id="btn-edit"
+                              >
+                              <i class="fas fa-edit"></i>
+                              <span style="margin-left: 10px">Editar</span>
+                            </a>
+                            <a
+                              ngbDropdownItem
+                              id="btn-edit"
                             (click)="
                               modalChildDetails.detailsOpenModal(
                                 modalChildDetails['incentiveDetailsModal'],
                                 row
                               )
                             "
-                          >
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">Ver Detalles</span>
-                          </a>
+                              >
+                              <i class="fas fa-edit"></i>
+                              <span style="margin-left: 10px">Ver Detalles</span>
+                            </a>
 
-                          <a
-                            ngbDropdownItem
-                            id="btn-delete"
-                            (click)="deleteSingleRow(row.id)"
-                          >
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">Eliminar</span>
-                          </a>
+                            <a
+                              ngbDropdownItem
+                              id="btn-delete"
+                              (click)="deleteSingleRow(row.id)"
+                              >
+                              <i class="fas fa-trash-alt"></i>
+                              <span style="margin-left: 10px">Eliminar</span>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <app-incentives-list-create-modal
-    #modalChildCreate
-    (loadIncentiveList)="loadIncentiveList()"
-  ></app-incentives-list-create-modal>
-  <app-incentives-list-edit-modal
-    #modalChildEdit
-    (loadIncentiveList)="loadIncentiveList()"
-  >
-  </app-incentives-list-edit-modal>
-  <app-incentives-list-details-modal #modalChildDetails>
-  </app-incentives-list-details-modal>
-</section>
+    <app-incentives-list-create-modal
+      #modalChildCreate
+      (loadIncentiveList)="loadIncentiveList()"
+    ></app-incentives-list-create-modal>
+    <app-incentives-list-edit-modal
+      #modalChildEdit
+      (loadIncentiveList)="loadIncentiveList()"
+      >
+    </app-incentives-list-edit-modal>
+    <app-incentives-list-details-modal #modalChildDetails>
+    </app-incentives-list-details-modal>
+  </section>

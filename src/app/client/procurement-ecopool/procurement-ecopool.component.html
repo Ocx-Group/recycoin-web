@@ -16,8 +16,8 @@
           <div class="card-header">
             <h4>
               {{
-                'ECOPOOL-PAGE.TITTLE-PAGE.TEXT'
-                  | translate
+              'ECOPOOL-PAGE.TITTLE-PAGE.TEXT'
+              | translate
               }}
             </h4>
           </div>
@@ -36,92 +36,98 @@
                               </div>
                             </div>
                             <input style="background-color: white;" type="text" class="form-control"
-                                   id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
-                                   placeholder="{{ 'ECOPOOL-PAGE.SEARCH.TEXT' | translate }}">
+                              id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
+                              placeholder="{{ 'ECOPOOL-PAGE.SEARCH.TEXT' | translate }}">
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.NUM-BILL-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.noBill }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.noBill }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.DATE-INIT-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.date }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.date }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.PACKS-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.pack }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.pack }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.AMOUNT-BASE-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.baseAmount }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.baseAmount }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.PERCENTAGE-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.percentage }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.percentage }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                     'ECOPOOL-PAGE.PAYMENTS-COLUMN.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.payment }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.payment }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.STATE-COLUMN.TEXT' | translate
                       }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.state == 'Activa'" class="badge-outline col-green">
-                        {{ row.state }}
-                      </div>
-                      <div *ngIf="row.state == 'Inactiva'" class="badge-outline col-red">
-                        {{ row.state }}
-                      </div>
-                      <div *ngIf="row.state == 'Pending'" class="badge-outline col-indigo">
-                        {{ row.state }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.state == 'Activa') {
+                          <div class="badge-outline col-green">
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'Inactiva') {
+                          <div class="badge-outline col-red">
+                            {{ row.state }}
+                          </div>
+                        }
+                        @if (row.state == 'Pending') {
+                          <div class="badge-outline col-indigo">
+                            {{ row.state }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'ECOPOOL-PAGE.DETAILS-COLUMN.TEXT' | translate
                     }}" sortable="false">
-                    <ng-template ngx-datatable-cell-template>
-                      <a class="msr-2 h-auto tblEditBtn">
-                        <i class="bi bi-folder2-open">{{
+                      <ng-template ngx-datatable-cell-template>
+                        <a class="msr-2 h-auto tblEditBtn">
+                          <i class="bi bi-folder2-open">{{
                             'ECOPOOL-PAGE.BTN-SEE-DETAILS.TEXT'
-                              | translate
+                            | translate
                           }}</i>
-                      </a>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                        </a>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

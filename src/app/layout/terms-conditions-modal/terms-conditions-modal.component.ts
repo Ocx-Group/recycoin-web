@@ -6,14 +6,14 @@ import { TermsConditionsService } from '@app/core/service/terms-conditions-servi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-terms-conditions-modal',
     templateUrl: './terms-conditions-modal.component.html',
     styleUrls: ['./terms-conditions-modal.component.scss'],
     standalone: true,
-    imports: [CommonModule]
+    imports: []
 })
 export class TermsConditionsModalComponent implements OnInit, OnDestroy {
   @ViewChild('termsModal', { static: true }) termsModal: TemplateRef<any>;

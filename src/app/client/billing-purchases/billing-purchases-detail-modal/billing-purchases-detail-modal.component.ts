@@ -5,13 +5,13 @@ import { AffiliateService } from '../../../core/service/affiliate-service/affili
 import { AuthService } from '../../../core/service/authentication-service/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-billing-purchases-detail-modal',
   templateUrl: './billing-purchases-detail-modal.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class BillingPurchasesDetailModalComponent implements OnInit {
   protected invoice: Invoice = new Invoice();

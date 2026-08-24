@@ -9,7 +9,7 @@ import {ProductsRequests, WalletRequest} from "@app/core/models/wallet-model/wal
 import {WalletService} from "@app/core/service/wallet-service/wallet.service";
 import {ProductService} from "@app/core/service/product-service/product.service";
 import {Product} from "@app/core/models/product-model/product.model";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-make-purchase-modal',
@@ -17,9 +17,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./make-purchase-modal.component.sass'],
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule
-  ]
+]
 })
 export class MakePurchaseModalComponent implements OnInit {
   makePurchaseForm: FormGroup;

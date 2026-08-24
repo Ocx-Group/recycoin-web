@@ -1,5 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
@@ -9,7 +9,7 @@ import { ReusableDatatableComponent, TableColumn, TableAction, TableConfig } fro
     selector: 'app-billing-orders',
     templateUrl: './billing-orders.component.html',
     standalone: true,
-    imports: [CommonModule, RouterModule, TranslateModule, IconsModule, ReusableDatatableComponent],
+    imports: [RouterModule, TranslateModule, IconsModule, ReusableDatatableComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BillingOrdersComponent implements OnInit {

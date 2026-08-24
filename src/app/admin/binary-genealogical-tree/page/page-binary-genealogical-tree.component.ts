@@ -8,7 +8,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {
   BinaryGenealogicalTreeComponent
 } from "../binary-genealogical-tree-component/binary-genealogical-tree.component";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-page-binary-genealogical-tree',
@@ -16,12 +16,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./page-binary-genealogical-tree.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     BinaryGenealogicalTreeComponent,
     RouterLink,
     NgxSpinnerComponent
-  ]
+]
 })
 export class PageBinaryGenealogicalTreeComponent implements OnInit {
 

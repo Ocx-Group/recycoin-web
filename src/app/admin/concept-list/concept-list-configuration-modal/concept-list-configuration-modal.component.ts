@@ -10,16 +10,15 @@ import {
   ConceptConfigurationService
 } from "../../../core/service/concept-configuration-service/concept-configuration.service";
 import {FormsModule} from "@angular/forms";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-concept-list-configuration-modal',
   templateUrl: './concept-list-configuration-modal.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule
-  ]
+]
 })
 export class ConceptListConfigurationModalComponent implements OnInit {
   // conceptConfigurationForm!: FormGroup;

@@ -42,7 +42,7 @@ import {
 } from "../../../core/service/product-attribute-value/product-attribute-value.service";
 import {ProductCombinationService} from "../../../core/service/product-combination-service/product-combination.service";
 import {ProductInventoryService} from "../../../core/service/product-inventory-service/product-inventory.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";

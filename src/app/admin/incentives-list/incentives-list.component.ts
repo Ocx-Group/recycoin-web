@@ -17,7 +17,7 @@ import {IncentivesListEditModalComponent} from "./incentives-list-edit-modal/inc
 import {
   IncentivesListDetailsModalComponent
 } from "./incentives-list-details-modal/incentives-list-details-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', 'Fecha de Registro'];
 
@@ -27,7 +27,6 @@ const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', '
   providers: [ToastrService],
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -41,7 +40,7 @@ const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', '
     IncentivesListCreateModalComponent,
     IncentivesListEditModalComponent,
     IncentivesListDetailsModalComponent
-  ]
+]
 })
 export class IncentivesListComponent implements OnInit {
   rows = [];

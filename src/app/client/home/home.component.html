@@ -192,57 +192,59 @@
         </div>
       </div>
 
-          <!-- Balance Information Table -->
-          <div *ngIf="balanceInformation && isBalanceInformationValid(balanceInformation)"
-               class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-          <div class="card-header">
-            <h4 class="badge-outline col-green">{{ 'HOME-PAGE-CLIENT.INFORMATION-2.TEXT' | translate }}</h4>
-          </div>
-          <div class="card-body">
-            <div id="chart1">
-              <apx-chart [series]="pieChartOptions.series" [chart]="pieChartOptions.chart"
-                [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
-                [dataLabels]="pieChartOptions.dataLabels" [legend]="pieChartOptions.legend"
-                [colors]="pieChartOptions.colors" class="apex-pie-center">
-              </apx-chart>
+      <!-- Balance Information Table -->
+      @if (balanceInformation && isBalanceInformationValid(balanceInformation)) {
+        <div
+          class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="badge-outline col-green">{{ 'HOME-PAGE-CLIENT.INFORMATION-2.TEXT' | translate }}</h4>
             </div>
-            <div class="table m-t-5">
-              <table class="table align-items-center table-row-border">
-                <tbody>
-                  <tr>
-                    <td class="col-blue">
-                      <i class="fa fa-circle col-blue msr-2"></i>
-                      {{ 'HOME-PAGE-CLIENT.AVAILABLE-BALANCE.TEXT' | translate }}
-                    </td>
-                    <td class="col-blue notranslate">
-                      USD ${{ balanceInformation.availableBalance ?? 0 | truncateDecimals:2 }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col-emerald">
-                      <i class="fa fa-circle col-emerald msr-2"></i>
-                      {{ 'HOME-PAGE-CLIENT.TOTAL-PAID.TEXT' | translate }}
-                    </td>
-                    <td class="col-emerald notranslate">
-                      USD ${{ balanceInformation.totalCommissionsPaid ?? 0 | truncateDecimals:2 }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col-green">
-                      <i class="fa fa-circle col-green msr-2"></i>
-                      {{ 'HOME-PAGE-CLIENT.TOTAL-ACQUISITIONS.TEXT' | translate }}
-                    </td>
-                    <td class="col-green notranslate">
-                      USD ${{ balanceInformation.totalAcquisitions ?? 0 }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body">
+              <div id="chart1">
+                <apx-chart [series]="pieChartOptions.series" [chart]="pieChartOptions.chart"
+                  [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
+                  [dataLabels]="pieChartOptions.dataLabels" [legend]="pieChartOptions.legend"
+                  [colors]="pieChartOptions.colors" class="apex-pie-center">
+                </apx-chart>
+              </div>
+              <div class="table m-t-5">
+                <table class="table align-items-center table-row-border">
+                  <tbody>
+                    <tr>
+                      <td class="col-blue">
+                        <i class="fa fa-circle col-blue msr-2"></i>
+                        {{ 'HOME-PAGE-CLIENT.AVAILABLE-BALANCE.TEXT' | translate }}
+                      </td>
+                      <td class="col-blue notranslate">
+                        USD ${{ balanceInformation.availableBalance ?? 0 | truncateDecimals:2 }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col-emerald">
+                        <i class="fa fa-circle col-emerald msr-2"></i>
+                        {{ 'HOME-PAGE-CLIENT.TOTAL-PAID.TEXT' | translate }}
+                      </td>
+                      <td class="col-emerald notranslate">
+                        USD ${{ balanceInformation.totalCommissionsPaid ?? 0 | truncateDecimals:2 }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col-green">
+                        <i class="fa fa-circle col-green msr-2"></i>
+                        {{ 'HOME-PAGE-CLIENT.TOTAL-ACQUISITIONS.TEXT' | translate }}
+                      </td>
+                      <td class="col-green notranslate">
+                        USD ${{ balanceInformation.totalAcquisitions ?? 0 }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
 
       <!-- First Chart -->
       <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-4">
@@ -258,12 +260,14 @@
               <div id="new-orders" class="media-list position-relative h-100" style="max-height: 200px !important; overflow-y: auto;">
                 <div class="table">
                   <table id="new-orders-table" class="table table-hover table-xl table-row-border mb-0">
-                    <tbody *ngFor="let item of maps">
-                      <tr>
-                        <td class="text-truncate">{{ item.Title }}</td>
-                        <td class="text-truncate">{{ item.Value }}</td>
-                      </tr>
-                    </tbody>
+                    @for (item of maps; track item) {
+                      <tbody>
+                        <tr>
+                          <td class="text-truncate">{{ item.Title }}</td>
+                          <td class="text-truncate">{{ item.Value }}</td>
+                        </tr>
+                      </tbody>
+                    }
                   </table>
                 </div>
               </div>

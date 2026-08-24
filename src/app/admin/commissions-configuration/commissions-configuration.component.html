@@ -6,157 +6,170 @@
     <li class="breadcrumb-item bcrumb-1">
       <a routerLink="/dashboard/main">
         <i class="fas fa-home font-17"></i></a>
-    </li>
-    <li class="breadcrumb-item">{{ 'COMMISSIONS-CONFIGURATION-PAGE.BREADCRUMB.TEXT' | translate }}</li>
-  </ul>
-  <div class="section-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>{{ 'COMMISSIONS-CONFIGURATION-PAGE.TITLE.TEXT' | translate }}</h4>
-          </div>
-          <div class="card-body">
-            <div *ngIf="loading" class="text-center py-5">
-              <div class="spinner-border text-primary" role="status"></div>
-              <p class="mt-3 mb-0">{{ 'COMMISSIONS-CONFIGURATION-PAGE.LOADING.TEXT' | translate }}</p>
+      </li>
+      <li class="breadcrumb-item">{{ 'COMMISSIONS-CONFIGURATION-PAGE.BREADCRUMB.TEXT' | translate }}</li>
+    </ul>
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>{{ 'COMMISSIONS-CONFIGURATION-PAGE.TITLE.TEXT' | translate }}</h4>
             </div>
+            <div class="card-body">
+              @if (loading) {
+                <div class="text-center py-5">
+                  <div class="spinner-border text-primary" role="status"></div>
+                  <p class="mt-3 mb-0">{{ 'COMMISSIONS-CONFIGURATION-PAGE.LOADING.TEXT' | translate }}</p>
+                </div>
+              }
 
-            <form *ngIf="!loading" [formGroup]="commissionsForm" (ngSubmit)="save()">
-              <div class="alert alert-light border d-flex justify-content-between flex-wrap gap-2">
-                <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.NOTICE.TEXT' | translate }}</span>
-                <small *ngIf="currentBrandId">
-                  {{ 'COMMISSIONS-CONFIGURATION-PAGE.BRAND-ID.TEXT' | translate }} #{{ currentBrandId }}
-                </small>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-7">
-                  <div class="card border">
-                    <div class="card-body">
-                      <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="commissionEnabled"
-                          formControlName="commissionEnabled">
-                        <label class="form-check-label fw-bold" for="commissionEnabled">
-                          {{ 'COMMISSIONS-CONFIGURATION-PAGE.ENABLED.TEXT' | translate }}
-                        </label>
-                        <div class="text-muted small">
-                          {{ 'COMMISSIONS-CONFIGURATION-PAGE.ENABLED-HELP.TEXT' | translate }}
+              @if (!loading) {
+                <form [formGroup]="commissionsForm" (ngSubmit)="save()">
+                  <div class="alert alert-light border d-flex justify-content-between flex-wrap gap-2">
+                    <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.NOTICE.TEXT' | translate }}</span>
+                    @if (currentBrandId) {
+                      <small>
+                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.BRAND-ID.TEXT' | translate }} #{{ currentBrandId }}
+                      </small>
+                    }
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <div class="card border">
+                        <div class="card-body">
+                          <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="commissionEnabled"
+                              formControlName="commissionEnabled">
+                            <label class="form-check-label fw-bold" for="commissionEnabled">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ENABLED.TEXT' | translate }}
+                            </label>
+                            <div class="text-muted small">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ENABLED-HELP.TEXT' | translate }}
+                            </div>
+                          </div>
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="dailyBonusAlwaysDistribute"
+                              formControlName="dailyBonusAlwaysDistribute">
+                            <label class="form-check-label fw-bold" for="dailyBonusAlwaysDistribute">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ALWAYS-DISTRIBUTE.TEXT' | translate }}
+                            </label>
+                            <div class="text-muted small">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ALWAYS-DISTRIBUTE-HELP.TEXT' | translate }}
+                            </div>
+                          </div>
                         </div>
                       </div>
-
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="dailyBonusAlwaysDistribute"
-                          formControlName="dailyBonusAlwaysDistribute">
-                        <label class="form-check-label fw-bold" for="dailyBonusAlwaysDistribute">
-                          {{ 'COMMISSIONS-CONFIGURATION-PAGE.ALWAYS-DISTRIBUTE.TEXT' | translate }}
-                        </label>
-                        <div class="text-muted small">
-                          {{ 'COMMISSIONS-CONFIGURATION-PAGE.ALWAYS-DISTRIBUTE-HELP.TEXT' | translate }}
+                      <div class="card border mt-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                          <h6 class="mb-0">{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVELS.TEXT' | translate }}</h6>
+                          <button type="button" class="btn btn-sm btn-outline-primary" (click)="addLevel()"
+                            [disabled]="!canAddLevel || saving">
+                            {{ 'COMMISSIONS-CONFIGURATION-PAGE.ADD-LEVEL.TEXT' | translate }}
+                          </button>
+                        </div>
+                        <div class="card-body">
+                          @if (levels.length === 0) {
+                            <p class="text-muted mb-0">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.NO-LEVELS.TEXT' | translate }}
+                            </p>
+                          }
+                          <div formArrayName="commissionLevels">
+                            @for (level of levels.controls; track level; let i = $index) {
+                              <div class="row align-items-center mb-2"
+                                >
+                                <div class="col-4 col-md-3">
+                                  <label class="form-label mb-0" [attr.for]="'level-' + i">
+                                    {{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVEL.TEXT' | translate }} {{ i + 1 }}
+                                  </label>
+                                </div>
+                                <div class="col-6 col-md-7">
+                                  <div class="input-group">
+                                    <input [id]="'level-' + i" type="number" class="form-control" min="0" max="100"
+                                      step="0.01" [formControlName]="i">
+                                    <span class="input-group-text">%</span>
+                                  </div>
+                                  @if (levelHasError(i)) {
+                                    <small class="text-danger">
+                                      {{ 'COMMISSIONS-CONFIGURATION-PAGE.INVALID-LEVEL.TEXT' | translate }}
+                                    </small>
+                                  }
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeLevel(i)"
+                                    [disabled]="saving"
+                                    [attr.aria-label]="'COMMISSIONS-CONFIGURATION-PAGE.REMOVE-LEVEL.TEXT' | translate">
+                                    <i class="fas fa-trash"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            }
+                          </div>
+                          @if (formError('levelsRequired')) {
+                            <small class="text-danger d-block mt-2">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ERR-LEVELS-REQUIRED.TEXT' | translate }}
+                            </small>
+                          }
+                          @if (formError('totalExceeded')) {
+                            <small class="text-danger d-block mt-2">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.ERR-TOTAL-EXCEEDED.TEXT' | translate }} {{ maxTotal }}%
+                            </small>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <div class="card border">
+                        <div class="card-body">
+                          <h6 class="mb-3">{{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY.TEXT' | translate }}</h6>
+                          @if (!isEnabled) {
+                            <p class="text-muted">
+                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY-DISABLED.TEXT' | translate }}
+                            </p>
+                          }
+                          @if (isEnabled) {
+                            <ul class="list-unstyled mb-3">
+                              @for (level of levels.controls; track level; let i = $index) {
+                                <li
+                                  class="d-flex justify-content-between border-bottom py-1">
+                                  <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVEL.TEXT' | translate }} {{ i + 1 }}</span>
+                                  <strong>{{ level.value || 0 }}%</strong>
+                                </li>
+                              }
+                            </ul>
+                          }
+                          <div class="d-flex justify-content-between">
+                            <span class="fw-bold">{{ 'COMMISSIONS-CONFIGURATION-PAGE.TOTAL.TEXT' | translate }}</span>
+                            <strong [class.text-danger]="totalPercentage > maxTotal">{{ totalPercentage }}%</strong>
+                          </div>
+                          <div class="text-muted small mt-3">
+                            {{ 'COMMISSIONS-CONFIGURATION-PAGE.MAX-LEVELS.TEXT' | translate }} {{ maxLevels }}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="card border mt-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                      <h6 class="mb-0">{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVELS.TEXT' | translate }}</h6>
-                      <button type="button" class="btn btn-sm btn-outline-primary" (click)="addLevel()"
-                        [disabled]="!canAddLevel || saving">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.ADD-LEVEL.TEXT' | translate }}
+                  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+                    @if (updatedAt) {
+                      <small>
+                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.UPDATED-AT.TEXT' | translate }} {{ updatedAt | date:'medium' }}
+                      </small>
+                    }
+                    <div class="ms-auto d-flex gap-2">
+                      <button type="button" class="btn btn-outline-secondary" (click)="load()" [disabled]="saving">
+                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.RELOAD.TEXT' | translate }}
+                      </button>
+                      <button type="submit" class="btn btn-primary" [disabled]="commissionsForm.invalid || saving">
+                        {{ (saving ? 'COMMISSIONS-CONFIGURATION-PAGE.SAVING.TEXT' :
+                        'COMMISSIONS-CONFIGURATION-PAGE.SAVE.TEXT') | translate }}
                       </button>
                     </div>
-                    <div class="card-body">
-                      <p *ngIf="levels.length === 0" class="text-muted mb-0">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.NO-LEVELS.TEXT' | translate }}
-                      </p>
-
-                      <div formArrayName="commissionLevels">
-                        <div class="row align-items-center mb-2"
-                          *ngFor="let level of levels.controls; let i = index">
-                          <div class="col-4 col-md-3">
-                            <label class="form-label mb-0" [attr.for]="'level-' + i">
-                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVEL.TEXT' | translate }} {{ i + 1 }}
-                            </label>
-                          </div>
-                          <div class="col-6 col-md-7">
-                            <div class="input-group">
-                              <input [id]="'level-' + i" type="number" class="form-control" min="0" max="100"
-                                step="0.01" [formControlName]="i">
-                              <span class="input-group-text">%</span>
-                            </div>
-                            <small class="text-danger" *ngIf="levelHasError(i)">
-                              {{ 'COMMISSIONS-CONFIGURATION-PAGE.INVALID-LEVEL.TEXT' | translate }}
-                            </small>
-                          </div>
-                          <div class="col-2 col-md-2 text-end">
-                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeLevel(i)"
-                              [disabled]="saving"
-                              [attr.aria-label]="'COMMISSIONS-CONFIGURATION-PAGE.REMOVE-LEVEL.TEXT' | translate">
-                              <i class="fas fa-trash"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <small class="text-danger d-block mt-2" *ngIf="formError('levelsRequired')">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.ERR-LEVELS-REQUIRED.TEXT' | translate }}
-                      </small>
-                      <small class="text-danger d-block mt-2" *ngIf="formError('totalExceeded')">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.ERR-TOTAL-EXCEEDED.TEXT' | translate }} {{ maxTotal }}%
-                      </small>
-                    </div>
                   </div>
-                </div>
-
-                <div class="col-lg-5">
-                  <div class="card border">
-                    <div class="card-body">
-                      <h6 class="mb-3">{{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY.TEXT' | translate }}</h6>
-
-                      <p *ngIf="!isEnabled" class="text-muted">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY-DISABLED.TEXT' | translate }}
-                      </p>
-
-                      <ul *ngIf="isEnabled" class="list-unstyled mb-3">
-                        <li *ngFor="let level of levels.controls; let i = index"
-                          class="d-flex justify-content-between border-bottom py-1">
-                          <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVEL.TEXT' | translate }} {{ i + 1 }}</span>
-                          <strong>{{ level.value || 0 }}%</strong>
-                        </li>
-                      </ul>
-
-                      <div class="d-flex justify-content-between">
-                        <span class="fw-bold">{{ 'COMMISSIONS-CONFIGURATION-PAGE.TOTAL.TEXT' | translate }}</span>
-                        <strong [class.text-danger]="totalPercentage > maxTotal">{{ totalPercentage }}%</strong>
-                      </div>
-
-                      <div class="text-muted small mt-3">
-                        {{ 'COMMISSIONS-CONFIGURATION-PAGE.MAX-LEVELS.TEXT' | translate }} {{ maxLevels }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
-                <small *ngIf="updatedAt">
-                  {{ 'COMMISSIONS-CONFIGURATION-PAGE.UPDATED-AT.TEXT' | translate }} {{ updatedAt | date:'medium' }}
-                </small>
-                <div class="ms-auto d-flex gap-2">
-                  <button type="button" class="btn btn-outline-secondary" (click)="load()" [disabled]="saving">
-                    {{ 'COMMISSIONS-CONFIGURATION-PAGE.RELOAD.TEXT' | translate }}
-                  </button>
-                  <button type="submit" class="btn btn-primary" [disabled]="commissionsForm.invalid || saving">
-                    {{ (saving ? 'COMMISSIONS-CONFIGURATION-PAGE.SAVING.TEXT' :
-                    'COMMISSIONS-CONFIGURATION-PAGE.SAVE.TEXT') | translate }}
-                  </button>
-                </div>
-              </div>
-            </form>
+                </form>
+              }
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

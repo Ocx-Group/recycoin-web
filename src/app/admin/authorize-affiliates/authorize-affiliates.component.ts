@@ -19,7 +19,7 @@ import {UserAffiliate} from "../../core/models/user-affiliate-model/user.affilia
 import {
   AuthorizeAffiliatesEditModalComponent
 } from "./authorize-affiliates-edit-modal/authorize-affiliates-edit-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 
 interface Alert {
@@ -51,7 +51,6 @@ const header = [
   providers: [ToastrService],
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -64,7 +63,7 @@ const header = [
     NgbDropdownMenu,
     NgbDropdownItem,
     AuthorizeAffiliatesEditModalComponent
-  ]
+]
 })
 export class AuthorizeAffiliatesComponent implements OnInit {
   alerts: Alert[];

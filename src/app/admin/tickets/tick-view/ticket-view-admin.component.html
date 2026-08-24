@@ -6,48 +6,50 @@
     <li class="breadcrumb-item bcrumb-1">
       <a routerLink="/admin/tickets-for-admin">
         <i class="fas fa-home font-17"></i></a>
-    </li>
-    <li class="breadcrumb-item">Ticket #{{ ticket?.id }}</li>
-  </ul>
-  <div class="section-body">
-    <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-          <div class="chat">
-            <div class="chat-header clearfix">
-              <img [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/users/user-1.png'"
-                alt="avatar">
-              <div class="chat-about">
-                <div class="chat-with">{{ user.name }} {{ user.last_name }}</div>
-                <button class="btn btn-info" (click)="showTicketDetails()">Detalles</button>
+      </li>
+      <li class="breadcrumb-item">Ticket #{{ ticket?.id }}</li>
+    </ul>
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="chat">
+              <div class="chat-header clearfix">
+                <img [src]="user.image_profile_url ? user.image_profile_url : 'assets/images/users/user-1.png'"
+                  alt="avatar">
+                  <div class="chat-about">
+                    <div class="chat-with">{{ user.name }} {{ user.last_name }}</div>
+                    <button class="btn btn-info" (click)="showTicketDetails()">Detalles</button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="chat-box">
-            <div class="card-body chat-content" style="position: relative; max-height: 400px; overflow-y: auto;" #scrollMe
-              >
-              <div *ngFor="let message of messages" class="chat-item"
-                   [ngClass]="{'chat-right': isAdmin(message.userId), 'chat-left': !isAdmin(message.userId)}">
-                <img [src]="message.imageProfileUrl || 'assets/images/users/user-1.png'" alt="User avatar">
-                <div class="chat-details">
-                  <div class="chat-text">{{ message.messageContent }}</div>
-                  <div class="chat-user font-weight-bold">{{ message.userName }}</div>
-                  <div class="chat-time">{{ message.createdAt | date: 'shortTime' }}</div>
+              <div class="chat-box">
+                <div class="card-body chat-content" style="position: relative; max-height: 400px; overflow-y: auto;" #scrollMe
+                  >
+                  @for (message of messages; track message) {
+                    <div class="chat-item"
+                      [ngClass]="{'chat-right': isAdmin(message.userId), 'chat-left': !isAdmin(message.userId)}">
+                      <img [src]="message.imageProfileUrl || 'assets/images/users/user-1.png'" alt="User avatar">
+                      <div class="chat-details">
+                        <div class="chat-text">{{ message.messageContent }}</div>
+                        <div class="chat-user font-weight-bold">{{ message.userName }}</div>
+                        <div class="chat-time">{{ message.createdAt | date: 'shortTime' }}</div>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="card-footer chat-form">
+                  <form id="chat-form">
+                    <input [(ngModel)]="newMessage" name="message" type="text" class="form-control"
+                      placeholder="Type a message">
+                      <button (click)="sendMessage()" class="btn btn-primary">
+                        <i class="far fa-paper-plane"></i>
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card-footer chat-form">
-              <form id="chat-form">
-                <input [(ngModel)]="newMessage" name="message" type="text" class="form-control"
-                  placeholder="Type a message">
-                <button (click)="sendMessage()" class="btn btn-primary">
-                  <i class="far fa-paper-plane"></i>
-                </button>
-              </form>
-            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>

@@ -10,209 +10,245 @@
 
   <div class="modal-body">
     <!-- Paso 1: Seleccionar flujo -->
-    <div *ngIf="currentStep === 1" class="d-flex justify-content-around py-4">
-      <button class="btn" [ngClass]="selectedFlow === 'purchase' ? 'btn-primary' : 'btn-outline-primary'"
-        (click)="selectFlow('purchase')">
-        {{ 'THIRD_PARTY_PURCHASE.PURCHASE_RECYCOINS' | translate }}
-      </button>
-      <button class="btn" [ngClass]="selectedFlow === 'matrix' ? 'btn-success' : 'btn-outline-success'"
-        (click)="selectFlow('matrix')">
-        {{ 'THIRD_PARTY_PURCHASE.FLOW_MATRIX' | translate }}
-      </button>
-    </div>
+    @if (currentStep === 1) {
+      <div class="d-flex justify-content-around py-4">
+        <button class="btn" [ngClass]="selectedFlow === 'purchase' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="selectFlow('purchase')">
+          {{ 'THIRD_PARTY_PURCHASE.PURCHASE_RECYCOINS' | translate }}
+        </button>
+        <button class="btn" [ngClass]="selectedFlow === 'matrix' ? 'btn-success' : 'btn-outline-success'"
+          (click)="selectFlow('matrix')">
+          {{ 'THIRD_PARTY_PURCHASE.FLOW_MATRIX' | translate }}
+        </button>
+      </div>
+    }
 
     <!-- FLUJO COMPRA: pasos 2–4 -->
-    <ng-container *ngIf="selectedFlow === 'purchase'">
+    @if (selectedFlow === 'purchase') {
       <!-- Paso 2: Selección de recycoins -->
-      <div *ngIf="currentStep === 2">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2">
-          <div class="col" *ngFor="let recycoin of recycoins">
-            <div class="card h-100" [class.selected]="isSelected(recycoin)">
-              <img [ngSrc]="recycoin.image" width="15" height="15" class="card-img-top" [alt]="recycoin.name">
-              <div class="card-body p-2">
-                <h6 class="card-title fs-6">{{ recycoin.name }}</h6>
-                <p class="card-text mb-1">
-                  <small>{{ 'THIRD_PARTY_PURCHASE.PRICE' | translate }}: {{ recycoin.baseAmount | currency }}</small>
-                </p>
-              </div>
-              <div class="card-footer bg-transparent border-top-0 p-2">
-                <button class="btn btn-sm w-100" [class.btn-primary]="!isSelected(recycoin)"
-                  [class.btn-success]="isSelected(recycoin)" (click)="toggleSelection(recycoin)">
-                  {{ (isSelected(recycoin)
-                  ? 'THIRD_PARTY_PURCHASE.SELECTED'
-                  : 'THIRD_PARTY_PURCHASE.SELECT') | translate }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Paso 3: Revisión y método de pago -->
-      <div *ngIf="currentStep === 3">
-        <h5>{{ 'THIRD_PARTY_PURCHASE.REVIEW_SELECTION' | translate }}</h5>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between align-items-center"
-            *ngFor="let item of selectedItems">
-            {{ item.name }}
-            <span>{{ item.baseAmount | currency }}</span>
-          </li>
-        </ul>
-        <div class="mb-4">
-          <strong>{{ 'THIRD_PARTY_PURCHASE.TOTAL' | translate }}: {{ getTotalAmount() | currency }}</strong>
-        </div>
-
-        <h5>{{ 'THIRD_PARTY_PURCHASE.SELECT_PAYMENT_METHOD' | translate }}</h5>
-        <div class="form-check mb-2">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="coinpayMethod"
-            [(ngModel)]="paymentMethod" value="coinpay">
-          <label class="form-check-label" for="coinpayMethod">
-            {{ 'THIRD_PARTY_PURCHASE.COINPAY' | translate }}
-          </label>
-        </div>
-        <div *ngIf="!isReachedWithdrawalLimit" class="form-check mb-2">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="walletMethod"
-            [(ngModel)]="paymentMethod" value="wallet">
-          <label class="form-check-label" for="walletMethod">
-            {{ 'THIRD_PARTY_PURCHASE.WALLET' | translate }}
-          </label>
-        </div>
-        <div *ngIf="paymentMethod === 'wallet'" class="mt-2">
-          <p>{{ 'THIRD_PARTY_PURCHASE.AVAILABLE_BALANCE' | translate }}: {{ walletBalance | currency }}</p>
-        </div>
-      </div>
-
-      <!-- Paso 4: Detalle de pago (QR / Wallet) -->
-      <div *ngIf="currentStep === 4">
-        <!-- CoinPay -->
-        <div *ngIf="paymentMethod === 'coinpay'" class="coinpay-container">
-          <div *ngIf="qrCodeData" class="qr-code-section">
-            <div class="qr-code-wrapper">
-              <img [ngSrc]="qrCodeData" width="200" height="200" class="qr-code" alt="CoinPay QR Code">
-            </div>
-            <div class="payment-details">
-              <h5 class="payment-title">BEP20</h5>
-              <img class="payment-detail network-icon" title="BEP20" ngSrc="assets/images/crypto/bep20.png" [width]="65"
-                [height]="65" alt="BEP20-network" />
-              <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
-              <div class="detail-item">
-                <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
-                <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
-                <span class="detail-value highlight">{{ getTotalAmount() | currency }}</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.TRANSACTION_ID' | translate }}:</span>
-                <span class="detail-value">{{ coinpayTransactionId }}</span>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="!qrCodeData" class="loading-indicator">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">{{ 'THIRD_PARTY_PURCHASE.LOADING' | translate }}</span>
-            </div>
-            <p class="mt-2">{{ 'THIRD_PARTY_PURCHASE.GENERATING_QR' | translate }}</p>
-          </div>
-          <div class="payment-address mt-4">
-            <h6>{{ 'THIRD_PARTY_PURCHASE.PAYMENT_ADDRESS' | translate }}:</h6>
-            <div class="address-container">
-              <code class="address">{{ paymentAddress }}</code>
-              <button class="btn btn-outline-secondary btn-sm ms-2" (click)="copyToClipboard(paymentAddress)">
-                <i class="bi bi-clipboard"></i> {{ 'THIRD_PARTY_PURCHASE.COPY' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Wallet -->
-        <div *ngIf="paymentMethod === 'wallet'" class="wallet-container p-4">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <h5>{{ 'THIRD_PARTY_PURCHASE.AVAILABLE_BALANCE' | translate }}</h5>
-              <p class="h3 text-success">{{ walletBalance | currency }}</p>
-            </div>
-            <div class="col-md-6 mb-3">
-              <h5>{{ 'THIRD_PARTY_PURCHASE.TOTAL' | translate }}</h5>
-              <p class="h3 text-danger">{{ getTotalAmount() | currency }}</p>
-            </div>
-          </div>
-          <div class="mt-4">
-            <div *ngIf="walletBalance >= getTotalAmount()" class="alert alert-success">
-              <i class="bi bi-check-circle-fill me-2"></i>
-              {{ 'THIRD_PARTY_PURCHASE.SUFFICIENT_BALANCE' | translate }}
-            </div>
-            <div *ngIf="walletBalance < getTotalAmount()" class="alert alert-warning">
-              <i class="bi bi-exclamation-triangle-fill me-2"></i>
-              {{ 'THIRD_PARTY_PURCHASE.INSUFFICIENT_BALANCE' | translate }}
-            </div>
-          </div>
-          <div class="payment-details mt-4">
-            <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
-            <div class="detail-item">
-              <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
-              <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
-              <span class="detail-value highlight">{{ getTotalAmount() | currency }}</span>
-            </div>
-          </div>
-          <div class="d-grid gap-2 col-6 mx-auto mt-4">
-            <button class="btn btn-primary btn-lg" (click)="processWalletPayment()"
-              [disabled]="walletBalance < getTotalAmount()">
-              <i class="bi bi-wallet2 me-2"></i>
-              {{ 'THIRD_PARTY_PURCHASE.CONFIRM_PAYMENT' | translate }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- FLUJO MATRICES: pasos 2 -->
-    <ng-container *ngIf="selectedFlow === 'matrix'">
-      <div *ngIf="currentStep === 2">
-        <h4 class="text-center mb-4">
-          {{ 'THIRD_PARTY_PURCHASE.USER' | translate }} {{ userReceivingPurchase?.user_name }}
-        </h4>
-        <div *ngIf="currentStep === 2">
-          <div class="row row-cols-1 row-cols-md-2 g-3">
-            <div class="col" *ngFor="let config of matrixConfigurations">
-              <div class="card h-100" [class.selected]="chosenMatrixConfig?.matrixType===config.matrixType">
-                <div class="card-body">
-                  <h6 class="card-title">{{ config.matrixName }}</h6>
-                  <p class="card-text">
-                    {{ 'THIRD_PARTY_PURCHASE.MATRIX_COST' | translate }}: {{ config.feeAmount | currency }}
-                  </p>
-                  <button class="btn w-100" [ngClass]="chosenMatrixConfig?.matrixType===config.matrixType
-                          ? 'btn-success' : 'btn-outline-success'" (click)="selectMatrixConfig(config)">
-                    {{ chosenMatrixConfig?.matrixType===config.matrixType
-                    ? ('THIRD_PARTY_PURCHASE.SELECTED' | translate)
-                    : ('THIRD_PARTY_PURCHASE.SELECT' | translate) }}
-                  </button>
+      @if (currentStep === 2) {
+        <div>
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2">
+            @for (recycoin of recycoins; track recycoin) {
+              <div class="col">
+                <div class="card h-100" [class.selected]="isSelected(recycoin)">
+                  <img [ngSrc]="recycoin.image" width="15" height="15" class="card-img-top" [alt]="recycoin.name">
+                  <div class="card-body p-2">
+                    <h6 class="card-title fs-6">{{ recycoin.name }}</h6>
+                    <p class="card-text mb-1">
+                      <small>{{ 'THIRD_PARTY_PURCHASE.PRICE' | translate }}: {{ recycoin.baseAmount | currency }}</small>
+                    </p>
+                  </div>
+                  <div class="card-footer bg-transparent border-top-0 p-2">
+                    <button class="btn btn-sm w-100" [class.btn-primary]="!isSelected(recycoin)"
+                      [class.btn-success]="isSelected(recycoin)" (click)="toggleSelection(recycoin)">
+                      {{ (isSelected(recycoin)
+                      ? 'THIRD_PARTY_PURCHASE.SELECTED'
+                      : 'THIRD_PARTY_PURCHASE.SELECT') | translate }}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="mt-4 text-end" *ngIf="!isReachedWithdrawalLimit">
-            <button class="btn btn-success" [disabled]="!chosenMatrixConfig" (click)="activateMatrixWithBalance()">
-              {{ 'THIRD_PARTY_PURCHASE.CONFIRM_MATRIX_ACTIVATION' | translate }} {{ chosenMatrixConfig?.matrixName }}
-            </button>
+            }
           </div>
         </div>
-      </div>
-    </ng-container>
-  </div>
+      }
+      <!-- Paso 3: Revisión y método de pago -->
+      @if (currentStep === 3) {
+        <div>
+          <h5>{{ 'THIRD_PARTY_PURCHASE.REVIEW_SELECTION' | translate }}</h5>
+          <ul class="list-group mb-3">
+            @for (item of selectedItems; track item) {
+              <li class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                {{ item.name }}
+                <span>{{ item.baseAmount | currency }}</span>
+              </li>
+            }
+          </ul>
+          <div class="mb-4">
+            <strong>{{ 'THIRD_PARTY_PURCHASE.TOTAL' | translate }}: {{ getTotalAmount() | currency }}</strong>
+          </div>
+          <h5>{{ 'THIRD_PARTY_PURCHASE.SELECT_PAYMENT_METHOD' | translate }}</h5>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="coinpayMethod"
+              [(ngModel)]="paymentMethod" value="coinpay">
+              <label class="form-check-label" for="coinpayMethod">
+                {{ 'THIRD_PARTY_PURCHASE.COINPAY' | translate }}
+              </label>
+            </div>
+            @if (!isReachedWithdrawalLimit) {
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="walletMethod"
+                  [(ngModel)]="paymentMethod" value="wallet">
+                  <label class="form-check-label" for="walletMethod">
+                    {{ 'THIRD_PARTY_PURCHASE.WALLET' | translate }}
+                  </label>
+                </div>
+              }
+              @if (paymentMethod === 'wallet') {
+                <div class="mt-2">
+                  <p>{{ 'THIRD_PARTY_PURCHASE.AVAILABLE_BALANCE' | translate }}: {{ walletBalance | currency }}</p>
+                </div>
+              }
+            </div>
+          }
+          <!-- Paso 4: Detalle de pago (QR / Wallet) -->
+          @if (currentStep === 4) {
+            <div>
+              <!-- CoinPay -->
+              @if (paymentMethod === 'coinpay') {
+                <div class="coinpay-container">
+                  @if (qrCodeData) {
+                    <div class="qr-code-section">
+                      <div class="qr-code-wrapper">
+                        <img [ngSrc]="qrCodeData" width="200" height="200" class="qr-code" alt="CoinPay QR Code">
+                      </div>
+                      <div class="payment-details">
+                        <h5 class="payment-title">BEP20</h5>
+                        <img class="payment-detail network-icon" title="BEP20" ngSrc="assets/images/crypto/bep20.png" [width]="65"
+                          [height]="65" alt="BEP20-network" />
+                          <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
+                          <div class="detail-item">
+                            <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
+                            <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
+                          </div>
+                          <div class="detail-item">
+                            <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
+                            <span class="detail-value highlight">{{ getTotalAmount() | currency }}</span>
+                          </div>
+                          <div class="detail-item">
+                            <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.TRANSACTION_ID' | translate }}:</span>
+                            <span class="detail-value">{{ coinpayTransactionId }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    @if (!qrCodeData) {
+                      <div class="loading-indicator">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">{{ 'THIRD_PARTY_PURCHASE.LOADING' | translate }}</span>
+                        </div>
+                        <p class="mt-2">{{ 'THIRD_PARTY_PURCHASE.GENERATING_QR' | translate }}</p>
+                      </div>
+                    }
+                    <div class="payment-address mt-4">
+                      <h6>{{ 'THIRD_PARTY_PURCHASE.PAYMENT_ADDRESS' | translate }}:</h6>
+                      <div class="address-container">
+                        <code class="address">{{ paymentAddress }}</code>
+                        <button class="btn btn-outline-secondary btn-sm ms-2" (click)="copyToClipboard(paymentAddress)">
+                          <i class="bi bi-clipboard"></i> {{ 'THIRD_PARTY_PURCHASE.COPY' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
+                <!-- Wallet -->
+                @if (paymentMethod === 'wallet') {
+                  <div class="wallet-container p-4">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <h5>{{ 'THIRD_PARTY_PURCHASE.AVAILABLE_BALANCE' | translate }}</h5>
+                        <p class="h3 text-success">{{ walletBalance | currency }}</p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <h5>{{ 'THIRD_PARTY_PURCHASE.TOTAL' | translate }}</h5>
+                        <p class="h3 text-danger">{{ getTotalAmount() | currency }}</p>
+                      </div>
+                    </div>
+                    <div class="mt-4">
+                      @if (walletBalance >= getTotalAmount()) {
+                        <div class="alert alert-success">
+                          <i class="bi bi-check-circle-fill me-2"></i>
+                          {{ 'THIRD_PARTY_PURCHASE.SUFFICIENT_BALANCE' | translate }}
+                        </div>
+                      }
+                      @if (walletBalance < getTotalAmount()) {
+                        <div class="alert alert-warning">
+                          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                          {{ 'THIRD_PARTY_PURCHASE.INSUFFICIENT_BALANCE' | translate }}
+                        </div>
+                      }
+                    </div>
+                    <div class="payment-details mt-4">
+                      <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
+                      <div class="detail-item">
+                        <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
+                        <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
+                        <span class="detail-value highlight">{{ getTotalAmount() | currency }}</span>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                      <button class="btn btn-primary btn-lg" (click)="processWalletPayment()"
+                        [disabled]="walletBalance < getTotalAmount()">
+                        <i class="bi bi-wallet2 me-2"></i>
+                        {{ 'THIRD_PARTY_PURCHASE.CONFIRM_PAYMENT' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          }
 
-  <div class="modal-footer">
-    <button class="btn btn-secondary" *ngIf="currentStep > 1" (click)="previousStep()">
-      {{ 'THIRD_PARTY_PURCHASE.BACK' | translate }}
-    </button>
+          <!-- FLUJO MATRICES: pasos 2 -->
+          @if (selectedFlow === 'matrix') {
+            @if (currentStep === 2) {
+              <div>
+                <h4 class="text-center mb-4">
+                  {{ 'THIRD_PARTY_PURCHASE.USER' | translate }} {{ userReceivingPurchase?.user_name }}
+                </h4>
+                @if (currentStep === 2) {
+                  <div>
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                      @for (config of matrixConfigurations; track config) {
+                        <div class="col">
+                          <div class="card h-100" [class.selected]="chosenMatrixConfig?.matrixType===config.matrixType">
+                            <div class="card-body">
+                              <h6 class="card-title">{{ config.matrixName }}</h6>
+                              <p class="card-text">
+                                {{ 'THIRD_PARTY_PURCHASE.MATRIX_COST' | translate }}: {{ config.feeAmount | currency }}
+                              </p>
+                  <button class="btn w-100" [ngClass]="chosenMatrixConfig?.matrixType===config.matrixType
+                          ? 'btn-success' : 'btn-outline-success'" (click)="selectMatrixConfig(config)">
+                                {{ chosenMatrixConfig?.matrixType===config.matrixType
+                                ? ('THIRD_PARTY_PURCHASE.SELECTED' | translate)
+                                : ('THIRD_PARTY_PURCHASE.SELECT' | translate) }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                    @if (!isReachedWithdrawalLimit) {
+                      <div class="mt-4 text-end">
+                        <button class="btn btn-success" [disabled]="!chosenMatrixConfig" (click)="activateMatrixWithBalance()">
+                          {{ 'THIRD_PARTY_PURCHASE.CONFIRM_MATRIX_ACTIVATION' | translate }} {{ chosenMatrixConfig?.matrixName }}
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
 
-    <button class="btn btn-primary" *ngIf="selectedFlow === 'purchase' && currentStep < 4" (click)="nextStep()"
-      [disabled]="!canProceed()">
-      {{ 'THIRD_PARTY_PURCHASE.NEXT' | translate }}
-    </button>
-  </div>
-</ng-template>
+        <div class="modal-footer">
+          @if (currentStep > 1) {
+            <button class="btn btn-secondary" (click)="previousStep()">
+              {{ 'THIRD_PARTY_PURCHASE.BACK' | translate }}
+            </button>
+          }
+
+          @if (selectedFlow === 'purchase' && currentStep < 4) {
+            <button class="btn btn-primary" (click)="nextStep()"
+              [disabled]="!canProceed()">
+              {{ 'THIRD_PARTY_PURCHASE.NEXT' | translate }}
+            </button>
+          }
+        </div>
+      </ng-template>

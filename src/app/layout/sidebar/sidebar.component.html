@@ -4,81 +4,105 @@
     (mouseleave)="mouseOut()">
     <div class="sidebar-brand mt-3">
       <a routerLink="/dashboard/main"> <app-logo [logoClass]="'header-logo'"></app-logo>
-      </a>
-    </div>
-    <!-- Menu -->
-    <div class="menu">
-      <ul class="list" [ngStyle]="{'max-height': 'calc(100vh - 80px)', 'max-width': listMaxWidth+'px'}"
+    </a>
+  </div>
+  <!-- Menu -->
+  <div class="menu">
+    <ul class="list" [ngStyle]="{'max-height': 'calc(100vh - 80px)', 'max-width': listMaxWidth+'px'}"
 
       >
-        <li class="sidebar-user-panel">
-          <div role="button" class="user-panel" (click)="profileImgComponent.openImageProfileModal()">
-            <div class=" image">
-              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
-                (error)="$any($event.target).src='assets/images/user.svg'"
-                class="img-fluid img-circle user-img-circle" alt="Foto de perfil del usuario" />
-            </div>
+      <li class="sidebar-user-panel">
+        <div role="button" class="user-panel" (click)="profileImgComponent.openImageProfileModal()">
+          <div class=" image">
+            <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
+              (error)="$any($event.target).src='assets/images/user.svg'"
+              class="img-fluid img-circle user-img-circle" alt="Foto de perfil del usuario" />
           </div>
-          <div class="profile-usertitle">
-            <div class="sidebar-userpic-name">{{ user.name + ' '+user.last_name }}</div>
-            <div class="profile-usertitle-job ">{{ user.user_name}} </div>
-            <div class="profile-usertitle-job mt-2">
-              <div class="btn btn-sm badge-outline col-red" *ngIf="user.activation_date == null"><i
-                  class="bi bi-person-exclamation"></i> Inactivo</div>
-              <div class="btn btn-sm badge-outline col-green" *ngIf="user.activation_date != null"><i
-                  class="bi bi-person-fill-check"></i> {{ grading === null ? 'Activo' : grading.name }}</div>
-            </div>
+        </div>
+        <div class="profile-usertitle">
+          <div class="sidebar-userpic-name">{{ user.name + ' '+user.last_name }}</div>
+          <div class="profile-usertitle-job ">{{ user.user_name}} </div>
+          <div class="profile-usertitle-job mt-2">
+            @if (user.activation_date == null) {
+              <div class="btn btn-sm badge-outline col-red"><i
+              class="bi bi-person-exclamation"></i> Inactivo</div>
+            }
+            @if (user.activation_date != null) {
+              <div class="btn btn-sm badge-outline col-green"><i
+              class="bi bi-person-fill-check"></i> {{ grading === null ? 'Activo' : grading.name }}</div>
+            }
+          </div>
 
-          </div>
-        </li>
-        <!-- Top Most level menu -->
-        <li *ngFor="let sidebarItem of sidebarItems"
+        </div>
+      </li>
+      <!-- Top Most level menu -->
+      @for (sidebarItem of sidebarItems; track sidebarItem) {
+        <li
           [routerLinkActive]="sidebarItem.submenu.length != 0 ? 'active' : 'active-top'">
-          <div class="header" *ngIf="sidebarItem.groupTitle === true">{{sidebarItem.title | translate}}</div>
-          <a [routerLink]="sidebarItem.class === '' ? [sidebarItem.path] : null" *ngIf="!sidebarItem.groupTitle;"
-            [ngClass]="[sidebarItem.class]" (click)="callToggleMenu($event, sidebarItem.submenu.length)"
-            class="menu-top">
-            <i-feather [name]="sidebarItem.icon" class="sidebarIcon"></i-feather>
-            <span class="hide-menu">{{sidebarItem.title | translate}}
-            </span>
-            <span *ngIf="sidebarItem.badge != '' " [ngClass]="[sidebarItem.badgeClass]">{{sidebarItem.badge}}</span>
-          </a>
+          @if (sidebarItem.groupTitle === true) {
+            <div class="header">{{sidebarItem.title | translate}}</div>
+          }
+          @if (!sidebarItem.groupTitle;) {
+            <a [routerLink]="sidebarItem.class === '' ? [sidebarItem.path] : null"
+              [ngClass]="[sidebarItem.class]" (click)="callToggleMenu($event, sidebarItem.submenu.length)"
+              class="menu-top">
+              <i-feather [name]="sidebarItem.icon" class="sidebarIcon"></i-feather>
+              <span class="hide-menu">{{sidebarItem.title | translate}}
+              </span>
+              @if (sidebarItem.badge != '' ) {
+                <span [ngClass]="[sidebarItem.badgeClass]">{{sidebarItem.badge}}</span>
+              }
+            </a>
+          }
           <!-- First level menu -->
-          <ul class="ml-menu" *ngIf="sidebarItem.submenu.length > 0">
-            <li *ngFor="let sidebarSubItem1 of sidebarItem.submenu"
-              [routerLinkActive]="sidebarSubItem1.submenu.length > 0 ? '' : 'active'">
-              <a [routerLink]="sidebarSubItem1.submenu.length > 0 ? null : [sidebarSubItem1.path]"
-                (click)="callToggleMenu($event,sidebarSubItem1.submenu.length)" [ngClass]="[sidebarSubItem1.class]">
-                {{sidebarSubItem1.title | translate}}
-              </a>
-              <!-- Second level menu -->
-              <ul class="ml-menu-2" *ngIf="sidebarSubItem1.submenu.length > 0">
-                <li *ngFor="let sidebarSubItem2 of sidebarSubItem1.submenu"
-                  [routerLinkActive]="sidebarSubItem2.submenu.length > 0 ? '' : 'active'">
-                  <a [routerLink]="sidebarSubItem2.submenu.length > 0 ? null : [sidebarSubItem2.path]"
-                    (click)="callToggleMenu($event,sidebarSubItem2.submenu.length)" [ngClass]="[sidebarSubItem2.class]">
-                    {{sidebarSubItem2.title | translate}}
+          @if (sidebarItem.submenu.length > 0) {
+            <ul class="ml-menu">
+              @for (sidebarSubItem1 of sidebarItem.submenu; track sidebarSubItem1) {
+                <li
+                  [routerLinkActive]="sidebarSubItem1.submenu.length > 0 ? '' : 'active'">
+                  <a [routerLink]="sidebarSubItem1.submenu.length > 0 ? null : [sidebarSubItem1.path]"
+                    (click)="callToggleMenu($event,sidebarSubItem1.submenu.length)" [ngClass]="[sidebarSubItem1.class]">
+                    {{sidebarSubItem1.title | translate}}
                   </a>
-                  <!-- Third level menu -->
-                  <ul class="ml-menu-3" *ngIf="sidebarSubItem2.submenu.length > 0">
-                    <li *ngFor="let sidebarSubItem3 of sidebarSubItem2.submenu"
-                      [routerLinkActive]="sidebarSubItem3.submenu.length > 0 ? '' : 'active'">
-                      <a [routerLink]="sidebarSubItem3.submenu.length > 0 ? null : [sidebarSubItem3.path]"
-                        (click)="callToggleMenu($event,sidebarSubItem3.submenu.length)"
-                        [ngClass]="[sidebarSubItem3.class]">
-                        {{sidebarSubItem3.title | translate}}
-                      </a>
-                    </li>
-                  </ul>
+                  <!-- Second level menu -->
+                  @if (sidebarSubItem1.submenu.length > 0) {
+                    <ul class="ml-menu-2">
+                      @for (sidebarSubItem2 of sidebarSubItem1.submenu; track sidebarSubItem2) {
+                        <li
+                          [routerLinkActive]="sidebarSubItem2.submenu.length > 0 ? '' : 'active'">
+                          <a [routerLink]="sidebarSubItem2.submenu.length > 0 ? null : [sidebarSubItem2.path]"
+                            (click)="callToggleMenu($event,sidebarSubItem2.submenu.length)" [ngClass]="[sidebarSubItem2.class]">
+                            {{sidebarSubItem2.title | translate}}
+                          </a>
+                          <!-- Third level menu -->
+                          @if (sidebarSubItem2.submenu.length > 0) {
+                            <ul class="ml-menu-3">
+                              @for (sidebarSubItem3 of sidebarSubItem2.submenu; track sidebarSubItem3) {
+                                <li
+                                  [routerLinkActive]="sidebarSubItem3.submenu.length > 0 ? '' : 'active'">
+                                  <a [routerLink]="sidebarSubItem3.submenu.length > 0 ? null : [sidebarSubItem3.path]"
+                                    (click)="callToggleMenu($event,sidebarSubItem3.submenu.length)"
+                                    [ngClass]="[sidebarSubItem3.class]">
+                                    {{sidebarSubItem3.title | translate}}
+                                  </a>
+                                </li>
+                              }
+                            </ul>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  }
                 </li>
-              </ul>
-            </li>
-          </ul>
+              }
+            </ul>
+          }
         </li>
-      </ul>
-    </div>
-    <!-- #Menu -->
-  </aside>
-  <!-- #END# Left Sidebar -->
+      }
+    </ul>
+  </div>
+  <!-- #Menu -->
+</aside>
+<!-- #END# Left Sidebar -->
 </div>
 <app-image-profile-modal (getInfo)="refreshUserInfoData(user.id)" #profileImgComponent></app-image-profile-modal>

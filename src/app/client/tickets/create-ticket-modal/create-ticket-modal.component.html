@@ -42,9 +42,11 @@
                 'is-invalid': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)
               }">
               <option value="">{{ 'TICKETS-PAGE.CATEGORY.DEFAULT-OPTION' | translate }}</option>
-              <option *ngFor="let item of categories" [value]="item.id">
-                {{ item.categoryName }}
-              </option>
+              @for (item of categories; track item) {
+                <option [value]="item.id">
+                  {{ item.categoryName }}
+                </option>
+              }
             </select>
             <div class="invalid-feedback">
               {{ 'TICKETS-PAGE.CATEGORY.REQUIRED-ERROR' | translate }}
@@ -64,12 +66,16 @@
               [ngClass]="{
                 'is-invalid': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)
               }"></textarea>
-            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.required">
-              {{ 'TICKETS-PAGE.DESCRIPTION.REQUIRED-ERROR' | translate }}
-            </div>
-            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.maxlength">
-              {{ 'TICKETS-PAGE.DESCRIPTION.MAXLENGTH-ERROR' | translate }}
-            </div>
+            @if (createTicketForm.get('description').errors?.required) {
+              <div class="invalid-feedback">
+                {{ 'TICKETS-PAGE.DESCRIPTION.REQUIRED-ERROR' | translate }}
+              </div>
+            }
+            @if (createTicketForm.get('description').errors?.maxlength) {
+              <div class="invalid-feedback">
+                {{ 'TICKETS-PAGE.DESCRIPTION.MAXLENGTH-ERROR' | translate }}
+              </div>
+            }
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
@@ -77,9 +83,11 @@
             <label>{{ 'TICKETS-PAGE.ADD-IMAGE.LABEL' | translate }}</label>
             <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
               <ngx-dropzone-label>{{ 'TICKETS-PAGE.ADD-IMAGE.DROPZONE' | translate }}</ngx-dropzone-label>
-              <ngx-dropzone-preview *ngFor="let f of files let i = index;" [removable]="true" (removed)="deleteFile(i)">
-                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-              </ngx-dropzone-preview>
+              @for (f of files; track f; let i = $index) {
+                <ngx-dropzone-preview [removable]="true" (removed)="deleteFile(i)">
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-preview>
+              }
             </ngx-dropzone>
           </div>
         </div>

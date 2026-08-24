@@ -15,7 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
 import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
 

@@ -42,363 +42,374 @@
                       class="custom-control-input"
                       [(ngModel)]="commissionType"
                       value="residual"
-                    >
-                    <label class="custom-control-label" for="radioResidual">
-                      <i class="fas fa-sync-alt mr-1 text-info"></i>
-                      Residuales
-                    </label>
-                  </div>
-                  <div class="custom-control custom-radio mt-2">
-                    <input
-                      type="radio"
-                      id="radioPasivo"
-                      name="commissionType"
-                      class="custom-control-input"
-                      [(ngModel)]="commissionType"
-                      value="pasivo"
-                    >
-                    <label class="custom-control-label" for="radioPasivo">
-                      <i class="fas fa-chart-line mr-1 text-success"></i>
-                      Pasivo
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-2 col-md-6 mb-3">
-                <label for="yearSelect" class="font-weight-bold">
-                  <i class="fas fa-calendar-alt mr-1 text-success"></i>
-                  Año
-                </label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-light">
-                      <i class="fas fa-calendar"></i>
-                    </span>
-                  </div>
-                  <select
-                    id="yearSelect"
-                    class="form-control"
-                    [(ngModel)]="selectedYear"
-                    (change)="onYearChange()"
-                  >
-                    <option
-                      *ngFor="let year of availableYears"
-                      [value]="year"
-                    >
-                      {{ year }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-lg-2 col-md-6 mb-3">
-                <label for="monthSelect" class="font-weight-bold">
-                  <i class="fas fa-calendar-day mr-1 text-info"></i>
-                  Mes
-                </label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-light">
-                      <i class="fas fa-calendar-check"></i>
-                    </span>
-                  </div>
-                  <select
-                    id="monthSelect"
-                    class="form-control"
-                    [(ngModel)]="selectedMonth"
-                    (change)="onMonthChange()"
-                  >
-                    <option
-                      *ngFor="let month of months"
-                      [value]="month.value"
-                    >
-                      {{ month.label }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-md-6 mb-3">
-                <label for="calculationMode" class="font-weight-bold">
-                  <i class="fas fa-cog mr-1 text-warning"></i>
-                  Modo
-                </label>
-                <div class="mt-2">
-                  <div class="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="radioSimulate"
-                      name="calculationMode"
-                      class="custom-control-input"
-                      [(ngModel)]="calculationMode"
-                      value="simulate"
-                    >
-                    <label class="custom-control-label" for="radioSimulate">
-                      <i class="fas fa-flask mr-1 text-info"></i>
-                      Simulación
-                    </label>
-                  </div>
-                  <div class="custom-control custom-radio mt-2">
-                    <input
-                      type="radio"
-                      id="radioFinal"
-                      name="calculationMode"
-                      class="custom-control-input"
-                      [(ngModel)]="calculationMode"
-                      value="final"
-                    >
-                    <label class="custom-control-label" for="radioFinal">
-                      <i class="fas fa-check-circle mr-1 text-success"></i>
-                      Cálculo Final
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-2 col-md-6 mb-3 d-flex align-items-end">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-block"
-                  (click)="consultCommissions()"
-                  [disabled]="isLoading"
-                >
-                  <i class="fas fa-search mr-1"></i>
-                  Consultar
-                </button>
-              </div>
-            </div>
-
-            <!-- Indicador de carga -->
-            <div class="row mt-4" *ngIf="isLoading">
-              <div class="col-12">
-                <div class="card border-primary">
-                  <div class="card-body text-center py-5">
-                    <output class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;">
-                      <span class="sr-only">Cargando...</span>
-                    </output>
-                    <h5 class="text-primary">
-                      <i class="fas fa-clock mr-2"></i>
-                      Consultando comisiones...
-                    </h5>
-                    <p class="text-muted mb-0">Por favor espere un momento</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Resultados -->
-            <div *ngIf="showTable && !isLoading">
-              <!-- Card de información del período -->
-              <div class="alert alert-primary border-left border-primary border-4 mt-4" role="alert">
-                <div class="row">
-                  <div class="col-md-4 mb-2 mb-md-0">
-                    <h6 class="alert-heading">
-                      <i class="fas fa-calendar-alt mr-2"></i>
-                      Período Consultado
-                    </h6>
-                    <p class="mb-0 small">{{ startDate }} al {{ endDate }}</p>
-                  </div>
-                  <div class="col-md-3 mb-2 mb-md-0">
-                    <h6 class="alert-heading">
-                      <i class="fas fa-tag mr-2"></i>
-                      Tipo de Comisión
-                    </h6>
-                    <span class="badge badge-success badge-pill">
-                      <i class="fas {{ commissionType === 'residual' ? 'fa-sync-alt' : 'fa-chart-line' }} mr-1"></i>
-                      {{ commissionType === 'residual' ? 'Residuales' : 'Pasivo' }}
-                    </span>
-                  </div>
-                  <div class="col-md-3 mb-2 mb-md-0">
-                    <h6 class="alert-heading">
-                      <i class="fas fa-cog mr-2"></i>
-                      Modo de Cálculo
-                    </h6>
-                    <span class="badge badge-warning badge-pill">
-                      <i class="fas {{ calculationMode === 'simulate' ? 'fa-flask' : 'fa-check-circle' }} mr-1"></i>
-                      {{ calculationMode === 'simulate' ? 'Simulación' : 'Cálculo Final' }}
-                    </span>
-                  </div>
-                  <div class="col-md-2 text-md-right">
-                    <h6 class="alert-heading">
-                      <i class="fas fa-database mr-2"></i>
-                      Registros
-                    </h6>
-                    <span class="badge badge-info badge-pill h5 mb-0">{{ commissionsData.length }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cards de estadísticas -->
-              <div class="row mb-4">
-                <div class="col-md-6 mb-3">
-                  <div class="card border-left border-info border-4">
-                    <div class="card-body">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <p class="text-uppercase text-info font-weight-bold mb-1 small">
-                            Total Comisiones
-                          </p>
-                          <h4 class="font-weight-bold text-dark mb-0">
-                            <i class="fas fa-dollar-sign mr-1"></i>
-                            {{ getTotalAmount() | currency:'USD':'symbol':'1.2-2' }}
-                          </h4>
-                        </div>
-                        <div class="col-auto">
-                          <i class="fas fa-coins fa-3x text-info"></i>
-                        </div>
+                      >
+                      <label class="custom-control-label" for="radioResidual">
+                        <i class="fas fa-sync-alt mr-1 text-info"></i>
+                        Residuales
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio mt-2">
+                      <input
+                        type="radio"
+                        id="radioPasivo"
+                        name="commissionType"
+                        class="custom-control-input"
+                        [(ngModel)]="commissionType"
+                        value="pasivo"
+                        >
+                        <label class="custom-control-label" for="radioPasivo">
+                          <i class="fas fa-chart-line mr-1 text-success"></i>
+                          Pasivo
+                        </label>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <div class="card border-left border-success border-4">
-                    <div class="card-body">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <p class="text-uppercase text-success font-weight-bold mb-1 small">
-                            Total a Pagar
-                          </p>
-                          <h4 class="font-weight-bold text-dark mb-0">
-                            <i class="fas fa-dollar-sign mr-1"></i>
-                            {{ getTotalToPay() | currency:'USD':'symbol':'1.2-2' }}
-                          </h4>
-                        </div>
-                        <div class="col-auto">
-                          <i class="fas fa-hand-holding-usd fa-3x text-success"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Tabla -->
-              <div class="card">
-                <div class="card-header bg-dark text-white">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">
-                      <i class="fas fa-table mr-2"></i>
-                      Detalle de Comisiones
-                    </h6>
-                    <button class="btn btn-sm btn-success" (click)="exportToExcel()">
-                      <i class="fas fa-file-excel mr-1"></i> Exportar a Excel
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body p-0">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-bordered mb-0">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th>
-                            <i class="fas fa-id-card mr-1"></i>
-                            ID Afiliado
-                          </th>
-                          <th>
-                            <i class="fas fa-user mr-1"></i>
-                            Nombre
-                          </th>
-                          <th class="text-right">
-                            <i class="fas fa-money-bill-wave mr-1"></i>
-                            Monto Comisión
-                          </th>
-                          <th class="text-center">
-                            <i class="fas fa-percent mr-1"></i>
-                            Porcentaje
-                          </th>
-                          <th class="text-right">
-                            <i class="fas fa-cash-register mr-1"></i>
-                            Monto a Pagar
-                          </th>
-                          <th class="text-center">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Estado
-                          </th>
-                          <th class="text-center" *ngIf="calculationMode === 'final'">
-                            <i class="fas fa-calendar-check mr-1"></i>
-                            Fecha Pago
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of commissionsData | slice: (page-1) * pageSize : page * pageSize">
-                          <td>
-                            <i class="fas fa-hashtag mr-1 text-muted"></i>
-                            <strong>{{ item.affiliateId }}</strong>
-                          </td>
-                          <td>
-                            <i class="fas fa-user-circle mr-2 text-primary"></i>
-                            {{ item.affiliateName }}
-                          </td>
-                          <td class="text-right">
-                            <i class="fas fa-dollar-sign mr-1 text-info"></i>
-                            {{ item.amount | currency:'USD':'symbol':'1.2-2' }}
-                          </td>
-                          <td class="text-center">
-                            <span class="badge badge-secondary badge-pill">
-                              {{ item.percentage }}%
-                            </span>
-                          </td>
-                          <td class="text-right">
-                            <strong class="text-success">
-                              <i class="fas fa-dollar-sign mr-1"></i>
-                              {{ item.amountToPay | currency:'USD':'symbol':'1.2-2' }}
-                            </strong>
-                          </td>
-                          <td class="text-center">
-                            <span
-                              class="badge badge-pill"
-                              [ngClass]="calculationMode === 'simulate' ? 'badge-info' : 'badge-success'"
+                  <div class="col-lg-2 col-md-6 mb-3">
+                    <label for="yearSelect" class="font-weight-bold">
+                      <i class="fas fa-calendar-alt mr-1 text-success"></i>
+                      Año
+                    </label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </div>
+                      <select
+                        id="yearSelect"
+                        class="form-control"
+                        [(ngModel)]="selectedYear"
+                        (change)="onYearChange()"
+                        >
+                        @for (year of availableYears; track year) {
+                          <option
+                            [value]="year"
                             >
-                              <i class="fas {{ calculationMode === 'simulate' ? 'fa-flask' : 'fa-check' }} mr-1"></i>
-                              {{ item.status }}
-                            </span>
-                          </td>
-                          <td class="text-center" *ngIf="calculationMode === 'final'">
-                            <i class="fas fa-calendar mr-1 text-muted"></i>
-                            {{ item.paymentDate }}
-                          </td>
-                        </tr>
-                      </tbody>
-                      <tfoot class="bg-light">
-                        <tr class="font-weight-bold">
-                          <td colspan="2" class="text-right">
-                            <i class="fas fa-calculator mr-2"></i>
-                            TOTALES:
-                          </td>
-                          <td class="text-right text-info">
-                            <i class="fas fa-dollar-sign mr-1"></i>
-                            {{ getTotalAmount() | currency:'USD':'symbol':'1.2-2' }}
-                          </td>
-                          <td></td>
-                          <td class="text-right text-success">
-                            <i class="fas fa-dollar-sign mr-1"></i>
-                            {{ getTotalToPay() | currency:'USD':'symbol':'1.2-2' }}
-                          </td>
-                          <td colspan="{{ calculationMode === 'final' ? '2' : '1' }}"></td>
-                        </tr>
-                      </tfoot>
-                    </table>
+                            {{ year }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-3">
+                    <label for="monthSelect" class="font-weight-bold">
+                      <i class="fas fa-calendar-day mr-1 text-info"></i>
+                      Mes
+                    </label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light">
+                          <i class="fas fa-calendar-check"></i>
+                        </span>
+                      </div>
+                      <select
+                        id="monthSelect"
+                        class="form-control"
+                        [(ngModel)]="selectedMonth"
+                        (change)="onMonthChange()"
+                        >
+                        @for (month of months; track month) {
+                          <option
+                            [value]="month.value"
+                            >
+                            {{ month.label }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 mb-3">
+                    <label for="calculationMode" class="font-weight-bold">
+                      <i class="fas fa-cog mr-1 text-warning"></i>
+                      Modo
+                    </label>
+                    <div class="mt-2">
+                      <div class="custom-control custom-radio">
+                        <input
+                          type="radio"
+                          id="radioSimulate"
+                          name="calculationMode"
+                          class="custom-control-input"
+                          [(ngModel)]="calculationMode"
+                          value="simulate"
+                          >
+                          <label class="custom-control-label" for="radioSimulate">
+                            <i class="fas fa-flask mr-1 text-info"></i>
+                            Simulación
+                          </label>
+                        </div>
+                        <div class="custom-control custom-radio mt-2">
+                          <input
+                            type="radio"
+                            id="radioFinal"
+                            name="calculationMode"
+                            class="custom-control-input"
+                            [(ngModel)]="calculationMode"
+                            value="final"
+                            >
+                            <label class="custom-control-label" for="radioFinal">
+                              <i class="fas fa-check-circle mr-1 text-success"></i>
+                              Cálculo Final
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-3 d-flex align-items-end">
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-block"
+                          (click)="consultCommissions()"
+                          [disabled]="isLoading"
+                          >
+                          <i class="fas fa-search mr-1"></i>
+                          Consultar
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Indicador de carga -->
+                    @if (isLoading) {
+                      <div class="row mt-4">
+                        <div class="col-12">
+                          <div class="card border-primary">
+                            <div class="card-body text-center py-5">
+                              <output class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;">
+                                <span class="sr-only">Cargando...</span>
+                              </output>
+                              <h5 class="text-primary">
+                                <i class="fas fa-clock mr-2"></i>
+                                Consultando comisiones...
+                              </h5>
+                              <p class="text-muted mb-0">Por favor espere un momento</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+
+                    <!-- Resultados -->
+                    @if (showTable && !isLoading) {
+                      <div>
+                        <!-- Card de información del período -->
+                        <div class="alert alert-primary border-left border-primary border-4 mt-4" role="alert">
+                          <div class="row">
+                            <div class="col-md-4 mb-2 mb-md-0">
+                              <h6 class="alert-heading">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                Período Consultado
+                              </h6>
+                              <p class="mb-0 small">{{ startDate }} al {{ endDate }}</p>
+                            </div>
+                            <div class="col-md-3 mb-2 mb-md-0">
+                              <h6 class="alert-heading">
+                                <i class="fas fa-tag mr-2"></i>
+                                Tipo de Comisión
+                              </h6>
+                              <span class="badge badge-success badge-pill">
+                                <i class="fas {{ commissionType === 'residual' ? 'fa-sync-alt' : 'fa-chart-line' }} mr-1"></i>
+                                {{ commissionType === 'residual' ? 'Residuales' : 'Pasivo' }}
+                              </span>
+                            </div>
+                            <div class="col-md-3 mb-2 mb-md-0">
+                              <h6 class="alert-heading">
+                                <i class="fas fa-cog mr-2"></i>
+                                Modo de Cálculo
+                              </h6>
+                              <span class="badge badge-warning badge-pill">
+                                <i class="fas {{ calculationMode === 'simulate' ? 'fa-flask' : 'fa-check-circle' }} mr-1"></i>
+                                {{ calculationMode === 'simulate' ? 'Simulación' : 'Cálculo Final' }}
+                              </span>
+                            </div>
+                            <div class="col-md-2 text-md-right">
+                              <h6 class="alert-heading">
+                                <i class="fas fa-database mr-2"></i>
+                                Registros
+                              </h6>
+                              <span class="badge badge-info badge-pill h5 mb-0">{{ commissionsData.length }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Cards de estadísticas -->
+                        <div class="row mb-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="card border-left border-info border-4">
+                              <div class="card-body">
+                                <div class="row align-items-center">
+                                  <div class="col">
+                                    <p class="text-uppercase text-info font-weight-bold mb-1 small">
+                                      Total Comisiones
+                                    </p>
+                                    <h4 class="font-weight-bold text-dark mb-0">
+                                      <i class="fas fa-dollar-sign mr-1"></i>
+                                      {{ getTotalAmount() | currency:'USD':'symbol':'1.2-2' }}
+                                    </h4>
+                                  </div>
+                                  <div class="col-auto">
+                                    <i class="fas fa-coins fa-3x text-info"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <div class="card border-left border-success border-4">
+                              <div class="card-body">
+                                <div class="row align-items-center">
+                                  <div class="col">
+                                    <p class="text-uppercase text-success font-weight-bold mb-1 small">
+                                      Total a Pagar
+                                    </p>
+                                    <h4 class="font-weight-bold text-dark mb-0">
+                                      <i class="fas fa-dollar-sign mr-1"></i>
+                                      {{ getTotalToPay() | currency:'USD':'symbol':'1.2-2' }}
+                                    </h4>
+                                  </div>
+                                  <div class="col-auto">
+                                    <i class="fas fa-hand-holding-usd fa-3x text-success"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Tabla -->
+                        <div class="card">
+                          <div class="card-header bg-dark text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <h6 class="mb-0">
+                                <i class="fas fa-table mr-2"></i>
+                                Detalle de Comisiones
+                              </h6>
+                              <button class="btn btn-sm btn-success" (click)="exportToExcel()">
+                                <i class="fas fa-file-excel mr-1"></i> Exportar a Excel
+                              </button>
+                            </div>
+                          </div>
+                          <div class="card-body p-0">
+                            <div class="table-responsive">
+                              <table class="table table-hover table-bordered mb-0">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th>
+                                      <i class="fas fa-id-card mr-1"></i>
+                                      ID Afiliado
+                                    </th>
+                                    <th>
+                                      <i class="fas fa-user mr-1"></i>
+                                      Nombre
+                                    </th>
+                                    <th class="text-right">
+                                      <i class="fas fa-money-bill-wave mr-1"></i>
+                                      Monto Comisión
+                                    </th>
+                                    <th class="text-center">
+                                      <i class="fas fa-percent mr-1"></i>
+                                      Porcentaje
+                                    </th>
+                                    <th class="text-right">
+                                      <i class="fas fa-cash-register mr-1"></i>
+                                      Monto a Pagar
+                                    </th>
+                                    <th class="text-center">
+                                      <i class="fas fa-info-circle mr-1"></i>
+                                      Estado
+                                    </th>
+                                    @if (calculationMode === 'final') {
+                                      <th class="text-center">
+                                        <i class="fas fa-calendar-check mr-1"></i>
+                                        Fecha Pago
+                                      </th>
+                                    }
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @for (item of commissionsData | slice: (page-1) * pageSize : page * pageSize; track item) {
+                                    <tr>
+                                      <td>
+                                        <i class="fas fa-hashtag mr-1 text-muted"></i>
+                                        <strong>{{ item.affiliateId }}</strong>
+                                      </td>
+                                      <td>
+                                        <i class="fas fa-user-circle mr-2 text-primary"></i>
+                                        {{ item.affiliateName }}
+                                      </td>
+                                      <td class="text-right">
+                                        <i class="fas fa-dollar-sign mr-1 text-info"></i>
+                                        {{ item.amount | currency:'USD':'symbol':'1.2-2' }}
+                                      </td>
+                                      <td class="text-center">
+                                        <span class="badge badge-secondary badge-pill">
+                                          {{ item.percentage }}%
+                                        </span>
+                                      </td>
+                                      <td class="text-right">
+                                        <strong class="text-success">
+                                          <i class="fas fa-dollar-sign mr-1"></i>
+                                          {{ item.amountToPay | currency:'USD':'symbol':'1.2-2' }}
+                                        </strong>
+                                      </td>
+                                      <td class="text-center">
+                                        <span
+                                          class="badge badge-pill"
+                                          [ngClass]="calculationMode === 'simulate' ? 'badge-info' : 'badge-success'"
+                                          >
+                                          <i class="fas {{ calculationMode === 'simulate' ? 'fa-flask' : 'fa-check' }} mr-1"></i>
+                                          {{ item.status }}
+                                        </span>
+                                      </td>
+                                      @if (calculationMode === 'final') {
+                                        <td class="text-center">
+                                          <i class="fas fa-calendar mr-1 text-muted"></i>
+                                          {{ item.paymentDate }}
+                                        </td>
+                                      }
+                                    </tr>
+                                  }
+                                </tbody>
+                                <tfoot class="bg-light">
+                                  <tr class="font-weight-bold">
+                                    <td colspan="2" class="text-right">
+                                      <i class="fas fa-calculator mr-2"></i>
+                                      TOTALES:
+                                    </td>
+                                    <td class="text-right text-info">
+                                      <i class="fas fa-dollar-sign mr-1"></i>
+                                      {{ getTotalAmount() | currency:'USD':'symbol':'1.2-2' }}
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right text-success">
+                                      <i class="fas fa-dollar-sign mr-1"></i>
+                                      {{ getTotalToPay() | currency:'USD':'symbol':'1.2-2' }}
+                                    </td>
+                                    <td colspan="{{ calculationMode === 'final' ? '2' : '1' }}"></td>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Paginación -->
+                        @if (commissionsData.length > pageSize) {
+                          <div class="d-flex justify-content-center mt-4">
+                            <ngb-pagination
+                              [(page)]="page"
+                              [pageSize]="pageSize"
+                              [collectionSize]="commissionsData.length"
+                              [maxSize]="5"
+                              [rotate]="true"
+                              [boundaryLinks]="true"
+                            ></ngb-pagination>
+                          </div>
+                        }
+                      </div>
+                    }
                   </div>
                 </div>
-              </div>
-
-              <!-- Paginación -->
-              <div class="d-flex justify-content-center mt-4" *ngIf="commissionsData.length > pageSize">
-                <ngb-pagination
-                  [(page)]="page"
-                  [pageSize]="pageSize"
-                  [collectionSize]="commissionsData.length"
-                  [maxSize]="5"
-                  [rotate]="true"
-                  [boundaryLinks]="true"
-                ></ngb-pagination>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        </section>

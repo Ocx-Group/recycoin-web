@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
-import {CommonModule} from "@angular/common";
+
 import {TranslateModule} from "@ngx-translate/core";
 import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
 import {Country} from "../../../core/models/country-model/country.model";
@@ -27,12 +27,11 @@ import {AffiliateService} from "../../../core/service/affiliate-service/affiliat
   providers: [ToastrService],
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModalModule,
-    TranslateModule,
-  ]
+    TranslateModule
+]
 })
 export class AffiliatesListEditModalComponent implements OnInit {
   editAffiliateForm: FormGroup;

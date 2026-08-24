@@ -12,7 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 import {RolService} from "../../../core/service/rol-service/rol.service";
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-rol-list-edit-modal',

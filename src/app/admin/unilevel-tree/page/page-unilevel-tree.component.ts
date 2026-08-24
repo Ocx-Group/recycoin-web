@@ -6,7 +6,7 @@ import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {UnilevelTreeComponentComponent} from "../unilevel-tree-component/unilevel-tree-component.component";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
   selector: 'app-page-unilevel-tree',
@@ -14,12 +14,11 @@ import {CommonModule} from "@angular/common";
   styleUrls: ['./page-unilevel-tree.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     UnilevelTreeComponentComponent,
     NgxSpinnerComponent
-  ]
+]
 })
 export class PageUnilevelTreeComponent implements OnInit {
   userId: number;

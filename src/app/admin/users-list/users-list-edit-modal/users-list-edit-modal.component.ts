@@ -18,7 +18,7 @@ import {UserService} from "../../../core/service/user-service/user.service";
 import {User} from "../../../core/models/user-model/user.model";
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 
 @Component({

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
-import {NgTemplateOutlet, CommonModule} from "@angular/common";
+import { NgTemplateOutlet, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-binary-genealogical-tree',

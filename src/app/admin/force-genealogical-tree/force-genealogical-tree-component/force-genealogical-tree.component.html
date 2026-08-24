@@ -1,50 +1,52 @@
 <div class="ng13-org-chart-entity">
-  <div
-    class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
-    *ngIf="hasParent"
-  ></div>
+  @if (hasParent) {
+    <div
+      class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
+    ></div>
+  }
   <div
     (click)="onClick()"
     [class]="data?.cssClass"
     class="ng13-org-chart-entity-box"
     [style]="data?.css"
-  >
+    >
     <ng-container
       *ngTemplateOutlet="nodeTemplate; context: { $implicit: data }"
-    >
+      >
     </ng-container>
   </div>
-  <div
-    class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
-    *ngIf="data?.children?.length && !data?.hideChildren"
-  ></div>
+  @if (data?.children?.length && !data?.hideChildren) {
+    <div
+      class="ng13-org-chart-entity-connector ng13-org-chart-entity-border"
+    ></div>
+  }
 </div>
 
-<div *ngIf="!data?.hideChildren" class="ng13-org-chart-container">
-  <ng-container
-    *ngFor="let data of data?.children; first as isFirst; last as isLast"
-  >
-    <div class="ng13-org-chart-sub-container">
-      <div class="ng13-org-chart-connector-container">
-        <div
-          class="ng13-org-chart-connector ng13-org-chart-entity-border"
-          [style.border-color]="isFirst ? 'transparent' : ''"
-        ></div>
-        <div class="ng13-org-chart-entity-border"></div>
-        <div
-          class="ng13-org-chart-connector ng13-org-chart-entity-border"
-          [style.border-color]="isLast ? 'transparent' : ''"
-        ></div>
+@if (!data?.hideChildren) {
+  <div class="ng13-org-chart-container">
+    @for (data of data?.children; track data; let isFirst = $first; let isLast = $last) {
+      <div class="ng13-org-chart-sub-container">
+        <div class="ng13-org-chart-connector-container">
+          <div
+            class="ng13-org-chart-connector ng13-org-chart-entity-border"
+            [style.border-color]="isFirst ? 'transparent' : ''"
+          ></div>
+          <div class="ng13-org-chart-entity-border"></div>
+          <div
+            class="ng13-org-chart-connector ng13-org-chart-entity-border"
+            [style.border-color]="isLast ? 'transparent' : ''"
+          ></div>
+        </div>
+        <app-force-genealogical-tree
+          [data]="data"
+          [hasParent]="true"
+          [nodeTemplate]="nodeTemplate"
+          >
+        </app-force-genealogical-tree>
       </div>
-      <app-force-genealogical-tree
-        [data]="data"
-        [hasParent]="true"
-        [nodeTemplate]="nodeTemplate"
-      >
-      </app-force-genealogical-tree>
-    </div>
-  </ng-container>
-</div>
+    }
+  </div>
+}
 <div class="ng13-org-chart-zoom-button-container">
   <ng-content select="[zoom-button]"></ng-content>
 </div>

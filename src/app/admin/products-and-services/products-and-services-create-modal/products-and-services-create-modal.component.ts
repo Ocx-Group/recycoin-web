@@ -18,7 +18,7 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
 import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
 import {ProductService} from "../../../core/service/product-service/product.service";
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 
 @Component({

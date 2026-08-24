@@ -41,9 +41,11 @@
                       'is-invalid': createTicketForm.get('category').invalid && (createTicketForm.get('category').touched || submitted)
                     }">
               <option value="">Seleccione una opción</option>
-              <option *ngFor="let item of categories" [value]="item.id">
-                {{ item.categoryName }}
-              </option>
+              @for (item of categories; track item) {
+                <option [value]="item.id">
+                  {{ item.categoryName }}
+                </option>
+              }
             </select>
             <div class="invalid-feedback">
               Debe seleccionar una categoría.
@@ -57,21 +59,25 @@
               <span class="text-danger">*</span>
             </label>
             <input placeholder="Escriba el username" type="text" id="userSearch" class="form-control"
-                   formControlName="userSearch"
-                   (input)="updateFilteredUsers()"
-                   (focus)="showSuggestions = true"
-                   (blur)="hideSuggestions()"
+              formControlName="userSearch"
+              (input)="updateFilteredUsers()"
+              (focus)="showSuggestions = true"
+              (blur)="hideSuggestions()"
                    [ngClass]="{
                      'is-invalid': createTicketForm.get('userId').invalid && (createTicketForm.get('userSearch').touched || submitted)
                    }">
             <div class="invalid-feedback">
               Debe seleccionar un usuario de la lista.
             </div>
-            <ul *ngIf="showSuggestions && filteredUsers.length" class="suggestions-list">
-              <li *ngFor="let user of filteredUsers" (click)="selectUser(user)">
-                {{ user.user_name }}
-              </li>
-            </ul>
+            @if (showSuggestions && filteredUsers.length) {
+              <ul class="suggestions-list">
+                @for (user of filteredUsers; track user) {
+                  <li (click)="selectUser(user)">
+                    {{ user.user_name }}
+                  </li>
+                }
+              </ul>
+            }
           </div>
         </div>
       </div>
@@ -86,12 +92,16 @@
                       formControlName="description" [ngClass]="{
                         'is-invalid': createTicketForm.get('description').invalid && (createTicketForm.get('description').touched || submitted)
                       }"></textarea>
-            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.required">
-              La descripción es requerida.
-            </div>
-            <div class="invalid-feedback" *ngIf="createTicketForm.get('description').errors?.maxlength">
-              La descripción no puede exceder los 255 caracteres.
-            </div>
+            @if (createTicketForm.get('description').errors?.required) {
+              <div class="invalid-feedback">
+                La descripción es requerida.
+              </div>
+            }
+            @if (createTicketForm.get('description').errors?.maxlength) {
+              <div class="invalid-feedback">
+                La descripción no puede exceder los 255 caracteres.
+              </div>
+            }
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
@@ -99,9 +109,11 @@
             <label>Agregar Imagen</label>
             <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
               <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
-              <ngx-dropzone-preview *ngFor="let f of files let i = index;" [removable]="true" (removed)="deleteFile(i)">
-                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-              </ngx-dropzone-preview>
+              @for (f of files; track f; let i = $index) {
+                <ngx-dropzone-preview [removable]="true" (removed)="deleteFile(i)">
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-preview>
+              }
             </ngx-dropzone>
           </div>
         </div>

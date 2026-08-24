@@ -1,6 +1,6 @@
 import {RightSidebarService} from '@app/core/service/rightsidebar-service/rightsidebar.service';
 import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {DOCUMENT, CommonModule} from '@angular/common';
+import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
   Inject,

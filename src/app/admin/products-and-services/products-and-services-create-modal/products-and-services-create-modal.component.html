@@ -18,220 +18,236 @@
           <label for="name">
             Nombre del Producto
             <span class="text-danger">*</span></label>
-          <input type="text" value="" class="form-control" id="name" placeholder="Nombre del producto"
+            <input type="text" value="" class="form-control" id="name" placeholder="Nombre del producto"
                  formControlName="name" required="required" [ngClass]="{
               'is-invalid': submitted && create_product_controls.name.errors
             }"/>
-          <div *ngIf="submitted && create_product_controls.name.errors" class="invalid-feedback">
-            <div *ngIf="create_product_controls.name.errors.required">
-              El nombre del producto es requerido.
+              @if (submitted && create_product_controls.name.errors) {
+                <div class="invalid-feedback">
+                  @if (create_product_controls.name.errors.required) {
+                    <div>
+                      El nombre del producto es requerido.
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="bar_code">
-            Código de Barra
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="bar_code" placeholder="Código de Barra"
-                 formControlName="bar_code"/>
-        </div>
-      </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="bar_code">
+                Código de Barra
+                <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="bar_code" placeholder="Código de Barra"
+                  formControlName="bar_code"/>
+                </div>
+              </div>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="description">
-            Descripción
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="description" placeholder="Descripción"
-                 formControlName="description"/>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="category">
-            Categoria (En caso de ser necesario)
-            <span class="text-danger">*</span></label>
-          <select class="form-select form-control" id="category" formControlName="category"
-                  required="required">
-            <option value="">Seleccione una opcion</option>
-            <option value="{{ item.id }}" *ngFor="let item of categoriesList">
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="keyword">
-            Mejorar Busquedad del Producto
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="keyword" placeholder="Palabras Claves"
-                 formControlName="keyword"/>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="calculate_group">
-            Grupo de calculo
-            <span class="text-danger">*</span></label>
-          <select class="form-select form-control" id="calculate_group" formControlName="calculate_group"
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <label for="description">
+                    Descripción
+                    <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="description" placeholder="Descripción"
+                      formControlName="description"/>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <label for="category">
+                        Categoria (En caso de ser necesario)
+                        <span class="text-danger">*</span></label>
+                        <select class="form-select form-control" id="category" formControlName="category"
+                          required="required">
+                          <option value="">Seleccione una opcion</option>
+                          @for (item of categoriesList; track item) {
+                            <option value="{{ item.id }}">
+                              {{ item.name }}
+                            </option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <label for="keyword">
+                          Mejorar Busquedad del Producto
+                          <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="keyword" placeholder="Palabras Claves"
+                            formControlName="keyword"/>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <label for="calculate_group">
+                              Grupo de calculo
+                              <span class="text-danger">*</span></label>
+                              <select class="form-select form-control" id="calculate_group" formControlName="calculate_group"
                   required="required" [ngClass]="{
               'is-invalid':
                 submitted && create_product_controls.calculate_group.errors
             }">
-            <option value="">Seleccione una opcion</option>
-            <option value="{{ item.id }}" *ngFor="let item of paymentsGroup">
-              {{ item.name }}
-            </option>
-          </select>
-          <div *ngIf="submitted && create_product_controls.calculate_group.errors" class="invalid-feedback">
-            <div *ngIf="create_product_controls.calculate_group.errors.required">
-              El grupo es requerido.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="sale_price">
-            Precio de Venta
-            <span class="text-danger">*</span></label>
-          <input type="number" min="0" value="" class="form-control" id="sale_price" placeholder="0.00"
+                                <option value="">Seleccione una opcion</option>
+                                @for (item of paymentsGroup; track item) {
+                                  <option value="{{ item.id }}">
+                                    {{ item.name }}
+                                  </option>
+                                }
+                              </select>
+                              @if (submitted && create_product_controls.calculate_group.errors) {
+                                <div class="invalid-feedback">
+                                  @if (create_product_controls.calculate_group.errors.required) {
+                                    <div>
+                                      El grupo es requerido.
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="sale_price">
+                                Precio de Venta
+                                <span class="text-danger">*</span></label>
+                                <input type="number" min="0" value="" class="form-control" id="sale_price" placeholder="0.00"
                  formControlName="sale_price" required="required" [ngClass]="{
               'is-invalid':
                 submitted && create_product_controls.sale_price.errors
             }"/>
-          <div *ngIf="submitted && create_product_controls.sale_price.errors" class="invalid-feedback">
-            <div *ngIf="create_product_controls.sale_price.errors.required">
-              El precio del producto es requerido.
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="taxes">
-            Impuestos
-            <span class="text-danger">*</span></label>
-          <input type="number" min="0" class="form-control" id="taxes" placeholder="0.00" formControlName="taxes"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="commissionable_value">
-            Valor Comisionable
-            <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="commissionable_value" min="0" value="" placeholder="0.00"
-                 formControlName="commissionable_value"/>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="binary_points">
-            Puntos binarios
-            <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="binary_points" value="" min="0" placeholder="0.00"
-                 formControlName="binary_points"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="qualified_points">
-            Puntos para calificar
-            <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="qualified_points" placeholder="0" value="" min="0"
-                 formControlName="qualified_points"/>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="product_weight">
-            Peso del Producto KG.
-            <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="product_weight" value="" placeholder="0" min="0"
-                 formControlName="product_weight"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="inventory" id="inventory"/>
-          <label class="form-check-label ms-2" for="inventory" placement="bottom"
-                 ngbTooltip="Usted aqui podra seleccionar si el producto que esta creando posee inventario, de ser asi debera tildar la opción de lo contrario dejarlo sin tildar.">
-            Inventario</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="minimum_purchase"
-                 id="minimum_purchase"/>
-          <label class="form-check-label ms-2" for="minimum_purchase" placement="bottom"
-                 ngbTooltip="Con la compra de este producto se tomara en cuanta para la suma de activación por compra minima.">
-            Compra minima</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="visible_product"
-                 id="visible_product"/>
-          <label class="form-check-label ms-2" for="visible_product" placement="bottom"
-                 ngbTooltip="El producto estara visible en la Tienda Online del sistema.">
-            Producto Visible</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="product_visible_public_store"
-                 id="product_visible_public_store"/>
-          <label class="form-check-label ms-2" for="product_visible_public_store" placement="bottom"
-                 ngbTooltip="El producto estara visible en la Tienda Publica Online del sistema.">
-            Producto visible en Tienda Pública</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="product_type" id="product_type"/>
-          <label class="form-check-label ms-2" for="product_type" placement="bottom"
-                 ngbTooltip="Si la opción esta marcada el producto solo sera visible para pagos por afiliación.">
-            Tipo de Producto</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="hide_points" id="hide_points"/>
-          <label class="form-check-label ms-2" for="hide_points" placement="bottom"
-                 ngbTooltip="Si esta opción esta marcada no se mostrara los puntos de este producto.">
-            Ocultar Puntos</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="pack_product" id="pack_product"/>
-          <label class="form-check-label ms-2" for="pack_product" placement="bottom"
-                 ngbTooltip="Si esta activa esta opción el producto generara pagos pasivos.">
-            Producto Pack</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="offer" id="offer"/>
-          <label class="form-check-label ms-2" for="offer" placement="bottom"
-                 ngbTooltip="Aparecera en la portada del producto una etiqueta de Oferta.">
-            Oferta</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="hide_commissionable_value"
-                 id="hide_commissionable_value"/>
-          <label class="form-check-label ms-2" for="hide_commissionable_value" placement="bottom"
-                 ngbTooltip="Si esta opción esta marcada no se mostrara el valor comisionable de este producto.">
-            Ocultar Valor Comisionable</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="activate_gallery_zoom"
-                 id="activate_gallery_zoom"/>
-          <label class="form-check-label ms-2" for="activate_gallery_zoom" placement="bottom"
-                 ngbTooltip="Si esta opción esta marcada las imagenes de los productos en el apartado de detalles tendra una galeria y estas aplica zoom, de no estar marcado solo se vera una imagen sin zoom.">
-            Activar galeria Zoom</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="recurring_product"
-                 id="recurring_product"/>
-          <label class="form-check-label ms-2" for="recurring_product" placement="bottom" ngbTooltip="">
-            Producto Recurrente</label>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-          <input class="form-check-input" type="checkbox" value="" formControlName="product_home" id="product_home"/>
-          <label class="form-check-label ms-2" for="product_home" placement="bottom"
-                 ngbTooltip="Si un afiliado desea retirar el 100% de su capital adquirido, deberá adquirir este producto de lo contrario se le retendrá X porcentaje configurable por el administrador en base al monto que desea retirar.">
-            Producto Inicio</label>
-        </div>
-      </div>
-    </div>
+                                  @if (submitted && create_product_controls.sale_price.errors) {
+                                    <div class="invalid-feedback">
+                                      @if (create_product_controls.sale_price.errors.required) {
+                                        <div>
+                                          El precio del producto es requerido.
+                                        </div>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                  <label for="taxes">
+                                    Impuestos
+                                    <span class="text-danger">*</span></label>
+                                    <input type="number" min="0" class="form-control" id="taxes" placeholder="0.00" formControlName="taxes"/>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label for="commissionable_value">
+                                      Valor Comisionable
+                                      <span class="text-danger">*</span></label>
+                                      <input type="number" class="form-control" id="commissionable_value" min="0" value="" placeholder="0.00"
+                                        formControlName="commissionable_value"/>
+                                      </div>
+                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <label for="binary_points">
+                                          Puntos binarios
+                                          <span class="text-danger">*</span></label>
+                                          <input type="number" class="form-control" id="binary_points" value="" min="0" placeholder="0.00"
+                                            formControlName="binary_points"/>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <label for="qualified_points">
+                                              Puntos para calificar
+                                              <span class="text-danger">*</span></label>
+                                              <input type="number" class="form-control" id="qualified_points" placeholder="0" value="" min="0"
+                                                formControlName="qualified_points"/>
+                                              </div>
+                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <label for="product_weight">
+                                                  Peso del Producto KG.
+                                                  <span class="text-danger">*</span></label>
+                                                  <input type="number" class="form-control" id="product_weight" value="" placeholder="0" min="0"
+                                                    formControlName="product_weight"/>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                    <input class="form-check-input" type="checkbox" value="" formControlName="inventory" id="inventory"/>
+                                                    <label class="form-check-label ms-2" for="inventory" placement="bottom"
+                                                      ngbTooltip="Usted aqui podra seleccionar si el producto que esta creando posee inventario, de ser asi debera tildar la opción de lo contrario dejarlo sin tildar.">
+                                                    Inventario</label>
+                                                  </div>
+                                                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                    <input class="form-check-input" type="checkbox" value="" formControlName="minimum_purchase"
+                                                      id="minimum_purchase"/>
+                                                      <label class="form-check-label ms-2" for="minimum_purchase" placement="bottom"
+                                                        ngbTooltip="Con la compra de este producto se tomara en cuanta para la suma de activación por compra minima.">
+                                                      Compra minima</label>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                      <input class="form-check-input" type="checkbox" value="" formControlName="visible_product"
+                                                        id="visible_product"/>
+                                                        <label class="form-check-label ms-2" for="visible_product" placement="bottom"
+                                                          ngbTooltip="El producto estara visible en la Tienda Online del sistema.">
+                                                        Producto Visible</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="product_visible_public_store"
+                                                          id="product_visible_public_store"/>
+                                                          <label class="form-check-label ms-2" for="product_visible_public_store" placement="bottom"
+                                                            ngbTooltip="El producto estara visible en la Tienda Publica Online del sistema.">
+                                                          Producto visible en Tienda Pública</label>
+                                                        </div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                          <input class="form-check-input" type="checkbox" value="" formControlName="product_type" id="product_type"/>
+                                                          <label class="form-check-label ms-2" for="product_type" placement="bottom"
+                                                            ngbTooltip="Si la opción esta marcada el producto solo sera visible para pagos por afiliación.">
+                                                          Tipo de Producto</label>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                          <input class="form-check-input" type="checkbox" value="" formControlName="hide_points" id="hide_points"/>
+                                                          <label class="form-check-label ms-2" for="hide_points" placement="bottom"
+                                                            ngbTooltip="Si esta opción esta marcada no se mostrara los puntos de este producto.">
+                                                          Ocultar Puntos</label>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                          <input class="form-check-input" type="checkbox" value="" formControlName="pack_product" id="pack_product"/>
+                                                          <label class="form-check-label ms-2" for="pack_product" placement="bottom"
+                                                            ngbTooltip="Si esta activa esta opción el producto generara pagos pasivos.">
+                                                          Producto Pack</label>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                          <input class="form-check-input" type="checkbox" value="" formControlName="offer" id="offer"/>
+                                                          <label class="form-check-label ms-2" for="offer" placement="bottom"
+                                                            ngbTooltip="Aparecera en la portada del producto una etiqueta de Oferta.">
+                                                          Oferta</label>
+                                                        </div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                          <input class="form-check-input" type="checkbox" value="" formControlName="hide_commissionable_value"
+                                                            id="hide_commissionable_value"/>
+                                                            <label class="form-check-label ms-2" for="hide_commissionable_value" placement="bottom"
+                                                              ngbTooltip="Si esta opción esta marcada no se mostrara el valor comisionable de este producto.">
+                                                            Ocultar Valor Comisionable</label>
+                                                          </div>
+                                                          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                            <input class="form-check-input" type="checkbox" value="" formControlName="activate_gallery_zoom"
+                                                              id="activate_gallery_zoom"/>
+                                                              <label class="form-check-label ms-2" for="activate_gallery_zoom" placement="bottom"
+                                                                ngbTooltip="Si esta opción esta marcada las imagenes de los productos en el apartado de detalles tendra una galeria y estas aplica zoom, de no estar marcado solo se vera una imagen sin zoom.">
+                                                              Activar galeria Zoom</label>
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                              <input class="form-check-input" type="checkbox" value="" formControlName="recurring_product"
+                                                                id="recurring_product"/>
+                                                                <label class="form-check-label ms-2" for="recurring_product" placement="bottom" ngbTooltip="">
+                                                                Producto Recurrente</label>
+                                                              </div>
+                                                              <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                                <input class="form-check-input" type="checkbox" value="" formControlName="product_home" id="product_home"/>
+                                                                <label class="form-check-label ms-2" for="product_home" placement="bottom"
+                                                                  ngbTooltip="Si un afiliado desea retirar el 100% de su capital adquirido, deberá adquirir este producto de lo contrario se le retendrá X porcentaje configurable por el administrador en base al monto que desea retirar.">
+                                                                Producto Inicio</label>
+                                                              </div>
+                                                            </div>
+                                                          </div>
 
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-        Cancelar
-      </button>
-    </div>
-  </form>
-</ng-template>
+                                                          <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                                            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                                                              Cancelar
+                                                            </button>
+                                                          </div>
+                                                        </form>
+                                                      </ng-template>

@@ -24,7 +24,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 
 @Component({

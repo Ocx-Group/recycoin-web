@@ -1,77 +1,80 @@
 <div class="reusable-datatable-container">
   <!-- Búsqueda y Botones de Acción -->
-  <div class="row mb-3" *ngIf="mergedConfig.showSearch || mergedConfig.showActions">
-    <!-- Búsqueda personalizada o por defecto -->
-    <div class="col-sm-3" *ngIf="mergedConfig.showSearch">
-      <ng-container *ngIf="customSearch; else defaultSearch">
-        <ng-container *ngTemplateOutlet="customSearch"></ng-container>
-      </ng-container>
-      <ng-template #defaultSearch>
-        <div class="table-search-area">
-          <div class="form-group">
-            <div class="input-group mb-2">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <i-feather name="search" style="color: #96a2b4;"></i-feather>
+  @if (mergedConfig.showSearch || mergedConfig.showActions) {
+    <div class="row mb-3">
+      <!-- Búsqueda personalizada o por defecto -->
+      @if (mergedConfig.showSearch) {
+        <div class="col-sm-3">
+          @if (customSearch) {
+            <ng-container *ngTemplateOutlet="customSearch"></ng-container>
+          } @else {
+            <div class="table-search-area">
+              <div class="form-group">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i-feather name="search" style="color: #96a2b4;"></i-feather>
+                    </div>
+                  </div>
+                  <input
+                    style="background-color: white;"
+                    type="text"
+                    class="form-control"
+                    (keyup)='updateFilter($event)'
+                    aria-label="Search box"
+                    [placeholder]="mergedConfig.searchPlaceholder | translate">
+                  </div>
                 </div>
               </div>
-              <input
-                style="background-color: white;"
-                type="text"
-                class="form-control"
-                (keyup)='updateFilter($event)'
-                aria-label="Search box"
-                [placeholder]="mergedConfig.searchPlaceholder | translate">
-            </div>
+            }
           </div>
-        </div>
-      </ng-template>
-    </div>
+        }
+        <!-- Botones personalizados -->
+        @if (mergedConfig.showActions) {
+          <div class="col align-self-end">
+            @if (customButtons) {
+              <ng-container *ngTemplateOutlet="customButtons"></ng-container>
+            } @else {
+              <ul class="nav justify-content-end">
+                <li class="nav-item m-2">
+                  <button type="button" class="btn btn-primary" (click)="copyTableData()">
+                    <i class="bi bi-clipboard-check"></i>
+                    {{ 'COMMON.COPY.TEXT' | translate }}
+                  </button>
+                </li>
+                <li class="nav-item m-2">
+                  <button type="button" class="btn btn-primary" (click)="printTable()">
+                    <i class="bi bi-printer"></i>
+                    {{ 'COMMON.PRINT.TEXT' | translate }}
+                  </button>
+                </li>
+                <li class="nav-item m-2">
+                  <button type="button" class="btn btn-primary" (click)="exportToCSV()">
+                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                    {{ 'COMMON.EXPORT.TEXT' | translate }}
+                  </button>
+                </li>
+              </ul>
+            }
+          </div>
+        }
+      </div>
+    }
 
-    <!-- Botones personalizados -->
-    <div class="col align-self-end" *ngIf="mergedConfig.showActions">
-      <ng-container *ngIf="customButtons; else defaultButtons">
-        <ng-container *ngTemplateOutlet="customButtons"></ng-container>
-      </ng-container>
-      <ng-template #defaultButtons>
-        <ul class="nav justify-content-end">
-          <li class="nav-item m-2">
-            <button type="button" class="btn btn-primary" (click)="copyTableData()">
-              <i class="bi bi-clipboard-check"></i>
-              {{ 'COMMON.COPY.TEXT' | translate }}
-            </button>
-          </li>
-          <li class="nav-item m-2">
-            <button type="button" class="btn btn-primary" (click)="printTable()">
-              <i class="bi bi-printer"></i>
-              {{ 'COMMON.PRINT.TEXT' | translate }}
-            </button>
-          </li>
-          <li class="nav-item m-2">
-            <button type="button" class="btn btn-primary" (click)="exportToCSV()">
-              <i class="bi bi-file-earmark-spreadsheet"></i>
-              {{ 'COMMON.EXPORT.TEXT' | translate }}
-            </button>
-          </li>
-        </ul>
-      </ng-template>
-    </div>
-  </div>
-
-  <!-- Tabla NGX Datatable -->
-  <ngx-datatable
-    #table
-    class="material"
-    [rows]="rows"
-    [loadingIndicator]="loadingIndicator"
-    [columnMode]="mergedConfig?.columnMode || 'force'"
-    [headerHeight]="mergedConfig?.headerHeight || 50"
-    [footerHeight]="mergedConfig?.footerHeight || 50"
-    [rowHeight]="mergedConfig?.rowHeight === 'auto' ? 'auto' : +(mergedConfig?.rowHeight || 'auto')"
-    [limit]="mergedConfig?.limit || 10"
-    [scrollbarH]="scrollBarHorizontal"
-    [reorderable]="mergedConfig?.reorderable !== false"
-    [swapColumns]="mergedConfig?.swapColumns !== false"
+    <!-- Tabla NGX Datatable -->
+    <ngx-datatable
+      #table
+      class="material"
+      [rows]="rows"
+      [loadingIndicator]="loadingIndicator"
+      [columnMode]="mergedConfig?.columnMode || 'force'"
+      [headerHeight]="mergedConfig?.headerHeight || 50"
+      [footerHeight]="mergedConfig?.footerHeight || 50"
+      [rowHeight]="mergedConfig?.rowHeight === 'auto' ? 'auto' : +(mergedConfig?.rowHeight || 'auto')"
+      [limit]="mergedConfig?.limit || 10"
+      [scrollbarH]="scrollBarHorizontal"
+      [reorderable]="mergedConfig?.reorderable !== false"
+      [swapColumns]="mergedConfig?.swapColumns !== false"
     [cssClasses]="{
       sortAscending: 'datatable-icon-up',
       sortDescending: 'datatable-icon-down',
@@ -86,77 +89,80 @@
       totalMessage: 'total',
       selectedMessage: 'seleccionado'
     }"
-    (activate)="onRowClick($event)"
-    (select)="onSelect($event)">
+      (activate)="onRowClick($event)"
+      (select)="onSelect($event)">
 
-    <!-- Columnas dinámicas -->
-    <ngx-datatable-column
-      *ngFor="let column of columns"
-      [name]="column.name"
-      [prop]="column.prop"
-      [sortable]="column.sortable !== false"
-      [canAutoResize]="column.canAutoResize !== false"
-      [draggable]="column.draggable !== false"
-      [resizeable]="column.resizeable !== false"
-      [width]="column.width"
-      [minWidth]="column.minWidth"
-      [maxWidth]="column.maxWidth">
+      <!-- Columnas dinámicas -->
+      @for (column of columns; track column) {
+        <ngx-datatable-column
+          [name]="column.name"
+          [prop]="column.prop"
+          [sortable]="column.sortable !== false"
+          [canAutoResize]="column.canAutoResize !== false"
+          [draggable]="column.draggable !== false"
+          [resizeable]="column.resizeable !== false"
+          [width]="column.width"
+          [minWidth]="column.minWidth"
+          [maxWidth]="column.maxWidth">
+          <!-- Template personalizado para el header si existe -->
+          <ng-template *ngIf="column.headerTemplate" ngx-datatable-header-template let-column="column" let-sortDir="sortDir" let-sortFn="sortFn" let-selectFn="selectFn">
+            <ng-container *ngTemplateOutlet="column.headerTemplate; context: { column: column, sortDir: sortDir, sortFn: sortFn, selectFn: selectFn }"></ng-container>
+          </ng-template>
+          <!-- Template para la celda -->
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            @if (column.cellTemplate) {
+              <ng-container *ngTemplateOutlet="column.cellTemplate; context: { row: row, value: value }"></ng-container>
+            } @else {
+              {{ getCellValue(row, column) }}
+            }
+          </ng-template>
+        </ngx-datatable-column>
+      }
 
-      <!-- Template personalizado para el header si existe -->
-      <ng-template *ngIf="column.headerTemplate" ngx-datatable-header-template let-column="column" let-sortDir="sortDir" let-sortFn="sortFn" let-selectFn="selectFn">
-        <ng-container *ngTemplateOutlet="column.headerTemplate; context: { column: column, sortDir: sortDir, sortFn: sortFn, selectFn: selectFn }"></ng-container>
-      </ng-template>
+      <!-- Columna de acciones si hay acciones definidas -->
+      @if ((actions && actions.length > 0) || actionsTemplate) {
+        <ngx-datatable-column
+          [name]="'COMMON.ACTIONS.TEXT' | translate"
+          [sortable]="false"
+          [canAutoResize]="true"
+          [draggable]="false"
+          [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- Template de acciones personalizado -->
+            @if (actionsTemplate) {
+              <ng-container *ngTemplateOutlet="actionsTemplate; context: { row: row }"></ng-container>
+            }
+            <!-- Dropdown de acciones por defecto -->
+            @if (!actionsTemplate && actions && actions.length > 0) {
+              <div ngbDropdown container="body">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm"
+                  ngbDropdownToggle>
+                  {{ 'COMMON.ACTIONS.TEXT' | translate }}
+                </button>
+                <div ngbDropdownMenu>
+                  @for (action of actions; track action) {
+                    @if (shouldShowAction(action, row)) {
+                      <a
+                        ngbDropdownItem
+                        [ngClass]="action.class"
+                        (click)="executeAction(action, row)"
+                        style="cursor: pointer;">
+                        @if (action.icon) {
+                          <i [class]="action.icon"></i>
+                        }
+                        <span [style.margin-left]="action.icon ? '8px' : '0'">{{ action.label }}</span>
+                      </a>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </ng-template>
+        </ngx-datatable-column>
+      }
 
-      <!-- Template para la celda -->
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <ng-container *ngIf="column.cellTemplate; else defaultCell">
-          <ng-container *ngTemplateOutlet="column.cellTemplate; context: { row: row, value: value }"></ng-container>
-        </ng-container>
-        <ng-template #defaultCell>
-          {{ getCellValue(row, column) }}
-        </ng-template>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <!-- Columna de acciones si hay acciones definidas -->
-    <ngx-datatable-column
-      *ngIf="(actions && actions.length > 0) || actionsTemplate"
-      [name]="'COMMON.ACTIONS.TEXT' | translate"
-      [sortable]="false"
-      [canAutoResize]="true"
-      [draggable]="false"
-      [resizeable]="false">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <!-- Template de acciones personalizado -->
-        <ng-container *ngIf="actionsTemplate">
-          <ng-container *ngTemplateOutlet="actionsTemplate; context: { row: row }"></ng-container>
-        </ng-container>
-
-        <!-- Dropdown de acciones por defecto -->
-        <div *ngIf="!actionsTemplate && actions && actions.length > 0" ngbDropdown container="body">
-          <button
-            type="button"
-            class="btn btn-outline-primary btn-sm"
-            ngbDropdownToggle>
-            {{ 'COMMON.ACTIONS.TEXT' | translate }}
-          </button>
-          <div ngbDropdownMenu>
-            <ng-container *ngFor="let action of actions">
-              <a
-                *ngIf="shouldShowAction(action, row)"
-                ngbDropdownItem
-                [ngClass]="action.class"
-                (click)="executeAction(action, row)"
-                style="cursor: pointer;">
-                <i *ngIf="action.icon" [class]="action.icon"></i>
-                <span [style.margin-left]="action.icon ? '8px' : '0'">{{ action.label }}</span>
-              </a>
-            </ng-container>
-          </div>
-        </div>
-      </ng-template>
-    </ngx-datatable-column>
-
-  </ngx-datatable>
-</div>
+    </ngx-datatable>
+  </div>
 

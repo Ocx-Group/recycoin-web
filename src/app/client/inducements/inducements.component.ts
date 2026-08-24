@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
 
@@ -8,7 +8,7 @@ import { IconsModule } from '@app/shared';
     selector: 'app-inducements',
     templateUrl: './inducements.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
+    imports: [NgxDatatableModule, TranslateModule, IconsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class InducementsComponent implements OnInit {
