@@ -21,33 +21,23 @@
               "base": "dist/main"
             },
             "index": "src/index.html",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
-              "@babel/runtime/regenerator",
-              "core-js",
-              "polylabel",
-              "xlsx/dist/xlsx.core.min.js",
-              "raf",
-              "rgbcolor",
               "jspdf-autotable",
-              "pdfmake/build/pdfmake.js",
-              "svg-gaugng e",
               "echarts",
-
-              "chart.js",
               "zrender/lib/svg/svg",
-              "zrender/lib/vml/vml",
-              "dragula",
-              "contra/emitter",
-              "crossvent",
               "apexcharts",
               "fast-deep-equal",
               "rfdc",
-              "sweetalert2",
-              "@ckeditor/ckeditor5-build-classic"
+              "sweetalert2"
             ],
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/ngx-spinner/animations/ball-scale-multiple.css",
@@ -55,14 +45,11 @@
               "./node_modules/@swimlane/ngx-datatable/index.css",
               "./node_modules/@swimlane/ngx-datatable/themes/material.css",
               "./node_modules/@swimlane/ngx-datatable/assets/icons.css",
-              "./node_modules/@ng-select/ng-select/themes/default.theme.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/style.scss",
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              "./node_modules/moment/min/moment.min.js",
-              "./node_modules/chart.js/dist/chart.umd.js",
               "./node_modules/apexcharts/dist/apexcharts.min.js",
               "./node_modules/particles.js/particles.js"
             ],
@@ -126,7 +113,10 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "assets": ["src/favicon.ico", "src/assets"]
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
           }
         }
       }

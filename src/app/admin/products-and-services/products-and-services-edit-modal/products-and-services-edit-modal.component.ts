@@ -7,7 +7,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
   FormGroup,
   FormBuilder,
@@ -44,7 +43,6 @@ import {
 import {ProductCombinationService} from "../../../core/service/product-combination-service/product-combination.service";
 import {ProductInventoryService} from "../../../core/service/product-inventory-service/product-inventory.service";
 import {NgClass, CommonModule} from "@angular/common";
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";
@@ -66,7 +64,6 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective,
-    CKEditorModule,
     NgxDropzoneModule,
     TranslatePipe,
     NgbNavOutlet,
@@ -74,7 +71,6 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   ]
 })
 export class ProductsAndServicesEditModalComponent implements OnInit {
-  public Editor = ClassicEditor;
   isCheckedAttribute: boolean = false;
   isCheckedInventory: boolean = false;
   editProductForm!: FormGroup;
