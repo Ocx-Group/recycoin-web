@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   FormGroup,
@@ -52,6 +53,7 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   selector: 'app-products-and-services-edit-modal',
   templateUrl: './products-and-services-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     NgbNavItem,

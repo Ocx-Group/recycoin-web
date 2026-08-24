@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -23,6 +24,7 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
   selector: 'app-calculation-groups-create-modal',
   templateUrl: './calculation-groups-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

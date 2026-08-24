@@ -171,7 +171,7 @@
                             <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
                               @if (control('logoUrl')?.value && control('logoUrl')?.valid && !logoPreviewFailed) {
                                 <img
-                                  [src]="control('logoUrl')?.value" alt="Logo" class="img-fluid mb-3"
+                                  [src]="$safeNavigationMigration(control('logoUrl')?.value)" alt="Logo" class="img-fluid mb-3"
                                   style="max-height: 120px; max-width: 220px;" (error)="onLogoPreviewError()">
                               }
                               @if (!control('logoUrl')?.value || logoPreviewFailed) {

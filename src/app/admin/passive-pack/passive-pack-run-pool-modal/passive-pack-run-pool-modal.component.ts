@@ -1,6 +1,6 @@
 import {ProcessGradingService} from '../../../core/service/process-grading-service/process-grading.service';
 import {LevelEcoPoolRequest, PassivePack} from '../../../core/models/passive-pack-model/passive-pack.model';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbAlert, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -21,6 +21,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-passive-pack-run-pool-modal',
   templateUrl: './passive-pack-run-pool-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     NgbAlert,

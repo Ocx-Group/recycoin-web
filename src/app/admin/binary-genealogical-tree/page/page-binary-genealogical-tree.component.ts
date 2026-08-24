@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -15,6 +15,7 @@ import {
   templateUrl: './page-binary-genealogical-tree.component.html',
   styleUrls: ['./page-binary-genealogical-tree.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     BinaryGenealogicalTreeComponent,

@@ -4,6 +4,7 @@ import {
   Output,
   ViewChild,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './calculation-groups-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule]
 })
 export class CalculationGroupsEditModalComponent implements OnInit {

@@ -5,9 +5,10 @@ import {
   ViewChild,
   TemplateRef,
   AfterViewInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
@@ -33,9 +34,10 @@ import {
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgxDatatableModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     IconsModule,
     RouterLink,

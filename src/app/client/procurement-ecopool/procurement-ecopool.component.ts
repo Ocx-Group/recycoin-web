@@ -1,7 +1,7 @@
-import { Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
 import {RouterLink} from "@angular/router";
 
@@ -9,7 +9,8 @@ import {RouterLink} from "@angular/router";
     selector: 'app-procurement-ecopool',
     templateUrl: './procurement-ecopool.component.html',
     standalone: true,
-  imports: [NgxDatatableModule, TranslateModule, IconsModule, RouterLink],
+  imports: [NgxDatatableModule, TranslatePipe, IconsModule, RouterLink],
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProcurementEcopoolComponent  {
@@ -60,7 +61,7 @@ export class ProcurementEcopoolComponent  {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
@@ -46,7 +46,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     ]),
   ],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;

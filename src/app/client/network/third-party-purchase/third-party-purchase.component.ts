@@ -9,6 +9,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -37,6 +38,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     templateUrl: './third-party-purchase.component.html',
     styleUrls: ['./third-party-purchase.component.scss'],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, TranslatePipe, NgOptimizedImage]
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {

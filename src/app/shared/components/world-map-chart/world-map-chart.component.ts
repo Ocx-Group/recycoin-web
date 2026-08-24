@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts';
@@ -17,6 +17,7 @@ export interface CountryData {
   styleUrls: ['./world-map-chart.component.scss'],
   standalone: true,
   imports: [NgxEchartsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts')

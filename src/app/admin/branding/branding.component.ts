@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -31,6 +31,7 @@ const MAX_LOGO_BYTES = 2 * 1024 * 1024;
   selector: 'app-branding',
   templateUrl: './branding.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
 })
 export class BrandingComponent implements OnInit {

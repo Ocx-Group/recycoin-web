@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Invoice } from '../../../core/models/invoice-model/invoice.model';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-billing-purchases-detail-modal',
   templateUrl: './billing-purchases-detail-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [],
 })
 export class BillingPurchasesDetailModalComponent implements OnInit {

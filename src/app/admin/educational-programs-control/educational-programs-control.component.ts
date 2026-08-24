@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
@@ -15,6 +15,7 @@ import {IconsModule} from "@app/shared";
   templateUrl: './educational-programs-control.component.html',
   styleUrls: ['./educational-programs-control.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     DataTableColumnDirective,
     TranslatePipe,
@@ -55,7 +56,7 @@ export class EducationalProgramsControlComponent implements OnInit {
       }
       return false;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   onPrint() {

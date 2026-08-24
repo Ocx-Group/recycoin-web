@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import {Product} from "@app/core/models/product-model/product.model";
   templateUrl: './make-purchase-modal.component.html',
   styleUrls: ['./make-purchase-modal.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ReactiveFormsModule
 ]

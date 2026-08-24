@@ -5,7 +5,8 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {Subject} from 'rxjs';
@@ -23,13 +24,14 @@ import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliat
 import {Ticket} from '@app/core/models/ticket-model/ticket.model';
 import {CommonModule} from '@angular/common';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
   standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, RouterLink, NgbCarousel, CreateTicketModalComponent, NgbSlide],
+  imports: [CommonModule, NgxDatatableModule, TranslatePipe, RouterLink, NgbCarousel, CreateTicketModalComponent, NgbSlide],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {

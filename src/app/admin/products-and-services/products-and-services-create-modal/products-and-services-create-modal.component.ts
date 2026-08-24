@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -25,6 +26,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-products-and-services-create-modal',
   templateUrl: './products-and-services-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ReactiveFormsModule,

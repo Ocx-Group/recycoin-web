@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,7 +8,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './educational-courses.component.html',
     styleUrls: ['./educational-courses.component.sass'],
     standalone: true,
-    imports: [TranslateModule, NgbNavModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe, NgbNavModule]
 })
 export class EducationalCoursesComponent implements OnInit {
   active;

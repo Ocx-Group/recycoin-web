@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -25,6 +26,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-concept-list-create-modal',
   templateUrl: './concept-list-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

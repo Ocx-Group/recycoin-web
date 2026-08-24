@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import {Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -34,6 +34,7 @@ const header = [
   templateUrl: './califications-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -97,7 +98,7 @@ export class CalificationsListComponent implements OnInit {
     // update the rows
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {

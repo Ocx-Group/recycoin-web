@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import Swal from 'sweetalert2';
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
@@ -21,6 +21,7 @@ interface CommissionData {
   selector: 'app-calculated-commissions',
   templateUrl: './calculated-commissions.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild,} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -25,6 +25,7 @@ import {off} from "@angular/fire/database";
   selector: 'app-create-requests-modal',
   templateUrl: './create-requests-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class CreateRequestsModalComponent implements OnInit {

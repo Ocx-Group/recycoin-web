@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-incentives-list-edit-modal',
   templateUrl: './incentives-list-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule]
 })
 export class IncentivesListEditModalComponent implements OnInit {

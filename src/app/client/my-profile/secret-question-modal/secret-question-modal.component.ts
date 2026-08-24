@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormGroup,
@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     selector: 'app-secret-question-modal',
     templateUrl: './secret-question-modal.component.html',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class SecretQuestionModalComponent implements OnInit {

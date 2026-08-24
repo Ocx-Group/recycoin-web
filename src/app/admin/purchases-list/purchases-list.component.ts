@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild,} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ClipboardService} from 'ngx-clipboard';
 import {ToastrService} from 'ngx-toastr';
@@ -26,6 +26,7 @@ const header = [
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, DatatableComponent, TranslatePipe, RouterLink, IconsModule, FormsModule, NgClass, DataTableColumnDirective, DataTableColumnCellDirective, DatePipe, CurrencyPipe]
 })
 export class PurchasesListComponent implements OnInit {
@@ -133,7 +134,7 @@ export class PurchasesListComponent implements OnInit {
         !val
       );
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {

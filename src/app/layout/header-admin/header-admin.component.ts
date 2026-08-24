@@ -8,6 +8,7 @@ import {
   OnInit,
   Renderer2,
   AfterViewInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {ConfigService} from '@app/config/config.service';
@@ -17,7 +18,7 @@ import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.serv
 import {map, Observable} from "rxjs";
 import {TicketSummary} from "@app/core/models/ticket-model/ticket-summary.model";
 import { IconsModule } from '@app/shared';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const document: any = window.document;
@@ -27,7 +28,8 @@ const document: any = window.document;
     templateUrl: './header-admin.component.html',
     styleUrls: ['./header-admin.component.sass'],
     standalone: true,
-    imports: [CommonModule, RouterLink, IconsModule, TranslateModule, NgbModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, RouterLink, IconsModule, TranslatePipe, NgbModule]
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
   public user: User = new User();

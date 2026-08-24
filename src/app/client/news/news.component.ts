@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import {RouterLink} from "@angular/router";
 
@@ -6,6 +6,7 @@ import {RouterLink} from "@angular/router";
     selector: 'app-news',
     templateUrl: './news.component.html',
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink]
 })
 export class NewsComponent implements OnInit {

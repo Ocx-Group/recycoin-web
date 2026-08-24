@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {NgbModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -15,7 +16,7 @@ import {
 import {ToastrService} from 'ngx-toastr';
 
 
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
 import {Country} from "../../../core/models/country-model/country.model";
 import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
@@ -26,11 +27,12 @@ import {AffiliateService} from "../../../core/service/affiliate-service/affiliat
   styleUrls: ['./affiliates-list-edit-modal.component.scss'],
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     NgbModalModule,
-    TranslateModule
+    TranslatePipe
 ]
 })
 export class AffiliatesListEditModalComponent implements OnInit {

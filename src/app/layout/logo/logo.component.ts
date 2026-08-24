@@ -1,5 +1,5 @@
 import { LogoService } from '@app/core/service/logo-service/logo.service';
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./logo.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class LogoComponent implements OnInit, OnDestroy {

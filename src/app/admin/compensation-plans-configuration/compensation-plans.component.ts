@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {
@@ -14,6 +14,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
   selector: 'app-compensation-plans',
   templateUrl: './compensation-plans.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     ReactiveFormsModule,

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatrixConfigurationService} from "../../../core/service/matrix-configuration/matrix-configuration.service";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../../shared";
@@ -10,6 +10,7 @@ import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "
   templateUrl: './matrix-list.component.html',
   styleUrls: ['./matrix-list.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     IconsModule,

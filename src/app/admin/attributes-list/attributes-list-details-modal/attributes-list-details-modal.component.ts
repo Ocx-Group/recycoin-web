@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,6 +20,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-attributes-list-details-modal',
   templateUrl: './attributes-list-details-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, DatatableComponent, ReactiveFormsModule, NgbNav, NgbNavItem, NgbNavContent, NgbNavLink, DataTableColumnDirective, DataTableColumnCellDirective, NgClass, NgbNavOutlet],
 })
 export class AttributesListDetailsModalComponent implements OnInit {

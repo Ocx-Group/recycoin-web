@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener} from '@angular/core';
+import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {RouterLink} from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -8,6 +8,7 @@ import {NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-
   selector: 'app-news-admin',
   templateUrl: './walkways-benches.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     DatatableComponent,

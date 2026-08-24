@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -31,6 +32,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-incentives-list-create-modal',
   templateUrl: './incentives-list-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ReactiveFormsModule,

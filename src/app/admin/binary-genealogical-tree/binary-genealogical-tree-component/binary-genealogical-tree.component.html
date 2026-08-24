@@ -7,7 +7,7 @@
   <ng-template #popTitle><b>{{data?.userName || data?.user_name}}</b></ng-template>
   <ng-template #popContent><b>Vol Izq:</b> 0 <br> <b>Vol Der:</b>: 0</ng-template>
   <button
-    (click)="onloadFamilyTree(data?.id)"
+    (click)="onloadFamilyTree($safeNavigationMigration(data?.id))"
     [class]="data?.cssClass"
     class="ng13-org-chart-entity-box"
     [style]="data?.css"

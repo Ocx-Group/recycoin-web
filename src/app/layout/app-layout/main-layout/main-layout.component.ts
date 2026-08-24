@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
@@ -27,6 +27,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
       FooterComponent,
       TermsConditionsModalComponent
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainLayoutComponent implements OnInit {

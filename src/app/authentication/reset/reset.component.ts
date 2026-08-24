@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -21,6 +21,7 @@ import { RequestResetPassword } from '@app/core/models/user-affiliate-model/requ
     templateUrl: './reset.component.html',
     styleUrls: ['./reset.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class ResetComponent implements OnInit {

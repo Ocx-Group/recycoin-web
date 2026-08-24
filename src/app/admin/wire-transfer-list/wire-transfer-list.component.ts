@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -15,6 +15,7 @@ import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "
   selector: 'app-wire-transfer-list',
   templateUrl: './wire-transfer-list.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IconsModule,
     TranslatePipe,
@@ -58,7 +59,7 @@ export class WireTransferListComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.userName.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   loadAllWireTransactions() {

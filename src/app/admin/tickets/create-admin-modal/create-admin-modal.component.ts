@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
@@ -21,6 +21,7 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   templateUrl: './create-admin-modal.component.html',
   styleUrls: ['./create-admin-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ReactiveFormsModule,
     CommonModule,

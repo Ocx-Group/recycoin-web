@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 
 @Component({
@@ -6,6 +6,7 @@ import {Component} from '@angular/core';
     templateUrl: './team.component.html',
     styleUrls: ['./team.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class TeamComponent {

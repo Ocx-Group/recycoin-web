@@ -228,7 +228,7 @@
                         </td>
                         <td class="border-0 text-end">
                           <span class="fw-bold text-primary fs-5">
-                            {{selectedInvoice?.totalInvoice | currency}}
+                            {{$safeNavigationMigration(selectedInvoice?.totalInvoice) | currency}}
                           </span>
                         </td>
                       </tr>
@@ -263,10 +263,10 @@
                     <h6 class="card-subtitle mb-3 text-muted">Fechas</h6>
                     <dl class="row mb-0">
                       <dt class="col-sm-4">Creación</dt>
-                      <dd class="col-sm-8">{{selectedInvoice?.createdAt | date:'medium'}}</dd>
+                      <dd class="col-sm-8">{{$safeNavigationMigration(selectedInvoice?.createdAt) | date:'medium'}}</dd>
 
                       <dt class="col-sm-4">Depósito</dt>
-                      <dd class="col-sm-8">{{selectedInvoice?.depositDate | date:'mediumDate'}}</dd>
+                      <dd class="col-sm-8">{{$safeNavigationMigration(selectedInvoice?.depositDate) | date:'mediumDate'}}</dd>
                     </dl>
                   </div>
                 </div>

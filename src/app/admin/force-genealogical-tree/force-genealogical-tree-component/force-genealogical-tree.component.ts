@@ -3,6 +3,7 @@ import {
   Input,
   ViewEncapsulation,
   TemplateRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {TreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import { NgTemplateOutlet, CommonModule } from "@angular/common";
@@ -17,6 +18,7 @@ import { NgTemplateOutlet, CommonModule } from "@angular/common";
   },
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     NgTemplateOutlet

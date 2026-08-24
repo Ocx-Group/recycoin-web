@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, OnInit, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -23,6 +23,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-califications-list-create-modal',
   templateUrl: './califications-list-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ReactiveFormsModule,

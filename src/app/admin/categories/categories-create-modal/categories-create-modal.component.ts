@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-categories-create-modal',
   templateUrl: './categories-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ReactiveFormsModule,

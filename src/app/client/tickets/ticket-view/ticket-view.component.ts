@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntil} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Subject, Subscription} from "rxjs";
@@ -17,6 +17,7 @@ import {RouterLink} from "@angular/router";
     templateUrl: './ticket-view.component.html',
     styleUrls: ['./ticket-view.component.scss'],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, FormsModule, RouterLink]
 })
 export class TicketViewComponent implements OnInit, OnDestroy {

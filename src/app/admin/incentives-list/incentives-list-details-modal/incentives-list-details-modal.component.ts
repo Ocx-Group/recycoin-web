@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
@@ -8,6 +8,7 @@ import {GradingService} from "../../../core/service/grading-service/grading.serv
   selector: 'app-incentives-list-details-modal',
   templateUrl: './incentives-list-details-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgbNav,
     NgbNavItem,

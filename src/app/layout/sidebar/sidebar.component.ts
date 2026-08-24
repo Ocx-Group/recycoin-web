@@ -13,6 +13,7 @@ import {
   Renderer2,
   HostListener,
   OnDestroy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { ROUTES } from './sidebar-items';
@@ -31,6 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     RouterLink,

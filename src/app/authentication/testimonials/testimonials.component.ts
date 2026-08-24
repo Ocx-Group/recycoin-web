@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Testimonial {
@@ -15,6 +15,7 @@ interface Testimonial {
     templateUrl: './testimonials.component.html',
     styleUrls: ['./testimonials.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule]
 })
 export class TestimonialsComponent implements OnInit, AfterViewInit {

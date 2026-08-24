@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { PaymentDetails, PaymentTranslations } from './activate-matrix-interfaces';
 import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
@@ -12,14 +12,15 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-activate-matrix',
     templateUrl: './activate-matrix.component.html',
     styleUrls: ['./activate-matrix.component.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, FormsModule, TranslatePipe]
 })
 export class ActivateMatrixComponent implements OnInit {
   matrixConfigurations: any[] = [];

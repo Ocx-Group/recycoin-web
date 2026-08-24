@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 import {Product} from '@app/core/models/product-model/product.model';
 import {ToastrService} from 'ngx-toastr';
@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule]
 })
 export class ProductsComponent implements OnInit {

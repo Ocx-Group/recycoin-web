@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './page404.component.html',
     styleUrls: ['./page404.component.sass'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink]
 })
 export class Page404Component implements OnInit {

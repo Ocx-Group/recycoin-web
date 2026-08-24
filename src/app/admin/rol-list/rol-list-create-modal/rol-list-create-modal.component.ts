@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,6 +25,7 @@ import { NgClass, CommonModule } from "@angular/common";
   templateUrl: './rol-list-create-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

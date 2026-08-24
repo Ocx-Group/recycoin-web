@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 
 @Component({
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.sass'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class FooterComponent implements OnInit {

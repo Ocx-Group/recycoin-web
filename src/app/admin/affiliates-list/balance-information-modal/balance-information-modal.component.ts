@@ -1,5 +1,5 @@
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 
 import {BalanceInformationModel1A} from '@app/core/models/wallet-model-1a/balance-information-1a.model';
@@ -17,6 +17,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   templateUrl: './balance-information-modal.component.html',
   styleUrls: ['./balance-information-modal.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgbNavItem,
     ChartComponent,

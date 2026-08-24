@@ -12,7 +12,7 @@
         <div class="user-container green-theme">
           <button type="button" class="user-panel">
             <div class="image">
-              <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
+              <img [src]="user?.image_profile_url ? $safeNavigationMigration(user?.image_profile_url) : 'assets/images/user.png'"
                 class="img-fluid img-circle" alt="User Profile" />
               </div>
             </button>

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -33,6 +33,7 @@ const header = ['Nombre', 'Descripción', 'No. Valores', 'Posición'];
     NgbDropdownToggle,
     NgbDropdownMenu,
     NgbDropdownItem, AttributesListCreateModalComponent, AttributesListEditModalComponent, AttributesListDetailsModalComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ToastrService],
 })
 export class AttributesListComponent implements OnInit {
@@ -83,7 +84,7 @@ export class AttributesListComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   loadAttributesList() {

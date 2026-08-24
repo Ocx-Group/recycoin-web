@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {ToastrService} from 'ngx-toastr';
@@ -16,6 +16,7 @@ import {FormsModule} from "@angular/forms";
   selector: 'app-concept-list-configuration-modal',
   templateUrl: './concept-list-configuration-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule
 ]

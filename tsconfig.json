@@ -24,7 +24,8 @@
       "@environments/*": [
         "./src/environments/*"
       ]
-    }
+    },
+    "strict": false
   },
   "exclude": [
     "node_modules/@types/webgl2",

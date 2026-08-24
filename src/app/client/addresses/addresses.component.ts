@@ -1,10 +1,10 @@
 import { AffiliateAddressService } from '@app/core/service/affiliate-address-service/affiliate-address.service';
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {CreateAddressModalComponent} from "@app/client/addresses/create-address-modal/create-address-modal.component";
 import { IconsModule } from '@app/shared';
 
@@ -12,7 +12,8 @@ import { IconsModule } from '@app/shared';
     selector: 'app-addresses',
     templateUrl: './addresses.component.html',
     standalone: true,
-  imports: [NgxDatatableModule, TranslateModule, CreateAddressModalComponent, IconsModule]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgxDatatableModule, TranslatePipe, CreateAddressModalComponent, IconsModule]
 })
 export class AddressesComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
@@ -52,7 +53,7 @@ export class AddressesComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   loadAddressesByAffiliate() {

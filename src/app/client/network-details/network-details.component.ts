@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Renderer2, Inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,6 +15,7 @@ import {RouterLink} from "@angular/router";
     templateUrl: './network-details.component.html',
     styleUrls: ['./network-details.component.scss'],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TruncateDecimalsPipe, RouterLink]
 })
 export class NetworkDetailsComponent implements OnInit, OnDestroy {

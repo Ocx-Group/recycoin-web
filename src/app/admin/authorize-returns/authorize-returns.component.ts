@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -15,6 +15,7 @@ import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "
   selector: 'app-authorize-returns',
   templateUrl: './authorize-returns.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
 })
 export class AuthorizeReturnsComponent implements OnInit {
@@ -63,7 +64,7 @@ export class AuthorizeReturnsComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   loadRequestRevertTransaction() {

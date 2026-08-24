@@ -5,11 +5,12 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
@@ -25,7 +26,8 @@ import { User } from '@app/core/models/user-model/user.model';
   templateUrl: './image-profile-modal.component.html',
   styleUrls: ['./image-profile-modal.component.scss'],
   standalone: true,
-  imports: [NgxDropzoneModule, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgxDropzoneModule, TranslatePipe],
 })
 export class ImageProfileModalComponent implements OnInit {
   @ViewChild('imageProfileModal', { static: true })

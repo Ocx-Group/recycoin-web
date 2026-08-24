@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -37,6 +37,7 @@ const header = [
   selector: 'app-products-and-services',
   templateUrl: './products-and-services.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -113,7 +114,7 @@ export class ProductsAndServicesComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {

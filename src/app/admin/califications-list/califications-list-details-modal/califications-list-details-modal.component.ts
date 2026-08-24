@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
@@ -8,6 +8,7 @@ import {GradingService} from "../../../core/service/grading-service/grading.serv
   selector: 'app-califications-list-details-modal',
   templateUrl: './califications-list-details-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: []
 })
 export class CalificationsListDetailsModalComponent implements OnInit {

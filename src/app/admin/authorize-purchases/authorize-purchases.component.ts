@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener} from '@angular/core';
+import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -35,6 +35,7 @@ const header = [
   templateUrl: './authorize-purchases.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -94,7 +95,7 @@ export class AuthorizePurchasesComponent {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   close(alert: Alert) {

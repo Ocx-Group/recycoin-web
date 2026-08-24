@@ -3,7 +3,7 @@ import {forkJoin} from 'rxjs';
 import Swal from 'sweetalert2';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -29,6 +29,7 @@ import {FormsModule} from "@angular/forms";
   selector: 'app-wallet-removal',
   templateUrl: './wallet-removal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     TranslatePipe,
@@ -121,7 +122,7 @@ export class WalletRemovalComponent implements OnInit {
       return d.adminUserName.toLowerCase().includes(val) || !val;
     });
     this.rows = temp.reverse();
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   copyTextToClipboard(text: string) {
@@ -143,7 +144,7 @@ export class WalletRemovalComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    const rows = this.table._internalRows;
+    const rows = this.table._internalRows();
     if (rows && rows.length) {
       const headers = [
         'Afiliado',

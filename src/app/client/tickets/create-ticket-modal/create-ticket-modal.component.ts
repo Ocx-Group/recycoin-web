@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {concatAll, from} from 'rxjs';
@@ -22,6 +22,7 @@ import {ObjectStorageService} from '@app/core/service/object-storage-service/obj
     templateUrl: './create-ticket-modal.component.html',
     styleUrls: ['./create-ticket-modal.component.scss'],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe]
 })
 export class CreateTicketModalComponent implements OnInit {

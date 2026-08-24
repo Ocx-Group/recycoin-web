@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-products-preview',
     templateUrl: './products-preview.component.html',
     styleUrls: ['./products-preview.component.scss'],
     standalone: true,
-    imports: [TranslateModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe]
 })
 export class ProductsPreviewComponent implements OnInit {
   public productList: any;

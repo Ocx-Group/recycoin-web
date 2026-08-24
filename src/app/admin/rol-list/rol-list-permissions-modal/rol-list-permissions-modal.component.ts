@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -22,6 +22,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './rol-list-permissions-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     IconsModule,
@@ -95,7 +96,7 @@ export class RolListPermissionsModalComponent implements OnInit {
       this.rows = this.temp.filter((d) => {
         return d.name?.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.table.offset = 0;
+      this.table.offset.set(0);
     }
   }
 

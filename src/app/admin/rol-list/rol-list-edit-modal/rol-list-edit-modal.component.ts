@@ -1,4 +1,4 @@
-import {EventEmitter} from '@angular/core';
+import {EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Component, ViewChild, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -19,6 +19,7 @@ import { NgClass, CommonModule } from "@angular/common";
   templateUrl: './rol-list-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

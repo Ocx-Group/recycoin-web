@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductRequest, RequestPayment } from '../../../core/models/coinpay-model/request-payment.model';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
@@ -10,14 +10,15 @@ import { Subscription, switchMap, timer } from 'rxjs';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-coinpay-modal',
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, QrcodeModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [ReactiveFormsModule, QrcodeModule, TranslatePipe]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;

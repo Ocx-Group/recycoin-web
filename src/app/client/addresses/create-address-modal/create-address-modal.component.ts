@@ -1,5 +1,5 @@
 import { City } from './../../../core/models/cities-model/cities.model';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     selector: 'app-create-address-modal',
     templateUrl: './create-address-modal.component.html',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class CreateAddressModalComponent implements OnInit {

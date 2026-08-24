@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {map} from 'rxjs/operators';
@@ -17,6 +17,7 @@ import {PassivePackRunPoolModalComponent} from "./passive-pack-run-pool-modal/pa
   selector: 'app-passive-pack',
   templateUrl: './passive-pack.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -105,7 +106,7 @@ export class PassivePackComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.invoiceId.toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   openModal(content: any, size: string = 'xl') {

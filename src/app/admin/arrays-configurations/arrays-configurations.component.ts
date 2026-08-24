@@ -4,7 +4,7 @@ import {
   FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {MatrixConfiguration} from "../../core/models/matrix-configuration-model/matrix.configuration.model";
 import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
@@ -30,6 +30,7 @@ const ALERTS: Alert[] = [
   templateUrl: './arrays-configurations.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

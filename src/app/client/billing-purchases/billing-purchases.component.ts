@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ViewChild,
   TemplateRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import Swal from 'sweetalert2';
 
@@ -19,7 +20,7 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
 import { IconsModule } from '@app/shared';
@@ -35,8 +36,9 @@ import {
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    TranslateModule,
+    TranslatePipe,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,

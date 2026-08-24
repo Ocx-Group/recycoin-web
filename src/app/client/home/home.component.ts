@@ -5,6 +5,7 @@ import {
   NgZone,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
@@ -26,7 +27,7 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import { ShareModalComponent } from '@app/client/home/share-modal/share-modal.component';
@@ -43,7 +44,7 @@ import {
   standalone: true,
   imports: [
     NgApexchartsModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     NgxEchartsModule,
     ShareModalComponent,
@@ -55,6 +56,7 @@ import {
       echarts: () => import('echarts'),
     }),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit {

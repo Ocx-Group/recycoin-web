@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
     templateUrl: './purchase-confirmation.component.html',
     styleUrls: ['./purchase-confirmation.component.sass'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class PurchaseConfirmationComponent {

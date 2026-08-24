@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ClipboardService} from 'ngx-clipboard';
@@ -26,6 +26,7 @@ const header = [
   selector: 'app-wallet-refill',
   templateUrl: './wallet-refill.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -89,7 +90,7 @@ export class WalletRefillComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {

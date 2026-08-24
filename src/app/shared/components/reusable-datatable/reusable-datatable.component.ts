@@ -9,11 +9,12 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
 import { NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
 
@@ -76,8 +77,9 @@ export interface TableConfig {
 @Component({
   selector: 'app-reusable-datatable',
   standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
+  imports: [CommonModule, NgxDatatableModule, TranslatePipe, IconsModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
   templateUrl: './reusable-datatable.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./reusable-datatable.component.scss']
 })
 export class ReusableDatatableComponent implements OnInit, OnChanges {
@@ -196,7 +198,7 @@ export class ReusableDatatableComponent implements OnInit, OnChanges {
     this.filterChanged.emit(val);
 
     if (this.table) {
-      this.table.offset = 0;
+      this.table.offset.set(0);
     }
   }
 

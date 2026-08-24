@@ -1,4 +1,4 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -24,6 +24,7 @@ const header = [
   templateUrl: './purchase-order-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class PurchaseOrderListComponent {
@@ -80,7 +81,7 @@ export class PurchaseOrderListComponent {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {

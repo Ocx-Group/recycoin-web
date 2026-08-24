@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostListener,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-concept-list-details-modal',
   templateUrl: './concept-list-details-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     DatatableComponent,

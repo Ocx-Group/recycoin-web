@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {
   AbstractControl,
   FormGroup,
@@ -14,6 +14,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-my-profile-edit-password-upload-modal',
   templateUrl: './my-profile-edit-password-upload-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

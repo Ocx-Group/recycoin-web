@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderAdminComponent } from '@app/layout/header-admin/header-admin.component';
 import { SidebarAdminComponent } from '@app/layout/sidebar-admin/sidebar-admin.component';
@@ -10,6 +10,7 @@ import { FooterComponent } from '@app/layout/footer/footer.component';
     templateUrl: './admin-layout.component.html',
     styleUrls: [],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       RouterOutlet,
       HeaderAdminComponent,

@@ -14,7 +14,7 @@
       <li class="sidebar-user-panel">
         <div role="button" class="user-panel" (click)="profileImgComponent.openImageProfileModal()">
           <div class=" image">
-            <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
+            <img [src]="user?.image_profile_url ? $safeNavigationMigration(user?.image_profile_url) : 'assets/images/user.svg'"
               (error)="$any($event.target).src='assets/images/user.svg'"
               class="img-fluid img-circle user-img-circle" alt="Foto de perfil del usuario" />
           </div>

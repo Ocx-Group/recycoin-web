@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -6,6 +6,7 @@ import { RouterOutlet } from '@angular/router';
     templateUrl: './auth-layout.component.html',
     styleUrls: [],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet]
 })
 export class AuthLayoutComponent implements OnInit {

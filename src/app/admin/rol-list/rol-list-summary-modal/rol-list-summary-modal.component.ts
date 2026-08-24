@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener} from '@angular/core';
+import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,6 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-rol-list-summary-modal',
   templateUrl: './rol-list-summary-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     DatatableComponent,

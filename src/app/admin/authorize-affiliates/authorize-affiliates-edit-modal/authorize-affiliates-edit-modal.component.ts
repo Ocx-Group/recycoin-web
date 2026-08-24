@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -21,6 +22,7 @@ import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableCompone
   templateUrl: './authorize-affiliates-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     DatatableComponent,
     DataTableColumnDirective,

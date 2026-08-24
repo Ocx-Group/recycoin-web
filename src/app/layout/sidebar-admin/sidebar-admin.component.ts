@@ -14,6 +14,7 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ROUTESADMIN } from './sidebar-admin-items';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
@@ -28,6 +29,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './sidebar-admin.component.html',
   styleUrls: ['./sidebar-admin.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     RouterLink,

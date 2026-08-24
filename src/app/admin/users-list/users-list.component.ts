@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -23,6 +23,7 @@ const header = ['Usuario', 'Rol', 'Nombre', 'Apellido', 'Correo'];
   templateUrl: './users-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -117,7 +118,7 @@ export class UsersListComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().includes(val) || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   deleteSingleRow(value) {

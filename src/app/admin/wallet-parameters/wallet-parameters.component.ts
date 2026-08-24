@@ -1,5 +1,5 @@
 import {forkJoin} from 'rxjs';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {formatDate} from '@angular/common';
 import {
   FormBuilder,
@@ -32,6 +32,7 @@ import {RouterLink} from "@angular/router";
   selector: 'app-wallet-parameters',
   templateUrl: './wallet-parameters.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,

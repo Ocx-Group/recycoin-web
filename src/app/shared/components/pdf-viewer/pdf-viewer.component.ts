@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PdfDocument } from '@app/core/interfaces/pdf-document.interface';
 import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
@@ -10,6 +10,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [PdfViewerModule],
 })
 export class PdfViewerComponent implements OnInit, OnDestroy {

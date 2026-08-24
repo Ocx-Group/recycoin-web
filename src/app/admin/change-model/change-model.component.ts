@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -19,6 +19,7 @@ import {IconsModule} from "../../shared";
   templateUrl: './change-model.component.html',
   styleUrls: ['./change-model.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -116,7 +117,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
   }
 
   copyTableData() {
-    const rows = this.table._internalRows;
+    const rows = this.table._internalRows();
     if (rows && rows.length) {
       const headers = Object.keys(rows[0]);
 
@@ -154,7 +155,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
       }
       return false;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   loadAllInvoicesForModelOneAndTwo() {

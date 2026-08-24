@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {RouterLink} from "@angular/router";
 import {ProductsComponent} from "@app/client/products/products.component";
@@ -11,7 +11,8 @@ import {ProductsComponent} from "@app/client/products/products.component";
     templateUrl: './services-and-products.component.html',
     styleUrls: ['./services-and-products.component.sass'],
     standalone: true,
-  imports: [TranslateModule, NgbModule, RouterLink, ProductsComponent]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, NgbModule, RouterLink, ProductsComponent]
 })
 export class ServicesAndProductsComponent implements OnInit {
   active: any;

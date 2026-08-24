@@ -1,5 +1,5 @@
 import { UserService } from '@app/core/service/user-service/user.service';
-import { Component, ViewChild, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
   AbstractControl,
@@ -21,6 +21,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
   templateUrl: './my-profile-edit-personal-info-modal.component.html',
   styleUrls: ['./my-profile-edit-personal-info-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class MyProfileEditPersonalInfoModalComponent implements OnInit {

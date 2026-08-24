@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideHttpClient, HttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, HttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 // Firebase
@@ -15,11 +15,10 @@ import { firebaseConfig } from '@environments/environment';
 
 // Translate
 import {
-  TranslateLoader,
-  TranslateModule,
   TranslateService,
+  provideTranslateService,
 } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Loading Bar
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -32,15 +31,11 @@ import { routes } from './app.routes';
 import { BrandingService } from './core/service/branding-service/branding.service';
 import { runtimeTenantInterceptor } from './core/interceptor/runtime-tenant.interceptor';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideAnimations(),
-    provideHttpClient(withInterceptors([runtimeTenantInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([runtimeTenantInterceptor])),
     provideAppInitializer(() => inject(BrandingService).load()),
     provideToastr({
       timeOut: 3000,
@@ -54,16 +49,10 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
 
     // Translate
-    importProvidersFrom(
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
-        },
-      }),
-      LoadingBarRouterModule,
-    ),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
+    }),
+    importProvidersFrom(LoadingBarRouterModule),
 
     // Language initialization
     provideAppInitializer(() => {

@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -25,6 +26,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-users-list-edit-modal',
   templateUrl: './users-list-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     TranslatePipe,

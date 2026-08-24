@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
@@ -24,6 +24,7 @@ import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
   selector: 'app-tickets-admin',
   templateUrl: './tickets-admin.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     DatatableComponent,

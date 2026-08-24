@@ -1,5 +1,5 @@
 import { FaceApiService } from '@app/core/service/face-api-service/face-api.service';
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ObjectStorageService } from '@app/core/service/object-storage-service/object-storage.service';
 
@@ -20,7 +20,8 @@ import { ObjectStorageService } from '@app/core/service/object-storage-service/o
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslateModule, NgbNavModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe, NgbNavModule]
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

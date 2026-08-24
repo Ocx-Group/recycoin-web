@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ClipboardService} from 'ngx-clipboard';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
@@ -16,6 +16,7 @@ import {IconsModule} from "../../shared";
   selector: 'app-balance-of-wallet',
   templateUrl: './balance-of-wallet.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -84,7 +85,7 @@ export class BalanceOfWalletComponent implements OnInit {
         return fieldValue.includes(val);
       });
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   showSuccess(message) {

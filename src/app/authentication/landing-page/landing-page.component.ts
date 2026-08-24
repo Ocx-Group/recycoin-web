@@ -12,8 +12,9 @@ import {
   OnInit,
   ViewEncapsulation,
   CUSTOM_ELEMENTS_SCHEMA,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
@@ -49,7 +50,8 @@ import { SafePipe } from '@app/shared/pipes/safe.pipe';
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [ToastrService],
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule, SafePipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, SafePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageComponent implements OnInit, OnDestroy {

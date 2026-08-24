@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -15,6 +15,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-attributes-list-edit-modal',
   templateUrl: './attributes-list-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ReactiveFormsModule,
