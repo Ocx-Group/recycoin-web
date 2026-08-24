@@ -1,0 +1,65 @@
+# =============================================================================
+# CI - Continuous Integration (Frontend Angular)
+# Se ejecuta en: PRs hacia main + push directo a main
+# Hace: build de produccion
+#
+# No hay paso de lint: el proyecto no tiene configuracion de ESLint ni target
+# 'lint' en angular.json, asi que 'npm run lint' falla. Cuando se anada
+# @angular-eslint, este workflow debe recuperar el job de lint como en
+# criptojackpot-web.
+# =============================================================================
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Build — compila la app en modo produccion para detectar errores de
+  # compilacion de TypeScript y de plantillas antes de mezclar
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: node-modules-${{ runner.os }}-
+
+      - name: Cache Angular build
+        uses: actions/cache@v6
+        with:
+          path: .angular/cache
+          key: angular-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**/*.ts', 'src/**/*.html') }}
+          restore-keys: angular-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
+      # --legacy-peer-deps: quedan peers sin resolver de librerias que aun no
+      # publican version para Angular 22 (@angular/fire, ngx-gauge, ngx-toastr)
+      # y de sharethis-angular, que sigue declarando ^14.
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build
+        run: npm run build:prod
