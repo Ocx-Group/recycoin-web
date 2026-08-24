@@ -1,5 +1,5 @@
-import {RightSidebarService} from 'src/app/core/service/rightsidebar-service/rightsidebar.service';
-import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
+import {RightSidebarService} from '@app/core/service/rightsidebar-service/rightsidebar.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
 import {DOCUMENT, CommonModule} from '@angular/common';
 import {
   Component,
@@ -10,8 +10,8 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import {ConfigService} from 'src/app/config/config.service';
-import {LanguageService} from 'src/app/core/service/language-service/language.service';
+import {ConfigService} from '@app/config/config.service';
+import {LanguageService} from '@app/core/service/language-service/language.service';
 import {User} from '@app/core/models/user-model/user.model';
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {map, Observable} from "rxjs";

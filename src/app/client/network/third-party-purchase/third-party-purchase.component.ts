@@ -24,7 +24,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixRequest } from '@app/core/interfaces/matrix-request';
 import Swal from 'sweetalert2';

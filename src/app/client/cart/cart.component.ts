@@ -14,7 +14,7 @@ import {
 } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
 import {ToastrService} from 'ngx-toastr';
 import QRCode from 'qrcode';
-import {CartService} from 'src/app/core/service/cart.service/cart.service';
+import {CartService} from '@app/core/service/cart.service/cart.service';
 import Swal from 'sweetalert2';
 
 import {CreateTransactionResponse} from '@app/core/models/coinpay-model/create-transaction-response.model';

@@ -16,7 +16,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { ROUTESADMIN } from './sidebar-admin-items';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { User } from '@app/core/models/user-model/user.model';
 import { RouteInfo } from './sidebar-admin.metadata';
 import { ImageProfileModalComponent } from '@app/shared/components/image-profile-modal/image-profile-modal.component';
