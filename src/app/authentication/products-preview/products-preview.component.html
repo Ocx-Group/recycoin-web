@@ -20,7 +20,7 @@
 
     <div class="products-section">
       <div class="row">
-        @for (item of productList; track item) {
+        @for (item of productList(); track item) {
           <div class="col-12 col-md-4">
             <div class="product-card">
               <img routerLink="/signin" type="button" src="{{item.image}}" class="card-img" alt="Semilla">

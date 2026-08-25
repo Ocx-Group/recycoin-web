@@ -1,6 +1,6 @@
 import { AddressBtc } from '@app/core/models/affiliate-btc-model/address-btc.model';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
-import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     templateUrl: './configure-wallet.component.html',
     styleUrls: ['./configure-wallet.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -34,7 +34,8 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
     private authService: AuthService,
     private affiliateBtcService: AffiliateBtcService,
     private toastr: ToastrService,
-    private affiliateService: AffiliateService
+    private affiliateService: AffiliateService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -76,6 +77,8 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
         if (value.success) {
           this.setConfiguration(value.data);
           this.walletForm.markAsPristine();
+          // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
         }
       },
       error: () => {

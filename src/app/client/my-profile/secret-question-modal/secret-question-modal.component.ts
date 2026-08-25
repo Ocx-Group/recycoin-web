@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     selector: 'app-secret-question-modal',
     templateUrl: './secret-question-modal.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class SecretQuestionModalComponent implements OnInit {
