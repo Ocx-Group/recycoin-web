@@ -9,7 +9,7 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
     selector: 'app-email-confirmation',
     templateUrl: './email.confirmation.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: []
 })
 export class EmailConfirmationComponent {

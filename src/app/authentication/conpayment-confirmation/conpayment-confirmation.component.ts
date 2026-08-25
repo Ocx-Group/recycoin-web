@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
     selector: 'app-conpayment-confirmation',
     templateUrl: './conpayment-confirmation.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: []
 })
 export class ConpaymentConfirmationComponent implements OnInit {

@@ -8,7 +8,8 @@ import {
   OnInit,
   Renderer2,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {ConfigService} from '@app/config/config.service';
@@ -28,7 +29,7 @@ const document: any = window.document;
     templateUrl: './header-admin.component.html',
     styleUrls: ['./header-admin.component.sass'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, RouterLink, IconsModule, TranslatePipe, NgbModule]
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
@@ -53,6 +54,7 @@ export class HeaderAdminComponent implements OnInit, AfterViewInit {
     private router: Router,
     public languageService: LanguageService,
     private ticketHubService: TicketHubService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.ticketHubService.connectionEstablished.subscribe((isConnected) => {
       if (isConnected) {
@@ -61,6 +63,9 @@ export class HeaderAdminComponent implements OnInit, AfterViewInit {
           map(summaries => summaries.reduce((acc, summary) => acc + summary.unreadMessagesCount, 0))
         );
         this.onLoadAllTickets();
+        // ticketSummaries$ y unreadCount$ se asignan aqui, despues del primer
+        // pintado. Sin marcar, con OnPush el async pipe nunca llega a leerlos.
+        this.cdr.markForCheck();
       } else {
         console.error('Waiting for connection to be established...');
       }

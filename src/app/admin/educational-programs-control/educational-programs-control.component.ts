@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy, signal} from '@angular/core';
 
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
@@ -15,7 +15,7 @@ import {IconsModule} from "@app/shared";
   templateUrl: './educational-programs-control.component.html',
   styleUrls: ['./educational-programs-control.component.css'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DataTableColumnDirective,
     TranslatePipe,
@@ -30,10 +30,10 @@ import {IconsModule} from "@app/shared";
   ]
 })
 export class EducationalProgramsControlComponent implements OnInit {
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
   properties: any = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
   searchField: any;
@@ -50,12 +50,12 @@ export class EducationalProgramsControlComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    this.rows = this.temp.filter(d => {
+    this.rows.set(this.temp.filter(d => {
       if (d[this.searchField]) {
         return d[this.searchField].toString().toLowerCase().indexOf(val) !== -1;
       }
       return false;
-    });
+    }));
     this.table.offset.set(0);
   }
 
@@ -70,10 +70,10 @@ export class EducationalProgramsControlComponent implements OnInit {
   getAllTradingAcademyPurchases() {
     this.invoiceService.getAllInvoicesForTradingAcademyPurchases().subscribe({
       next: (response) => {
-        this.rows = response;
+        this.rows.set(response);
         this.temp = [...response];
-        this.loadingIndicator = false;
-        this.properties = Object.getOwnPropertyNames(this.rows[0]);
+        this.loadingIndicator.set(false);
+        this.properties = Object.getOwnPropertyNames(response[0]);
       },
       error: (error) => {
         console.error(error);

@@ -78,7 +78,7 @@
                     </ul>
                   </div>
                 </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                <ngx-datatable #table class="material" [rows]="rows()" [loadingIndicator]="loadingIndicator()"
                   columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
                   [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="#Orden">

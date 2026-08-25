@@ -61,7 +61,7 @@
                       </ul>
                     </div>
                   </div>
-                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                  <ngx-datatable #table class="material" [rows]="rows()" [loadingIndicator]="loadingIndicator()"
                     columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
                     [selectionType]="'checkbox'" [limit]="10" [scrollbarH]="scrollBarHorizontal"
                     [reorderable]="reorderable">
