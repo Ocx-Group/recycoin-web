@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy, signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-categories-create-modal',
   templateUrl: './categories-create-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -24,7 +24,7 @@ export class CategoriesCreateModalComponent implements OnInit {
   checkboxSmallBanner = false;
   checkboxBigBanner = false;
   selectedFile: File = null;
-  categories = [];
+  readonly categories = signal<any[]>([]);
   productCategory: ProductCategory = new ProductCategory();
 
   @ViewChild('categoriesCreateModal') categoriesCreateModal: NgbModal;
@@ -104,7 +104,7 @@ export class CategoriesCreateModalComponent implements OnInit {
 
   categoryList() {
     this.productCategoryService.getAll().subscribe((resp) => {
-      this.categories = resp;
+      this.categories.set(resp);
     });
   }
 

@@ -24,7 +24,7 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
   selector: 'app-calculation-groups-create-modal',
   templateUrl: './calculation-groups-create-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,

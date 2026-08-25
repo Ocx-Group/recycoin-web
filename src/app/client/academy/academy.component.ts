@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { Product } from '@app/core/models/product-model/product.model';
@@ -12,11 +12,11 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './academy.component.html',
     styleUrls: ['./academy.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe]
 })
 export class AcademyComponent implements OnInit {
-  products: Product[] = [];
+  readonly products = signal<Product[]>([]);
 
   constructor(
     private productService: ProductService,
@@ -39,10 +39,10 @@ export class AcademyComponent implements OnInit {
   loadProduct() {
     this.productService.getAllTradingAcademy().subscribe({
       next: (value: Product[]) => {
-        this.products = value;
-        this.products.forEach((item: any) => {
+        value.forEach((item: any) => {
           Object.assign(item, { quantity: 1, total: item.salePrice });
         });
+        this.products.set(value);
       },
       error: err => {
         this.showError('Error');

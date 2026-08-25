@@ -25,7 +25,7 @@ import { NgClass, CommonModule } from "@angular/common";
   templateUrl: './rol-list-create-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,

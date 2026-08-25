@@ -13,7 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
     templateUrl: './terms-conditions-modal.component.html',
     styleUrls: ['./terms-conditions-modal.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: []
 })
 export class TermsConditionsModalComponent implements OnInit, OnDestroy {

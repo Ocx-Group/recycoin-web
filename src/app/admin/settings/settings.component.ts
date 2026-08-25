@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
@@ -10,7 +10,7 @@ import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-b
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgbNav,
     NgbNavItem,
@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private configurationService: ConfigurationService,
     private toastrService: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -54,6 +55,8 @@ export class SettingsComponent implements OnInit {
             paymentModelCutoffDate: this.formatDateForInput(new Date(config.paymentModelCutoffDate)),
             isUnderMaintenance: config.isUnderMaintenance
           });
+          // El subscribe llega fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
         } else {
           console.error('Error al cargar la configuración general')
         }

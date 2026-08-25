@@ -15,7 +15,7 @@
             <div class="col">
               <h5 class="mb-0">Cantidad Modelo 1A</h5>
               <span
-                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1A ?? 0) + ' Tokens' }}</span>
+                class="fw-bold mb-0 font-15 text-success">{{ (information().amountPoolModel1A ?? 0) + ' Tokens' }}</span>
             </div>
             <i class="fas fa-coins card-icon col-blue font-30 col-auto"></i>
           </div>
@@ -29,7 +29,7 @@
             <div class="col">
               <h5 class="mb-0">Cantidad Modelo 1B</h5>
               <span
-                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1B ?? 0) + ' Tokens' }}</span>
+                class="fw-bold mb-0 font-15 text-success">{{ (information().amountPoolModel1B ?? 0) + ' Tokens' }}</span>
             </div>
             <i class="fas fa-coins card-icon col-purple font-30 col-auto"></i>
           </div>
@@ -43,7 +43,7 @@
             <div class="col">
               <h5 class="mb-0">Cantidad Recycoins</h5>
               <span class="fw-bold mb-0 font-15 text-success">
-                {{ (information.amountPoolModel2 ?? 0) + ' Tokens' }}
+                {{ (information().amountPoolModel2 ?? 0) + ' Tokens' }}
               </span>
             </div>
             <i class="fas fa-coins card-icon col-red font-30 col-auto"></i>
@@ -58,7 +58,7 @@
             <div class="col">
               <h5 class="mb-0">Información de red Recycoins</h5>
               <span class="fw-bold mb-0 font-15 text-success">
-                {{ (information.amountPoolModel3 ?? 0) + ' Tokens' }}
+                {{ (information().amountPoolModel3 ?? 0) + ' Tokens' }}
               </span>
             </div>
             <i class="fas fa-coins card-icon col-green font-30 col-auto"></i>
@@ -84,11 +84,11 @@
           <div class="m-t-30">
             <div class="row text-center">
               <div class="col-6 border-right">
-                <h6 class="m-b-0 text-success">${{(information.amountPassiveModel1A ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountPassiveModel1A ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Pasivo Pagado</span>
               </div>
               <div class="col-6">
-                <h6 class="m-b-0 text-success">${{(information.amountResidualModel1A ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountResidualModel1A ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Residual Pagado</span>
               </div>
             </div>
@@ -112,11 +112,11 @@
           <div class="m-t-30">
             <div class="row text-center">
               <div class="col-6 border-right">
-                <h6 class="m-b-0 text-success">${{(information.amountPassiveModel1B ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountPassiveModel1B ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Pasivo Pagado</span>
               </div>
               <div class="col-6">
-                <h6 class="m-b-0 text-success">${{(information.amountResidualModel1B ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountResidualModel1B ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Residual Pagado</span>
               </div>
             </div>
@@ -140,11 +140,11 @@
           <div class="m-t-30">
             <div class="row text-center">
               <div class="col-6 border-right">
-                <h6 class="m-b-0 text-success">${{(information.amountPassiveModel2 ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountPassiveModel2 ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Pasivo Pagado</span>
               </div>
               <div class="col-6">
-                <h6 class="m-b-0 text-success">${{(information.amountResidualModel2 ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountResidualModel2 ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Residual Pagado</span>
               </div>
             </div>
@@ -168,11 +168,11 @@
           <div class="m-t-30">
             <div class="row text-center">
               <div class="col-6 border-right">
-                <h6 class="m-b-0 text-success">${{(information.amountPercentageModel3 ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountPercentageModel3 ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">10% pagado</span>
               </div>
               <div class="col-6">
-                <h6 class="m-b-0 text-success">${{(information.amountResidualModel3 ?? 0) | truncateDecimals:2}}</h6>
+                <h6 class="m-b-0 text-success">${{(information().amountResidualModel3 ?? 0) | truncateDecimals:2}}</h6>
                 <span class="font-14">Residual Pagado</span>
               </div>
             </div>
@@ -189,13 +189,13 @@
           <h6 class="m-b-10">Clientes directos</h6>
           <h6 class="text-end"><i class="fas fa-user float-start"></i>
             <span>
-              {{ (information.amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
+              {{ (information().amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
             </span>
           </h6>
           <h6 class="m-b-10 m">Clientes red</h6>
           <h6 class="text-end"><i class="fas fa-users float-start"></i>
             <span>
-              {{ (information.amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
+              {{ (information().amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
             </span>
           </h6>
         </div>
@@ -208,22 +208,22 @@
           <h6 class="m-b-10">Red izquierda</h6>
           <h6 class="text-end"><i class="fas fa-arrow-left float-start"></i>
             <span>
-                    {{ (information.amountChildrenLeftModel4 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountChildrenLeftModel4 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
           <h6 class="m-b-10">Red derecha</h6>
           <h6 class="text-end"><i class="fas fa-arrow-right float-start"></i>
             <span>
-                    {{ (information.amountChildrenRightModel4 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountChildrenRightModel4 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
           <div class="row text-center m-t-30">
             <div class="col-6 border-right">
-              <h6 class="m-b-0 text-success">${{ (information.volumeLeftModel4 ?? 0) | truncateDecimals:2}}</h6>
+              <h6 class="m-b-0 text-success">${{ (information().volumeLeftModel4 ?? 0) | truncateDecimals:2}}</h6>
               <span class="font-14">Acumulado izquierda</span>
             </div>
             <div class="col-6">
-              <h6 class="m-b-0 text-success">${{ (information.volumeRightModel4 ?? 0) | truncateDecimals:2}}</h6>
+              <h6 class="m-b-0 text-success">${{ (information().volumeRightModel4 ?? 0) | truncateDecimals:2}}</h6>
               <span class="font-14">Acumulado derecha</span>
             </div>
           </div>
@@ -237,13 +237,13 @@
           <h6 class="m-b-10">Clientes directos</h6>
           <h6 class="text-end"><i class="fas fa-user float-start"></i>
             <span>
-                    {{ (information.amountUsersDirectModel5 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountUsersDirectModel5 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
           <h6 class="m-b-10">Clientes red</h6>
           <h6 class="text-end"><i class="fas fa-users float-start"></i>
             <span>
-                    {{ (information.amountUsersNetworkModel5 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountUsersNetworkModel5 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
         </div>
@@ -256,13 +256,13 @@
           <h6 class="m-b-10">Clientes directos</h6>
           <h6 class="text-end"><i class="fas fa-user float-start"></i>
             <span>
-                    {{ (information.amountUsersDirectModel6 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountUsersDirectModel6 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
           <h6 class="m-b-10">Clientes red</h6>
           <h6 class="text-end"><i class="fas fa-users float-start"></i>
             <span>
-                    {{ (information.amountUsersNetworkModel6 ?? 0) + ' Usuarios' }}
+                    {{ (information().amountUsersNetworkModel6 ?? 0) + ' Usuarios' }}
                   </span>
           </h6>
         </div>

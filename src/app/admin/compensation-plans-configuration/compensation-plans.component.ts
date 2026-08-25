@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {
@@ -14,7 +14,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
   selector: 'app-compensation-plans',
   templateUrl: './compensation-plans.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     ReactiveFormsModule,
@@ -30,7 +30,9 @@ export class CompensationPlansComponent implements OnInit {
 
   constructor(private configurationService: ConfigurationService,
               private formBuilder: FormBuilder,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit(): void {
@@ -60,6 +62,8 @@ export class CompensationPlansComponent implements OnInit {
           automatic_incentive_calculation: resp.automatic_incentive_calculation,
           automatic_commission_calculation: resp.automatic_commission_calculation
         })
+        // El subscribe llega fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       }
     });
   }

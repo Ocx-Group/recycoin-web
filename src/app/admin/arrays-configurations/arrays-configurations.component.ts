@@ -4,7 +4,7 @@ import {
   FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {MatrixConfiguration} from "../../core/models/matrix-configuration-model/matrix.configuration.model";
 import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
@@ -30,7 +30,7 @@ const ALERTS: Alert[] = [
   templateUrl: './arrays-configurations.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -52,7 +52,8 @@ export class ArraysConfigurationsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private configurationService: ConfigurationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
     this.alerts = Array.from(ALERTS);
   }
@@ -130,6 +131,8 @@ export class ArraysConfigurationsComponent implements OnInit {
           front_affiliates: resp.affiliates_front_num,
           software_millenium: resp.software_millennium_front_num,
         });
+        // El subscribe llega fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       });
   }
 }

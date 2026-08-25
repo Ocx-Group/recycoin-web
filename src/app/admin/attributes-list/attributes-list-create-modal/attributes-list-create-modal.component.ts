@@ -4,7 +4,8 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
 import {
   AbstractControl,
@@ -22,7 +23,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-attributes-list-create-modal',
   templateUrl: './attributes-list-create-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,7 +33,7 @@ import { NgClass, CommonModule } from "@angular/common";
 export class AttributesListCreateModalComponent implements OnInit {
   createAttributeForm!: FormGroup;
   submitted = false;
-  attributesType: [];
+  readonly attributesType = signal<any[]>([]);
   productAttributes: ProductAttribute = new ProductAttribute();
 
   @ViewChild('attributesCreateModal') attributesCreateModal: NgbModal;
@@ -92,7 +93,7 @@ export class AttributesListCreateModalComponent implements OnInit {
 
   getAttributesType() {
     this.productAttributeService.getAttributeType().subscribe((resp) => {
-      this.attributesType = resp;
+      this.attributesType.set(resp);
     });
   }
 

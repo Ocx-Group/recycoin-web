@@ -110,7 +110,7 @@
             }"
                       >
                       <option value="">Seleccione una opción</option>
-                      @for (item of calificationList; track item) {
+                      @for (item of calificationList(); track item) {
                         <option
                           value="{{ item.id }}"
                           >
@@ -327,7 +327,7 @@
                                                                   formControlName="qualification_qualified_fronts1"
                                                                   >
                                                                   <option value="0">Seleccione una opción</option>
-                                                                  @for (item of calificationList; track item) {
+                                                                  @for (item of calificationList(); track item) {
                                                                     <option
                                                                       value="{{ item.id }}"
                                                                       >
@@ -358,7 +358,7 @@
                                                                     formControlName="qualification_qualified_fronts2"
                                                                     >
                                                                     <option value="0">Seleccione una opción</option>
-                                                                    @for (item of calificationList; track item) {
+                                                                    @for (item of calificationList(); track item) {
                                                                       <option
                                                                         value="{{ item.id }}"
                                                                         >
@@ -389,7 +389,7 @@
                                                                       formControlName="qualification_qualified_fronts3"
                                                                       >
                                                                       <option value="0">Seleccione una opción</option>
-                                                                      @for (item of calificationList; track item) {
+                                                                      @for (item of calificationList(); track item) {
                                                                         <option
                                                                           value="{{ item.id }}"
                                                                           >
@@ -436,7 +436,7 @@
                                                                         formControlName="products"
                                                                         >
                                                                         <option value="0">Seleccione una opción</option>
-                                                                        @for (item of productListData; track item) {
+                                                                        @for (item of productListData(); track item) {
                                                                           <option
                                                                             value="{{ item.id }}"
                                                                             >
@@ -454,7 +454,7 @@
                                                                         formControlName="affiliations"
                                                                         >
                                                                         <option value="0">Seleccione una opción</option>
-                                                                        @for (item of membershipData; track item) {
+                                                                        @for (item of membershipData(); track item) {
                                                                           <option
                                                                             value="{{ item.id }}"
                                                                             >
@@ -554,7 +554,7 @@
                                                                                       formControlName="network_leaders_qualifier"
                                                                                       >
                                                                                       <option value="0">Seleccione una opción</option>
-                                                                                      @for (item of calificationList; track item) {
+                                                                                      @for (item of calificationList(); track item) {
                                                                                         <option
                                                                                           value="{{ item.id }}"
                                                                                           >

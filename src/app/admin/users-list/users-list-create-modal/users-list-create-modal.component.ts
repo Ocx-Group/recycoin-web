@@ -24,7 +24,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-users-list-create-modal',
   templateUrl: './users-list-create-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,

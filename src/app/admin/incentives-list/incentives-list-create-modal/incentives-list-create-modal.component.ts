@@ -4,7 +4,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
 import {
   AbstractControl,
@@ -32,7 +33,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-incentives-list-create-modal',
   templateUrl: './incentives-list-create-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -47,9 +48,9 @@ import { NgClass, CommonModule } from "@angular/common";
 })
 export class IncentivesListCreateModalComponent implements OnInit {
   createIncentivesForm!: FormGroup;
-  productListData!: [];
-  membershipData!: [];
-  calificationList!: [];
+  readonly productListData = signal<any[]>([]);
+  readonly membershipData = signal<any[]>([]);
+  readonly calificationList = signal<any[]>([]);
   submitted = false;
   active = 1;
   incentive: Incentive = new Incentive();
@@ -112,20 +113,20 @@ export class IncentivesListCreateModalComponent implements OnInit {
 
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
-      this.productListData = resp;
+      this.productListData.set(resp);
     });
   }
 
   fetchMembership() {
     this.gradingService.getMembership().subscribe((resp) => {
-      this.membershipData = resp;
+      this.membershipData.set(resp);
     });
   }
 
   fetchCalificationList() {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
-        this.calificationList = resp;
+        this.calificationList.set(resp);
       }
     });
   }

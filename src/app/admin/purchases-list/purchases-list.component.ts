@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ClipboardService} from 'ngx-clipboard';
 import {ToastrService} from 'ngx-toastr';
@@ -26,7 +26,7 @@ const header = [
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, DatatableComponent, TranslatePipe, RouterLink, IconsModule, FormsModule, NgClass, DataTableColumnDirective, DataTableColumnCellDirective, DatePipe, CurrencyPipe]
 })
 export class PurchasesListComponent implements OnInit {
@@ -51,6 +51,7 @@ export class PurchasesListComponent implements OnInit {
     private printService: PrintService,
     private invoiceService: InvoiceService,
     private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -88,10 +89,14 @@ export class PurchasesListComponent implements OnInit {
           this.currentPage = response.data.currentPage;
         }
         this.loadingIndicator = false;
+        // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: error => {
         console.error(error);
         this.loadingIndicator = false;
+        // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+        this.cdr.markForCheck();
         this.toastr.error('Error al cargar los datos');
       },
     });
@@ -215,11 +220,15 @@ export class PurchasesListComponent implements OnInit {
           window.URL.revokeObjectURL(url);
 
           this.loadingIndicator = false;
+          // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.toastr.success('Excel generado exitosamente');
         },
         error: error => {
           console.error('Error al exportar el excel', error);
           this.loadingIndicator = false;
+          // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.toastr.error('Error al generar el excel');
         },
       });
@@ -227,6 +236,8 @@ export class PurchasesListComponent implements OnInit {
       console.error('Error al exportar el excel', error);
       this.toastr.error('Error al generar el excel');
       this.loadingIndicator = false;
+      // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+      this.cdr.markForCheck();
     }
   }
 }

@@ -16,7 +16,7 @@
           <div class="card-header"></div>
           <div class="card-body">
             <div class="row align-items-stretch ml-3">
-              @for (item of products; track item) {
+              @for (item of products(); track item) {
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12 mb-4">
                   <div class="card bg-dark text-white h-90" (mouseenter)="item.showButton = true"
                     (mouseleave)="item.showButton = false">

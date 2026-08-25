@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     selector: 'app-edit-security-pin-modal',
     templateUrl: './edit-security-pin-modal.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class EditSecurityPinModalComponent implements OnInit {
