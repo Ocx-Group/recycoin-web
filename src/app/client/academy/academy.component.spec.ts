@@ -2,13 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AcademyComponent } from './academy.component';
 
+import { testProviders } from '@app/testing/testing';
+
 describe('AcademyComponent', () => {
   let component: AcademyComponent;
   let fixture: ComponentFixture<AcademyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AcademyComponent ]
+      imports: [ AcademyComponent ],
+      providers: [...testProviders]
     })
     .compileComponents();
 

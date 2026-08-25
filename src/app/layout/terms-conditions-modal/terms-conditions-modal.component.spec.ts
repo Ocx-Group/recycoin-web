@@ -2,13 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TermsConditionsModalComponent } from './terms-conditions-modal.component';
 
+import { testProviders } from '@app/testing/testing';
+
 describe('TermsConditionsModalComponent', () => {
   let component: TermsConditionsModalComponent;
   let fixture: ComponentFixture<TermsConditionsModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TermsConditionsModalComponent ]
+      imports: [ TermsConditionsModalComponent ],
+      providers: [...testProviders]
     })
     .compileComponents();
 
