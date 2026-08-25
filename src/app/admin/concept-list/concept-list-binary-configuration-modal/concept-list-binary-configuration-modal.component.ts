@@ -7,7 +7,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './concept-list-binary-configuration-modal.component.html',
   styleUrls: ['./concept-list.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule
   ]

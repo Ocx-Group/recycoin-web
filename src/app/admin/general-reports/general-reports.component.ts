@@ -4,7 +4,7 @@ import {Component, ChangeDetectionStrategy} from '@angular/core';
   selector: 'app-general-reports',
   templateUrl: './general-reports.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: []
 })
 export class GeneralReportsComponent {

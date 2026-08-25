@@ -6,7 +6,7 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
     templateUrl: './page-loader.component.html',
     styleUrls: ['./page-loader.component.sass'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [LoadingBarModule]
 })
 export class PageLoaderComponent implements OnInit {

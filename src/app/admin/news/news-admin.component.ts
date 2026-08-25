@@ -5,7 +5,7 @@ import {RouterLink} from "@angular/router";
   selector: 'app-news-admin',
   templateUrl: './news-admin.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink
   ]

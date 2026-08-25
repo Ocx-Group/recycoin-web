@@ -121,10 +121,7 @@
               "src/assets/scss/style.scss",
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
-            "scripts": [
-              "./node_modules/apexcharts/dist/apexcharts.min.js",
-              "./node_modules/particles.js/particles.js"
-            ],
+            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets"

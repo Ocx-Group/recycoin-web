@@ -6,7 +6,7 @@ import {RouterLink} from "@angular/router";
     selector: 'app-news',
     templateUrl: './news.component.html',
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink]
 })
 export class NewsComponent implements OnInit {

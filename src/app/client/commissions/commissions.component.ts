@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-commissions',
     templateUrl: './commissions.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe, FormsModule]
 })
 export class CommissionsComponent implements OnInit {

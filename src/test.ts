@@ -23,3 +23,9 @@ beforeEach(() => {
   localStorage.clear();
   seedTestSession();
 });
+
+// Dos componentes llaman al global particlesJS en ngOnInit. Cargar la
+// libreria de verdad no sirve: pide assets/particles/particles.json por XHR y
+// el callback llega cuando el fixture ya se destruyo, buscando un elemento que
+// ya no existe. Se sustituye por un doble sin efectos.
+(globalThis as any).particlesJS = Object.assign(() => {}, { load: () => {} });

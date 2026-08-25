@@ -6,7 +6,7 @@ import {Component, ChangeDetectionStrategy} from '@angular/core';
     templateUrl: './team.component.html',
     styleUrls: ['./team.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: []
 })
 export class TeamComponent {

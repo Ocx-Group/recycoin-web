@@ -8,7 +8,7 @@ import {IconsModule} from "../../shared";
   selector: 'app-transactions-commission',
   templateUrl: './transactions-commission.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,

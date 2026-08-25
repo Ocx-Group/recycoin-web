@@ -15,7 +15,7 @@ import { NgClass, CommonModule } from "@angular/common";
     'products-services-configurations-create-carrier-modal.component.scss',
   ],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,

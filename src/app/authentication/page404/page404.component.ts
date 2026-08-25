@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './page404.component.html',
     styleUrls: ['./page404.component.sass'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [RouterLink]
 })
 export class Page404Component implements OnInit {

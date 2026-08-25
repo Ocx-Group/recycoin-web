@@ -14,7 +14,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-my-profile-edit-password-upload-modal',
   templateUrl: './my-profile-edit-password-upload-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
