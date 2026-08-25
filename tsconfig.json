@@ -25,7 +25,15 @@
         "./src/environments/*"
       ]
     },
-    "strict": false
+    "strict": true,
+    // Fase 1 de la adopcion de strict: activadas strictFunctionTypes,
+    // strictBindCallApply, noImplicitThis y alwaysStrict, que costaban 3
+    // errores. Las tres que faltan son proyectos aparte: strictNullChecks
+    // son 293 errores mas, noImplicitAny otros 315 y
+    // strictPropertyInitialization otros 336.
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false
   },
   "exclude": [
     "node_modules/@types/webgl2",
