@@ -79,7 +79,11 @@ export interface TableConfig {
   standalone: true,
   imports: [CommonModule, NgxDatatableModule, TranslatePipe, IconsModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
   templateUrl: './reusable-datatable.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  // Todo el estado propio nace de un evento de plantilla (updateFilter) o de un
+  // @HostListener (onResize); ambos ensucian la vista por si mismos. El resto
+  // llega por @Input, y los tres padres reasignan el array en vez de mutarlo.
+  // La unica promesa es el clipboard, que no escribe estado.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./reusable-datatable.component.scss']
 })
 export class ReusableDatatableComponent implements OnInit, OnChanges {
