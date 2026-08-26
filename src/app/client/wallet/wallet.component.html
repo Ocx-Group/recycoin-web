@@ -136,8 +136,8 @@
               </ng-template>
 
               <!-- Componente reutilizable -->
-              <app-reusable-datatable id="htmlTable" [rows]="rows" [columns]="tableColumns" [actions]="tableActions"
-                [config]="tableConfig" [loadingIndicator]="loadingIndicator" [customSearch]="customSearchTemplate"
+              <app-reusable-datatable id="htmlTable" [rows]="rows()" [columns]="tableColumns" [actions]="tableActions"
+                [config]="tableConfig" [loadingIndicator]="loadingIndicator()" [customSearch]="customSearchTemplate"
                 [customButtons]="customButtonsTemplate">
               </app-reusable-datatable>
             </div>

@@ -5,7 +5,8 @@ import {
   ViewChild,
   TemplateRef,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -34,7 +35,7 @@ import {
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgxDatatableModule,
     TranslatePipe,
@@ -47,9 +48,9 @@ import {
 export class WalletComponent implements OnInit, AfterViewInit {
   balanceInformation: BalanceInformation = new BalanceInformation();
   public userCookie: UserAffiliate;
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
@@ -118,9 +119,9 @@ export class WalletComponent implements OnInit, AfterViewInit {
       next: resp => {
         if (resp != null && resp.length > 0) {
           this.temp = [...resp];
-          this.rows = resp;
+          this.rows.set(resp);
         }
-        this.loadingIndicator = false;
+        this.loadingIndicator.set(false);
       },
       error: err => {
         this.showError('Error!');
@@ -155,15 +156,15 @@ export class WalletComponent implements OnInit, AfterViewInit {
     const val = this.normalizeText(event.target.value);
 
     if (val === '') {
-      this.rows = [...this.temp];
+      this.rows.set([...this.temp]);
     } else {
-      this.rows = this.temp.filter(d => {
+      this.rows.set(this.temp.filter(d => {
         return (
           this.normalizeText(d.concept).includes(val) ||
           this.normalizeText(d.adminUserName || '').includes(val) ||
           this.normalizeText(d.affiliateUserName || '').includes(val)
         );
-      });
+      }));
     }
   }
 
@@ -226,7 +227,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
         this.translateService.instant('WALLET-PAGE.DETAILS-COLUMN.TEXT'),
       ];
 
-      const data = this.rows.map(row => [
+      const data = this.rows().map(row => [
         row.adminUserName,
         row.affiliateUserName,
         row.credit,

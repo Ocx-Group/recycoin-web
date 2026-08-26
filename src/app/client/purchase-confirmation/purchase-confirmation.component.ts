@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
     templateUrl: './purchase-confirmation.component.html',
     styleUrls: ['./purchase-confirmation.component.sass'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: []
 })
 export class PurchaseConfirmationComponent {

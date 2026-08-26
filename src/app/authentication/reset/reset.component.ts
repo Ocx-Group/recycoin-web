@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -21,7 +21,7 @@ import { RequestResetPassword } from '@app/core/models/user-affiliate-model/requ
     templateUrl: './reset.component.html',
     styleUrls: ['./reset.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class ResetComponent implements OnInit {
@@ -36,6 +36,7 @@ export class ResetComponent implements OnInit {
     private affiliateService: AffiliateService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.verificationCode =
       this.activatedRoute.snapshot.params.verificationCode;
@@ -141,6 +142,8 @@ export class ResetComponent implements OnInit {
       .subscribe({
         next: value => {
           this.isLoading = false;
+          // Viene de un timer, fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
 
           if (value === null) {
             this.showExpiredLinkMessage();
@@ -158,6 +161,8 @@ export class ResetComponent implements OnInit {
         },
         error: () => {
           this.isLoading = false;
+          // Viene de un timer, fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.router.navigate(['/signin']);
         },
       });
@@ -201,6 +206,8 @@ export class ResetComponent implements OnInit {
       .subscribe(() => {
         if (this.checkCodeTime()) {
           this.isLoading = true;
+          // Viene de un timer, fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.router.navigate(['/signin']);
         }
       });
