@@ -245,6 +245,7 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
     this.toast = this.createToast();
     this.processGradingService.startFetchingProgress(this.configurationId);
     this.progressSubscription = this.processGradingService.progress$.subscribe(progress => {
+      this.percentageValue = progress;
       this.updateProgressBar(progress / 100);
       if (this.percentageValue === 100) {
         Swal.close();

@@ -5,7 +5,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-news-admin',
+  selector: 'app-walkways-benches',
   templateUrl: './walkways-benches.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
