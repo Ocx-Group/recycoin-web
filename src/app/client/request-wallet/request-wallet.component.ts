@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import {DatatableComponent, NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UntypedFormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -12,7 +12,7 @@ import {RouterLink} from "@angular/router";
   templateUrl: './request-wallet.component.html',
   standalone: true,
   imports: [NgxDatatableModule, ReactiveFormsModule, TranslatePipe, IconsModule, RouterLink],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {
@@ -26,12 +26,15 @@ export class RequestWalletComponent {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
+  ) {
     this.fetch(data => {
       this.temp = [...data];
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }
@@ -53,6 +56,7 @@ export class RequestWalletComponent {
 
     req.onload = () => {
       cb(JSON.parse(req.response));
+      this.cdr.markForCheck();
     };
 
     req.send();

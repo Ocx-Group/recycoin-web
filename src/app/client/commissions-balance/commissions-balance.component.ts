@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ import { IconsModule } from '@app/shared';
     templateUrl: './commissions-balance.component.html',
     standalone: true,
     imports: [NgxDatatableModule, TranslatePipe, IconsModule],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CommissionsBalanceComponent implements OnInit {
@@ -21,12 +21,13 @@ export class CommissionsBalanceComponent implements OnInit {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.fetch((data) => {
       this.temp = [...data];
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }
@@ -47,6 +48,7 @@ export class CommissionsBalanceComponent implements OnInit {
 
     req.onload = () => {
       cb(JSON.parse(req.response));
+      this.cdr.markForCheck();
     };
 
     req.send();

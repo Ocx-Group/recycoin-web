@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -35,7 +35,7 @@ const header = [
   templateUrl: './authorize-purchases.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -47,7 +47,7 @@ const header = [
 ]
 })
 export class AuthorizePurchasesComponent {
-  alerts: Alert[];
+  alerts: Alert[] = [];
   show: Boolean = true;
   linkMsj: String = 'hide';
   rows = [];
@@ -61,7 +61,8 @@ export class AuthorizePurchasesComponent {
   constructor(
     private toastr: ToastrService,
     private clipboardService: ClipboardService,
-    private printService: PrintService
+    private printService: PrintService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -82,6 +83,7 @@ export class AuthorizePurchasesComponent {
 
     req.onload = () => {
       cb(JSON.parse(req.response));
+      this.cdr.markForCheck();
     };
 
     req.send();
