@@ -1,5 +1,5 @@
 <main class="login-wrapper">
-  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex()] + ')'"
     [@backgroundFade]="'visible'">
   </div>
 
@@ -44,22 +44,22 @@
         </div>
 
         <div class="container-login-button">
-          <button class="login-button" type="submit" [disabled]="loading">
-            @if (loading) {
+          <button class="login-button" type="submit" [disabled]="loading()">
+            @if (loading()) {
               <output class="spinner-border spinner-border-sm">
                 <span class="sr-only">Loading...</span>
               </output>
             }
             {{ signin }}
           </button>
-          <button class="login-button mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
+          <button class="login-button mt-2" type="button" [disabled]="loading()" (click)="googleLoginSubmitted()">
             <i class="bi bi-google"></i>
             Google
           </button>
         </div>
-        @if (error !== '') {
+        @if (error() !== '') {
           <div class="alert alert-danger">
-            {{ error }}
+            {{ error() }}
           </div>
         }
       </form>

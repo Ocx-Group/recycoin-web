@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -46,13 +46,16 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     ]),
   ],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
-  error = '';
-  loading = false;
+  // Los tres unicos campos que la plantilla lee y que se escriben fuera de un
+  // evento: error y loading desde las respuestas de login, currentImageIndex
+  // desde el setInterval del fondo. Como senales no hace falta ChangeDetectorRef.
+  readonly error = signal('');
+  readonly loading = signal(false);
   hide = true;
   logoUrl: string;
   username: string = 'Usuario';
@@ -70,7 +73,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     '/assets/images/login-option-2.png',
     '/assets/images/login-option-3.png',
   ];
-  currentImageIndex = 0;
+  readonly currentImageIndex = signal(0);
   private intervalId: any;
   showPassword: boolean = false;
 
@@ -147,7 +150,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   loginSubmitted() {
     let signin = new Signin();
     this.submitted = true;
-    this.error = '';
+    this.error.set('');
     signin.userName = this.authLogin.value.email;
     signin.password = this.authLogin.value.pwd;
 
@@ -161,7 +164,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       if (signin.userName === '' || signin.password === '') {
         return;
       }
-      this.loading = true;
+      this.loading.set(true);
 
       this.authService.loginUser(signin).subscribe((response: Response) => {
         if (response.success) {
@@ -173,14 +176,14 @@ export class SigninComponent implements OnInit, OnDestroy {
         } else {
           this.showError(response.message);
         }
-        this.loading = false;
+        this.loading.set(false);
       });
     });
   }
 
   googleLoginSubmitted() {
     const deviceInfo = this.deviceService.getDeviceInfo();
-    this.loading = true;
+    this.loading.set(true);
 
     this.authService.fetchIpAddress().subscribe(ip => {
       this.authService
@@ -200,11 +203,11 @@ export class SigninComponent implements OnInit, OnDestroy {
             } else {
               this.showError(response.message);
             }
-            this.loading = false;
+            this.loading.set(false);
           },
           error: () => {
             this.showError('No fue posible iniciar sesión con Google.');
-            this.loading = false;
+            this.loading.set(false);
           },
         });
     });
@@ -236,8 +239,9 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   private startBackgroundRotation() {
     this.intervalId = setInterval(() => {
-      this.currentImageIndex =
-        (this.currentImageIndex + 1) % this.backgroundImages.length;
+      this.currentImageIndex.set(
+        (this.currentImageIndex() + 1) % this.backgroundImages.length,
+      );
     }, 10000);
   }
 

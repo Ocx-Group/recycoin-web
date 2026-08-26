@@ -13,7 +13,7 @@
 
   <div class="section-body">
     <!-- Loading state más elegante -->
-    @if (loading) {
+    @if (loading()) {
       <div class="loading-container">
         <div class="loading-content">
           <div class="spinner-grow text-primary" role="status"></div>
@@ -25,7 +25,7 @@
     }
 
     <!-- Matrix configurations -->
-    @if (!loading && matrixConfigurations.length > 0) {
+    @if (!loading() && matrixConfigurations().length > 0) {
       <div class="invoice">
         <div class="invoice-print">
           <div class="row">
@@ -58,7 +58,7 @@
               <div class="section-title">{{ 'ACTIVATE_MATRIX.AVAILABLE_MATRICES' | translate }}</div>
               <p class="section-subtitle text-muted mb-3">Selecciona la matriz que deseas activar</p>
               <div id="matrix-list" class="matrices-grid mt-3">
-                @for (config of matrixConfigurations; track config; let i = $index) {
+                @for (config of matrixConfigurations(); track config; let i = $index) {
                   <div class="matrix-item"
                     [class.selected]="selectedMatrixConfig?.matrixType === config.matrixType"
                     (click)="selectMatrixConfig(config)">
@@ -166,7 +166,7 @@
     }
 
     <!-- Empty state -->
-    @if (!loading && matrixConfigurations.length === 0) {
+    @if (!loading() && matrixConfigurations().length === 0) {
       <div class="invoice">
         <div class="invoice-print">
           <div class="empty-state">
