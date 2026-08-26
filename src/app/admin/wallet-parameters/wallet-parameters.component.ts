@@ -1,5 +1,5 @@
 import {forkJoin} from 'rxjs';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {formatDate} from '@angular/common';
 import {
   FormBuilder,
@@ -32,6 +32,7 @@ import {RouterLink} from "@angular/router";
   selector: 'app-wallet-parameters',
   templateUrl: './wallet-parameters.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -57,7 +58,8 @@ export class WalletParametersComponent implements OnInit {
     private walletRetentionConfigService: WalletRetentionConfigService,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private toastr: ToastrService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -112,6 +114,8 @@ export class WalletParametersComponent implements OnInit {
           activate_confirmation_mails: resp.activate_confirmation_mails,
           concept_wallet_withdrawal: resp.concept_wallet_withdrawal
         })
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -128,6 +132,8 @@ export class WalletParametersComponent implements OnInit {
           commission_amount: resp.commission_amount,
           activate_invoice_cancellation: resp.activate_invoice_cancellation
         });
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -154,6 +160,8 @@ export class WalletParametersComponent implements OnInit {
             datePickersArray.push(pickerGroup);
           });
         }
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -178,6 +186,8 @@ export class WalletParametersComponent implements OnInit {
             rangesArray.push(rangeGroup);
           });
         }
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -227,6 +237,8 @@ export class WalletParametersComponent implements OnInit {
         this.showSuccess('The wallet period and wallet retention were updated successfully!');
         this.loadWalletPeriod();
         this.loadWalletRetentionConf();
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -241,6 +253,8 @@ export class WalletParametersComponent implements OnInit {
       next: () => {
         this.showSuccess('The wallet parameters was updated successfully!');
         this.loadAdditionalParametersConfiguration();
+        // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error!');
@@ -257,6 +271,8 @@ export class WalletParametersComponent implements OnInit {
             this.showSuccess('The wallet period was deleted successfully!');
             this.loadWalletPeriod();
           }
+          // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
         },
         error: () => {
           this.showError('Error!');
@@ -272,6 +288,8 @@ export class WalletParametersComponent implements OnInit {
         next: () => {
           this.showSuccess('The wallet retention was deleted successfully!');
           this.loadWalletRetentionConf();
+          // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
         },
         error: () => {
           this.showError('Error!');

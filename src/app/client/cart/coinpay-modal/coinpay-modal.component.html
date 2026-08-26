@@ -8,10 +8,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <div *ngIf="!selectedCrypto" class="crypto-selection-container">
-      <h5 class="crypto-title">{{ 'PAYMENT_MODAL.SELECT_CRYPTO' | translate }}</h5>
-      <div class="crypto-selection">
-        <!-- <div class="crypto-option" (click)="selectCrypto('BTC')">
+    @if (!selectedCrypto) {
+      <div class="crypto-selection-container">
+        <h5 class="crypto-title">{{ 'PAYMENT_MODAL.SELECT_CRYPTO' | translate }}</h5>
+        <div class="crypto-selection">
+          <!-- <div class="crypto-option" (click)="selectCrypto('BTC')">
           <img [src]="getNetworkIcon('BTC')" alt="Bitcoin" class="crypto-icon">
           <span class="crypto-name">Bitcoin</span>
         </div> -->
@@ -21,59 +22,76 @@
         </div>
       </div>
     </div>
+  }
 
-    <div *ngIf="selectedCrypto && !selectedNetwork" class="network-selection-container">
+  @if (selectedCrypto && !selectedNetwork) {
+    <div class="network-selection-container">
       <h5 class="network-title">{{ 'PAYMENT_MODAL.SELECT_NETWORK' | translate }}</h5>
       <div class="network-selection">
-        <div *ngFor="let network of networks; trackBy: trackByNetwork" class="network-option"
-          [class.selected]="network === selectedNetwork" (click)="selectNetwork(network)">
-          <img [src]="getNetworkIcon(network.shortName)" [attr.alt]="network.shortName" class="network-icon">
-          <span class="network-name">{{ network.name }}</span>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="selectedNetwork">
-      <div *ngIf="isLoading" class="loading-container">
-        <div class="spinner"></div>
-        <p>{{ 'PAYMENT_MODAL.LOADING' | translate }}</p>
-      </div>
-      <div *ngIf="!isLoading">
-        <div class="payment-info">
-          <h5 class="payment-title">{{ 'PAYMENT_MODAL.PAYMENT_DETAILS' | translate }}</h5>
-          <div class="selected-network-info">
-            <ng-container *ngIf="selectedNetwork as network">
-              <img [src]="getNetworkIcon(network.shortName)" [attr.alt]="network.shortName" class="network-icon">
-              <p class="network-detail">
-                <strong>{{ network.name }}</strong>
-                {{ selectedCrypto }}
-              </p>
-            </ng-container>
+        @for (network of networks; track trackByNetwork($index, network)) {
+          <div class="network-option"
+            [class.selected]="network === selectedNetwork" (click)="selectNetwork(network)">
+            <img [src]="getNetworkIcon(network.shortName)" [attr.alt]="network.shortName" class="network-icon">
+            <span class="network-name">{{ network.name }}</span>
           </div>
-          <p class="payment-detail">
-            <strong>{{ 'PAYMENT_MODAL.TOTAL_TO_PAY' | translate }}:</strong> ${{ total }}
-          </p>
-          <p class="payment-detail">
-            <strong>{{ 'PAYMENT_MODAL.WALLET_ADDRESS' | translate }}:</strong> {{ walletAddress }}
-          </p>
-        </div>
-        <div class="qr-code-container">
-          <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="{{ 'PAYMENT_MODAL.QR_CODE' | translate }}"
-            class="qr-code-image">
-          <p *ngIf="!qrCodeDataUrl">{{ 'PAYMENT_MODAL.QR_CODE_LOADING' | translate }}</p>
-        </div>
-        <div class="payment-instructions">
-          <p>{{ 'PAYMENT_MODAL.INSTRUCTIONS' | translate }}</p>
-        </div>
+        }
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button *ngIf="selectedNetwork" type="button" class="btn btn-outline-primary" (click)="backToNetworkSelection()">
+  }
+
+  @if (selectedNetwork) {
+    <div>
+      @if (isLoading) {
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <p>{{ 'PAYMENT_MODAL.LOADING' | translate }}</p>
+        </div>
+      }
+      @if (!isLoading) {
+        <div>
+          <div class="payment-info">
+            <h5 class="payment-title">{{ 'PAYMENT_MODAL.PAYMENT_DETAILS' | translate }}</h5>
+            <div class="selected-network-info">
+              @if (selectedNetwork; as network) {
+                <img [src]="getNetworkIcon(network.shortName)" [attr.alt]="network.shortName" class="network-icon">
+                <p class="network-detail">
+                  <strong>{{ network.name }}</strong>
+                  {{ selectedCrypto }}
+                </p>
+              }
+            </div>
+            <p class="payment-detail">
+              <strong>{{ 'PAYMENT_MODAL.TOTAL_TO_PAY' | translate }}:</strong> ${{ total }}
+            </p>
+            <p class="payment-detail">
+              <strong>{{ 'PAYMENT_MODAL.WALLET_ADDRESS' | translate }}:</strong> {{ walletAddress }}
+            </p>
+          </div>
+          <div class="qr-code-container">
+            @if (qrCodeDataUrl) {
+              <img [src]="qrCodeDataUrl" alt="{{ 'PAYMENT_MODAL.QR_CODE' | translate }}"
+                class="qr-code-image">
+            }
+            @if (!qrCodeDataUrl) {
+              <p>{{ 'PAYMENT_MODAL.QR_CODE_LOADING' | translate }}</p>
+            }
+          </div>
+          <div class="payment-instructions">
+            <p>{{ 'PAYMENT_MODAL.INSTRUCTIONS' | translate }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+<div class="modal-footer">
+  @if (selectedNetwork) {
+    <button type="button" class="btn btn-outline-primary" (click)="backToNetworkSelection()">
       {{ 'PAYMENT_MODAL.CHANGE_NETWORK' | translate }}
     </button>
-    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">
-      {{ 'PAYMENT_MODAL.CLOSE' | translate }}
-    </button>
-  </div>
+  }
+  <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">
+    {{ 'PAYMENT_MODAL.CLOSE' | translate }}
+  </button>
+</div>
 </ng-template>

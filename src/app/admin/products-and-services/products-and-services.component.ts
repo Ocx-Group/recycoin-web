@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -21,7 +21,7 @@ import {
 import {
   ProductsAndServicesEditModalComponent
 } from "./products-and-services-edit-modal/products-and-services-edit-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = [
   'Código del Producto',
@@ -37,8 +37,8 @@ const header = [
   selector: 'app-products-and-services',
   templateUrl: './products-and-services.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -52,7 +52,7 @@ const header = [
     NgbDropdown,
     NgbDropdownToggle,
     NgbDropdownMenu
-  ]
+]
 })
 export class ProductsAndServicesComponent implements OnInit {
   rows = [];
@@ -70,7 +70,8 @@ export class ProductsAndServicesComponent implements OnInit {
     private productService: ProductService,
     private printService: PrintService,
     private toastr: ToastrService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -93,6 +94,7 @@ export class ProductsAndServicesComponent implements OnInit {
       this.temp = [...resp];
       this.rows = resp;
       this.loadingIndicator = false;
+      this.cdr.markForCheck();
     });
   }
 
@@ -100,6 +102,7 @@ export class ProductsAndServicesComponent implements OnInit {
     this.configurationService.getProductConfiguration().subscribe((resp: ProductConfiguration) => {
       if (resp != null) {
         this.productConfiguration = resp;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -114,7 +117,7 @@ export class ProductsAndServicesComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {

@@ -9,6 +9,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -19,12 +20,12 @@ import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.m
 import { Product } from '@app/core/models/product-model/product.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixRequest } from '@app/core/interfaces/matrix-request';
 import Swal from 'sweetalert2';
@@ -37,6 +38,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     templateUrl: './third-party-purchase.component.html',
     styleUrls: ['./third-party-purchase.component.scss'],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, TranslatePipe, NgOptimizedImage]
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {

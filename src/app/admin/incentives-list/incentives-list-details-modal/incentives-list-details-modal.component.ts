@@ -1,34 +1,35 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-incentives-list-details-modal',
   templateUrl: './incentives-list-details-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     NgbNav,
     NgbNavItem,
     NgbNavContent,
     NgbNavLink,
     NgbNavOutlet
-  ]
+]
 })
 export class IncentivesListDetailsModalComponent implements OnInit {
   incentive: Incentive = new Incentive();
-  calificationList!: [];
-  productListData!: [];
-  membershipData!: [];
+  calificationList: any[] = [];
+  productListData: any[] = [];
+  membershipData: any[] = [];
   active = 1;
 
   @ViewChild('incentiveDetailsModal') incentiveDetailsModal: NgbModal;
 
   constructor(
     private modalService: NgbModal,
-    private gradingService: GradingService
+    private gradingService: GradingService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -42,6 +43,7 @@ export class IncentivesListDetailsModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -49,12 +51,25 @@ export class IncentivesListDetailsModalComponent implements OnInit {
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
       this.productListData = resp;
+      this.cdr.markForCheck();
     });
   }
 
   fetchMembership() {
     this.gradingService.getMembership().subscribe((resp) => {
       this.membershipData = resp;
+      this.cdr.markForCheck();
     });
+  }
+
+  detailsOpenModal(content, incentive: Incentive) {
+    this.incentive = incentive;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

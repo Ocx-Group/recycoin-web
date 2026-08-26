@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener} from '@angular/core';
+import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -7,7 +7,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
-import { CommonModule } from '@angular/common';
+
 
 interface Alert {
   type: string;
@@ -35,8 +35,8 @@ const header = [
   templateUrl: './authorize-purchases.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -44,7 +44,7 @@ const header = [
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective
-  ]
+]
 })
 export class AuthorizePurchasesComponent {
   alerts: Alert[];
@@ -95,7 +95,7 @@ export class AuthorizePurchasesComponent {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   close(alert: Alert) {

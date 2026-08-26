@@ -14,332 +14,368 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
   <form
     class="register-form"
     [formGroup]="createUserForm"
-    [autocomplete]="off"
+    autocomplete="off"
     (ngSubmit)="onAddRowSave()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="user_name">
             {{ 'USERS-LIST-CREATE-MODAL.COL-USER.TEXT' | translate }}
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_name"
-            autocomplete="new-user_name"
-            formControlName="user_name"
-            placeholder="Usuario"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="user_name"
+              autocomplete="new-user_name"
+              formControlName="user_name"
+              placeholder="Usuario"
+              required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.user_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.user_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.user_name.errors.required">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-USER.TEXT' | translate }}
+              />
+              @if (submitted && create_user_controls.user_name.errors) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (create_user_controls.user_name.errors.required) {
+                    <div>
+                      {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-USER.TEXT' | translate }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="name">
-            {{ 'USERS-LIST-CREATE-MODAL.COL-NAME.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="name"
-            id="name"
-            placeholder="Nombre"
-            required="required"
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="name">
+                {{ 'USERS-LIST-CREATE-MODAL.COL-NAME.TEXT' | translate }}
+                <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  id="name"
+                  placeholder="Nombre"
+                  required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.name.errors.required">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="password">
-            {{ 'USERS-LIST-CREATE-MODAL.COL-PASSWORD.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            formControlName="password"
-            autocomplete="new-password"
-            placeholder="Password"
-            required="required"
+                  />
+                  @if (submitted && create_user_controls.name.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (create_user_controls.name.errors.required) {
+                        <div>
+                          {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <label for="password">
+                    {{ 'USERS-LIST-CREATE-MODAL.COL-PASSWORD.TEXT' | translate }}
+                    <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      formControlName="password"
+                      autocomplete="new-password"
+                      placeholder="Password"
+                      required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.password.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.password.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.password.errors.required">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-PASS.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="last_name">
-            {{ 'USERS-LIST-CREATE-MODAL.COL-LASTNAME.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="last_name"
-            formControlName="last_name"
-            placeholder="Apellidos"
-            required="required"
+                      />
+                      @if (submitted && create_user_controls.password.errors) {
+                        <div
+                          class="invalid-feedback"
+                          >
+                          @if (create_user_controls.password.errors.required) {
+                            <div>
+                              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-PASS.TEXT' | translate }}
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <label for="last_name">
+                        {{ 'USERS-LIST-CREATE-MODAL.COL-LASTNAME.TEXT' | translate }}
+                        <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="last_name"
+                          formControlName="last_name"
+                          placeholder="Apellidos"
+                          required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.last_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.last_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.last_name.errors.required">
-              {{
-                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate
-              }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="confirm_password">
-            {{
-              'USERS-LIST-CREATE-MODAL.COL-CONFIRM-PASSWORD.TEXT' | translate
-            }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="password"
-            class="form-control"
-            autocomplete="new-password"
-            id="confirm_password"
-            formControlName="confirm_password"
-            placeholder="confirm password"
-            required="required"
+                          />
+                          @if (submitted && create_user_controls.last_name.errors) {
+                            <div
+                              class="invalid-feedback"
+                              >
+                              @if (create_user_controls.last_name.errors.required) {
+                                <div>
+                                  {{
+                                  'USERS-LIST-CREATE-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate
+                                  }}
+                                </div>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <label for="confirm_password">
+                            {{
+                            'USERS-LIST-CREATE-MODAL.COL-CONFIRM-PASSWORD.TEXT' | translate
+                            }}
+                            <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="password"
+                              class="form-control"
+                              autocomplete="new-password"
+                              id="confirm_password"
+                              formControlName="confirm_password"
+                              placeholder="confirm password"
+                              required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && create_user_controls.confirm_password.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.confirm_password.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.confirm_password.errors.required">
-              {{
-                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-CONFIRM-PASS.TEXT'
-                  | translate
-              }}
-            </div>
-            <div *ngIf="create_user_controls.confirm_password.errors.mustMatch">
-              {{
-                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EQUALS-PASS.TEXT' | translate
-              }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="phone">
-            {{ 'USERS-LIST-CREATE-MODAL.COL-PHONE.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="phone"
-            id="phone"
-            placeholder="Phone"
-            required="required"
+                              />
+                              @if (submitted && create_user_controls.confirm_password.errors) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (create_user_controls.confirm_password.errors.required) {
+                                    <div>
+                                      {{
+                                      'USERS-LIST-CREATE-MODAL.MSJ-ERROR-CONFIRM-PASS.TEXT'
+                                      | translate
+                                      }}
+                                    </div>
+                                  }
+                                  @if (create_user_controls.confirm_password.errors.mustMatch) {
+                                    <div>
+                                      {{
+                                      'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EQUALS-PASS.TEXT' | translate
+                                      }}
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="phone">
+                                {{ 'USERS-LIST-CREATE-MODAL.COL-PHONE.TEXT' | translate }}
+                                <span class="text-danger">*</span></label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="phone"
+                                  id="phone"
+                                  placeholder="Phone"
+                                  required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.phone.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.phone.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.phone.errors.required">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="email">
-            {{ 'USERS-LIST-CREATE-MODAL.COL-EMAIL.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="email"
-            class="form-control"
-            formControlName="email"
-            placeholder="email"
-            id="email"
-            required="required"
+                                  />
+                                  @if (submitted && create_user_controls.phone.errors) {
+                                    <div
+                                      class="invalid-feedback"
+                                      >
+                                      @if (create_user_controls.phone.errors.required) {
+                                        <div>
+                                          {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
+                                        </div>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                  <label for="email">
+                                    {{ 'USERS-LIST-CREATE-MODAL.COL-EMAIL.TEXT' | translate }}
+                                    <span class="text-danger">*</span></label
+                                    >
+                                    <input
+                                      type="email"
+                                      class="form-control"
+                                      formControlName="email"
+                                      placeholder="email"
+                                      id="email"
+                                      required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.email.errors
             }"
-          />
-          <div
-            *ngIf="submitted && create_user_controls.email.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.email.errors.required">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
-            </div>
-            <div *ngIf="create_user_controls.email.errors.email">
-              {{
-                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL-INVALID.TEXT'
-                  | translate
-              }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label
-          >{{
-              'USERS-LIST-CREATE-MODAL.COL-ROLE.TEXT' | translate
-            }}<span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select form-control"
-            id="rol_id"
-            formControlName="rol_id"
-            required="required"
+                                      />
+                                      @if (submitted && create_user_controls.email.errors) {
+                                        <div
+                                          class="invalid-feedback"
+                                          >
+                                          @if (create_user_controls.email.errors.required) {
+                                            <div>
+                                              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
+                                            </div>
+                                          }
+                                          @if (create_user_controls.email.errors.email) {
+                                            <div>
+                                              {{
+                                              'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL-INVALID.TEXT'
+                                              | translate
+                                              }}
+                                            </div>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                      <label
+                                        >{{
+                                        'USERS-LIST-CREATE-MODAL.COL-ROLE.TEXT' | translate
+                                        }}<span class="text-danger">*</span></label
+                                        >
+                                        <select
+                                          class="form-select form-control"
+                                          id="rol_id"
+                                          formControlName="rol_id"
+                                          required="required"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.rol_id.errors
             }"
-          >
-            <option value="">
-              {{ 'USERS-LIST-CREATE-MODAL.LBL-SELECT-ROLE.TEXT' | translate }}
-            </option>
-            <option value="{{ item.id }}" *ngFor="let item of selectItems">
-              {{ item.name }}
-            </option>
-          </select>
-          <div
-            *ngIf="submitted && create_user_controls.rol_id.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.rol_id.errors">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-ROL.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="observation"
-          >{{
-              'USERS-LIST-CREATE-MODAL.COL-OBSERVATION.TEXT' | translate
-            }}<span class="text-danger"></span
-            ></label>
-          <textarea
-            type="textarea"
-            class="form-control"
-            placeholder="Observation"
-            formControlName="observation"
-            id="observation"
+                                          >
+                                          <option value="">
+                                            {{ 'USERS-LIST-CREATE-MODAL.LBL-SELECT-ROLE.TEXT' | translate }}
+                                          </option>
+                                          @for (item of selectItems; track item) {
+                                            <option value="{{ item.id }}">
+                                              {{ item.name }}
+                                            </option>
+                                          }
+                                        </select>
+                                        @if (submitted && create_user_controls.rol_id.errors) {
+                                          <div
+                                            class="invalid-feedback"
+                                            >
+                                            @if (create_user_controls.rol_id.errors) {
+                                              <div>
+                                                {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-ROL.TEXT' | translate }}
+                                              </div>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <label for="observation"
+                                          >{{
+                                          'USERS-LIST-CREATE-MODAL.COL-OBSERVATION.TEXT' | translate
+                                          }}<span class="text-danger"></span
+                                        ></label>
+                                        <textarea
+                                          type="textarea"
+                                          class="form-control"
+                                          placeholder="Observation"
+                                          formControlName="observation"
+                                          id="observation"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.observation.errors
             }"
-          ></textarea>
-          <div
-            *ngIf="submitted && create_user_controls.observation.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.observation.errors">
-              {{
-                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-OBSERVATION.TEXT' | translate
-              }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="address"
-          >{{
-              'USERS-LIST-CREATE-MODAL.COL-ADDRESS.TEXT' | translate
-            }}<span class="text-danger"></span
-            ></label>
-          <textarea
-            type="textarea"
-            class="form-control"
-            placeholder="Address"
-            formControlName="address"
+                                        ></textarea>
+                                        @if (submitted && create_user_controls.observation.errors) {
+                                          <div
+                                            class="invalid-feedback"
+                                            >
+                                            @if (create_user_controls.observation.errors) {
+                                              <div>
+                                                {{
+                                                'USERS-LIST-CREATE-MODAL.MSJ-ERROR-OBSERVATION.TEXT' | translate
+                                                }}
+                                              </div>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <label for="address"
+                                          >{{
+                                          'USERS-LIST-CREATE-MODAL.COL-ADDRESS.TEXT' | translate
+                                          }}<span class="text-danger"></span
+                                        ></label>
+                                        <textarea
+                                          type="textarea"
+                                          class="form-control"
+                                          placeholder="Address"
+                                          formControlName="address"
             [ngClass]="{
               'is-invalid': submitted && create_user_controls.address.errors
             }"
-          ></textarea>
-          <div
-            *ngIf="submitted && create_user_controls.address.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="create_user_controls.address.errors">
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            formControlName="status"
-            id="status"
-          />
-          <label class="form-check-label ms-2" for="status">
-            {{ 'USERS-LIST-CREATE-MODAL.BTN-STATUS.TEXT' | translate }}
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'USERS-LIST-CREATE-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        Cancel
-      </button>
-    </div>
-  </form>
-</ng-template>
+                                        ></textarea>
+                                        @if (submitted && create_user_controls.address.errors) {
+                                          <div
+                                            class="invalid-feedback"
+                                            >
+                                            @if (create_user_controls.address.errors) {
+                                              <div>
+                                                {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
+                                              </div>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <input
+                                          class="form-check-input"
+                                          type="checkbox"
+                                          value=""
+                                          formControlName="status"
+                                          id="status"
+                                          />
+                                          <label class="form-check-label ms-2" for="status">
+                                            {{ 'USERS-LIST-CREATE-MODAL.BTN-STATUS.TEXT' | translate }}
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary">
+                                        {{ 'USERS-LIST-CREATE-MODAL.BTN-SAVE.TEXT' | translate }}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-light"
+                                        (click)="modal.close('Close click')"
+                                        >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </form>
+                                </ng-template>

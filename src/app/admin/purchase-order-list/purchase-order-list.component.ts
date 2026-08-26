@@ -1,4 +1,4 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -6,7 +6,7 @@ import {PrintService} from "../../core/service/print-service/print.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
-import { CommonModule } from '@angular/common';
+
 
 
 const header = [
@@ -24,7 +24,8 @@ const header = [
   templateUrl: './purchase-order-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: [CommonModule, DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class PurchaseOrderListComponent {
   rows = [];
@@ -80,7 +81,7 @@ export class PurchaseOrderListComponent {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {

@@ -14,82 +14,98 @@
     </button>
   </div>
   <div class="modal-body">
-    <form class="register-form" [autocomplete]="off" [formGroup]="sendRequest" (ngSubmit)="onSaveRequest()">
+    <form class="register-form" autocomplete="off" [formGroup]="sendRequest" (ngSubmit)="onSaveRequest()">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="amount_requested">
             {{ 'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate }}
             <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" formControlName="amount_requested"
+            <input type="number" class="form-control" formControlName="amount_requested"
             placeholder="{{ 'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate }}" required [ngClass]="{
               'is-invalid': submitted && request_controls.amount_requested.errors
             }" />
-          <div *ngIf="submitted && request_controls.amount_requested.errors" class="invalid-feedback">
-            <div *ngIf="request_controls.amount_requested.errors.required">Ingrese un monto igual o menor al balance
-              disponible.</div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="access_key">
-            {{ 'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate }}
-            <span class="text-danger">*</span>
-          </label>
-          <div class="input-group">
-            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="access_key"
+              @if (submitted && request_controls.amount_requested.errors) {
+                <div class="invalid-feedback">
+                  @if (request_controls.amount_requested.errors.required) {
+                    <div>Ingrese un monto igual o menor al balance
+                    disponible.</div>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="access_key">
+                {{ 'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate }}
+                <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="access_key"
               placeholder="{{ 'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate }}" required [ngClass]="{
                 'is-invalid': submitted && request_controls.access_key.errors
               }" />
-            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-              <i class="material-icons">
-                {{ showPassword ? 'visibility_off' : 'visibility' }}
-              </i>
-            </button>
-          </div>
-          <div *ngIf="submitted && request_controls.access_key.errors" class="invalid-feedback">
-            <div *ngIf="request_controls.access_key.errors.required">La contraseña es requerida.</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <label for="observation">{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}<span
-              class="text-danger"></span></label>
-          <textarea type="textarea" class="form-control"
-            placeholder="{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}" formControlName="observation"
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                    <i class="material-icons">
+                      {{ showPassword ? 'visibility_off' : 'visibility' }}
+                    </i>
+                  </button>
+                </div>
+                @if (submitted && request_controls.access_key.errors) {
+                  <div class="invalid-feedback">
+                    @if (request_controls.access_key.errors.required) {
+                      <div>La contraseña es requerida.</div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <label for="observation">{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}<span
+                class="text-danger"></span></label>
+                <textarea type="textarea" class="form-control"
+                  placeholder="{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}" formControlName="observation"
             [ngClass]="{
               'is-invalid': submitted && request_controls.observation.errors
             }"></textarea>
-          <div *ngIf="submitted && request_controls.observation.errors" class="invalid-feedback">
-            <div *ngIf="request_controls.observation.errors.required">La observación es requerida.</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="generation_code">{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}<span
-              class="text-danger">*</span></label>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}"
+                @if (submitted && request_controls.observation.errors) {
+                  <div class="invalid-feedback">
+                    @if (request_controls.observation.errors.required) {
+                      <div>La observación es requerida.</div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <label for="generation_code">{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}<span
+                class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}"
               formControlName="generation_code" required [ngClass]="{
                 'is-invalid': submitted && request_controls.generation_code.errors
               }" />
-            <div *ngIf="submitted && request_controls.generation_code.errors" class="invalid-feedback">
-              <div *ngIf="request_controls.generation_code.errors.required">El código de seguridad es requerido.</div>
-            </div>
-            <button class="input-group-text btn-primary ms-3" type="button" (click)="onGenerateVerificationCode()">
-              {{ 'REQUESTS-PAGE.GENERATE-CODE-BTN.TEXT' | translate }}
-            </button>
+                    @if (submitted && request_controls.generation_code.errors) {
+                      <div class="invalid-feedback">
+                        @if (request_controls.generation_code.errors.required) {
+                          <div>El código de seguridad es requerido.</div>
+                        }
+                      </div>
+                    }
+                    <button class="input-group-text btn-primary ms-3" type="button" (click)="onGenerateVerificationCode()">
+                      {{ 'REQUESTS-PAGE.GENERATE-CODE-BTN.TEXT' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                  {{ 'REQUESTS-PAGE.SUBMIT-BTN.TEXT' | translate }}
+                </button>
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                  {{ 'REQUESTS-PAGE.CLOSE-BTN.TEXT' | translate }}
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">
-          {{ 'REQUESTS-PAGE.SUBMIT-BTN.TEXT' | translate }}
-        </button>
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-          {{ 'REQUESTS-PAGE.CLOSE-BTN.TEXT' | translate }}
-        </button>
-      </div>
-    </form>
-  </div>
-</ng-template>
+        </ng-template>

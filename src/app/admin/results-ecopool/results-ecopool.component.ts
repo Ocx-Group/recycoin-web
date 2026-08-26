@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 
 import {
   DataTableColumnCellDirective,
@@ -10,13 +10,14 @@ import {
 import {ResultsEcoPoolService} from "../../core/service/results-ecopool-service/results-ecopool.service";
 import {IconsModule} from "../../shared";
 import {TranslatePipe} from "@ngx-translate/core";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-results-ecopool',
   templateUrl: './results-ecopool.component.html',
   standalone: true,
-  imports: [CommonModule, DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
   temp = [];
@@ -55,7 +56,7 @@ export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
     this.rows = this.temp.filter(function (d) {
       return d.affiliateName.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   getRowHeight(row) {

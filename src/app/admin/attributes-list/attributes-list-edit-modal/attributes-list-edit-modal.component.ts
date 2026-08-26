@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,12 +9,13 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {ProductAttribute} from "../../../core/models/product-attribute-model/product-attribute.model";
 import {ProductAttributeService} from "../../../core/service/product-attribute/product-attribute.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-attributes-list-edit-modal',
   templateUrl: './attributes-list-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -25,7 +26,7 @@ export class AttributesListEditModalComponent implements OnInit {
   editAttributeForm!: FormGroup;
   submitted = false;
   productAttribute: ProductAttribute = new ProductAttribute();
-  attributesType: [];
+  attributesType: any[] = [];
 
   @ViewChild('attributesEditModal') attributesEditModal: NgbModal;
   @Output('loadAttributesList') loadAttributesList: EventEmitter<any> =
@@ -35,7 +36,8 @@ export class AttributesListEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private productAttributeService: ProductAttributeService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -60,6 +62,7 @@ export class AttributesListEditModalComponent implements OnInit {
   getAttributesType() {
     this.productAttributeService.getAttributeType().subscribe((resp) => {
       this.attributesType = resp;
+      this.cdr.markForCheck();
     });
   }
 
@@ -94,6 +97,9 @@ export class AttributesListEditModalComponent implements OnInit {
       description: this.productAttribute.description,
       position: this.productAttribute.position,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   closeModals() {

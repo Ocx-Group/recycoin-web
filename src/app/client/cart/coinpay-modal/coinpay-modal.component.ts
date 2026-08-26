@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductRequest, RequestPayment } from '../../../core/models/coinpay-model/request-payment.model';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
@@ -7,17 +7,18 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import * as QRCode from 'qrcode';
 import { Subscription, switchMap, timer } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-coinpay-modal',
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, QrcodeModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ReactiveFormsModule, QrcodeModule, TranslatePipe]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;
@@ -93,6 +94,7 @@ export class CoinpayModalComponent implements OnInit {
         if (response) {
           console.log(response);
           this.networks = response;
+          this.cdr.markForCheck();
         }
       },
       error: (err) => {
@@ -120,6 +122,9 @@ export class CoinpayModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   selectCrypto(crypto: 'BTC' | 'USDT') {
@@ -190,6 +195,7 @@ export class CoinpayModalComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
+        this.cdr.markForCheck();
         console.error(err);
         this.showError("Error al crear la transacción");
       },

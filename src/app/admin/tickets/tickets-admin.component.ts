@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
@@ -17,27 +17,26 @@ import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-
 import {CreateAdminModalComponent} from "./create-admin-modal/create-admin-modal.component";
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
-import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe, NgClass } from "@angular/common";
 import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
 
 @Component({
   selector: 'app-tickets-admin',
   templateUrl: './tickets-admin.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective,
     NgClass,
-    NgIf,
-    NgForOf,
     AdminRespondedPipe,
     AsyncPipe,
     NgbCarousel,
     NgbSlide,
     CreateAdminModalComponent
-  ]
+]
 })
 export class TicketsAdminComponent implements OnInit {
   tickets: Ticket[] = [];

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
   AbstractControl,
@@ -17,6 +17,9 @@ import {UserService} from "../../../core/service/user-service/user.service";
 @Component({
     selector: 'app-my-profile-edit-personal-info-modal',
     templateUrl: './my-profile-edit-personal-info-modal.component.html',
+    // Sin changeDetection explicito Angular 22 ya lo trata como OnPush; se
+    // anota para que las auditorias de estrategia lo vean.
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CommonModule,

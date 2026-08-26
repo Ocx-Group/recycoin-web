@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy, signal} from '@angular/core';
 import {ClipboardService} from 'ngx-clipboard';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
@@ -10,26 +10,26 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {WalletService} from "../../core/service/wallet-service/wallet.service";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-balance-of-wallet',
   templateUrl: './balance-of-wallet.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective
-  ]
+]
 })
 export class BalanceOfWalletComponent implements OnInit {
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
@@ -58,8 +58,8 @@ export class BalanceOfWalletComponent implements OnInit {
     this.walletService.getAllWallets().subscribe(resp => {
       if (resp != null) {
         this.temp = [...resp];
-        this.rows = resp;
-        this.loadingIndicator = false;
+        this.rows.set(resp);
+        this.loadingIndicator.set(false);
       }
     });
   }
@@ -79,13 +79,13 @@ export class BalanceOfWalletComponent implements OnInit {
       'detail',
     ];
 
-    this.rows = this.temp.filter(d => {
+    this.rows.set(this.temp.filter(d => {
       return searchFields.some(field => {
         const fieldValue = d[field]?.toString().toLowerCase() || '';
         return fieldValue.includes(val);
       });
-    });
-    this.table.offset = 0;
+    }));
+    this.table.offset.set(0);
   }
 
   showSuccess(message) {

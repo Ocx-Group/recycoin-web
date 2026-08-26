@@ -1,6 +1,6 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import {ProductsComponent} from "@app/client/products/products.component";
 import {RouterLink} from "@angular/router";
 
@@ -9,7 +9,8 @@ import {RouterLink} from "@angular/router";
     templateUrl: './billing-purchase.component.html',
     styleUrls: ['./billing-purchase.component.scss'],
     standalone: true,
-  imports: [CommonModule, TranslateModule, ProductsComponent, RouterLink],
+  imports: [TranslatePipe, ProductsComponent, RouterLink],
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BillingPurchaseComponent implements OnInit {

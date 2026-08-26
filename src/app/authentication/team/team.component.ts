@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+
 
 @Component({
     selector: 'app-team',
     templateUrl: './team.component.html',
     styleUrls: ['./team.component.scss'],
     standalone: true,
-    imports: [CommonModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class TeamComponent {
   teamMembers = [

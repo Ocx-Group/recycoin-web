@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 interface Alert {
   type: string;
   message: string;
@@ -16,15 +17,16 @@ const ALERTS: Alert[] = [
   },
 ];
 
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-commissions',
     templateUrl: './commissions.component.html',
     standalone: true,
-    imports: [CommonModule, TranslateModule, FormsModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TranslatePipe, FormsModule, NgbAlert]
 })
 export class CommissionsComponent implements OnInit {
   alerts: Alert[];

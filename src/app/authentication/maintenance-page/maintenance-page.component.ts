@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
     selector: 'app-maintenance',
     templateUrl: './maintenance-page.component.html',
     standalone: true,
-    imports: [CommonModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class MaintenancePageComponent implements OnInit {
 

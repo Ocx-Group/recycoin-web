@@ -22,110 +22,113 @@
             <h4>{{ 'CALCULATE-COMMISSIONS.SETTINGS-TITLE.TEXT' | translate }}</h4>
           </div>
           <div class="card-body">
-            <div *ngIf="loadingSettings" class="text-center py-4">
-              <div class="spinner-border" role="status"></div>
-            </div>
-
-            <form *ngIf="!loadingSettings" [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-              <div class="alert alert-light border">
-                {{ 'CALCULATE-COMMISSIONS.SETTINGS-HELP.TEXT' | translate }}
+            @if (loadingSettings) {
+              <div class="text-center py-4">
+                <div class="spinner-border" role="status"></div>
               </div>
+            }
 
-              <div class="row">
-                <div class="col-lg-3 col-md-6">
-                  <div class="form-group">
-                    <label>{{ 'CALCULATE-COMMISSIONS.ENABLED.TEXT' | translate }}</label>
-                    <div class="form-check form-switch">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="monthlyEnabled"
-                        formControlName="enabled"
-                      >
-                      <label class="form-check-label" for="monthlyEnabled">
-                        {{ 'CALCULATE-COMMISSIONS.ENABLED-HELP.TEXT' | translate }}
+            @if (!loadingSettings) {
+              <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+                <div class="alert alert-light border">
+                  {{ 'CALCULATE-COMMISSIONS.SETTINGS-HELP.TEXT' | translate }}
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                      <label>{{ 'CALCULATE-COMMISSIONS.ENABLED.TEXT' | translate }}</label>
+                      <div class="form-check form-switch">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="monthlyEnabled"
+                          formControlName="enabled"
+                          >
+                        <label class="form-check-label" for="monthlyEnabled">
+                          {{ 'CALCULATE-COMMISSIONS.ENABLED-HELP.TEXT' | translate }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                      <label for="settingsRate">
+                        {{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}
                       </label>
+                      <input
+                        type="number"
+                        id="settingsRate"
+                        class="form-control"
+                        formControlName="interestRate"
+                        min="0"
+                        [max]="maxInterestRate"
+                        step="0.01"
+                        >
+                      <small class="form-text text-muted">
+                        {{ 'CALCULATE-COMMISSIONS.RATE-HELP.TEXT' | translate }}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                      <label for="settingsWaitingDays">
+                        {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}
+                      </label>
+                      <input
+                        type="number"
+                        id="settingsWaitingDays"
+                        class="form-control"
+                        formControlName="waitingDays"
+                        min="0"
+                        [max]="maxWaitingDays"
+                        step="1"
+                        >
+                      <small class="form-text text-muted">
+                        {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS-HELP.TEXT' | translate }}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                      <label for="settingsPaymentGroup">
+                        {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}
+                      </label>
+                      <select
+                        id="settingsPaymentGroup"
+                        class="form-control"
+                        formControlName="paymentGroupId"
+                        >
+                        <option [ngValue]="null">
+                          {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-NONE.TEXT' | translate }}
+                        </option>
+                        @for (group of paymentGroups; track group) {
+                          <option [ngValue]="group.id">
+                            {{ group.name }}
+                          </option>
+                        }
+                      </select>
+                      <small class="form-text text-muted">
+                        {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-HELP.TEXT' | translate }}
+                      </small>
                     </div>
                   </div>
                 </div>
-
-                <div class="col-lg-3 col-md-6">
-                  <div class="form-group">
-                    <label for="settingsRate">
-                      {{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}
-                    </label>
-                    <input
-                      type="number"
-                      id="settingsRate"
-                      class="form-control"
-                      formControlName="interestRate"
-                      min="0"
-                      [max]="maxInterestRate"
-                      step="0.01"
-                    >
-                    <small class="form-text text-muted">
-                      {{ 'CALCULATE-COMMISSIONS.RATE-HELP.TEXT' | translate }}
-                    </small>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary" [disabled]="savingSettings">
+                      <i class="fas fa-save"></i>
+                      {{ 'CALCULATE-COMMISSIONS.BTN-SAVE.TEXT' | translate }}
+                    </button>
+                    @if (settingsUpdatedAt) {
+                      <span class="text-muted ml-3">
+                        {{ 'CALCULATE-COMMISSIONS.UPDATED-AT.TEXT' | translate }}
+                        {{ settingsUpdatedAt | date: 'short' }}
+                      </span>
+                    }
                   </div>
                 </div>
-
-                <div class="col-lg-3 col-md-6">
-                  <div class="form-group">
-                    <label for="settingsWaitingDays">
-                      {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}
-                    </label>
-                    <input
-                      type="number"
-                      id="settingsWaitingDays"
-                      class="form-control"
-                      formControlName="waitingDays"
-                      min="0"
-                      [max]="maxWaitingDays"
-                      step="1"
-                    >
-                    <small class="form-text text-muted">
-                      {{ 'CALCULATE-COMMISSIONS.WAITING-DAYS-HELP.TEXT' | translate }}
-                    </small>
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                  <div class="form-group">
-                    <label for="settingsPaymentGroup">
-                      {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}
-                    </label>
-                    <select
-                      id="settingsPaymentGroup"
-                      class="form-control"
-                      formControlName="paymentGroupId"
-                    >
-                      <option [ngValue]="null">
-                        {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-NONE.TEXT' | translate }}
-                      </option>
-                      <option *ngFor="let group of paymentGroups" [ngValue]="group.id">
-                        {{ group.name }}
-                      </option>
-                    </select>
-                    <small class="form-text text-muted">
-                      {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-HELP.TEXT' | translate }}
-                    </small>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row mt-2">
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary" [disabled]="savingSettings">
-                    <i class="fas fa-save"></i>
-                    {{ 'CALCULATE-COMMISSIONS.BTN-SAVE.TEXT' | translate }}
-                  </button>
-                  <span *ngIf="settingsUpdatedAt" class="text-muted ml-3">
-                    {{ 'CALCULATE-COMMISSIONS.UPDATED-AT.TEXT' | translate }}
-                    {{ settingsUpdatedAt | date: 'short' }}
-                  </span>
-                </div>
-              </div>
-            </form>
+              </form>
+            }
           </div>
         </div>
       </div>
@@ -164,13 +167,14 @@
                       {{ 'CALCULATE-COMMISSIONS.MONTH.TEXT' | translate }}
                     </label>
                     <select id="monthSelect" class="form-control" formControlName="month">
-                      <option
-                        *ngFor="let month of months"
-                        [ngValue]="month.value"
-                        [disabled]="isMonthDisabled(month.value)"
-                      >
-                        {{ month.labelKey | translate }} {{ selectedYear }}
-                      </option>
+                      @for (month of months; track month) {
+                        <option
+                          [ngValue]="month.value"
+                          [disabled]="isMonthDisabled(month.value)"
+                          >
+                          {{ month.labelKey | translate }} {{ selectedYear }}
+                        </option>
+                      }
                     </select>
                     <small class="form-text text-muted">
                       {{ 'CALCULATE-COMMISSIONS.MONTH-HELP.TEXT' | translate }}
@@ -229,7 +233,7 @@
                       min="0"
                       [max]="maxInterestRate"
                       step="0.01"
-                    >
+                      >
                   </div>
                 </div>
 
@@ -246,7 +250,7 @@
                       min="0"
                       [max]="maxWaitingDays"
                       step="1"
-                    >
+                      >
                   </div>
                 </div>
 
@@ -259,9 +263,11 @@
                       <option [ngValue]="null">
                         {{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP-NONE.TEXT' | translate }}
                       </option>
-                      <option *ngFor="let group of paymentGroups" [ngValue]="group.id">
-                        {{ group.name }}
-                      </option>
+                      @for (group of paymentGroups; track group) {
+                        <option [ngValue]="group.id">
+                          {{ group.name }}
+                        </option>
+                      }
                     </select>
                   </div>
                 </div>
@@ -279,11 +285,11 @@
                     [ngClass]="isSimulation ? 'btn-info' : 'btn-success'"
                     (click)="processLiquidation()"
                     [disabled]="processing"
-                  >
+                    >
                     <i class="fas" [ngClass]="isSimulation ? 'fa-flask' : 'fa-check-circle'"></i>
                     {{ (isSimulation
-                        ? 'CALCULATE-COMMISSIONS.BTN-SIMULATE.TEXT'
-                        : 'CALCULATE-COMMISSIONS.BTN-RUN.TEXT') | translate }}
+                    ? 'CALCULATE-COMMISSIONS.BTN-SIMULATE.TEXT'
+                    : 'CALCULATE-COMMISSIONS.BTN-RUN.TEXT') | translate }}
                   </button>
                 </div>
               </div>
@@ -294,77 +300,84 @@
     </div>
 
     <!-- Resultado -->
-    <div class="row" *ngIf="result">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>
-              {{ (result.dryRun
-                  ? 'CALCULATE-COMMISSIONS.RESULT-SIMULATED.TEXT'
-                  : 'CALCULATE-COMMISSIONS.RESULT-LIQUIDATED.TEXT') | translate }}
-            </h4>
-          </div>
-          <div class="card-body">
-            <ngb-alert *ngIf="result.dryRun" [dismissible]="false" type="info">
-              <div class="alert-body">
-                {{ 'CALCULATE-COMMISSIONS.RESULT-PREVIEW-NOTE.TEXT' | translate }}
-              </div>
-            </ngb-alert>
-
-            <ul>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.PERIOD.TEXT' | translate }}:</strong>
-                {{ result.startDate }} — {{ result.endDate }}
-              </li>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}:</strong>
-                {{ result.interestRate }}%
-              </li>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}:</strong>
-                {{ result.waitingDays }}
-              </li>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}:</strong>
-                {{ paymentGroupName(result.paymentGroupId) }}
-              </li>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.AFFILIATES.TEXT' | translate }}:</strong>
-                {{ result.rowsAffected }}
-              </li>
-              <li>
-                <strong>{{ 'CALCULATE-COMMISSIONS.TOTAL.TEXT' | translate }}:</strong>
-                {{ result.totalCredit | number: '1.2-4' }}
-              </li>
-            </ul>
-
-            <div *ngIf="result.rowsAffected === 0" class="alert alert-warning">
-              {{ 'CALCULATE-COMMISSIONS.RESULT-EMPTY.TEXT' | translate }}
+    @if (result) {
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>
+                {{ (result.dryRun
+                ? 'CALCULATE-COMMISSIONS.RESULT-SIMULATED.TEXT'
+                : 'CALCULATE-COMMISSIONS.RESULT-LIQUIDATED.TEXT') | translate }}
+              </h4>
             </div>
-
-            <div class="table-responsive" *ngIf="result.items.length">
-              <table class="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE-ID.TEXT' | translate }}</th>
-                    <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE.TEXT' | translate }}</th>
-                    <th class="text-right">
-                      {{ 'CALCULATE-COMMISSIONS.COL-CREDIT.TEXT' | translate }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of result.items">
-                    <td>{{ item.affiliateId }}</td>
-                    <td>{{ item.affiliateUserName }}</td>
-                    <td class="text-right">{{ item.credit | number: '1.2-4' }}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body">
+              @if (result.dryRun) {
+                <ngb-alert [dismissible]="false" type="info">
+                  <div class="alert-body">
+                    {{ 'CALCULATE-COMMISSIONS.RESULT-PREVIEW-NOTE.TEXT' | translate }}
+                  </div>
+                </ngb-alert>
+              }
+              <ul>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.PERIOD.TEXT' | translate }}:</strong>
+                  {{ result.startDate }} — {{ result.endDate }}
+                </li>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.RATE.TEXT' | translate }}:</strong>
+                  {{ result.interestRate }}%
+                </li>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.WAITING-DAYS.TEXT' | translate }}:</strong>
+                  {{ result.waitingDays }}
+                </li>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.PAYMENT-GROUP.TEXT' | translate }}:</strong>
+                  {{ paymentGroupName(result.paymentGroupId) }}
+                </li>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.AFFILIATES.TEXT' | translate }}:</strong>
+                  {{ result.rowsAffected }}
+                </li>
+                <li>
+                  <strong>{{ 'CALCULATE-COMMISSIONS.TOTAL.TEXT' | translate }}:</strong>
+                  {{ result.totalCredit | number: '1.2-4' }}
+                </li>
+              </ul>
+              @if (result.rowsAffected === 0) {
+                <div class="alert alert-warning">
+                  {{ 'CALCULATE-COMMISSIONS.RESULT-EMPTY.TEXT' | translate }}
+                </div>
+              }
+              @if (result.items.length) {
+                <div class="table-responsive">
+                  <table class="table table-striped table-sm">
+                    <thead>
+                      <tr>
+                        <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE-ID.TEXT' | translate }}</th>
+                        <th>{{ 'CALCULATE-COMMISSIONS.COL-AFFILIATE.TEXT' | translate }}</th>
+                        <th class="text-right">
+                          {{ 'CALCULATE-COMMISSIONS.COL-CREDIT.TEXT' | translate }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (item of result.items; track item) {
+                        <tr>
+                          <td>{{ item.affiliateId }}</td>
+                          <td>{{ item.affiliateUserName }}</td>
+                          <td class="text-right">{{ item.credit | number: '1.2-4' }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
             </div>
           </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </section>

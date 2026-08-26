@@ -68,85 +68,103 @@
                             <input style="background-color: white;" type="text" class="form-control"
                               id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
                               placeholder="{{ 'REQUESTS-PAGE.SEARCH.TEXT' | translate }}">
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
-                        <button class="btn btn-primary" *ngIf="!isReachedWithdrawalLimit"
-                          (click)="modalChildCreate.openCreateRequestModal(modalChildCreate['createRequestModal'])">
-                          {{'REQUESTS-PAGE.PROCESS-PAYMENT.TEXT' | translate}}
-                        </button>
+                    <div class="col-sm-1">
+                      <div class="header-buttons-left">
+                        <div class="tbl-btn-style">
+                          @if (!isReachedWithdrawalLimit) {
+                            <button class="btn btn-primary"
+                              (click)="modalChildCreate.openCreateRequestModal(modalChildCreate['createRequestModal'])">
+                              {{'REQUESTS-PAGE.PROCESS-PAYMENT.TEXT' | translate}}
+                            </button>
+                          }
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <h6>
+                      {{ 'REQUESTS-PAGE.TITTLE-TABLE.TEXT' | translate }}
+                    </h6>
+                  </div>
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                    <ngx-datatable-column name="{{ 'REQUESTS-PAGE.AMOUNT-WITHDRAW-COLUMN.TEXT' | translate }}">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        $ {{ row.amount }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'REQUESTS-PAGE.OBSERVATION-COLUMN.TEXT' | translate }}">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.concept }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'REQUESTS-PAGE.ADMIN-ANSWER-COLUMN.TEXT' | translate }}">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.status == 0) {
+                          <div class="badge-outline col-yellow">
+                            {{ 'REQUESTS-PAGE.ADMIN-ANSWER.NOT-ATTENDED.TEXT' | translate }}
+                          </div>
+                        }
+                        @if (row.status == 1) {
+                          <div class="badge-outline col-green">
+                            {{ 'REQUESTS-PAGE.ADMIN-ANSWER.ATTENDED.TEXT' | translate }}
+                          </div>
+                        }
+                        @if (row.status == 2) {
+                          <div class="badge-outline col-red">
+                            {{ 'REQUESTS-PAGE.ADMIN-ANSWER.CANCELLED.TEXT' | translate }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'REQUESTS-PAGE.STATE-COLUMN.TEXT' | translate }}">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.status == 0) {
+                          <div class="badge-outline col-yellow">
+                            {{ 'REQUESTS-PAGE.STATE.PENDING.TEXT' | translate }}
+                          </div>
+                        }
+                        @if (row.status == 1) {
+                          <div class="badge-outline col-green">
+                            {{ 'REQUESTS-PAGE.STATE.APPROVED.TEXT' | translate }}
+                          </div>
+                        }
+                        @if (row.status == 2) {
+                          <div class="badge-outline col-red">
+                            {{ 'REQUESTS-PAGE.STATE.CANCELLED.TEXT' | translate }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'REQUESTS-PAGE.REQUEST-TYPE.TEXT' | translate }}">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.type == 'withdrawal_request') {
+                          <div class="badge-outline col-blue">
+                            {{ 'REQUESTS-PAGE.TYPE.WITHDRAWAL.TEXT' | translate }}
+                          </div>
+                        }
+                        @if (row.type == 'revert_invoice_request') {
+                          <div class="badge-outline col-orange">
+                            {{ 'REQUESTS-PAGE.REQUEST-TYPE.REVERT-INVOICE.TEXT' | translate }}
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
                 </div>
-                <div class="row">
-                  <h6>
-                    {{ 'REQUESTS-PAGE.TITTLE-TABLE.TEXT' | translate }}
-                  </h6>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="{{ 'REQUESTS-PAGE.AMOUNT-WITHDRAW-COLUMN.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      $ {{ row.amount }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'REQUESTS-PAGE.OBSERVATION-COLUMN.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.concept }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'REQUESTS-PAGE.ADMIN-ANSWER-COLUMN.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.status == 0" class="badge-outline col-yellow">
-                        {{ 'REQUESTS-PAGE.ADMIN-ANSWER.NOT-ATTENDED.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.status == 1" class="badge-outline col-green">
-                        {{ 'REQUESTS-PAGE.ADMIN-ANSWER.ATTENDED.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.status == 2" class="badge-outline col-red">
-                        {{ 'REQUESTS-PAGE.ADMIN-ANSWER.CANCELLED.TEXT' | translate }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'REQUESTS-PAGE.STATE-COLUMN.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.status == 0" class="badge-outline col-yellow">
-                        {{ 'REQUESTS-PAGE.STATE.PENDING.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.status == 1" class="badge-outline col-green">
-                        {{ 'REQUESTS-PAGE.STATE.APPROVED.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.status == 2" class="badge-outline col-red">
-                        {{ 'REQUESTS-PAGE.STATE.CANCELLED.TEXT' | translate }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'REQUESTS-PAGE.REQUEST-TYPE.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.type == 'withdrawal_request'" class="badge-outline col-blue">
-                        {{ 'REQUESTS-PAGE.TYPE.WITHDRAWAL.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.type == 'revert_invoice_request'" class="badge-outline col-orange">
-                        {{ 'REQUESTS-PAGE.REQUEST-TYPE.REVERT-INVOICE.TEXT' | translate }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<app-create-requests-modal (loadWalletRequest)="loadWalletRequest()" (setAvailableBalance)="setAvailableBalance()"
-  [user]="user" [balanceInfo]="balanceInfo" [walletWithdrawalConfig]="walletWithdrawalsConfig"
+  </section>
+  <app-create-requests-modal (loadWalletRequest)="loadWalletRequest()" (setAvailableBalance)="setAvailableBalance()"
+    [user]="user" [balanceInfo]="balanceInfo" [walletWithdrawalConfig]="walletWithdrawalsConfig"
   #modalChildCreate></app-create-requests-modal>

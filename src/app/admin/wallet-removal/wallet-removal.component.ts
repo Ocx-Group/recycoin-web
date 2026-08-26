@@ -3,7 +3,7 @@ import {forkJoin} from 'rxjs';
 import Swal from 'sweetalert2';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -29,6 +29,7 @@ import {FormsModule} from "@angular/forms";
   selector: 'app-wallet-removal',
   templateUrl: './wallet-removal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     TranslatePipe,
@@ -58,6 +59,7 @@ export class WalletRemovalComponent implements OnInit {
     private configurationService: ConfigurationService,
     private coinPaymentService: CoinpaymentService,
     private coinpayService: CoinpayService,
+    private cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -100,6 +102,9 @@ export class WalletRemovalComponent implements OnInit {
     this.rows = filteredData;
     this.loadingIndicator = false;
     this.rows.reverse();
+    // El forkJoin de loadData cae despues del primer pintado: sin marcar, la
+    // tabla se queda con el spinner y sin filas.
+    this.cdr.markForCheck();
   }
 
   showSuccess(message) {
@@ -121,7 +126,7 @@ export class WalletRemovalComponent implements OnInit {
       return d.adminUserName.toLowerCase().includes(val) || !val;
     });
     this.rows = temp.reverse();
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   copyTextToClipboard(text: string) {
@@ -143,7 +148,7 @@ export class WalletRemovalComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    const rows = this.table._internalRows;
+    const rows = this.table._internalRows();
     if (rows && rows.length) {
       const headers = [
         'Afiliado',
@@ -388,5 +393,9 @@ export class WalletRemovalComponent implements OnInit {
 
   resetWalletRequest() {
     this.selectedRows = [];
+    // Unico punto por el que pasan las tres respuestas que limpian la seleccion
+    // (denegar, CoinPayment y pago administrativo). Tambien cubre el reset de
+    // proccessOptionValue, que se hace en el mismo tick y gobierna los radios.
+    this.cdr.markForCheck();
   }
 }

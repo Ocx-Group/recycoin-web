@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { ProductsRequests, WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
@@ -7,13 +7,14 @@ import { CartService } from '@app/core/service/cart.service/cart.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-conpayment-confirmation',
     templateUrl: './conpayment-confirmation.component.html',
     standalone: true,
-    imports: [CommonModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class ConpaymentConfirmationComponent implements OnInit {
   walletRequest: WalletRequest = new WalletRequest();

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
 import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-products-services-configurations-create-carrier-modal',
@@ -15,6 +15,7 @@ import {NgClass, CommonModule} from "@angular/common";
     'products-services-configurations-create-carrier-modal.component.scss',
   ],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,

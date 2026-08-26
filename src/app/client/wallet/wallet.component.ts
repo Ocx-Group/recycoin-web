@@ -5,9 +5,11 @@ import {
   ViewChild,
   TemplateRef,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
@@ -17,7 +19,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CommonModule } from '@angular/common';
+
 
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
@@ -33,22 +35,22 @@ import {
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     NgxDatatableModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     IconsModule,
     RouterLink,
-    ReusableDatatableComponent,
-  ],
+    ReusableDatatableComponent
+],
 })
 export class WalletComponent implements OnInit, AfterViewInit {
   balanceInformation: BalanceInformation = new BalanceInformation();
   public userCookie: UserAffiliate;
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
@@ -117,9 +119,9 @@ export class WalletComponent implements OnInit, AfterViewInit {
       next: resp => {
         if (resp != null && resp.length > 0) {
           this.temp = [...resp];
-          this.rows = resp;
+          this.rows.set(resp);
         }
-        this.loadingIndicator = false;
+        this.loadingIndicator.set(false);
       },
       error: err => {
         this.showError('Error!');
@@ -154,15 +156,15 @@ export class WalletComponent implements OnInit, AfterViewInit {
     const val = this.normalizeText(event.target.value);
 
     if (val === '') {
-      this.rows = [...this.temp];
+      this.rows.set([...this.temp]);
     } else {
-      this.rows = this.temp.filter(d => {
+      this.rows.set(this.temp.filter(d => {
         return (
           this.normalizeText(d.concept).includes(val) ||
           this.normalizeText(d.adminUserName || '').includes(val) ||
           this.normalizeText(d.affiliateUserName || '').includes(val)
         );
-      });
+      }));
     }
   }
 
@@ -225,7 +227,7 @@ export class WalletComponent implements OnInit, AfterViewInit {
         this.translateService.instant('WALLET-PAGE.DETAILS-COLUMN.TEXT'),
       ];
 
-      const data = this.rows.map(row => [
+      const data = this.rows().map(row => [
         row.adminUserName,
         row.affiliateUserName,
         row.credit,

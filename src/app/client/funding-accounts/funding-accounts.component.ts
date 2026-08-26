@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ProductsComponent } from '@app/client/products/products.component';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,7 +9,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './funding-accounts.component.html',
     styleUrls: ['./funding-accounts.component.scss'],
     standalone: true,
-    imports: [CommonModule, TranslateModule, NgbNavModule]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe, NgbNavModule, ProductsComponent]
 })
 export class FundingAccountsComponent implements OnInit {
   active;

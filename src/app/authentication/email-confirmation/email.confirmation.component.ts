@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
 
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
 @Component({
     selector: 'app-email-confirmation',
     templateUrl: './email.confirmation.component.html',
     standalone: true,
-    imports: [CommonModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class EmailConfirmationComponent {
 

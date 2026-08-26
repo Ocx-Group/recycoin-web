@@ -85,60 +85,64 @@
                       <input style="background-color: white;" type="text" class="form-control" id="inlineFormInputGroup"
                         (keyup)='updateFilter($event)' aria-label="Search box"
                         placeholder="{{ 'WALLET-PAGE.SEARCH.TEXT' | translate }}">
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </ng-template>
+              </ng-template>
 
-            <!-- Botones personalizados -->
-            <ng-template #customButtonsTemplate>
-              <ul class="nav justify-content-end">
-                <li class="nav-item m-2">
-                  <button type="button" class="btn btn-primary" (click)="copyTableData()">
-                    <i class="bi bi-clipboard-check"></i>
-                    {{ 'WALLET-PAGE.COPY-BTN.TEXT' | translate }}
-                  </button>
-                </li>
-                <li class="nav-item m-2">
-                  <button type="button" class="btn btn-primary" (click)="downloadPDF()">
-                    <i class="bi bi-printer"></i>
-                    {{ 'WALLET-PAGE.PDF-BTN.TEXT' | translate }}
-                  </button>
-                </li>
-              </ul>
-            </ng-template>
+              <!-- Botones personalizados -->
+              <ng-template #customButtonsTemplate>
+                <ul class="nav justify-content-end">
+                  <li class="nav-item m-2">
+                    <button type="button" class="btn btn-primary" (click)="copyTableData()">
+                      <i class="bi bi-clipboard-check"></i>
+                      {{ 'WALLET-PAGE.COPY-BTN.TEXT' | translate }}
+                    </button>
+                  </li>
+                  <li class="nav-item m-2">
+                    <button type="button" class="btn btn-primary" (click)="downloadPDF()">
+                      <i class="bi bi-printer"></i>
+                      {{ 'WALLET-PAGE.PDF-BTN.TEXT' | translate }}
+                    </button>
+                  </li>
+                </ul>
+              </ng-template>
 
-            <!-- Templates personalizados para celdas -->
-            <ng-template #creditTemplate let-row="row">
-              <div class="col-green">
-                {{ row.credit | truncateDecimals:2 }}
-              </div>
-            </ng-template>
+              <!-- Templates personalizados para celdas -->
+              <ng-template #creditTemplate let-row="row">
+                <div class="col-green">
+                  {{ row.credit | truncateDecimals:2 }}
+                </div>
+              </ng-template>
 
-            <ng-template #debitTemplate let-row="row">
-              <div class="col-red">
-                {{ row.debit | truncateDecimals:2 }}
-              </div>
-            </ng-template>
+              <ng-template #debitTemplate let-row="row">
+                <div class="col-red">
+                  {{ row.debit | truncateDecimals:2 }}
+                </div>
+              </ng-template>
 
-            <ng-template #statusTemplate let-row="row">
-              <div *ngIf="row.status == true" class="badge-outline col-green">
-                {{ 'WALLET-PAGE.STATE.ATTENDED.TEXT' | translate }}
-              </div>
-              <div *ngIf="row.status == false" class="badge-outline col-red">
-                {{ 'WALLET-PAGE.STATE.NOT-ATTENDED.TEXT' | translate }}
-              </div>
-            </ng-template>
+              <ng-template #statusTemplate let-row="row">
+                @if (row.status == true) {
+                  <div class="badge-outline col-green">
+                    {{ 'WALLET-PAGE.STATE.ATTENDED.TEXT' | translate }}
+                  </div>
+                }
+                @if (row.status == false) {
+                  <div class="badge-outline col-red">
+                    {{ 'WALLET-PAGE.STATE.NOT-ATTENDED.TEXT' | translate }}
+                  </div>
+                }
+              </ng-template>
 
-            <!-- Componente reutilizable -->
-            <app-reusable-datatable id="htmlTable" [rows]="rows" [columns]="tableColumns" [actions]="tableActions"
-              [config]="tableConfig" [loadingIndicator]="loadingIndicator" [customSearch]="customSearchTemplate"
-              [customButtons]="customButtonsTemplate">
-            </app-reusable-datatable>
+              <!-- Componente reutilizable -->
+              <app-reusable-datatable id="htmlTable" [rows]="rows()" [columns]="tableColumns" [actions]="tableActions"
+                [config]="tableConfig" [loadingIndicator]="loadingIndicator()" [customSearch]="customSearchTemplate"
+                [customButtons]="customButtonsTemplate">
+              </app-reusable-datatable>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

@@ -1,17 +1,14 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
@@ -23,14 +20,15 @@ import { CommonModule } from '@angular/common';
   selector: 'app-incentives-list-edit-modal',
   templateUrl: './incentives-list-edit-modal.component.html',
   standalone: true,
-  imports: [CommonModule]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, NgbNavModule, ReactiveFormsModule]
 })
 export class IncentivesListEditModalComponent implements OnInit {
   editIncentivesForm!: FormGroup;
   incentive: Incentive = new Incentive();
-  productListData!: [];
-  membershipData!: [];
-  calificationList!: [];
+  productListData: any[] = [];
+  membershipData: any[] = [];
+  calificationList: any[] = [];
   submitted = false;
   active = 1;
 
@@ -43,7 +41,8 @@ export class IncentivesListEditModalComponent implements OnInit {
     private gradingService: GradingService,
     private incentiveService: IncentiveService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -94,6 +93,9 @@ export class IncentivesListEditModalComponent implements OnInit {
       network_leaders_qualifier: incentive.network_leaders_qualifier,
       leader_by_matrix: incentive.leader_by_matrix.toString(),
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   showSuccess(message: string) {
@@ -107,12 +109,14 @@ export class IncentivesListEditModalComponent implements OnInit {
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
       this.productListData = resp;
+      this.cdr.markForCheck();
     });
   }
 
   fetchMembership() {
     this.gradingService.getMembership().subscribe((resp) => {
       this.membershipData = resp;
+      this.cdr.markForCheck();
     });
   }
 
@@ -120,6 +124,7 @@ export class IncentivesListEditModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }

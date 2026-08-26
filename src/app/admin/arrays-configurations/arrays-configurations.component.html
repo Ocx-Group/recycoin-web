@@ -18,7 +18,7 @@
     [formGroup]="matrixConfigurationForm"
     [autocomplete]=""
     (ngSubmit)="onAddRowSave()"
-  >
+    >
     <div class="section-body">
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
@@ -29,184 +29,191 @@
               </h4>
             </div>
             <div class="card-body">
-              <p *ngFor="let alert of alerts" class="text-center">
-                <ngb-alert
-                  [type]="alert.type"
-                  (closed)="close(alert)"
-                  *ngIf="show"
-                >{{
-                    'ARRAYS-CONFIGURATIONS-PAGE.MSJ-INFO.TEXT' | translate
-                  }}
-                </ngb-alert
-                >
-              </p>
+              @for (alert of alerts; track alert) {
+                <p class="text-center">
+                  @if (show) {
+                    <ngb-alert
+                      [type]="alert.type"
+                      (closed)="close(alert)"
+                      >{{
+                      'ARRAYS-CONFIGURATIONS-PAGE.MSJ-INFO.TEXT' | translate
+                      }}
+                      </ngb-alert
+                      >
+                    }
+                  </p>
+                }
 
-              <div class="row align-items-center mb-3">
-                <div class="col-12 col-sm-4 text-center">
-                  <span class="">{{
+                <div class="row align-items-center mb-3">
+                  <div class="col-12 col-sm-4 text-center">
+                    <span class="">{{
                       'ARRAYS-CONFIGURATIONS-PAGE.LBL-MATRIX-UNILEVEL.TEXT'
-                        | translate
+                      | translate
                     }}</span>
-                  <div class="d-inline-block">
-                    <input
-                      class="form-check-input ms-2 me-2"
-                      autocomplete="new_unilevel_matrix"
-                      formControlName="unilevel_matrix"
-                      type="checkbox"
-                      name="unilevel_matrix"
-                      id="unilevel_matrix"
-                      value=""
-                    />
-                    <label class="form-check-label" for="unilevel_matrix">{{
-                        'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-UNILEVEL.TEXT'
+                    <div class="d-inline-block">
+                      <input
+                        class="form-check-input ms-2 me-2"
+                        autocomplete="new_unilevel_matrix"
+                        formControlName="unilevel_matrix"
+                        type="checkbox"
+                        name="unilevel_matrix"
+                        id="unilevel_matrix"
+                        value=""
+                        />
+                        <label class="form-check-label" for="unilevel_matrix">{{
+                          'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-UNILEVEL.TEXT'
                           | translate
-                      }}</label>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-4 text-center">
-                  <span class="">{{
-                      'ARRAYS-CONFIGURATIONS-PAGE.LBL-MATRIX-FORCED.TEXT'
+                        }}</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-4 text-center">
+                      <span class="">{{
+                        'ARRAYS-CONFIGURATIONS-PAGE.LBL-MATRIX-FORCED.TEXT'
                         | translate
-                    }}</span>
-                  <div class="d-inline-block">
-                    <input
-                      class="form-check-input ms-2 me-2"
-                      type="checkbox"
-                      name="forced_matrix"
-                      formControlName="forced_matrix"
-                      id="forced_matrix"
-                      value=""
-                    />
-                    <label class="form-check-label" for="forced_matrix">{{
-                        'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-FORCED.TEXT'
+                      }}</span>
+                      <div class="d-inline-block">
+                        <input
+                          class="form-check-input ms-2 me-2"
+                          type="checkbox"
+                          name="forced_matrix"
+                          formControlName="forced_matrix"
+                          id="forced_matrix"
+                          value=""
+                          />
+                          <label class="form-check-label" for="forced_matrix">{{
+                            'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-FORCED.TEXT'
+                            | translate
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4 text-center">
+                        <span class="">{{
+                          'ARRAYS-CONFIGURATIONS-PAGE.LBL-MATRIX-BINARY.TEXT'
                           | translate
-                      }}</label>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-4 text-center">
-                  <span class="">{{
-                      'ARRAYS-CONFIGURATIONS-PAGE.LBL-MATRIX-BINARY.TEXT'
-                        | translate
-                    }}</span>
-                  <div class="d-inline-block">
-                    <input
-                      class="form-check-input ms-2 me-2"
-                      type="checkbox"
-                      name="binary_matrix"
-                      formControlName="binary_matrix"
-                      id="binary_matrix"
-                      value=""
-                    />
-                    <label class="form-check-label" for="binary_matrix">{{
-                        'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-BINARY.TEXT'
-                          | translate
-                      }}</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mb-3">
-                <div class="form-group col-12 col-sm-5 text-center">
-                  <label for="front_affiliates" class="form-label">{{
-                      'ARRAYS-CONFIGURATIONS-PAGE.LBL-NUMBER-FRONT-AFFILIATES.TEXT'
-                        | translate
-                    }}</label>
-                  <div class="input-group">
-                    <input
-                      type="number"
-                      id="front_affiliates"
-                      formControlName="front_affiliates"
-                      name="front_affiliates"
-                      class="form-control"
-                      value="1"
-                      required="required"
+                        }}</span>
+                        <div class="d-inline-block">
+                          <input
+                            class="form-check-input ms-2 me-2"
+                            type="checkbox"
+                            name="binary_matrix"
+                            formControlName="binary_matrix"
+                            id="binary_matrix"
+                            value=""
+                            />
+                            <label class="form-check-label" for="binary_matrix">{{
+                              'ARRAYS-CONFIGURATIONS-PAGE.LBL-ACTIVE-MATRIX-BINARY.TEXT'
+                              | translate
+                            }}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center mb-3">
+                        <div class="form-group col-12 col-sm-5 text-center">
+                          <label for="front_affiliates" class="form-label">{{
+                            'ARRAYS-CONFIGURATIONS-PAGE.LBL-NUMBER-FRONT-AFFILIATES.TEXT'
+                            | translate
+                          }}</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              id="front_affiliates"
+                              formControlName="front_affiliates"
+                              name="front_affiliates"
+                              class="form-control"
+                              value="1"
+                              required="required"
                       [ngClass]="{
                         'is-invalid':
                           submitted &&
                           create_matrix_controls.front_affiliates.errors
                       }"
-                    />
-                    <div
-                      class="input-group-text"
-                      id="btnGroupAddon"
-                      placement="bottom"
-                      ngbTooltip="Numero de Frontales: Es la cantidad de frontales que podran tener los usuarios. Esto se tomara en cuanta siempre y cuando la opcion de activación de matriz forzada este marcada."
-                    >
-                      <i class="bi bi-book-half"></i>
-                    </div>
-                  </div>
-                  <div
-                    *ngIf="
-                      submitted &&
-                      create_matrix_controls.front_affiliates.errors
-                    "
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        create_matrix_controls.front_affiliates.errors.required
-                      "
-                    >
-                      Se requiere el numero de frontales para afiliados.
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col-12 col-sm-5 text-center">
-                  <label for="software_millenium" class="form-label">{{
-                      'ARRAYS-CONFIGURATIONS-PAGE.LBL-NUMBER-FRONT-SOFTWARE-MILLENIUM.TEXT'
-                        | translate
-                    }}</label>
-                  <div class="input-group">
-                    <input
-                      type="number"
-                      id="software_millenium"
-                      name="software_millenium"
-                      formControlName="software_millenium"
-                      class="form-control"
-                      value="1"
-                      required="required"
+                              />
+                              <div
+                                class="input-group-text"
+                                id="btnGroupAddon"
+                                placement="bottom"
+                                ngbTooltip="Numero de Frontales: Es la cantidad de frontales que podran tener los usuarios. Esto se tomara en cuanta siempre y cuando la opcion de activación de matriz forzada este marcada."
+                                >
+                                <i class="bi bi-book-half"></i>
+                              </div>
+                            </div>
+                            @if (
+                              submitted &&
+                              create_matrix_controls.front_affiliates.errors
+                              ) {
+                              <div
+                                class="invalid-feedback"
+                                >
+                                @if (
+                                  create_matrix_controls.front_affiliates.errors.required
+                                  ) {
+                                  <div
+                                    >
+                                    Se requiere el numero de frontales para afiliados.
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </div>
+                          <div class="form-group col-12 col-sm-5 text-center">
+                            <label for="software_millenium" class="form-label">{{
+                              'ARRAYS-CONFIGURATIONS-PAGE.LBL-NUMBER-FRONT-SOFTWARE-MILLENIUM.TEXT'
+                              | translate
+                            }}</label>
+                            <div class="input-group">
+                              <input
+                                type="number"
+                                id="software_millenium"
+                                name="software_millenium"
+                                formControlName="software_millenium"
+                                class="form-control"
+                                value="1"
+                                required="required"
                       [ngClass]="{
                         'is-invalid':
                           submitted &&
                           create_matrix_controls.software_millenium.errors
                       }"
-                    />
-                    <div
-                      class="input-group-text"
-                      id="btnGroupAddon"
-                      placement="bottom"
-                      ngbTooltip="Numero de Frontales para SoftwareMillenium: Es la cantidad de frontales que podra tener SoftwareMillenium. Esto se tomara en cuanta siempre y cuando la opcion de activación de matriz forzada este marcada."
-                    >
-                      <i class="bi bi-book-half"></i>
-                    </div>
-                  </div>
-                  <div
-                    *ngIf="
-                      submitted &&
-                      create_matrix_controls.software_millenium.errors
-                    "
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        create_matrix_controls.software_millenium.errors
-                          .required
-                      "
-                    >
-                      Se requiere el numero de frontales para
-                      software_millenium.
+                                />
+                                <div
+                                  class="input-group-text"
+                                  id="btnGroupAddon"
+                                  placement="bottom"
+                                  ngbTooltip="Numero de Frontales para SoftwareMillenium: Es la cantidad de frontales que podra tener SoftwareMillenium. Esto se tomara en cuanta siempre y cuando la opcion de activación de matriz forzada este marcada."
+                                  >
+                                  <i class="bi bi-book-half"></i>
+                                </div>
+                              </div>
+                              @if (
+                                submitted &&
+                                create_matrix_controls.software_millenium.errors
+                                ) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (
+                                    create_matrix_controls.software_millenium.errors
+                                    .required
+                                    ) {
+                                    <div
+                                      >
+                                      Se requiere el numero de frontales para
+                                      software_millenium.
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                            <div class="col-12 col-sm-2 text-center">
+                              <button type="submit" class="btn btn-primary">
+                                {{ 'ARRAYS-CONFIGURATIONS-PAGE.BTN-SAVE.TEXT' | translate }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-sm-2 text-center">
-                  <button type="submit" class="btn btn-primary">
-                    {{ 'ARRAYS-CONFIGURATIONS-PAGE.BTN-SAVE.TEXT' | translate }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
-</section>
+              </form>
+            </section>

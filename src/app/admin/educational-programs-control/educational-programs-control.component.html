@@ -83,7 +83,7 @@
                     </ul>
                   </div>
                 </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                <ngx-datatable #table class="material" [rows]="rows()" [loadingIndicator]="loadingIndicator()"
                                columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
                                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="Usuario">
@@ -132,12 +132,6 @@
                           {{ 'CONCEPT-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">{{
-                                'CONCEPT-LIST-PAGE.BTN-DELETE.TEXT' | translate
-                              }}</span>
-                          </a>
                         </div>
                       </div>
                     </ng-template>

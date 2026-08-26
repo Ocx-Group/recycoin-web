@@ -14,240 +14,264 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
   <form
     class="register-form"
     [formGroup]="editUserForm"
-    [autocomplete]="off"
+    autocomplete="off"
     (ngSubmit)="onEditRowSave()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="user_name">
             {{ 'USERS-LIST-EDIT-MODAL.COL-USER-NAME.TEXT' | translate }}
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_name"
-            autocomplete="new-user_name"
-            formControlName="user_name"
-            placeholder="Usuario"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="user_name"
+              autocomplete="new-user_name"
+              formControlName="user_name"
+              placeholder="Usuario"
+              required="required"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.user_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_user_controls.user_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.user_name.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-USER.TEXT' | translate }}
+              />
+              @if (submitted && edit_user_controls.user_name.errors) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (edit_user_controls.user_name.errors.required) {
+                    <div>
+                      {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-USER.TEXT' | translate }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="name">
-            {{ 'USERS-LIST-EDIT-MODAL.COL-NAME.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="name"
-            id="name"
-            placeholder="Nombre"
-            required="required"
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="name">
+                {{ 'USERS-LIST-EDIT-MODAL.COL-NAME.TEXT' | translate }}
+                <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  id="name"
+                  placeholder="Nombre"
+                  required="required"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_user_controls.name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.name.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="last_name">
-            {{ 'USERS-LIST-EDIT-MODAL.COL-LASTNAME.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="last_name"
-            formControlName="last_name"
-            placeholder="Apellidos"
-            required="required"
+                  />
+                  @if (submitted && edit_user_controls.name.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (edit_user_controls.name.errors.required) {
+                        <div>
+                          {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <label for="last_name">
+                    {{ 'USERS-LIST-EDIT-MODAL.COL-LASTNAME.TEXT' | translate }}
+                    <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="last_name"
+                      formControlName="last_name"
+                      placeholder="Apellidos"
+                      required="required"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.last_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_user_controls.last_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.last_name.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="phone">
-            {{ 'USERS-LIST-EDIT-MODAL.COL-PHONE.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="phone"
-            id="phone"
-            placeholder="Phone"
-            required="required"
+                      />
+                      @if (submitted && edit_user_controls.last_name.errors) {
+                        <div
+                          class="invalid-feedback"
+                          >
+                          @if (edit_user_controls.last_name.errors.required) {
+                            <div>
+                              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate }}
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <label for="phone">
+                        {{ 'USERS-LIST-EDIT-MODAL.COL-PHONE.TEXT' | translate }}
+                        <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="phone"
+                          id="phone"
+                          placeholder="Phone"
+                          required="required"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.phone.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_user_controls.phone.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.phone.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="email">
-            {{ 'USERS-LIST-EDIT-MODAL.COL-EMAIL.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="email"
-            class="form-control"
-            formControlName="email"
-            placeholder="email"
-            id="email"
-            required="required"
+                          />
+                          @if (submitted && edit_user_controls.phone.errors) {
+                            <div
+                              class="invalid-feedback"
+                              >
+                              @if (edit_user_controls.phone.errors.required) {
+                                <div>
+                                  {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
+                                </div>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <label for="email">
+                            {{ 'USERS-LIST-EDIT-MODAL.COL-EMAIL.TEXT' | translate }}
+                            <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="email"
+                              class="form-control"
+                              formControlName="email"
+                              placeholder="email"
+                              id="email"
+                              required="required"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.email.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_user_controls.email.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.email.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
-            </div>
-            <div *ngIf="edit_user_controls.email.errors.email">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-INVALID.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>{{ 'USERS-LIST-EDIT-MODAL.COL-ROL.TEXT' | translate }}</label>
-          <select class="form-select form-control" formControlName="rol_id">
-            <option
-              [ngValue]="item.id"
-              *ngFor="let item of selectRol;"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="observation">
-            {{
-              'USERS-LIST-EDIT-MODAL.COL-OBSERVATION.TEXT' | translate
-            }}<span class="text-danger"></span
-          ></label>
-          <textarea
-            type="textarea"
-            class="form-control"
-            placeholder="Observation"
-            formControlName="observation"
-            id="observation"
+                              />
+                              @if (submitted && edit_user_controls.email.errors) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (edit_user_controls.email.errors.required) {
+                                    <div>
+                                      {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
+                                    </div>
+                                  }
+                                  @if (edit_user_controls.email.errors.email) {
+                                    <div>
+                                      {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-INVALID.TEXT' | translate }}
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label>{{ 'USERS-LIST-EDIT-MODAL.COL-ROL.TEXT' | translate }}</label>
+                              <select class="form-select form-control" formControlName="rol_id">
+                                @for (item of selectRol; track item) {
+                                  <option
+                                    [ngValue]="item.id"
+                                    >
+                                    {{ item.name }}
+                                  </option>
+                                }
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="observation">
+                                {{
+                                'USERS-LIST-EDIT-MODAL.COL-OBSERVATION.TEXT' | translate
+                                }}<span class="text-danger"></span
+                              ></label>
+                              <textarea
+                                type="textarea"
+                                class="form-control"
+                                placeholder="Observation"
+                                formControlName="observation"
+                                id="observation"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.observation.errors
             }"
-          ></textarea>
-          <div
-            *ngIf="submitted && edit_user_controls.observation.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.observation.errors.required">
-              {{
-                'USERS-LIST-EDIT-MODAL.MSJ-ERROR-OBSERVATION.TEXT' | translate
-              }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="address"
-          >{{
-              'USERS-LIST-EDIT-MODAL.COL-ADDRESS.TEXT' | translate
-            }}<span class="text-danger"></span
-            ></label>
-          <textarea
-            type="textarea"
-            class="form-control"
-            placeholder="Address"
-            formControlName="address"
+                              ></textarea>
+                              @if (submitted && edit_user_controls.observation.errors) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (edit_user_controls.observation.errors.required) {
+                                    <div>
+                                      {{
+                                      'USERS-LIST-EDIT-MODAL.MSJ-ERROR-OBSERVATION.TEXT' | translate
+                                      }}
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="address"
+                                >{{
+                                'USERS-LIST-EDIT-MODAL.COL-ADDRESS.TEXT' | translate
+                                }}<span class="text-danger"></span
+                              ></label>
+                              <textarea
+                                type="textarea"
+                                class="form-control"
+                                placeholder="Address"
+                                formControlName="address"
             [ngClass]="{
               'is-invalid': submitted && edit_user_controls.address.errors
             }"
-          ></textarea>
-          <div
-            *ngIf="submitted && edit_user_controls.address.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_user_controls.address.errors.required">
-              {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            formControlName="status"
-            id="status"
-          />
-          <label class="form-check-label ms-2" for="status"> Status </label>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'USERS-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        {{ 'USERS-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
-</ng-template>
+                              ></textarea>
+                              @if (submitted && edit_user_controls.address.errors) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (edit_user_controls.address.errors.required) {
+                                    <div>
+                                      {{ 'USERS-LIST-EDIT-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                value=""
+                                formControlName="status"
+                                id="status"
+                                />
+                                <label class="form-check-label ms-2" for="status"> Status </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                              {{ 'USERS-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-light"
+                              (click)="modal.close('Close click')"
+                              >
+                              {{ 'USERS-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
+                            </button>
+                          </div>
+                        </form>
+                      </ng-template>

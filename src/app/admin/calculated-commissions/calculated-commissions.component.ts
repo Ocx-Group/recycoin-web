@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import Swal from 'sweetalert2';
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {CurrencyPipe, NgClass, CommonModule} from "@angular/common";
+import { CurrencyPipe, NgClass, CommonModule } from "@angular/common";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {WalletService} from "../../core/service/wallet-service/wallet.service";
 
@@ -21,6 +21,7 @@ interface CommissionData {
   selector: 'app-calculated-commissions',
   templateUrl: './calculated-commissions.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -65,7 +66,7 @@ export class CalculatedCommissionsComponent implements OnInit {
     {value: 12, label: 'Diciembre'}
   ];
 
-  constructor(private walletService: WalletService) {
+  constructor(private walletService: WalletService, private cdr: ChangeDetectorRef) {
     // Inicializar con el mes anterior
     const today = new Date();
     const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
@@ -121,6 +122,8 @@ export class CalculatedCommissionsComponent implements OnInit {
       this.commissionsData = this.generateMockData();
       this.isLoading = false;
       this.showTable = true;
+      // Viene de un setTimeout: con OnPush hay que marcar.
+      this.cdr.markForCheck();
     }, 1500);
   }
 

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ import {IncentivesListEditModalComponent} from "./incentives-list-edit-modal/inc
 import {
   IncentivesListDetailsModalComponent
 } from "./incentives-list-details-modal/incentives-list-details-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', 'Fecha de Registro'];
 
@@ -26,8 +26,8 @@ const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', '
   templateUrl: './incentives-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -41,7 +41,7 @@ const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', '
     IncentivesListCreateModalComponent,
     IncentivesListEditModalComponent,
     IncentivesListDetailsModalComponent
-  ]
+]
 })
 export class IncentivesListComponent implements OnInit {
   rows = [];
@@ -57,7 +57,8 @@ export class IncentivesListComponent implements OnInit {
     private incentiveService: IncentiveService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -85,7 +86,7 @@ export class IncentivesListComponent implements OnInit {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {
@@ -100,10 +101,12 @@ export class IncentivesListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
 
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

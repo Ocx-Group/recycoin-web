@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -14,9 +15,10 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ROUTESADMIN } from './sidebar-admin-items';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { User } from '@app/core/models/user-model/user.model';
 import { RouteInfo } from './sidebar-admin.metadata';
 import { ImageProfileModalComponent } from '@app/shared/components/image-profile-modal/image-profile-modal.component';
@@ -28,6 +30,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './sidebar-admin.component.html',
   styleUrls: ['./sidebar-admin.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterLink,
@@ -55,6 +58,7 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {
     this.routerObj = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -181,6 +185,7 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
     this.userService.getUser(this.user).subscribe(response => {
       if (response.success) {
         this.user = response.data;
+        this.cdr.markForCheck();
       }
     });
   }

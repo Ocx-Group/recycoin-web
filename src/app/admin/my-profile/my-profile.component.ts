@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 
@@ -10,10 +10,10 @@ import {PrintService} from "../../core/service/print-service/print.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {
   MyProfileEditPasswordModalComponent
-} from "../../client/my-profile/my-profile-edit-password-modal/my-profile-edit-password-modal.component";
+} from "./my-profile-edit-password-modal/my-profile-edit-password-modal.component";
 import {
   MyProfileEditPersonalInfoModalComponent
-} from "../../client/my-profile/my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component";
+} from "./my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component";
 import {
   MyProfileEditPasswordUploadModalComponent
 } from "./my-profile-edit-password-upload-modal/my-profile-edit-password-upload-modal.component";
@@ -25,6 +25,7 @@ const header = ['Movimientos', 'IP', 'Fecha'];
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     NgbDropdown,
@@ -55,6 +56,7 @@ export class MyProfileComponent implements OnInit {
     private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -85,6 +87,7 @@ export class MyProfileComponent implements OnInit {
     this.userService.getUser(this.userCookie).subscribe((response) => {
       if (response.success) {
         this.user = response.data;
+        this.cdr.markForCheck();
       }
     });
   }

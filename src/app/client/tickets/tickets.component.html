@@ -39,78 +39,83 @@
                     <label class="form-check-label">
                       <input
                         type="checkbox" [checked]="isTicketSelected(row)"
-                            (change)="onSelectTicket(row, $any($event.target).checked)" (click)="$event.stopPropagation()">
-                      <span class="form-check-sign"></span>
-                    </label>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'TICKETS-PAGE.STATUS-COLUMN.TEXT' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <button class="btn"
-                      [ngClass]="{'badge-outline col-green': row.status == true, 'badge-outline col-red': row.status == false}"
-                      [disabled]="true">
-                      {{ row.status == false ? ('TICKETS-PAGE.STATUS-CLOSED.TEXT' | translate) :
-                      ('TICKETS-PAGE.STATUS-OPEN.TEXT' | translate) }}
-                    </button>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'TICKETS-PAGE.MESSAGE-COLUMN.TEXT' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <a class="text-decoration-none" role="button" (click)="openTicketDetails(row)">{{ row.subject }}</a>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'TICKETS-PAGE.CATEGORY-COLUMN.TEXT' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <a>
-                      <span class="badge badge-primary">{{ getCategoryName(row.categoryId) }}</span>
-                    </a>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'TICKETS-PAGE.DATE-COLUMN.TEXT' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.createdAt }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'TICKETS-PAGE.IMAGE-COLUMN.TEXT' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <div *ngIf="row.ticketImages?.length > 0; else noImage">
-                      <img [src]="row.ticketImages[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
-                           class="thumbnail" (click)="$event.stopPropagation(); openModal(content, row)"
-                           style="cursor: pointer; width: 100px; height: auto;">
+                        (change)="onSelectTicket(row, $any($event.target).checked)" (click)="$event.stopPropagation()">
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'TICKETS-PAGE.STATUS-COLUMN.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <button class="btn"
+                        [ngClass]="{'badge-outline col-green': row.status == true, 'badge-outline col-red': row.status == false}"
+                        [disabled]="true">
+                        {{ row.status == false ? ('TICKETS-PAGE.STATUS-CLOSED.TEXT' | translate) :
+                        ('TICKETS-PAGE.STATUS-OPEN.TEXT' | translate) }}
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'TICKETS-PAGE.MESSAGE-COLUMN.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <a class="text-decoration-none" role="button" (click)="openTicketDetails(row)">{{ row.subject }}</a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'TICKETS-PAGE.CATEGORY-COLUMN.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <a>
+                        <span class="badge badge-primary">{{ getCategoryName(row.categoryId) }}</span>
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'TICKETS-PAGE.DATE-COLUMN.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.createdAt }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'TICKETS-PAGE.IMAGE-COLUMN.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      @if (row.ticketImages?.length > 0) {
+                        <div>
+                          <img [src]="row.ticketImages[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
+                            class="thumbnail" (click)="$event.stopPropagation(); openModal(content, row)"
+                            style="cursor: pointer; width: 100px; height: auto;">
+                          </div>
+                        } @else {
+                          <div
+                            style="max-width: 80%; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                            <span>{{ 'TICKETS-PAGE.NO-IMAGE.TEXT' | translate }}</span>
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                  <ng-template #content let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title">{{ 'TICKETS-PAGE.IMAGE-MODAL.TITLE' | translate }}</h4>
+                      <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>
                     </div>
-                    <ng-template #noImage>
-                      <div
-                        style="max-width: 80%; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                        <span>{{ 'TICKETS-PAGE.NO-IMAGE.TEXT' | translate }}</span>
+                    <div class="modal-body">
+                      @if (selectedTicket.images?.length) {
+                        <ngb-carousel>
+                          @for (img of selectedTicket.images; track img) {
+                            <ng-template ngbSlide>
+                              <img [src]="img.imagePath" alt="{{ 'TICKETS-PAGE.SLIDE-IMAGE-ALT.TEXT' | translate }}"
+                                class="img-fluid">
+                              </ng-template>
+                            }
+                          </ngb-carousel>
+                        }
                       </div>
                     </ng-template>
-                  </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
-              <ng-template #content let-modal>
-                <div class="modal-header">
-                  <h4 class="modal-title">{{ 'TICKETS-PAGE.IMAGE-MODAL.TITLE' | translate }}</h4>
-                  <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-7">
+                      <p class="p-15">{{ 'TICKETS-PAGE.SHOWING.TEXT' | translate }} - {{ this.tickets.length }}</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  <ngb-carousel *ngIf="selectedTicket.images?.length">
-                    <ng-template ngbSlide *ngFor="let img of selectedTicket.images">
-                      <img [src]="img.imagePath" alt="{{ 'TICKETS-PAGE.SLIDE-IMAGE-ALT.TEXT' | translate }}"
-                        class="img-fluid">
-                    </ng-template>
-                  </ngb-carousel>
-                </div>
-              </ng-template>
-            </div>
-            <div class="row">
-              <div class="col-sm-7">
-                <p class="p-15">{{ 'TICKETS-PAGE.SHOWING.TEXT' | translate }} - {{ this.tickets.length }}</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<app-create-ticket-modal></app-create-ticket-modal>
+      </section>
+      <app-create-ticket-modal></app-create-ticket-modal>

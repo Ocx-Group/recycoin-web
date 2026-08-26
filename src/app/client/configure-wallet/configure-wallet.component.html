@@ -30,76 +30,88 @@
         </div>
       </div>
 
-      <div *ngIf="currentStep === 1">
-        <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <label for="trc_address" class="col-red" title="Billetera para recibir los pagos y comisiones en USDT.">
-              Dirección BEP20 (USDT)
-            </label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="trc_address" formControlName="trc_address"
-                placeholder="Dirección BEP20 para recibir mis pagos." autocomplete="off" />
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <img class="small-icon" src="assets/images/crypto/bep20.png" alt="bep20-network">
-                </span>
+      @if (currentStep === 1) {
+        <div>
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <label for="trc_address" class="col-red" title="Billetera para recibir los pagos y comisiones en USDT.">
+                Dirección BEP20 (USDT)
+              </label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="trc_address" formControlName="trc_address"
+                  placeholder="Dirección BEP20 para recibir mis pagos." autocomplete="off" />
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <img class="small-icon" src="assets/images/crypto/bep20.png" alt="bep20-network">
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <label for="bnb_address" class="col-green" title="Billetera para la liberación del token.">
-              Dirección RecyCoin (BNB)
-            </label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="bnb_address" formControlName="bnb_address"
-                placeholder="Dirección BNB Smart Chain para recibir mis tokens." autocomplete="off" />
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <img class="small-icon" src="assets/images/crypto/bep20.png" alt="bep20-network">
-                </span>
+            <div class="row mt-3">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <label for="bnb_address" class="col-green" title="Billetera para la liberación del token.">
+                  Dirección RecyCoin (BNB)
+                </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="bnb_address" formControlName="bnb_address"
+                    placeholder="Dirección BNB Smart Chain para recibir mis tokens." autocomplete="off" />
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <img class="small-icon" src="assets/images/crypto/bep20.png" alt="bep20-network">
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          }
 
-      <div *ngIf="currentStep === 2">
-        <div class="row">
-          <div class="col-xl-12">
-            <label for="security_code">Código de verificación</label>
-            <input type="text" class="form-control" id="security_code" formControlName="security_code"
-              placeholder="Ingrese el código de verificación" autocomplete="off">
-          </div>
-        </div>
-      </div>
+          @if (currentStep === 2) {
+            <div>
+              <div class="row">
+                <div class="col-xl-12">
+                  <label for="security_code">Código de verificación</label>
+                  <input type="text" class="form-control" id="security_code" formControlName="security_code"
+                    placeholder="Ingrese el código de verificación" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            }
 
-      <div *ngIf="currentStep === 3">
-        <div class="row">
-          <div class="col-xl-12">
-            <label for="password">Contraseña</label>
-            <input type="password" class="form-control" id="password" formControlName="password"
-              placeholder="Ingrese su contraseña" autocomplete="off">
-          </div>
-        </div>
-      </div>
+            @if (currentStep === 3) {
+              <div>
+                <div class="row">
+                  <div class="col-xl-12">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" formControlName="password"
+                      placeholder="Ingrese su contraseña" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              }
 
-      <div class="modal-footer">
-        <button *ngIf="currentStep > 1" type="button" class="btn btn-secondary" (click)="previousStep()">
-          Anterior
-        </button>
-        <button *ngIf="currentStep < 3" type="button" class="btn btn-primary" (click)="nextStep()"
-          [disabled]="!canProceed()">
-          Siguiente
-        </button>
-        <button *ngIf="currentStep === 3" type="submit" class="btn btn-primary" [disabled]="!walletForm.valid">
-          Confirmar
-        </button>
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </form>
-</ng-template>
+              <div class="modal-footer">
+                @if (currentStep > 1) {
+                  <button type="button" class="btn btn-secondary" (click)="previousStep()">
+                    Anterior
+                  </button>
+                }
+                @if (currentStep < 3) {
+                  <button type="button" class="btn btn-primary" (click)="nextStep()"
+                    [disabled]="!canProceed()">
+                    Siguiente
+                  </button>
+                }
+                @if (currentStep === 3) {
+                  <button type="submit" class="btn btn-primary" [disabled]="!walletForm.valid">
+                    Confirmar
+                  </button>
+                }
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </ng-template>

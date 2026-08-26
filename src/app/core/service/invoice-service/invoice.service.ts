@@ -171,7 +171,7 @@ export class InvoiceService {
     };
 
     return this.http
-      .get(`${this.urlApi}/invoice/create_invoice_by_reference`, options)
+      .get<Blob>(`${this.urlApi}/invoice/create_invoice_by_reference`, options)
       .pipe(
         map((response: HttpResponse<Blob>) => {
           const brandIdHeader = response.headers.get('X-Brand-Id');

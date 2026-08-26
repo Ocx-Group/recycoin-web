@@ -1,5 +1,5 @@
 import { interval, switchMap, takeWhile } from 'rxjs';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,11 +19,15 @@ import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
     templateUrl: './coinpayments.component.html',
     styleUrls: ['./coinpayments.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, NgbAlert]
 })
 export class CoinpaymentsComponent {
-  qrImageUrl: string;
-  address: string;
+  // Ambos los escribe la respuesta de createTransaction, que llega despues del
+  // primer pintado. El fichero no llevaba marca de estrategia y en Angular 22 eso
+  // ya es OnPush, asi que hasta ahora el QR y la direccion no llegaban a pintarse.
+  readonly qrImageUrl = signal<string>('');
+  readonly address = signal<string>('');
   txn_Id: string;
   isLoading = false;
   public user: UserAffiliate = new UserAffiliate();
@@ -49,8 +53,8 @@ export class CoinpaymentsComponent {
     this.loadingChange.emit(true);
     this.coinPaymentService.createTransaction(this.buildCoinPaymentRequest()).subscribe({
       next: (value: ConpaymentTransaction) => {
-        this.qrImageUrl = value.qrcode_Url;
-        this.address = value.address;
+        this.qrImageUrl.set(value.qrcode_Url);
+        this.address.set(value.address);
         this.txn_Id = value.txn_Id;
         this.getTransactionInfo(this.txn_Id, true);
       },

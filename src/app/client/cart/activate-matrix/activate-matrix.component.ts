@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 
 import { PaymentDetails, PaymentTranslations } from './activate-matrix-interfaces';
 import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
@@ -12,20 +12,23 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-activate-matrix',
     templateUrl: './activate-matrix.component.html',
     styleUrls: ['./activate-matrix.component.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, FormsModule, TranslatePipe]
 })
 export class ActivateMatrixComponent implements OnInit {
-  matrixConfigurations: any[] = [];
+  // Las dos unicas cosas que la plantilla lee y que se escriben desde una
+  // respuesta HTTP o desde el .then del Swal de confirmacion.
+  readonly matrixConfigurations = signal<any[]>([]);
   currentUser: UserAffiliate;
   selectedMatrixConfig: any = null;
-  loading = false;
+  readonly loading = signal(false);
   today = new Date();
   products: any = [];
   transaction: ConpaymentTransaction = new ConpaymentTransaction();
@@ -44,17 +47,17 @@ export class ActivateMatrixComponent implements OnInit {
   }
 
   getAllMatrixConfigurations(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
       next: config => {
         console.log('Matrix configurations:', config);
-        this.matrixConfigurations = config;
-        this.loading = false;
+        this.matrixConfigurations.set(config);
+        this.loading.set(false);
       },
       error: err => {
         console.error('Error loading matrix configurations:', err);
         this.errorMessage('Error al cargar las configuraciones de matriz');
-        this.loading = false;
+        this.loading.set(false);
       },
     });
   }
@@ -225,7 +228,7 @@ export class ActivateMatrixComponent implements OnInit {
   }
 
   private processPayment(): void {
-    this.loading = true;
+    this.loading.set(true);
 
     try {
       const transactionRequest = this.createTransactionRequest();
@@ -244,7 +247,7 @@ export class ActivateMatrixComponent implements OnInit {
 
   private handlePaymentSuccess(response: ConpaymentTransaction): void {
     this.transaction = response;
-    this.loading = false;
+    this.loading.set(false);
 
     if (response?.checkout_Url) {
       this.successMessage(`Redirigiendo al pago de la matriz ${this.selectedMatrixConfig.matrixName}`);
@@ -261,7 +264,7 @@ export class ActivateMatrixComponent implements OnInit {
   }
 
   private handlePaymentError(error: any, logMessage: string): void {
-    this.loading = false;
+    this.loading.set(false);
     console.error(logMessage, error);
     this.errorMessage(logMessage === 'Error creando transacción:' ? 'Error al crear la transacción de pago' : 'Error al preparar la transacción');
   }

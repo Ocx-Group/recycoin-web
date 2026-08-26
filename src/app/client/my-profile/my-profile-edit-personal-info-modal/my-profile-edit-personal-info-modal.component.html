@@ -26,248 +26,253 @@
       </button>
     </div>
 
-    <form class="modern-form" [formGroup]="editPersonalInfoForm" [autocomplete]="off"
+    <form class="modern-form" [formGroup]="editPersonalInfoForm" autocomplete="off"
       (ngSubmit)="onSaveEditInfoValues()">
       <!-- Tab Content -->
-      <div class="modern-tab-content" *ngIf="activeTab === 'profile'">
-        <div class="cards-container">
-          <!-- Card 1: Datos Principales -->
-          <div class="modern-card">
-            <div class="modern-card-header">
-              <div class="card-header-content">
-                <i class="bi bi-person-badge card-icon"></i>
-                <h3 class="card-title">Datos Principales</h3>
-              </div>
-              <p class="card-description">Información básica de la cuenta</p>
-            </div>
-            <div class="modern-card-body">
-              <!-- Usuario (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-usuario">Usuario</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-person input-icon"></i>
-                  <input type="text" id="input-usuario" class="modern-input"
-                    [value]="personalInfo?.user_name || 'lanyisep'" readonly />
+      @if (activeTab === 'profile') {
+        <div class="modern-tab-content">
+          <div class="cards-container">
+            <!-- Card 1: Datos Principales -->
+            <div class="modern-card">
+              <div class="modern-card-header">
+                <div class="card-header-content">
+                  <i class="bi bi-person-badge card-icon"></i>
+                  <h3 class="card-title">Datos Principales</h3>
                 </div>
+                <p class="card-description">Información básica de la cuenta</p>
               </div>
-
-              <!-- Correo (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-correo-principal">Correo</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-envelope input-icon"></i>
-                  <input type="text" id="input-correo-principal" class="modern-input"
-                    [value]="personalInfo?.email || ''" readonly />
-                </div>
-              </div>
-
-              <!-- Nro de identificación (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-identificacion">Nro de identificación</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-card-text input-icon"></i>
-                  <input type="text" id="input-identificacion" class="modern-input"
-                    [value]="personalInfo?.identification || '4038112102'" readonly />
-                </div>
-              </div>
-
-              <!-- Patrocinador (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-patrocinador">Patrocinador</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-people input-icon"></i>
-                  <input type="text" id="input-patrocinador" class="modern-input"
-                    [value]="personalInfo?.sponsor || 'danielann'" readonly />
-                </div>
-              </div>
-
-              <!-- Fecha de Registro (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-fecha-registro">Fecha de Registro</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-calendar-event input-icon"></i>
-                  <input type="text" id="input-fecha-registro" class="modern-input"
-                    [value]="personalInfo?.created_at || '2024-08-18 01:30:25'" readonly />
-                </div>
-              </div>
-
-              <!-- Fecha de Nacimiento (Read-only) -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-fecha-nacimiento">Fecha de Nacimiento</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-calendar-event input-icon"></i>
-                  <input type="text" id="input-fecha-nacimiento" class="modern-input"
-                    [value]="personalInfo?.birth_date || '18 de octubre de 1970'" readonly />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Datos Secundarios -->
-          <div class="modern-card">
-            <div class="modern-card-header">
-              <div class="card-header-content">
-                <i class="bi bi-geo-alt card-icon"></i>
-                <h3 class="card-title">Datos Secundarios</h3>
-              </div>
-              <p class="card-description">Información de contacto y ubicación</p>
-            </div>
-            <div class="modern-card-body">
-              <!-- Nombre -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="user_name">Nombre <span class="text-danger">*</span></label>
-                <input type="text" class="modern-input" id="user_name" formControlName="user_name" placeholder="Nombre"
-                  [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.user_name.errors}" />
-                <div *ngIf="submitted && edit_personal_info_controls.user_name.errors" class="invalid-feedback">
-                  <div *ngIf="edit_personal_info_controls.user_name.errors.required">
-                    {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+              <div class="modern-card-body">
+                <!-- Usuario (Read-only) -->
+                <div class="form-group-modern">
+                  <label class="modern-label" for="input-usuario">Usuario</label>
+                  <div class="input-with-icon">
+                    <i class="bi bi-person input-icon"></i>
+                    <input type="text" id="input-usuario" class="modern-input"
+                      [value]="personalInfo?.user_name || 'lanyisep'" readonly />
+                    </div>
                   </div>
-                </div>
-              </div>
+                  <!-- Correo (Read-only) -->
+                  <div class="form-group-modern">
+                    <label class="modern-label" for="input-correo-principal">Correo</label>
+                    <div class="input-with-icon">
+                      <i class="bi bi-envelope input-icon"></i>
+                      <input type="text" id="input-correo-principal" class="modern-input"
+                        [value]="personalInfo?.email || ''" readonly />
+                      </div>
+                    </div>
+                    <!-- Nro de identificación (Read-only) -->
+                    <div class="form-group-modern">
+                      <label class="modern-label" for="input-identificacion">Nro de identificación</label>
+                      <div class="input-with-icon">
+                        <i class="bi bi-card-text input-icon"></i>
+                        <input type="text" id="input-identificacion" class="modern-input"
+                          [value]="personalInfo?.identification || '4038112102'" readonly />
+                        </div>
+                      </div>
+                      <!-- Patrocinador (Read-only) -->
+                      <div class="form-group-modern">
+                        <label class="modern-label" for="input-patrocinador">Patrocinador</label>
+                        <div class="input-with-icon">
+                          <i class="bi bi-people input-icon"></i>
+                          <input type="text" id="input-patrocinador" class="modern-input"
+                            [value]="personalInfo?.sponsor || 'danielann'" readonly />
+                          </div>
+                        </div>
+                        <!-- Fecha de Registro (Read-only) -->
+                        <div class="form-group-modern">
+                          <label class="modern-label" for="input-fecha-registro">Fecha de Registro</label>
+                          <div class="input-with-icon">
+                            <i class="bi bi-calendar-event input-icon"></i>
+                            <input type="text" id="input-fecha-registro" class="modern-input"
+                              [value]="personalInfo?.created_at || '2024-08-18 01:30:25'" readonly />
+                            </div>
+                          </div>
+                          <!-- Fecha de Nacimiento (Read-only) -->
+                          <div class="form-group-modern">
+                            <label class="modern-label" for="input-fecha-nacimiento">Fecha de Nacimiento</label>
+                            <div class="input-with-icon">
+                              <i class="bi bi-calendar-event input-icon"></i>
+                              <input type="text" id="input-fecha-nacimiento" class="modern-input"
+                                [value]="personalInfo?.birth_date || '18 de octubre de 1970'" readonly />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Card 2: Datos Secundarios -->
+                        <div class="modern-card">
+                          <div class="modern-card-header">
+                            <div class="card-header-content">
+                              <i class="bi bi-geo-alt card-icon"></i>
+                              <h3 class="card-title">Datos Secundarios</h3>
+                            </div>
+                            <p class="card-description">Información de contacto y ubicación</p>
+                          </div>
+                          <div class="modern-card-body">
+                            <!-- Nombre -->
+                            <div class="form-group-modern">
+                              <label class="modern-label" for="user_name">Nombre <span class="text-danger">*</span></label>
+                              <input type="text" class="modern-input" id="user_name" formControlName="user_name" placeholder="Nombre"
+                                [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.user_name.errors}" />
+                                @if (submitted && edit_personal_info_controls.user_name.errors) {
+                                  <div class="invalid-feedback">
+                                    @if (edit_personal_info_controls.user_name.errors.required) {
+                                      <div>
+                                        {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-NAME.TEXT' | translate }}
+                                      </div>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                              <!-- Apellido -->
+                              <div class="form-group-modern">
+                                <label class="modern-label" for="last_name">Apellido <span class="text-danger">*</span></label>
+                                <input type="text" class="modern-input" id="last_name" formControlName="last_name"
+                                  placeholder="Apellido"
+                                  [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.last_name.errors}" />
+                                  @if (submitted && edit_personal_info_controls.last_name.errors) {
+                                    <div class="invalid-feedback">
+                                      @if (edit_personal_info_controls.last_name.errors.required) {
+                                        <div>
+                                          {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate }}
+                                        </div>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                                <!-- Dirección -->
+                                <div class="form-group-modern">
+                                  <label class="modern-label" for="address">Dirección <span class="text-danger">*</span></label>
+                                  <div class="input-with-icon">
+                                    <i class="bi bi-geo-alt-fill input-icon"></i>
+                                    <input type="text" class="modern-input" id="address" formControlName="address" placeholder="Dirección"
+                                      [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.address.errors}" />
+                                    </div>
+                                    @if (submitted && edit_personal_info_controls.address.errors) {
+                                      <div class="invalid-feedback">
+                                        @if (edit_personal_info_controls.address.errors.required) {
+                                          <div>
+                                            {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
+                                          </div>
+                                        }
+                                      </div>
+                                    }
+                                  </div>
+                                  <!-- Teléfono -->
+                                  <div class="form-group-modern">
+                                    <label class="modern-label" for="phone">Teléfono <span class="text-danger">*</span></label>
+                                    <div class="input-with-icon">
+                                      <i class="bi bi-telephone input-icon"></i>
+                                      <input type="text" class="modern-input" id="phone" formControlName="phone" placeholder="Teléfono"
+                                        [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.phone.errors}" />
+                                      </div>
+                                      @if (submitted && edit_personal_info_controls.phone.errors) {
+                                        <div class="invalid-feedback">
+                                          @if (edit_personal_info_controls.phone.errors.required) {
+                                            <div>
+                                              {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
+                                            </div>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                    <!-- Código Postal -->
+                                    <div class="form-group-modern">
+                                      <label class="modern-label" for="input-postal-code">Código Postal</label>
+                                      <input type="text" id="input-postal-code" class="modern-input" placeholder="Código Postal"
+                                        [value]="personalInfo?.postal_code || '53719'" />
+                                      </div>
+                                      <!-- País -->
+                                      <div class="form-group-modern">
+                                        <label class="modern-label" for="input-pais">País</label>
+                                        <div class="input-with-icon">
+                                          <i class="bi bi-globe input-icon"></i>
+                                          <input type="text" id="input-pais" class="modern-input"
+                                            [value]="personalInfo?.country_information?.name || 'United States'" readonly />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- Card 3: Campos Adicionales -->
+                                    <div class="modern-card">
+                                      <div class="modern-card-header">
+                                        <div class="card-header-content">
+                                          <i class="bi bi-heart card-icon"></i>
+                                          <h3 class="card-title">Campos Adicionales para el beneficiario</h3>
+                                        </div>
+                                        <p class="card-description">Información del beneficiario designado</p>
+                                      </div>
+                                      <div class="modern-card-body">
+                                        <!-- Nombre del Beneficiario -->
+                                        <div class="form-group-modern">
+                                          <label class="modern-label" for="input-beneficiary-name">Nombre del Beneficiario</label>
+                                          <div class="input-with-icon">
+                                            <i class="bi bi-person input-icon"></i>
+                                            <input type="text" id="input-beneficiary-name" class="modern-input" placeholder="Ana musica"
+                                              [value]="personalInfo?.beneficiary_name || ''" />
+                                            </div>
+                                          </div>
+                                          <!-- Correo del beneficiario -->
+                                          <div class="form-group-modern">
+                                            <label class="modern-label" for="input-beneficiary-email">Correo del beneficiario</label>
+                                            <div class="input-with-icon">
+                                              <i class="bi bi-envelope input-icon"></i>
+                                              <input type="email" id="input-beneficiary-email" class="modern-input" placeholder="correo@ejemplo.com"
+                                                [value]="personalInfo?.beneficiary_email || ''" />
+                                              </div>
+                                            </div>
+                                            <!-- Teléfono del beneficiario -->
+                                            <div class="form-group-modern">
+                                              <label class="modern-label" for="input-beneficiary-phone">Teléfono del beneficiario</label>
+                                              <div class="input-with-icon">
+                                                <i class="bi bi-telephone input-icon"></i>
+                                                <input type="text" id="input-beneficiary-phone" class="modern-input" placeholder="Número de teléfono"
+                                                  [value]="personalInfo?.beneficiary_phone || ''" />
+                                                </div>
+                                              </div>
+                                              <!-- Info Box -->
+                                              <div class="info-box-modern">
+                                                <p class="info-text">
+                                                  El beneficiario será notificado de cualquier cambio importante en la cuenta.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    }
 
-              <!-- Apellido -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="last_name">Apellido <span class="text-danger">*</span></label>
-                <input type="text" class="modern-input" id="last_name" formControlName="last_name"
-                  placeholder="Apellido"
-                  [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.last_name.errors}" />
-                <div *ngIf="submitted && edit_personal_info_controls.last_name.errors" class="invalid-feedback">
-                  <div *ngIf="edit_personal_info_controls.last_name.errors.required">
-                    {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-LASTNAME.TEXT' | translate }}
-                  </div>
-                </div>
-              </div>
+                                    <!-- Documents Tab Content (Placeholder) -->
+                                    @if (activeTab === 'documents') {
+                                      <div class="modern-tab-content">
+                                        <div class="cards-container">
+                                          <div class="modern-card">
+                                            <div class="modern-card-body">
+                                              <p class="text-center" style="padding: 2rem;">Documentos del Afiliado</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    }
 
-              <!-- Dirección -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="address">Dirección <span class="text-danger">*</span></label>
-                <div class="input-with-icon">
-                  <i class="bi bi-geo-alt-fill input-icon"></i>
-                  <input type="text" class="modern-input" id="address" formControlName="address" placeholder="Dirección"
-                    [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.address.errors}" />
-                </div>
-                <div *ngIf="submitted && edit_personal_info_controls.address.errors" class="invalid-feedback">
-                  <div *ngIf="edit_personal_info_controls.address.errors.required">
-                    {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-ADDRESS.TEXT' | translate }}
-                  </div>
-                </div>
-              </div>
+                                    <!-- Divider -->
+                                    <div class="modern-divider"></div>
 
-              <!-- Teléfono -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="phone">Teléfono <span class="text-danger">*</span></label>
-                <div class="input-with-icon">
-                  <i class="bi bi-telephone input-icon"></i>
-                  <input type="text" class="modern-input" id="phone" formControlName="phone" placeholder="Teléfono"
-                    [ngClass]="{'is-invalid': submitted && edit_personal_info_controls.phone.errors}" />
-                </div>
-                <div *ngIf="submitted && edit_personal_info_controls.phone.errors" class="invalid-feedback">
-                  <div *ngIf="edit_personal_info_controls.phone.errors.required">
-                    {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.MSJ-ERROR-PHONE.TEXT' | translate }}
-                  </div>
-                </div>
-              </div>
-
-              <!-- Código Postal -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-postal-code">Código Postal</label>
-                <input type="text" id="input-postal-code" class="modern-input" placeholder="Código Postal"
-                  [value]="personalInfo?.postal_code || '53719'" />
-              </div>
-
-              <!-- País -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-pais">País</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-globe input-icon"></i>
-                  <input type="text" id="input-pais" class="modern-input"
-                    [value]="personalInfo?.country_information?.name || 'United States'" readonly />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Campos Adicionales -->
-          <div class="modern-card">
-            <div class="modern-card-header">
-              <div class="card-header-content">
-                <i class="bi bi-heart card-icon"></i>
-                <h3 class="card-title">Campos Adicionales para el beneficiario</h3>
-              </div>
-              <p class="card-description">Información del beneficiario designado</p>
-            </div>
-            <div class="modern-card-body">
-              <!-- Nombre del Beneficiario -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-beneficiary-name">Nombre del Beneficiario</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-person input-icon"></i>
-                  <input type="text" id="input-beneficiary-name" class="modern-input" placeholder="Ana musica"
-                    [value]="personalInfo?.beneficiary_name || ''" />
-                </div>
-              </div>
-
-              <!-- Correo del beneficiario -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-beneficiary-email">Correo del beneficiario</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-envelope input-icon"></i>
-                  <input type="email" id="input-beneficiary-email" class="modern-input" placeholder="correo@ejemplo.com"
-                    [value]="personalInfo?.beneficiary_email || ''" />
-                </div>
-              </div>
-
-              <!-- Teléfono del beneficiario -->
-              <div class="form-group-modern">
-                <label class="modern-label" for="input-beneficiary-phone">Teléfono del beneficiario</label>
-                <div class="input-with-icon">
-                  <i class="bi bi-telephone input-icon"></i>
-                  <input type="text" id="input-beneficiary-phone" class="modern-input" placeholder="Número de teléfono"
-                    [value]="personalInfo?.beneficiary_phone || ''" />
-                </div>
-              </div>
-
-              <!-- Info Box -->
-              <div class="info-box-modern">
-                <p class="info-text">
-                  El beneficiario será notificado de cualquier cambio importante en la cuenta.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Documents Tab Content (Placeholder) -->
-      <div class="modern-tab-content" *ngIf="activeTab === 'documents'">
-        <div class="cards-container">
-          <div class="modern-card">
-            <div class="modern-card-body">
-              <p class="text-center" style="padding: 2rem;">Documentos del Afiliado</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Divider -->
-      <div class="modern-divider"></div>
-
-      <!-- Footer with Actions -->
-      <div class="modern-modal-footer">
-        <div class="footer-info">
-          <p class="last-update-text">
-            Última actualización: {{ personalInfo?.updated_at || '2024-08-18 01:30:25' }}
-          </p>
-        </div>
-        <div class="footer-actions">
-          <button type="button" class="btn-modern btn-cancel" (click)="modal.close('Close click')">
-            {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.BTN-CANCEL.TEXT' | translate }}
-          </button>
-          <button type="submit" class="btn-modern btn-save">
-            {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.BTN-SAVE.TEXT' | translate }}
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</ng-template>
+                                    <!-- Footer with Actions -->
+                                    <div class="modern-modal-footer">
+                                      <div class="footer-info">
+                                        <p class="last-update-text">
+                                          Última actualización: {{ personalInfo?.updated_at || '2024-08-18 01:30:25' }}
+                                        </p>
+                                      </div>
+                                      <div class="footer-actions">
+                                        <button type="button" class="btn-modern btn-cancel" (click)="modal.close('Close click')">
+                                          {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.BTN-CANCEL.TEXT' | translate }}
+                                        </button>
+                                        <button type="submit" class="btn-modern btn-save">
+                                          {{ 'ADMIN-EDIT-PERSONAL-INFO-MODAL.BTN-SAVE.TEXT' | translate }}
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </ng-template>

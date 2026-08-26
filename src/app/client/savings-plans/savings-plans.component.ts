@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProductsComponent } from '../products/products.component';
 import {RouterLink} from "@angular/router";
 
@@ -9,7 +9,8 @@ import {RouterLink} from "@angular/router";
     templateUrl: './savings-plans.component.html',
     styleUrls: ['./savings-plans.component.css'],
     standalone: true,
-  imports: [CommonModule, TranslateModule, ProductsComponent, RouterLink]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, ProductsComponent, RouterLink]
 })
 export class SavingsPlansComponent implements OnInit {
   active: number = 9;

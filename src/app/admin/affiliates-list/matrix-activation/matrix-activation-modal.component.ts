@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 
@@ -6,13 +6,14 @@ import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliat
 import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {MatrixRequest} from '@app/core/interfaces/matrix-request';
 import {MatrixConfigurationService} from "@app/core/service/matrix-configuration/matrix-configuration.service";
-import {CurrencyPipe, CommonModule} from "@angular/common";
+import { CurrencyPipe, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-matrix-activation-modal',
   templateUrl: './matrix-activation-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     CurrencyPipe
@@ -32,7 +33,8 @@ export class MatrixActivationModalComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private matrixQualificationService: MatrixQualificationService,
-    private matrixConfigurationService: MatrixConfigurationService
+    private matrixConfigurationService: MatrixConfigurationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -52,6 +54,7 @@ export class MatrixActivationModalComponent implements OnInit {
         console.error('Error loading matrix configurations:', error);
         this.toast.error('Error al cargar las configuraciones de matriz');
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -99,6 +102,7 @@ export class MatrixActivationModalComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
+        this.cdr.markForCheck();
         console.error('Error activating matrix:', error);
         this.toast.error('Error al activar la matriz');
       }

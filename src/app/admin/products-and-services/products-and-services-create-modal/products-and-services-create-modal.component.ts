@@ -4,6 +4,8 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
 import {
   AbstractControl,
@@ -18,13 +20,14 @@ import {PaymentGroupsService} from "../../../core/service/payment-groups-service
 import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
 import {ProductService} from "../../../core/service/product-service/product.service";
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 
 @Component({
   selector: 'app-products-and-services-create-modal',
   templateUrl: './products-and-services-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -36,8 +39,8 @@ export class ProductsAndServicesCreateModalComponent implements OnInit {
   createProductForm!: FormGroup;
   submitted = false;
   product: Product = new Product();
-  paymentsGroup = [];
-  categoriesList = [];
+  readonly paymentsGroup = signal<PaymentGroup[]>([]);
+  readonly categoriesList = signal<any[]>([]);
 
   @ViewChild('createProductModal') createProductModal: NgbModal;
   @Output('loadProductList') loadProductList: EventEmitter<any> =
@@ -148,14 +151,14 @@ export class ProductsAndServicesCreateModalComponent implements OnInit {
       .getAll()
       .subscribe((paymentGroups: PaymentGroup[]) => {
         if (paymentGroups !== null) {
-          this.paymentsGroup = paymentGroups;
+          this.paymentsGroup.set(paymentGroups);
         }
       });
   }
 
   loadCategoryList() {
     this.productCategoryService.getAll().subscribe((resp) => {
-      this.categoriesList = resp;
+      this.categoriesList.set(resp);
     });
   }
 }

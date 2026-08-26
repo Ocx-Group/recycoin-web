@@ -1,6 +1,9 @@
 import { ProductCategory } from '../product-category-model/product-category.model';
 
 export class Product {
+  /** Solo de vista: la ponen (mouseenter)/(mouseleave) de las tarjetas de
+   *  producto para mostrar el boton de compra. No viene de la API. */
+  showButton?: boolean;
   id: number;
   categoryId: number;
   salePrice: number;

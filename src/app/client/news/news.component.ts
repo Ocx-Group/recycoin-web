@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
     standalone: true,
-  imports: [CommonModule, RouterLink]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterLink]
 })
 export class NewsComponent implements OnInit {
 

@@ -28,762 +28,820 @@
                           <label for="name">
                             Nombre del Producto
                             <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="name" placeholder="Nombre del producto"
+                            <input type="text" class="form-control" id="name" placeholder="Nombre del producto"
                                  formControlName="name" required="required" [ngClass]="{
                               'is-invalid':
                                 submittedProduct && edit_product_controls.name.errors
                             }"/>
-                          <div *ngIf="
+                            @if (
                               submittedProduct && edit_product_controls.name.errors
-                            " class="invalid-feedback">
-                            <div *ngIf="edit_product_controls.name.errors.required">
-                              El nombre del producto es requerido.
+                              ) {
+                              <div class="invalid-feedback">
+                                @if (edit_product_controls.name.errors.required) {
+                                  <div>
+                                    El nombre del producto es requerido.
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <label for="bar_code">
+                              Código de Barra
+                              <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="bar_code" placeholder="Código de Barra"
+                                formControlName="bar_code"/>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="bar_code">
-                            Código de Barra
-                            <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="bar_code" placeholder="Código de Barra"
-                                 formControlName="bar_code"/>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="description">
-                            Descripción
-                            <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="description" placeholder="Descripción"
-                                 formControlName="description"/>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="category">
-                            Categoria (En caso de ser necesario)
-                            <span class="text-danger">*</span></label>
-                          <select class="form-select form-control" id="category" formControlName="category">
-                            <option value="">Seleccione una opcion</option>
-                            <option value="{{ item.id }}" *ngFor="let item of categoriesList">
-                              {{ item.name }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="keyword">
-                            Mejorar Busquedad del Producto
-                            <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="keyword" placeholder="Palabras Claves"
-                                 formControlName="keyword"/>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="calculate_group">
-                            Grupo de calculo
-                            <span class="text-danger">*</span></label>
-                          <select class="form-select form-control" id="calculate_group"
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="description">
+                                Descripción
+                                <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="description" placeholder="Descripción"
+                                  formControlName="description"/>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label for="category">
+                                  Categoria (En caso de ser necesario)
+                                  <span class="text-danger">*</span></label>
+                                  <select class="form-select form-control" id="category" formControlName="category">
+                                    <option value="">Seleccione una opcion</option>
+                                    @for (item of categoriesList; track item) {
+                                      <option value="{{ item.id }}">
+                                        {{ item.name }}
+                                      </option>
+                                    }
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                  <label for="keyword">
+                                    Mejorar Busquedad del Producto
+                                    <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="keyword" placeholder="Palabras Claves"
+                                      formControlName="keyword"/>
+                                  </div>
+                                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label for="calculate_group">
+                                      Grupo de calculo
+                                      <span class="text-danger">*</span></label>
+                                      <select class="form-select form-control" id="calculate_group"
                                   formControlName="calculate_group" required="required" [ngClass]="{
                               'is-invalid':
                                 submittedProduct &&
                                 edit_product_controls.calculate_group.errors
                             }">
-                            <option value="">Seleccione una opcion</option>
-                            <option value="{{ item.id }}" *ngFor="let item of calificationList">
-                              {{ item.name }}
-                            </option>
-                          </select>
-                          <div *ngIf="
-                              submittedProduct &&
-                              edit_product_controls.calculate_group.errors
-                            " class="invalid-feedback">
-                            <div *ngIf="
-                                edit_product_controls.calculate_group.errors
-                                  .required
-                              ">
-                              El grupo de calculo es requerido.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                                        <option value="">Seleccione una opcion</option>
+                                        @for (item of calificationList; track item) {
+                                          <option value="{{ item.id }}">
+                                            {{ item.name }}
+                                          </option>
+                                        }
+                                      </select>
+                                      @if (
+                                        submittedProduct &&
+                                        edit_product_controls.calculate_group.errors
+                                        ) {
+                                        <div class="invalid-feedback">
+                                          @if (
+                                            edit_product_controls.calculate_group.errors
+                                            .required
+                                            ) {
+                                            <div>
+                                              El grupo de calculo es requerido.
+                                            </div>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                  </div>
 
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="sale_price">
-                            Precio de Venta
-                            <span class="text-danger">*</span></label>
-                          <input type="number" min="0" class="form-control" id="sale_price" placeholder="0.00"
+                                  <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                      <label for="sale_price">
+                                        Precio de Venta
+                                        <span class="text-danger">*</span></label>
+                                        <input type="number" min="0" class="form-control" id="sale_price" placeholder="0.00"
                                  formControlName="sale_price" required="required" [ngClass]="{
                               'is-invalid':
                                 submittedProduct &&
                                 edit_product_controls.sale_price.errors
                             }"/>
-                          <div *ngIf="
-                              submittedProduct &&
-                              edit_product_controls.sale_price.errors
-                            " class="invalid-feedback">
-                            <div *ngIf="
-                                edit_product_controls.sale_price.errors.required
-                              ">
-                              El precio del producto es requerido.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="taxes">
-                            Impuestos
-                            <span class="text-danger">*</span></label>
-                          <input type="number" min="0" class="form-control" id="taxes" placeholder="0.00"
-                                 formControlName="taxes"/>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="commissionable_value">
-                            Valor Comisionable
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="commissionable_value" min="0" placeholder="0.00"
-                                 formControlName="commissionable_value"/>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="binary_points">
-                            Puntos binarios
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="binary_points" min="0" placeholder="0.00"
-                                 formControlName="binary_points"/>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="qualified_points">
-                            Puntos para calificar
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="qualified_points" placeholder="0" min="0"
-                                 formControlName="qualified_points"/>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="product_weight">
-                            Peso del Producto KG.
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="product_weight" placeholder="0" min="0"
-                                 formControlName="product_weight"/>
-                        </div>
-                      </div>
-                      <div class="row" *ngIf="this.product.productType == false">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="base_amount_pack">
-                            Monto Base Packs
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="base_amount_pack" placeholder="0" min="0"
-                                 formControlName="base_amount_pack"/>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="amount_day_pay">
-                            Cantidad de pagos
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="amount_day_pay" placeholder="0" min="0"
-                                 formControlName="amount_day_pay"/>
-                        </div>
-                      </div>
-                      <div class="row" *ngIf="this.product.productType == false">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                          <label for="days_wait">
-                            Dias de espera
-                            <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" id="days_wait" placeholder="0" min="0"
-                                 formControlName="days_wait"/>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="inventory"
-                                 id="inventory"/>
-                          <label class="form-check-label ms-2" for="inventory" placement="bottom"
-                                 ngbTooltip="Usted aqui podra seleccionar si el producto que esta creando posee inventario, de ser asi debera tildar la opción de lo contrario dejarlo sin tildar.">
-                            Inventario</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="minimum_purchase"
-                                 id="minimum_purchase"/>
-                          <label class="form-check-label ms-2" for="minimum_purchase" placement="bottom"
-                                 ngbTooltip="Con la compra de este producto se tomara en cuanta para la suma de activación por compra minima.">
-                            Compra minima</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="visible_product"
-                                 id="visible_product"/>
-                          <label class="form-check-label ms-2" for="visible_product" placement="bottom"
-                                 ngbTooltip="El producto estara visible en la Tienda Online del sistema.">
-                            Producto Visible</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value=""
-                                 formControlName="product_visible_public_store" id="product_visible_public_store"/>
-                          <label class="form-check-label ms-2" for="product_visible_public_store" placement="bottom"
-                                 ngbTooltip="El producto estara visible en la Tienda Publica Online del sistema.">
-                            Producto visible en Tienda Pública</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="product_type"
-                                 id="product_type"/>
-                          <label class="form-check-label ms-2" for="product_type" placement="bottom"
-                                 ngbTooltip="Si la opción esta marcada el producto solo sera visible para pagos por afiliación.">
-                            Tipo de Producto</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="hide_points"
-                                 id="hide_points"/>
-                          <label class="form-check-label ms-2" for="hide_points" placement="bottom"
-                                 ngbTooltip="Si esta opción esta marcada no se mostrara los puntos de este producto.">
-                            Ocultar Puntos</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="pack_product"
-                                 id="pack_product"/>
-                          <label class="form-check-label ms-2" for="pack_product" placement="bottom"
-                                 ngbTooltip="Si esta activa esta opción el producto generara pagos pasivos.">
-                            Producto Pack</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="offer" id="offer"/>
-                          <label class="form-check-label ms-2" for="offer" placement="bottom"
-                                 ngbTooltip="Aparecera en la portada del producto una etiqueta de Oferta.">
-                            Oferta</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value=""
-                                 formControlName="hide_commissionable_value" id="hide_commissionable_value"/>
-                          <label class="form-check-label ms-2" for="hide_commissionable_value" placement="bottom"
-                                 ngbTooltip="Si esta opción esta marcada no se mostrara el valor comisionable de este producto.">
-                            Ocultar Valor Comisionable</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value=""
-                                 formControlName="activate_gallery_zoom" id="activate_gallery_zoom"/>
-                          <label class="form-check-label ms-2" for="activate_gallery_zoom" placement="bottom"
-                                 ngbTooltip="Si esta opción esta marcada las imagenes de los productos en el apartado de detalles tendra una galeria y estas aplica zoom, de no estar marcado solo se vera una imagen sin zoom.">
-                            Activar galeria Zoom</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="recurring_product"
-                                 id="recurring_product"/>
-                          <label class="form-check-label ms-2" for="recurring_product" placement="bottom" ngbTooltip="">
-                            Producto Recurrente</label>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                          <input class="form-check-input" type="checkbox" value="" formControlName="product_home"
-                                 id="product_home"/>
-                          <label class="form-check-label ms-2" for="product_home" placement="bottom"
-                                 ngbTooltip="Si un afiliado desea retirar el 100% de su capital adquirido, deberá adquirir este producto de lo contrario se le retendrá X porcentaje configurable por el administrador en base al monto que desea retirar.">
-                            Producto Inicio</label>
-                        </div>
-                      </div>
-                      <div class="row mt-4">
-                        <div class="col d-flex justify-content-center">
-                          <button type="submit" class="btn btn-primary">
-                            Guardar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </ng-template>
-            </li>
+                                        @if (
+                                          submittedProduct &&
+                                          edit_product_controls.sale_price.errors
+                                          ) {
+                                          <div class="invalid-feedback">
+                                            @if (
+                                              edit_product_controls.sale_price.errors.required
+                                              ) {
+                                              <div>
+                                                El precio del producto es requerido.
+                                              </div>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <label for="taxes">
+                                          Impuestos
+                                          <span class="text-danger">*</span></label>
+                                          <input type="number" min="0" class="form-control" id="taxes" placeholder="0.00"
+                                            formControlName="taxes"/>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                          <label for="commissionable_value">
+                                            Valor Comisionable
+                                            <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" id="commissionable_value" min="0" placeholder="0.00"
+                                              formControlName="commissionable_value"/>
+                                          </div>
+                                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <label for="binary_points">
+                                              Puntos binarios
+                                              <span class="text-danger">*</span></label>
+                                              <input type="number" class="form-control" id="binary_points" min="0" placeholder="0.00"
+                                                formControlName="binary_points"/>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                              <label for="qualified_points">
+                                                Puntos para calificar
+                                                <span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" id="qualified_points" placeholder="0" min="0"
+                                                  formControlName="qualified_points"/>
+                                              </div>
+                                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <label for="product_weight">
+                                                  Peso del Producto KG.
+                                                  <span class="text-danger">*</span></label>
+                                                  <input type="number" class="form-control" id="product_weight" placeholder="0" min="0"
+                                                    formControlName="product_weight"/>
+                                                </div>
+                                              </div>
+                                              @if (this.product.productType == false) {
+                                                <div class="row">
+                                                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                    <label for="base_amount_pack">
+                                                      Monto Base Packs
+                                                      <span class="text-danger">*</span></label>
+                                                      <input type="number" class="form-control" id="base_amount_pack" placeholder="0" min="0"
+                                                        formControlName="base_amount_pack"/>
+                                                    </div>
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                      <label for="amount_day_pay">
+                                                        Cantidad de pagos
+                                                        <span class="text-danger">*</span></label>
+                                                        <input type="number" class="form-control" id="amount_day_pay" placeholder="0" min="0"
+                                                          formControlName="amount_day_pay"/>
+                                                      </div>
+                                                    </div>
+                                                  }
+                                                  @if (this.product.productType == false) {
+                                                    <div class="row">
+                                                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                        <label for="days_wait">
+                                                          Dias de espera
+                                                          <span class="text-danger">*</span></label>
+                                                          <input type="number" class="form-control" id="days_wait" placeholder="0" min="0"
+                                                            formControlName="days_wait"/>
+                                                        </div>
+                                                      </div>
+                                                    }
+                                                    <div class="row">
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="inventory"
+                                                          id="inventory"/>
+                                                        <label class="form-check-label ms-2" for="inventory" placement="bottom"
+                                                          ngbTooltip="Usted aqui podra seleccionar si el producto que esta creando posee inventario, de ser asi debera tildar la opción de lo contrario dejarlo sin tildar.">
+                                                        Inventario</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="minimum_purchase"
+                                                          id="minimum_purchase"/>
+                                                        <label class="form-check-label ms-2" for="minimum_purchase" placement="bottom"
+                                                          ngbTooltip="Con la compra de este producto se tomara en cuanta para la suma de activación por compra minima.">
+                                                        Compra minima</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="visible_product"
+                                                          id="visible_product"/>
+                                                        <label class="form-check-label ms-2" for="visible_product" placement="bottom"
+                                                          ngbTooltip="El producto estara visible en la Tienda Online del sistema.">
+                                                        Producto Visible</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                          formControlName="product_visible_public_store" id="product_visible_public_store"/>
+                                                        <label class="form-check-label ms-2" for="product_visible_public_store" placement="bottom"
+                                                          ngbTooltip="El producto estara visible en la Tienda Publica Online del sistema.">
+                                                        Producto visible en Tienda Pública</label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row">
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="product_type"
+                                                          id="product_type"/>
+                                                        <label class="form-check-label ms-2" for="product_type" placement="bottom"
+                                                          ngbTooltip="Si la opción esta marcada el producto solo sera visible para pagos por afiliación.">
+                                                        Tipo de Producto</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="hide_points"
+                                                          id="hide_points"/>
+                                                        <label class="form-check-label ms-2" for="hide_points" placement="bottom"
+                                                          ngbTooltip="Si esta opción esta marcada no se mostrara los puntos de este producto.">
+                                                        Ocultar Puntos</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="pack_product"
+                                                          id="pack_product"/>
+                                                        <label class="form-check-label ms-2" for="pack_product" placement="bottom"
+                                                          ngbTooltip="Si esta activa esta opción el producto generara pagos pasivos.">
+                                                        Producto Pack</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="offer" id="offer"/>
+                                                        <label class="form-check-label ms-2" for="offer" placement="bottom"
+                                                          ngbTooltip="Aparecera en la portada del producto una etiqueta de Oferta.">
+                                                        Oferta</label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row">
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                          formControlName="hide_commissionable_value" id="hide_commissionable_value"/>
+                                                        <label class="form-check-label ms-2" for="hide_commissionable_value" placement="bottom"
+                                                          ngbTooltip="Si esta opción esta marcada no se mostrara el valor comisionable de este producto.">
+                                                        Ocultar Valor Comisionable</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                          formControlName="activate_gallery_zoom" id="activate_gallery_zoom"/>
+                                                        <label class="form-check-label ms-2" for="activate_gallery_zoom" placement="bottom"
+                                                          ngbTooltip="Si esta opción esta marcada las imagenes de los productos en el apartado de detalles tendra una galeria y estas aplica zoom, de no estar marcado solo se vera una imagen sin zoom.">
+                                                        Activar galeria Zoom</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="recurring_product"
+                                                          id="recurring_product"/>
+                                                        <label class="form-check-label ms-2" for="recurring_product" placement="bottom" ngbTooltip="">
+                                                        Producto Recurrente</label>
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                        <input class="form-check-input" type="checkbox" value="" formControlName="product_home"
+                                                          id="product_home"/>
+                                                        <label class="form-check-label ms-2" for="product_home" placement="bottom"
+                                                          ngbTooltip="Si un afiliado desea retirar el 100% de su capital adquirido, deberá adquirir este producto de lo contrario se le retendrá X porcentaje configurable por el administrador en base al monto que desea retirar.">
+                                                        Producto Inicio</label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row mt-4">
+                                                      <div class="col d-flex justify-content-center">
+                                                        <button type="submit" class="btn btn-primary">
+                                                          Guardar
+                                                        </button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </form>
+                                            </ng-template>
+                                          </li>
 
-            <li [ngbNavItem]="2">
-              <a ngbNavLink>Atributos</a>
-              <ng-template ngbNavContent>
-                <form [formGroup]="editProductAttributesForm" (ngSubmit)="onSaveProductAttribute()">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
-                        <input [(ngModel)]="isCheckedAttribute" (change)="checkboxChangedAttribute()"
-                               class="form-check-input" type="checkbox" [ngModelOptions]="{ standalone: true }"/>
-                        <label class="form-check-label ms-2">
-                          Activar Atributos</label>
-                      </div>
-                    </div>
-                    <div class="row" *ngIf="isCheckedAttribute == true">
-                      <div class="fw-bold p-t-10 font-17 text-center">
-                        Agregar Combinación
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="attribute_name">
-                          Atributo
-                          <span class="text-danger">*</span></label>
-                        <select class="form-select form-control" id="attribute_name" required="required"
+                                          <li [ngbNavItem]="2">
+                                            <a ngbNavLink>Atributos</a>
+                                            <ng-template ngbNavContent>
+                                              <form [formGroup]="editProductAttributesForm" (ngSubmit)="onSaveProductAttribute()">
+                                                <div class="card-body">
+                                                  <div class="row">
+                                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
+                                                      <input [(ngModel)]="isCheckedAttribute" (change)="checkboxChangedAttribute()"
+                                                        class="form-check-input" type="checkbox" [ngModelOptions]="{ standalone: true }"/>
+                                                      <label class="form-check-label ms-2">
+                                                      Activar Atributos</label>
+                                                    </div>
+                                                  </div>
+                                                  @if (isCheckedAttribute == true) {
+                                                    <div class="row">
+                                                      <div class="fw-bold p-t-10 font-17 text-center">
+                                                        Agregar Combinación
+                                                      </div>
+                                                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                        <label for="attribute_name">
+                                                          Atributo
+                                                          <span class="text-danger">*</span></label>
+                                                          <select class="form-select form-control" id="attribute_name" required="required"
                                 formControlName="attribute_name" (change)="getAttributesValues($event)" [ngClass]="{
                             'is-invalid':
                             submittedAttribute &&
                               edit_product_attributes_controls.attribute_name
                                 .errors
                           }">
-                          <option value="">Seleccione una opción</option>
-                          <option value="{{ item.id }}" *ngFor="let item of attributesList">
-                            {{ item.name }}
-                          </option>
-                        </select>
+                                                            <option value="">Seleccione una opción</option>
+                                                            @for (item of attributesList; track item) {
+                                                              <option value="{{ item.id }}">
+                                                                {{ item.name }}
+                                                              </option>
+                                                            }
+                                                          </select>
+                                                          @if (
+                                                            submittedAttribute &&
+                                                            edit_product_attributes_controls.attribute_name
+                                                            .errors
+                                                            ) {
+                                                            <div class="invalid-feedback">
+                                                              @if (
+                                                                edit_product_attributes_controls.attribute_name
+                                                                .errors.required
+                                                                ) {
+                                                                <div>
+                                                                  El atributo es requerido.
+                                                                </div>
+                                                              }
+                                                            </div>
+                                                          }
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                          <label for="attribute_value">
+                                                            Valor
+                                                            <span class="text-danger">*</span></label>
+                                                            <select class="form-select form-control" id="attribute_value" (change)="getNameValue($event)"
+                                                              placeholder="" formControlName="attribute_value">
+                                                              <option value="">Seleccione una opción</option>
+                                                              @for (item of attributesValuesList; track item) {
+                                                                <option value="{{ item.attributeValue }}">
+                                                                  {{ item.attributeValue }}
+                                                                </option>
+                                                              }
+                                                            </select>
+                                                          </div>
+                                                          <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                            <label for="attribute_combination">
+                                                              Combinacion
+                                                              <span class="text-danger">*</span></label>
+                                                              <input type="text" class="form-control" id="attribute_combination"
+                                                                formControlName="attribute_combination"/>
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                              <label for="attribute_reference" placement="top" ngbTooltip="">
+                                                                Referencia
+                                                                <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" id="attribute_reference"
+                                                                  placeholder="Agregue una referencia" formControlName="attribute_reference"/>
+                                                              </div>
+                                                            </div>
+                                                          }
+                                                          @if (isCheckedAttribute == true) {
+                                                            <div class="row mt-4">
+                                                              <div class="col d-flex justify-content-end">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                  Guardar
+                                                                </button>
+                                                              </div>
+                                                            </div>
+                                                          }
+                                                          @if (isCheckedAttribute == true) {
+                                                            <div class="row">
+                                                              <div class="fw-bold p-t-10 font-17 text-center">
+                                                                Lista de Combinaciones
+                                                              </div>
+                                                              <ngx-datatable #table class="material overflow-x-auto" style="height: 300px"
+                                                                [rows]="rowsCombinations" [loadingIndicator]="loadingIndicator" columnMode="force"
+                                                                [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                                                                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                                                                <ngx-datatable-column name="Atributo - valor par">
+                                                                  <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                    {{ row.codeRef }}
+                                                                  </ng-template>
+                                                                </ngx-datatable-column>
+                                                                <ngx-datatable-column name="Referencia">
+                                                                  <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                    {{ row }}
+                                                                  </ng-template>
+                                                                </ngx-datatable-column>
+                                                                <ngx-datatable-column name="Existencias">
+                                                                  <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                    {{ row }}
+                                                                  </ng-template>
+                                                                </ngx-datatable-column>
+                                                                <ngx-datatable-column name="Eliminar">
+                                                                  <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                    <div class="col-red" (click)="deleteSingleRowCombination(row.id)">
+                                                                      <i class="bi bi-trash"></i>
+                                                                    </div>
+                                                                  </ng-template>
+                                                                </ngx-datatable-column>
+                                                              </ngx-datatable>
+                                                            </div>
+                                                          }
+                                                        </div>
+                                                      </form>
+                                                    </ng-template>
+                                                  </li>
+                                                  <li [ngbNavItem]="3">
+                                                    <a ngbNavLink>Contenido HTML</a>
+                                                    <ng-template ngbNavContent>
+                                                      <form [formGroup]="editProductContentHtmlForm">
+                                                        <div class="card-body">
+                                                          <div class="row">
+                                                            <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
+                                                              <input class="form-check-input" type="checkbox" value="" formControlName="enable_content_html"
+                                                                id="enable_content_html"/>
+                                                              <label class="form-check-label ms-2" for="enable_content_html" placement="bottom"
+                                                                ngbTooltip="Al estar marcada esta opcion, solo se mostrara este contenido en el detalle del producto, reemplazaria el contenido del campo descripción.">
+                                                              Activar contenido HTML</label>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </form>
+                                                    </ng-template>
+                                                  </li>
+                                                  <li [ngbNavItem]="4">
+                                                    <a ngbNavLink>Imágenes del Producto</a>
+                                                    <ng-template ngbNavContent>
+                                                      <div class="card-body">
+                                                        <div class="row">
+                                                          <div class="alert alert-info text-center">
+                                                            Nota: Dimenciones optimas 1120px*1120px, preferiblemente
+                                                            las imagenes deben tener las mismas dimenciones de alto
+                                                            como de ancho.
+                                                          </div>
+                                                        </div>
 
-                        <div *ngIf="
-                          submittedAttribute &&
-                            edit_product_attributes_controls.attribute_name
-                              .errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              edit_product_attributes_controls.attribute_name
-                                .errors.required
-                            ">
-                            El atributo es requerido.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="attribute_value">
-                          Valor
-                          <span class="text-danger">*</span></label>
-                        <select class="form-select form-control" id="attribute_value" (change)="getNameValue($event)"
-                                placeholder="" formControlName="attribute_value">
-                          <option value="">Seleccione una opción</option>
-                          <option value="{{ item.attributeValue }}" *ngFor="let item of attributesValuesList">
-                            {{ item.attributeValue }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="attribute_combination">
-                          Combinacion
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="attribute_combination"
-                               formControlName="attribute_combination"/>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="attribute_reference" placement="top" ngbTooltip="">
-                          Referencia
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="attribute_reference"
-                               placeholder="Agregue una referencia" formControlName="attribute_reference"/>
-                      </div>
-                    </div>
-                    <div class="row mt-4" *ngIf="isCheckedAttribute == true">
-                      <div class="col d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">
-                          Guardar
-                        </button>
-                      </div>
-                    </div>
-                    <div class="row" *ngIf="isCheckedAttribute == true">
-                      <div class="fw-bold p-t-10 font-17 text-center">
-                        Lista de Combinaciones
-                      </div>
-                      <ngx-datatable #table class="material overflow-x-auto" style="height: 300px"
-                                     [rows]="rowsCombinations" [loadingIndicator]="loadingIndicator" columnMode="force"
-                                     [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                                     [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                        <ngx-datatable-column name="Atributo - valor par">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.codeRef }}
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Referencia">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row }}
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Existencias">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row }}
-                          </ng-template>
-                        </ngx-datatable-column>
+                                                        @if (product.image != null || '') {
+                                                          <div class="row">
+                                                            <div class="d-flex justify-content-center">
+                                                              <button type="button" class="btn btn-danger mx-2" (click)="deleteImage()">
+                                                                Eliminar
+                                                              </button>
+                                                            </div>
+                                                          </div>
+                                                        }
+                                                        @if (product.image == null || '') {
+                                                          <div class="row d-flex justify-content-center align-items-center">
+                                                            <div class="col-6">
+                                                              <label for="imageProfile">
+                                                                Imagen
+                                                                <span class="text-danger">*</span>
+                                                              </label>
+                                                              <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="false">
+                                                                <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
+                                                                @for (f of files; track f) {
+                                                                  <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                                    [file]="f" [removable]="true" (removed)="deleteFile(f)">
+                                                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                                                  </ngx-dropzone-image-preview>
+                                                                }
+                                                              </ngx-dropzone>
+                                                            </div>
+                                                          </div>
+                                                        }
+                                                        <div class="row mt-4">
+                                                          <div class="col-12 d-flex justify-content-center">
+                                                            @if (product.image) {
+                                                              <div class="image-container d-flex justify-content-center align-items-center"
+                                                                style="width: 250px;">
+                                                                <img [src]="product.image" alt="img_product" style="max-width: 100%; max-height: 100%;">
+                                                              </div>
+                                                            }
+                                                          </div>
+                                                        </div>
 
-                        <ngx-datatable-column name="Eliminar">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            <div class="col-red" (click)="deleteSingleRowCombination(row.id)">
-                              <i class="bi bi-trash"></i>
-                            </div>
-                          </ng-template>
-                        </ngx-datatable-column>
-                      </ngx-datatable>
-                    </div>
-                  </div>
-                </form>
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="3">
-              <a ngbNavLink>Contenido HTML</a>
-              <ng-template ngbNavContent>
-                <form [formGroup]="editProductContentHtmlForm">
-                  <div class="card-body">
-                    <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
-                    <div class="row">
-                      <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
-                        <input class="form-check-input" type="checkbox" value="" formControlName="enable_content_html"
-                               id="enable_content_html"/>
-                        <label class="form-check-label ms-2" for="enable_content_html" placement="bottom"
-                               ngbTooltip="Al estar marcada esta opcion, solo se mostrara este contenido en el detalle del producto, reemplazaria el contenido del campo descripción.">
-                          Activar contenido HTML</label>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="4">
-              <a ngbNavLink>Imágenes del Producto</a>
-              <ng-template ngbNavContent>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="alert alert-info text-center">
-                      Nota: Dimenciones optimas 1120px*1120px, preferiblemente
-                      las imagenes deben tener las mismas dimenciones de alto
-                      como de ancho.
-                    </div>
-                  </div>
+                                                      </div>
+                                                    </ng-template>
+                                                  </li>
 
-                  <div class="row" *ngIf="product.image != null || ''">
-                    <div class="d-flex justify-content-center">
-                      <button type="button" class="btn btn-danger mx-2" (click)="deleteImage()">
-                        Eliminar
-                      </button>
-                    </div>
-                  </div>
-                  <div class="row d-flex justify-content-center align-items-center" *ngIf="product.image == null || ''">
-                    <div class="col-6">
-                      <label for="imageProfile">
-                        Imagen
-                        <span class="text-danger">*</span>
-                      </label>
-                      <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="false">
-                        <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                                                    [file]="f" [removable]="true" (removed)="deleteFile(f)">
-                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                        </ngx-dropzone-image-preview>
-                      </ngx-dropzone>
-                    </div>
-
-                  </div>
-                  <div class="row mt-4">
-                    <div class="col-12 d-flex justify-content-center">
-                      <div class="image-container d-flex justify-content-center align-items-center"
-                           style="width: 250px;" *ngIf="product.image">
-                        <img [src]="product.image" alt="img_product" style="max-width: 100%; max-height: 100%;">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </ng-template>
-            </li>
-
-            <li [ngbNavItem]="5">
-              <a ngbNavLink>Descuento por Calificación</a>
-              <ng-template ngbNavContent>
-                <form class="register-form" [formGroup]="editProductDiscountForm" (ngSubmit)="onSaveProductDiscount()">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="fw-bold p-t-10 font-17 text-center">
-                        Agregar Descuento
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="discount_name">
-                          Nombre del Descuento
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="discount_name" placeholder="Nombre del Descuento"
+                                                  <li [ngbNavItem]="5">
+                                                    <a ngbNavLink>Descuento por Calificación</a>
+                                                    <ng-template ngbNavContent>
+                                                      <form class="register-form" [formGroup]="editProductDiscountForm" (ngSubmit)="onSaveProductDiscount()">
+                                                        <div class="card-body">
+                                                          <div class="row">
+                                                            <div class="fw-bold p-t-10 font-17 text-center">
+                                                              Agregar Descuento
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                              <label for="discount_name">
+                                                                Nombre del Descuento
+                                                                <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" id="discount_name" placeholder="Nombre del Descuento"
                                formControlName="discount_name" required="required" [ngClass]="{
                             'is-invalid':
                             submittedDiscount &&
                               edit_product_discount_controls.discount_name
                                 .errors
                           }"/>
-                        <div *ngIf="
-                          submittedDiscount &&
-                            edit_product_discount_controls.discount_name.errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              edit_product_discount_controls.discount_name
-                                .errors.required
-                            ">
-                            El nombre del descuento es requerido.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="discount_description">
-                          Descripción
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="discount_description" placeholder="Descripción"
-                               formControlName="discount_description"/>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="discount_calification">
-                          Calificación
-                          <span class="text-danger">*</span></label>
-                        <select class="form-select form-control" id="discount_calification"
+                                                                @if (
+                                                                  submittedDiscount &&
+                                                                  edit_product_discount_controls.discount_name.errors
+                                                                  ) {
+                                                                  <div class="invalid-feedback">
+                                                                    @if (
+                                                                      edit_product_discount_controls.discount_name
+                                                                      .errors.required
+                                                                      ) {
+                                                                      <div>
+                                                                        El nombre del descuento es requerido.
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+                                                                }
+                                                              </div>
+                                                              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                                <label for="discount_description">
+                                                                  Descripción
+                                                                  <span class="text-danger">*</span></label>
+                                                                  <input type="text" class="form-control" id="discount_description" placeholder="Descripción"
+                                                                    formControlName="discount_description"/>
+                                                                </div>
+                                                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                                  <label for="discount_calification">
+                                                                    Calificación
+                                                                    <span class="text-danger">*</span></label>
+                                                                    <select class="form-select form-control" id="discount_calification"
                                 formControlName="discount_calification" required="required" [ngClass]="{
                             'is-invalid':
                             submittedDiscount &&
                               edit_product_discount_controls
                                 .discount_calification.errors
                           }">
-                          <option value="">Seleccione una opcion</option>
-                          <option value="{{ item.id }}" *ngFor="let item of calificationList">
-                            {{ item.name }}
-                          </option>
-                        </select>
-                        <div *ngIf="
-                          submittedDiscount &&
-                            edit_product_discount_controls.discount_calification
-                              .errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              edit_product_discount_controls
-                                .discount_calification.errors.required
-                            ">
-                            La Calificación es requerida.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="discount_percentage">
-                          Porcentaje
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control" required="required" id="discount_percentage"
+                                                                      <option value="">Seleccione una opcion</option>
+                                                                      @for (item of calificationList; track item) {
+                                                                        <option value="{{ item.id }}">
+                                                                          {{ item.name }}
+                                                                        </option>
+                                                                      }
+                                                                    </select>
+                                                                    @if (
+                                                                      submittedDiscount &&
+                                                                      edit_product_discount_controls.discount_calification
+                                                                      .errors
+                                                                      ) {
+                                                                      <div class="invalid-feedback">
+                                                                        @if (
+                                                                          edit_product_discount_controls
+                                                                          .discount_calification.errors.required
+                                                                          ) {
+                                                                          <div>
+                                                                            La Calificación es requerida.
+                                                                          </div>
+                                                                        }
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+                                                                  <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                                    <label for="discount_percentage">
+                                                                      Porcentaje
+                                                                      <span class="text-danger">*</span></label>
+                                                                      <input type="number" min="0" class="form-control" required="required" id="discount_percentage"
                                placeholder="%" formControlName="discount_percentage" [ngClass]="{
                             'is-invalid':
                             submittedDiscount &&
                               edit_product_discount_controls.discount_percentage
                                 .errors
                           }"/>
-                        <div *ngIf="
-                          submittedDiscount &&
-                            edit_product_discount_controls.discount_percentage
-                              .errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              edit_product_discount_controls.discount_percentage
-                                .errors.required
-                            ">
-                            El porcentage es requerido.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                                                                      @if (
+                                                                        submittedDiscount &&
+                                                                        edit_product_discount_controls.discount_percentage
+                                                                        .errors
+                                                                        ) {
+                                                                        <div class="invalid-feedback">
+                                                                          @if (
+                                                                            edit_product_discount_controls.discount_percentage
+                                                                            .errors.required
+                                                                            ) {
+                                                                            <div>
+                                                                              El porcentage es requerido.
+                                                                            </div>
+                                                                          }
+                                                                        </div>
+                                                                      }
+                                                                    </div>
+                                                                  </div>
 
-                    <div class="row mt-0">
-                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                        <label for="discount_percentage_commissionable">
-                          Porcentaje
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control mb-3" id="discount_percentage_commissionable"
-                               placeholder="%" formControlName="discount_percentage_commissionable"/>
-                        <input class="form-check-input" type="checkbox" value=""
-                               formControlName="discount_commissionable" id="discount_commissionable"/>
-                        <label class="form-check-label ms-2" for="inventory">
-                          Comisionable</label>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                        <label for="discount_percentage_binary_points">
-                          Porcentaje
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control mb-3" id="discount_percentage_binary_points"
-                               placeholder="%" formControlName="discount_percentage_binary_points"/>
-                        <input class="form-check-input" type="checkbox" value=""
-                               formControlName="discount_binary_points" id="discount_binary_points"/>
-                        <label class="form-check-label ms-2" for="discount_binary_points">
-                          Puntos binarios</label>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
-                        <label for="discount_percentage_qualified_points">
-                          Porcentaje
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control mb-3" id="discount_percentage_qualified_points"
-                               placeholder="%" formControlName="discount_percentage_qualified_points"/>
-                        <input class="form-check-input" type="checkbox" value=""
-                               formControlName="discount_qualified_points" id="discount_qualified_points"/>
-                        <label class="form-check-label ms-2" for="discount_qualified_points">
-                          Puntos para calificar</label>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-5">
-                        <button type="submit" class="btn btn-primary">
-                          Guardar
-                        </button>
-                      </div>
-                    </div>
+                                                                  <div class="row mt-0">
+                                                                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                                      <label for="discount_percentage_commissionable">
+                                                                        Porcentaje
+                                                                        <span class="text-danger">*</span></label>
+                                                                        <input type="number" min="0" class="form-control mb-3" id="discount_percentage_commissionable"
+                                                                          placeholder="%" formControlName="discount_percentage_commissionable"/>
+                                                                        <input class="form-check-input" type="checkbox" value=""
+                                                                          formControlName="discount_commissionable" id="discount_commissionable"/>
+                                                                        <label class="form-check-label ms-2" for="inventory">
+                                                                        Comisionable</label>
+                                                                      </div>
+                                                                      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                                        <label for="discount_percentage_binary_points">
+                                                                          Porcentaje
+                                                                          <span class="text-danger">*</span></label>
+                                                                          <input type="number" min="0" class="form-control mb-3" id="discount_percentage_binary_points"
+                                                                            placeholder="%" formControlName="discount_percentage_binary_points"/>
+                                                                          <input class="form-check-input" type="checkbox" value=""
+                                                                            formControlName="discount_binary_points" id="discount_binary_points"/>
+                                                                          <label class="form-check-label ms-2" for="discount_binary_points">
+                                                                          Puntos binarios</label>
+                                                                        </div>
+                                                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-4 ml-4">
+                                                                          <label for="discount_percentage_qualified_points">
+                                                                            Porcentaje
+                                                                            <span class="text-danger">*</span></label>
+                                                                            <input type="number" min="0" class="form-control mb-3" id="discount_percentage_qualified_points"
+                                                                              placeholder="%" formControlName="discount_percentage_qualified_points"/>
+                                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                              formControlName="discount_qualified_points" id="discount_qualified_points"/>
+                                                                            <label class="form-check-label ms-2" for="discount_qualified_points">
+                                                                            Puntos para calificar</label>
+                                                                          </div>
+                                                                          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-5">
+                                                                            <button type="submit" class="btn btn-primary">
+                                                                              Guardar
+                                                                            </button>
+                                                                          </div>
+                                                                        </div>
 
-                    <div class="row mt-4">
-                      <div class="alert alert-info text-center">
-                        Las opciones si estan marcadas se aplicara el descuento
-                        a los puntos correspondientes.
-                      </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                      <div class="fw-bold p-t-10 font-17 text-center">
-                        Lista de Descuentos
-                      </div>
-                      <ngx-datatable #table class="material overflow-x-auto" style="height: 300px" [rows]="rows"
-                                     [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50"
-                                     [footerHeight]="50"
-                                     rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
-                                     [reorderable]="reorderable">
-                        <ngx-datatable-column name="Nombre">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.name }}
-                          </ng-template>
-                        </ngx-datatable-column>
+                                                                        <div class="row mt-4">
+                                                                          <div class="alert alert-info text-center">
+                                                                            Las opciones si estan marcadas se aplicara el descuento
+                                                                            a los puntos correspondientes.
+                                                                          </div>
+                                                                        </div>
+                                                                        <hr/>
+                                                                        <div class="row">
+                                                                          <div class="fw-bold p-t-10 font-17 text-center">
+                                                                            Lista de Descuentos
+                                                                          </div>
+                                                                          <ngx-datatable #table class="material overflow-x-auto" style="height: 300px" [rows]="rows"
+                                                                            [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50"
+                                                                            [footerHeight]="50"
+                                                                            rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                                                                            [reorderable]="reorderable">
+                                                                            <ngx-datatable-column name="Nombre">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.name }}
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
 
                         <ngx-datatable-column name="{{
                             'PRODUCTS-AND-SERVICES.COL-PRODUCT-CODE.TEXT'
                               | translate
                           }}" sortable="false">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.name }}
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Descripción">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.description }}
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Calificación">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.qualification }}
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Porcentaje">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.percentage }}%
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Desc. Comisionable">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.pCommissionable }}%
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Desc. Puntos Binarios">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.pBinaryPoints }}%
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Desc. Puntos calificar">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            {{ row.pPointsQualify }}%
-                          </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Eliminar">
-                          <ng-template let-row="row" ngx-datatable-cell-template>
-                            <div class="col-red" (click)="deleteSingleRowDiscount(row.id)">
-                              <i class="bi bi-trash"></i>
-                            </div>
-                          </ng-template>
-                        </ngx-datatable-column>
-                      </ngx-datatable>
-                    </div>
-                  </div>
-                </form>
-              </ng-template>
-            </li>
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.name }}
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Descripción">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.description }}
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Calificación">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.qualification }}
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Porcentaje">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.percentage }}%
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Desc. Comisionable">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.pCommissionable }}%
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Desc. Puntos Binarios">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.pBinaryPoints }}%
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Desc. Puntos calificar">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                {{ row.pPointsQualify }}%
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                            <ngx-datatable-column name="Eliminar">
+                                                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                                                <div class="col-red" (click)="deleteSingleRowDiscount(row.id)">
+                                                                                  <i class="bi bi-trash"></i>
+                                                                                </div>
+                                                                              </ng-template>
+                                                                            </ngx-datatable-column>
+                                                                          </ngx-datatable>
+                                                                        </div>
+                                                                      </div>
+                                                                    </form>
+                                                                  </ng-template>
+                                                                </li>
 
-            <li [ngbNavItem]="6">
-              <a ngbNavLink>Inventario</a>
-              <ng-template ngbNavContent>
-                <form [formGroup]="editProductInventoryForm" (ngSubmit)="onSaveProductInventory()">
-                  <div class="card-body">
-                    <div class="row" *ngIf="isCheckedInventory == true">
-                      <div class="fw-bold p-t-10 font-17 text-center">
-                        Agregar Inventario
-                      </div>
-                      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
-                        <label for="inventory_note">
-                          Nota
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inventory_note" required="required"
+                                                                <li [ngbNavItem]="6">
+                                                                  <a ngbNavLink>Inventario</a>
+                                                                  <ng-template ngbNavContent>
+                                                                    <form [formGroup]="editProductInventoryForm" (ngSubmit)="onSaveProductInventory()">
+                                                                      <div class="card-body">
+                                                                        @if (isCheckedInventory == true) {
+                                                                          <div class="row">
+                                                                            <div class="fw-bold p-t-10 font-17 text-center">
+                                                                              Agregar Inventario
+                                                                            </div>
+                                                                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                                                                              <label for="inventory_note">
+                                                                                Nota
+                                                                                <span class="text-danger">*</span></label>
+                                                                                <input type="text" class="form-control" id="inventory_note" required="required"
                                placeholder="Nota" value="" formControlName="inventory_note" [ngClass]="{
                             'is-invalid':
                               submittedInventory && edit_product_inventory_controls.inventory_note.errors  &&
                               edit_product_inventory_controls.inventory_note.errors
 
                           }"/>
-                        <div *ngIf="
-                            submittedInventory && edit_product_inventory_controls.inventory_note.errors  &&
-                            edit_product_inventory_controls.inventory_note.errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
+                                                                                @if (
+                                                                                  submittedInventory && edit_product_inventory_controls.inventory_note.errors  &&
+                                                                                  edit_product_inventory_controls.inventory_note.errors
+                                                                                  ) {
+                                                                                  <div class="invalid-feedback">
+                                                                                    @if (
+                                                                                      edit_product_inventory_controls.inventory_note.errors.required
+                                                                                      ) {
+                                                                                      <div>
+                                                                                        El valor es requerido.
+                                                                                      </div>
+                                                                                    }
+                                                                                  </div>
+                                                                                }
+                                                                              </div>
+                                                                              <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                                                                                <label for="inventory_support">
+                                                                                  Soporte
+                                                                                  <span class="text-danger">*</span></label>
+                                                                                  <input type="text" class="form-control" id="inventory_support" placeholder="Soporte"
+                                                                                    formControlName="inventory_support"/>
+                                                                                </div>
+                                                                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                                                                                  <label for="inventory_combination">
+                                                                                    Combinación
+                                                                                    <span class="text-danger">*</span></label>
+                                                                                    <select name="inventory_combination" class="form-select form-control" id="inventory_combination"
+                                                                                      formControlName="inventory_combination">
+                                                                                      <option value="">Seleccione una opción</option>
+                                                                                      @for (item of rowsCombinations; track item) {
+                                                                                        <option value="{{ item.id }}">
+                                                                                          {{ item.codeRef }}
+                                                                                        </option>
+                                                                                      }
+                                                                                    </select>
+                                                                                  </div>
+                                                                                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                                                                                    <label for="inventory_quantity" placement="top" ngbTooltip="">
+                                                                                      Cantidad
+                                                                                      <span class="text-danger">*</span></label>
+                                                                                      <input type="number" min="0" class="form-control" id="inventory_quantity" placeholder="0"
+                                                                                        formControlName="inventory_quantity"/>
+                                                                                    </div>
+                                                                                    <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
+                                                                                      <label for="inventory_type">
+                                                                                        Tipo
+                                                                                        <span class="text-danger">*</span></label>
+                                                                                      </div>
+                                                                                      <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
+                                                                                        <input class="form-check-input ms-2 me-2" type="radio" name="inventory_type" id="inventory_type"
+                                                                                          formControlName="inventory_type" value="0"/>
+                                                                                        <label for="lbl_income"> Ingreso. </label>
+                                                                                      </div>
+                                                                                      <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
+                                                                                        <input class="form-check-input ms-2 me-2" type="radio" name="inventory_type"
+                                                                                          formControlName="inventory_type" id="inventory_type" value="1"/>
+                                                                                        <label for="lbl_egress">Egreso. </label>
+                                                                                      </div>
+                                                                                      <div class="row mt-2">
+                                                                                        <div class="col d-flex justify-content-end">
+                                                                                          <button type="submit" class="btn btn-primary">
+                                                                                            Guardar
+                                                                                          </button>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  }
+                                                                                </div>
+                                                                              </form>
+                                                                            </ng-template>
+                                                                          </li>
+                                                                        </ul>
+                                                                        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
 
-                              edit_product_inventory_controls.inventory_note.errors.required
-                            ">
-                            El valor es requerido.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
-                        <label for="inventory_support">
-                          Soporte
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inventory_support" placeholder="Soporte"
-                               formControlName="inventory_support"/>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                        <label for="inventory_combination">
-                          Combinación
-                          <span class="text-danger">*</span></label>
-                        <select name="inventory_combination" class="form-select form-control" id="inventory_combination"
-                                formControlName="inventory_combination">
-                          <option value="">Seleccione una opción</option>
-                          <option value="{{ item.id }}" *ngFor="let item of rowsCombinations">
-                            {{ item.codeRef }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
-                        <label for="inventory_quantity" placement="top" ngbTooltip="">
-                          Cantidad
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control" id="inventory_quantity" placeholder="0"
-                               formControlName="inventory_quantity"/>
-                      </div>
-
-                      <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
-                        <label for="inventory_type">
-                          Tipo
-                          <span class="text-danger">*</span></label>
-                      </div>
-                      <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
-                        <input class="form-check-input ms-2 me-2" type="radio" name="inventory_type" id="inventory_type"
-                               formControlName="inventory_type" value="0"/>
-                        <label for="lbl_income"> Ingreso. </label>
-                      </div>
-                      <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
-                        <input class="form-check-input ms-2 me-2" type="radio" name="inventory_type"
-                               formControlName="inventory_type" id="inventory_type" value="1"/>
-                        <label for="lbl_egress">Egreso. </label>
-                      </div>
-                      <div class="row mt-2">
-                        <div class="col d-flex justify-content-end">
-                          <button type="submit" class="btn btn-primary">
-                            Guardar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </ng-template>
-            </li>
-          </ul>
-          <div [ngbNavOutlet]="nav" class="mt-2"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-      Cancelar
-    </button>
-  </div>
-</ng-template>
+                                                                <div class="modal-footer">
+                                                                  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                                                                    Cancelar
+                                                                  </button>
+                                                                </div>
+                                                              </ng-template>

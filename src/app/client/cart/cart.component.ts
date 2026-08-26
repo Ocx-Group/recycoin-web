@@ -1,11 +1,13 @@
 import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
 import {CreateChannelResponse} from '@app/core/models/coinpay-model/create-channel-response.model';
@@ -14,7 +16,7 @@ import {
 } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
 import {ToastrService} from 'ngx-toastr';
 import QRCode from 'qrcode';
-import {CartService} from 'src/app/core/service/cart.service/cart.service';
+import {CartService} from '@app/core/service/cart.service/cart.service';
 import Swal from 'sweetalert2';
 
 import {CreateTransactionResponse} from '@app/core/models/coinpay-model/create-transaction-response.model';
@@ -51,7 +53,7 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {QrcodeModule} from 'qrcode-angular';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {CoinpayModalComponent} from "@app/client/cart/coinpay-modal/coinpay-modal.component";
 import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
 import {TruncateDecimalsPipe} from "@app/shared/pipes/truncate-decimals.pipe";
@@ -61,12 +63,13 @@ import {TruncateDecimalsPipe} from "@app/shared/pipes/truncate-decimals.pipe";
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule,
     ReactiveFormsModule,
     FormsModule,
     QrcodeModule,
     NgbModule,
-    TranslateModule,
+    TranslatePipe,
     CoinpayModalComponent, PdfViewerComponent,
     TruncateDecimalsPipe]
 })
@@ -115,6 +118,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private pagaditoService: PagaditoService,
     private pdfViewerService: PdfViewerService,
     private matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -125,6 +129,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.today.getTime();
     this.cartService.getProducts().subscribe(res => {
       this.products = res;
+      this.cdr.markForCheck();
       this.setValuesToPaid();
     });
 
@@ -726,6 +731,7 @@ export class CartComponent implements OnInit, OnDestroy {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

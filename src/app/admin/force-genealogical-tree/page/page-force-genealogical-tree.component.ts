@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {TreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {TranslatePipe} from "@ngx-translate/core";
 import {RouterLink} from "@angular/router";
 import {ForceGenealogicalTreeComponent} from "../force-genealogical-tree-component/force-genealogical-tree.component";
-import { CommonModule } from '@angular/common';
+
 
 
 interface MyTreeNode extends TreeNode {
@@ -18,12 +18,12 @@ interface MyTreeNode extends TreeNode {
   templateUrl: './page-force-genealogical-tree.component.html',
   styleUrls: ['./page-force-genealogical-tree.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     ForceGenealogicalTreeComponent
-  ]
+]
 })
 export class PageForceGenealogicalTreeComponent {
   tree: MyTreeNode = {

@@ -28,64 +28,66 @@
                   </span>
                   <input type="text" class="form-control border-start-0" (keyup)="updateFilter($event)"
                     placeholder="{{ 'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate }}" aria-label="Search" />
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-12 col-md-6">
-                <div class="row g-3">
-                  <div class="col-6 col-sm-5">
-                    <div class="input-group">
-                      <span class="input-group-text bg-light border-end-0">
-                        <i-feather name="calendar" class="text-muted"></i-feather>
-                      </span>
-                      <input type="date" class="form-control border-start-0" [(ngModel)]="startDate"
-                        (ngModelChange)="onDateFilterChange()" placeholder="Fecha inicio" />
+                <div class="col-12 col-md-6">
+                  <div class="row g-3">
+                    <div class="col-6 col-sm-5">
+                      <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">
+                          <i-feather name="calendar" class="text-muted"></i-feather>
+                        </span>
+                        <input type="date" class="form-control border-start-0" [(ngModel)]="startDate"
+                          (ngModelChange)="onDateFilterChange()" placeholder="Fecha inicio" />
+                        </div>
+                      </div>
+                      <div class="col-6 col-sm-5">
+                        <div class="input-group">
+                          <span class="input-group-text bg-light border-end-0">
+                            <i-feather name="calendar" class="text-muted"></i-feather>
+                          </span>
+                          <input type="date" class="form-control border-start-0" [(ngModel)]="endDate"
+                            (ngModelChange)="onDateFilterChange()" placeholder="Fecha fin" />
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-2">
+                          <button class="btn btn-outline-secondary w-100" (click)="clearDateFilters()"
+                            title="Limpiar filtros">
+                            <i-feather name="x"></i-feather>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-6 col-sm-5">
-                    <div class="input-group">
-                      <span class="input-group-text bg-light border-end-0">
-                        <i-feather name="calendar" class="text-muted"></i-feather>
-                      </span>
-                      <input type="date" class="form-control border-start-0" [(ngModel)]="endDate"
-                        (ngModelChange)="onDateFilterChange()" placeholder="Fecha fin" />
+
+                    <div class="col-12 col-md-2">
+                      <div class="btn-group w-100">
+                        <button type="button" class="btn btn-primary ms-1" (click)="clipBoardCopy()"
+                          title="{{ 'PURCHASES-LIST-PAGE.BTN-COPY.TEXT' | translate }}">
+                          <i class="bi bi-clipboard-check"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary ms-1" (click)="onPrint()"
+                          title="{{ 'PURCHASES-LIST-PAGE.BTN-PRINT.TEXT' | translate }}">
+                          <i class="bi bi-printer"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary ms-1" (click)="exportToExcel()"
+                          [disabled]="loadingIndicator" title="Exportar a excel">
+                          <i class="bi" [ngClass]="loadingIndicator ? 'bi-hourglass-split' : 'bi-file-excel'"></i>
+                          @if (loadingIndicator) {
+                            <output class="spinner-border spinner-border-sm ms-1">
+                              <span class="visually-hidden">Cargando...</span>
+                            </output>
+                          }
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-12 col-sm-2">
-                    <button class="btn btn-outline-secondary w-100" (click)="clearDateFilters()"
-                      title="Limpiar filtros">
-                      <i-feather name="x"></i-feather>
-                    </button>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-12 col-md-2">
-                <div class="btn-group w-100">
-                  <button type="button" class="btn btn-primary ms-1" (click)="clipBoardCopy()"
-                    title="{{ 'PURCHASES-LIST-PAGE.BTN-COPY.TEXT' | translate }}">
-                    <i class="bi bi-clipboard-check"></i>
-                  </button>
-                  <button type="button" class="btn btn-primary ms-1" (click)="onPrint()"
-                    title="{{ 'PURCHASES-LIST-PAGE.BTN-PRINT.TEXT' | translate }}">
-                    <i class="bi bi-printer"></i>
-                  </button>
-                  <button type="button" class="btn btn-primary ms-1" (click)="exportToExcel()"
-                    [disabled]="loadingIndicator" title="Exportar a excel">
-                    <i class="bi" [ngClass]="loadingIndicator ? 'bi-hourglass-split' : 'bi-file-excel'"></i>
-                    <output *ngIf="loadingIndicator" class="spinner-border spinner-border-sm ms-1">
-                      <span class="visually-hidden">Cargando...</span>
-                    </output>
-                  </button>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                    [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                    [selectionType]="'checkbox'" [count]="totalElements" [offset]="currentPage - 1" [limit]="pageSize"
-                    [externalPaging]="true" (page)="onPage($event)" [scrollbarH]="scrollBarHorizontal"
+                    <div class="row">
+                      <div class="col-12">
+                        <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                          [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                          [selectionType]="'checkbox'" [count]="totalElements" [offset]="currentPage - 1" [limit]="pageSize"
+                          [externalPaging]="true" (page)="onPage($event)" [scrollbarH]="scrollBarHorizontal"
                     [reorderable]="reorderable" [cssClasses]="{
                     sortAscending: 'bi bi-chevron-up',
                     sortDescending: 'bi bi-chevron-down',
@@ -94,186 +96,188 @@
                     pagerPrevious: 'bi bi-chevron-double-left',
                     pagerNext: 'bi bi-chevron-double-right'
                   }">
-                    <ngx-datatable-column [width]="70" [sortable]="false" [canAutoResize]="false"
-                      [headerCheckboxable]="true" [checkboxable]="true">
-                    </ngx-datatable-column>
+                          <ngx-datatable-column [width]="70" [sortable]="false" [canAutoResize]="false"
+                            [headerCheckboxable]="true" [checkboxable]="true">
+                          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-AFFILIATE.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        <span class="fw-medium">{{ row.userName }}</span>
-                      </ng-template>
-                    </ngx-datatable-column>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-AFFILIATE.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              <span class="fw-medium">{{ row.userName }}</span>
+                            </ng-template>
+                          </ngx-datatable-column>
 
                     <ngx-datatable-column name="{{
                       'PURCHASES-LIST-PAGE.COL-NAME-AND-LASTNAME.TEXT' | translate
                     }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.name }} {{ row.lastName }}
-                      </ng-template>
-                    </ngx-datatable-column>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.name }} {{ row.lastName }}
+                            </ng-template>
+                          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-BILL.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        <span class="text-muted">#{{ row.id }}</span>
-                      </ng-template>
-                    </ngx-datatable-column>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-BILL.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              <span class="text-muted">#{{ row.id }}</span>
+                            </ng-template>
+                          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-DATE.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.date | date : 'mediumDate' : 'UTC' }}
-                      </ng-template>
-                    </ngx-datatable-column>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-DATE.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.date | date : 'mediumDate' : 'UTC' }}
+                            </ng-template>
+                          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-BILL-STATE.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        <span class="badge rounded-pill" [ngClass]="row.status ? 'bg-success' : 'bg-danger'">
-                          {{ row.status ? 'Activa' : 'Pendiente o Anulada' }}
-                        </span>
-                      </ng-template>
-                    </ngx-datatable-column>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-BILL-STATE.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              <span class="badge rounded-pill" [ngClass]="row.status ? 'bg-success' : 'bg-danger'">
+                                {{ row.status ? 'Activa' : 'Pendiente o Anulada' }}
+                              </span>
+                            </ng-template>
+                          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-PAID.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        <span class="text-success fw-bold">
-                          {{ row.totalInvoice | currency }}
-                        </span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-DETAILS.TEXT' | translate }}">
-                      <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button class="btn btn-link btn-sm p-0 text-primary" (click)="showDetails(row)">
-                          <i class="bi bi-pencil-square me-1"></i>
-                          {{ 'PURCHASES-LIST-PAGE.BTN-DETAILS.TEXT' | translate }}
-                        </button>
-                      </ng-template>
-                    </ngx-datatable-column>
-                  </ngx-datatable>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-PAID.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              <span class="text-success fw-bold">
+                                {{ row.totalInvoice | currency }}
+                              </span>
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column name="{{ 'PURCHASES-LIST-PAGE.COL-DETAILS.TEXT' | translate }}">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              <button class="btn btn-link btn-sm p-0 text-primary" (click)="showDetails(row)">
+                                <i class="bi bi-pencil-square me-1"></i>
+                                {{ 'PURCHASES-LIST-PAGE.BTN-DETAILS.TEXT' | translate }}
+                              </button>
+                            </ng-template>
+                          </ngx-datatable-column>
+                        </ngx-datatable>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Modal de detalles -->
-  <ng-template #detailsModal let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title">Detalles de la Compra #{{selectedInvoice?.id}}</h5>
-      <button title="Muestra detalles de la compra" type="button" class="btn-close" (click)="modal.dismiss()"></button>
-    </div>
-    <div class="modal-body">
-      <!-- Información del cliente -->
-      <div class="card mb-3">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-3 text-muted">Información del Cliente</h6>
-          <div class="row">
-            <div class="col-md-4">
-              <p class="mb-1"><small class="text-muted">Usuario</small></p>
-              <p class="fw-medium">{{selectedInvoice?.userName}}</p>
-            </div>
-            <div class="col-md-4">
-              <p class="mb-1"><small class="text-muted">Nombre</small></p>
-              <p class="fw-medium">{{selectedInvoice?.name}} {{selectedInvoice?.lastName}}</p>
-            </div>
-            <div class="col-md-4">
-              <p class="mb-1"><small class="text-muted">Estado</small></p>
-              <span class="badge rounded-pill" [ngClass]="selectedInvoice?.status ? 'bg-success' : 'bg-danger'">
-                {{ selectedInvoice?.status ? 'Activa' : 'Pendiente o Anulada' }}
-              </span>
-            </div>
+        <!-- Modal de detalles -->
+        <ng-template #detailsModal let-modal>
+          <div class="modal-header">
+            <h5 class="modal-title">Detalles de la Compra #{{selectedInvoice?.id}}</h5>
+            <button title="Muestra detalles de la compra" type="button" class="btn-close" (click)="modal.dismiss()"></button>
           </div>
-        </div>
-      </div>
-
-      <!-- Detalles de la factura -->
-      <div class="card">
-        <div class="card-body">
-          <h6 class="text-muted mb-3">Productos</h6>
-          <div class="table-responsive">
-            <table class="table table-hover border-light">
-              <thead>
-                <tr class="bg-light">
-                  <th scope="col" class="border-0 text-secondary">Producto</th>
-                  <th scope="col" class="border-0 text-center text-secondary">Cantidad</th>
-                  <th scope="col" class="border-0 text-end text-secondary">Precio Unit.</th>
-                  <th scope="col" class="border-0 text-end text-secondary">Total</th>
-                </tr>
-              </thead>
-              <tbody class="border-top-0">
-                <tr *ngFor="let detail of selectedInvoice?.invoicesDetails">
-                  <td class="border-light">
-                    <span class="fw-medium">{{detail.productName}}</span>
-                  </td>
-                  <td class="text-center border-light">
-                    <span class="badge bg-light text-dark">{{detail.productQuantity}}</span>
-                  </td>
-                  <td class="text-end border-light text-muted">
-                    {{detail.productPrice | currency}}
-                  </td>
-                  <td class="text-end border-light">
-                    <span class="fw-medium">{{detail.baseAmount | currency}}</span>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="3" class="border-0 text-end pe-4">
-                    <span class="text-muted">Total</span>
-                  </td>
-                  <td class="border-0 text-end">
-                    <span class="fw-bold text-primary fs-5">
-                      {{selectedInvoice?.totalInvoice | currency}}
+          <div class="modal-body">
+            <!-- Información del cliente -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h6 class="card-subtitle mb-3 text-muted">Información del Cliente</h6>
+                <div class="row">
+                  <div class="col-md-4">
+                    <p class="mb-1"><small class="text-muted">Usuario</small></p>
+                    <p class="fw-medium">{{selectedInvoice?.userName}}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p class="mb-1"><small class="text-muted">Nombre</small></p>
+                    <p class="fw-medium">{{selectedInvoice?.name}} {{selectedInvoice?.lastName}}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p class="mb-1"><small class="text-muted">Estado</small></p>
+                    <span class="badge rounded-pill" [ngClass]="selectedInvoice?.status ? 'bg-success' : 'bg-danger'">
+                      {{ selectedInvoice?.status ? 'Activa' : 'Pendiente o Anulada' }}
                     </span>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <!-- Información adicional -->
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="card-subtitle mb-3 text-muted">Información de Pago</h6>
-              <dl class="row mb-0">
-                <dt class="col-sm-4">Método</dt>
-                <dd class="col-sm-8">{{selectedInvoice?.paymentMethod}}</dd>
+            <!-- Detalles de la factura -->
+            <div class="card">
+              <div class="card-body">
+                <h6 class="text-muted mb-3">Productos</h6>
+                <div class="table-responsive">
+                  <table class="table table-hover border-light">
+                    <thead>
+                      <tr class="bg-light">
+                        <th scope="col" class="border-0 text-secondary">Producto</th>
+                        <th scope="col" class="border-0 text-center text-secondary">Cantidad</th>
+                        <th scope="col" class="border-0 text-end text-secondary">Precio Unit.</th>
+                        <th scope="col" class="border-0 text-end text-secondary">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                      @for (detail of selectedInvoice?.invoicesDetails; track detail) {
+                        <tr>
+                          <td class="border-light">
+                            <span class="fw-medium">{{detail.productName}}</span>
+                          </td>
+                          <td class="text-center border-light">
+                            <span class="badge bg-light text-dark">{{detail.productQuantity}}</span>
+                          </td>
+                          <td class="text-end border-light text-muted">
+                            {{detail.productPrice | currency}}
+                          </td>
+                          <td class="text-end border-light">
+                            <span class="fw-medium">{{detail.baseAmount | currency}}</span>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="3" class="border-0 text-end pe-4">
+                          <span class="text-muted">Total</span>
+                        </td>
+                        <td class="border-0 text-end">
+                          <span class="fw-bold text-primary fs-5">
+                            {{$safeNavigationMigration(selectedInvoice?.totalInvoice) | currency}}
+                          </span>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-                <dt class="col-sm-4">Banco</dt>
-                <dd class="col-sm-8">{{selectedInvoice?.bank}}</dd>
+            <!-- Información adicional -->
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-3 text-muted">Información de Pago</h6>
+                    <dl class="row mb-0">
+                      <dt class="col-sm-4">Método</dt>
+                      <dd class="col-sm-8">{{selectedInvoice?.paymentMethod}}</dd>
 
-                <dt class="col-sm-4"># Recibo</dt>
-                <dd class="col-sm-8">{{selectedInvoice?.receiptNumber}}</dd>
-              </dl>
+                      <dt class="col-sm-4">Banco</dt>
+                      <dd class="col-sm-8">{{selectedInvoice?.bank}}</dd>
+
+                      <dt class="col-sm-4"># Recibo</dt>
+                      <dd class="col-sm-8">{{selectedInvoice?.receiptNumber}}</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-3 text-muted">Fechas</h6>
+                    <dl class="row mb-0">
+                      <dt class="col-sm-4">Creación</dt>
+                      <dd class="col-sm-8">{{$safeNavigationMigration(selectedInvoice?.createdAt) | date:'medium'}}</dd>
+
+                      <dt class="col-sm-4">Depósito</dt>
+                      <dd class="col-sm-8">{{$safeNavigationMigration(selectedInvoice?.depositDate) | date:'mediumDate'}}</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="card-subtitle mb-3 text-muted">Fechas</h6>
-              <dl class="row mb-0">
-                <dt class="col-sm-4">Creación</dt>
-                <dd class="col-sm-8">{{selectedInvoice?.createdAt | date:'medium'}}</dd>
-
-                <dt class="col-sm-4">Depósito</dt>
-                <dd class="col-sm-8">{{selectedInvoice?.depositDate | date:'mediumDate'}}</dd>
-              </dl>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="printInvoiceDetails()">
+              <i class="bi bi-printer me-1"></i>Imprimir
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="printInvoiceDetails()">
-        <i class="bi bi-printer me-1"></i>Imprimir
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
-    </div>
-  </ng-template>
-</section>
+        </ng-template>
+      </section>

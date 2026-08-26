@@ -47,191 +47,195 @@
                             placeholder="{{
                               'AUTHORIZE-AFFILIATES.SEARCH.TEXT' | translate
                             }}"
-                          />
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio1"
-                          value="option1"
-                        />
-                        <label class="form-check-label" for="inlineRadio1">{{
-                          'AUTHORIZE-PURCHASES.CHECK-APPROVE-ORDER.TEXT'
-                            | translate
-                        }}</label>
-                      </div>
-
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio2"
-                          value="option2"
-                        />
-                        <label class="form-check-label" for="inlineRadio2">{{
-                          'AUTHORIZE-PURCHASES.CHECK-DENY-ORDER.TEXT'
-                            | translate
-                        }}</label>
-                      </div>
-                    </div>
-                  </div>
-                  <p *ngFor="let alert of alerts" class="text-center">
-                    <ngb-alert
-                      [type]="alert.type"
-                      (closed)="close(alert)"
-                      *ngIf="show">
-                      {{ 'AUTHORIZE-AFFILIATES.MSJ.TEXT' | translate }}
-                    </ngb-alert>
-                  </p>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'AUTHORIZE-PURCHASES.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
-
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="onPrint()">
-                          <i class="bi bi-printer"></i>
-                          {{ 'AUTHORIZE-PURCHASES.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                      <li class="nav-item m-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          for="flexSwitchCheckDefault"
-                        >
-                          <i class="bi bi-check2-circle"></i>
-                          {{
-                            'AUTHORIZE-PURCHASES.BTN-PROCESS-SELECTION.TEXT'
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio1"
+                            value="option1"
+                            />
+                            <label class="form-check-label" for="inlineRadio1">{{
+                              'AUTHORIZE-PURCHASES.CHECK-APPROVE-ORDER.TEXT'
                               | translate
-                          }}
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <ngx-datatable
-                  #table
-                  class="material"
-                  [rows]="rows"
-                  [loadingIndicator]="loadingIndicator"
-                  columnMode="force"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  rowHeight="auto"
-                  [selectionType]="'checkbox'"
-                  [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal"
-                  [reorderable]="reorderable"
-                >
-                  <ngx-datatable-column
-                    [width]="70"
-                    [sortable]="false"
-                    [draggable]="false"
-                    [resizeable]="false"
-                    [canAutoResize]="false"
-                    [headerCheckboxable]="true"
-                    [checkboxable]="true"
-                  >
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                            }}</label>
+                          </div>
+
+                          <div class="form-check form-check-inline">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="inlineRadioOptions"
+                              id="inlineRadio2"
+                              value="option2"
+                              />
+                              <label class="form-check-label" for="inlineRadio2">{{
+                                'AUTHORIZE-PURCHASES.CHECK-DENY-ORDER.TEXT'
+                                | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                        @for (alert of alerts; track alert) {
+                          <p class="text-center">
+                            @if (show) {
+                              <ngb-alert
+                                [type]="alert.type"
+                                (closed)="close(alert)"
+                                >
+                                {{ 'AUTHORIZE-AFFILIATES.MSJ.TEXT' | translate }}
+                              </ngb-alert>
+                            }
+                          </p>
+                        }
+                        <div class="col align-self-end">
+                          <ul class="nav justify-content-end">
+                            <li class="nav-item m-2">
+                              <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
+                                <i class="bi bi-clipboard-check"></i>
+                                {{ 'AUTHORIZE-PURCHASES.BTN-COPY.TEXT' | translate }}
+                              </button>
+                            </li>
+
+                            <li class="nav-item m-2">
+                              <button type="button" class="btn btn-primary" (click)="onPrint()">
+                                <i class="bi bi-printer"></i>
+                                {{ 'AUTHORIZE-PURCHASES.BTN-PRINT.TEXT' | translate }}
+                              </button>
+                            </li>
+                            <li class="nav-item m-2">
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                for="flexSwitchCheckDefault"
+                                >
+                                <i class="bi bi-check2-circle"></i>
+                                {{
+                                'AUTHORIZE-PURCHASES.BTN-PROCESS-SELECTION.TEXT'
+                                | translate
+                                }}
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <ngx-datatable
+                        #table
+                        class="material"
+                        [rows]="rows"
+                        [loadingIndicator]="loadingIndicator"
+                        columnMode="force"
+                        [headerHeight]="50"
+                        [footerHeight]="50"
+                        rowHeight="auto"
+                        [selectionType]="'checkbox'"
+                        [limit]="10"
+                        [scrollbarH]="scrollBarHorizontal"
+                        [reorderable]="reorderable"
+                        >
+                        <ngx-datatable-column
+                          [width]="70"
+                          [sortable]="false"
+                          [draggable]="false"
+                          [resizeable]="false"
+                          [canAutoResize]="false"
+                          [headerCheckboxable]="true"
+                          [checkboxable]="true"
+                          >
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-AFFILIATE.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.affiliate }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.affiliate }}
+                          </ng-template>
+                        </ngx-datatable-column>
 
-                  <ngx-datatable-column
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-ORDER.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.order }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'AUTHORIZE-PURCHASES.COL-DATE.TEXT' | translate }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.date }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.order }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
+                          name="{{ 'AUTHORIZE-PURCHASES.COL-DATE.TEXT' | translate }}"
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.date }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-PAID-METHOD.TEXT' | translate
                     }}"
-                    sortable="false"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.paidMethod }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'AUTHORIZE-PURCHASES.COL-BANK.TEXT' | translate }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.bank }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                          sortable="false"
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.paidMethod }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
+                          name="{{ 'AUTHORIZE-PURCHASES.COL-BANK.TEXT' | translate }}"
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.bank }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-SUPPORT.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.support }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.support }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-TRASACTION-DATE.TEXT' | translate
                     }}"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.transactionDate }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column
+                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.transactionDate }}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
                     name="{{
                       'AUTHORIZE-PURCHASES.COL-DETAIL.TEXT' | translate
                     }}"
-                    sortable="false"
-                  >
-                    <ng-template
-                      let-value="value"
-                      let-row="row"
-                      let-rowIndex="rowIndex"
-                      ngx-datatable-cell-template
-                    >
-                      <a class="msr-2 h-auto tblEditBtn">
-                        <i class="bi bi-pencil-square">{{
-                          'AUTHORIZE-PURCHASES.BTN-SEE-DETAILS.TEXT' | translate
-                        }}</i>
-                      </a>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                          sortable="false"
+                          >
+                          <ng-template
+                            let-value="value"
+                            let-row="row"
+                            let-rowIndex="rowIndex"
+                            ngx-datatable-cell-template
+                            >
+                            <a class="msr-2 h-auto tblEditBtn">
+                              <i class="bi bi-pencil-square">{{
+                                'AUTHORIZE-PURCHASES.BTN-SEE-DETAILS.TEXT' | translate
+                              }}</i>
+                            </a>
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>

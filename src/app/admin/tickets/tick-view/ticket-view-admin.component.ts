@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntil} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Subject, Subscription} from "rxjs";
@@ -16,6 +16,7 @@ import {Ticket} from "@app/core/models/ticket-model/ticket.model";
     templateUrl: './ticket-view-admin.component.html',
     styleUrls: ['./ticket-view-admin.component.sass'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         CommonModule,
         FormsModule,
@@ -88,6 +89,9 @@ export class TicketViewAdminComponent implements OnInit, OnDestroy {
         } else {
           console.log('No ticket received or connection not established');
         }
+        // processMessageSender ya hace detectChanges por cada mensaje, pero un
+        // ticket sin mensajes no pasa por ahi y la cabecera se quedaria vacia.
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error recibiendo ticket:', err);

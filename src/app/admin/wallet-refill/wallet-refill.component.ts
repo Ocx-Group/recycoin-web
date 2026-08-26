@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy, signal} from '@angular/core';
 
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ClipboardService} from 'ngx-clipboard';
@@ -26,6 +26,7 @@ const header = [
   selector: 'app-wallet-refill',
   templateUrl: './wallet-refill.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -36,9 +37,9 @@ const header = [
   ]
 })
 export class WalletRefillComponent implements OnInit {
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
   @ViewChild('table') table: DatatableComponent;
@@ -66,8 +67,8 @@ export class WalletRefillComponent implements OnInit {
     this.walletWaitService.getAllWalletsWait().subscribe({
       next: (resp) => {
         this.temp = [...resp];
-        this.rows = resp;
-        this.loadingIndicator = false;
+        this.rows.set(resp);
+        this.loadingIndicator.set(false);
       },
       error: () => {
         this.showError('Error!');
@@ -86,10 +87,10 @@ export class WalletRefillComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    this.rows = this.temp.filter(function (d) {
+    this.rows.set(this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.table.offset = 0;
+    }));
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {

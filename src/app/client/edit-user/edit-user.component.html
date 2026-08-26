@@ -37,272 +37,197 @@
                                     <input id="user_name" class="form-control"
                                       placeholder="{{ 'EDIT-PROFILE.USERNAME' | translate }}" type="text"
                                       formControlName="user_name" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="email"> {{ 'EDIT-PROFILE.EMAIL' | translate }} </label>
-                                    <br />
-                                    <input id="email" class="form-control"
-                                      placeholder="{{ 'EDIT-PROFILE.EMAIL' | translate }}" name="email" type="text"
-                                      formControlName="email" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="identification"> {{ 'EDIT-PROFILE.IDENTIFICATION' | translate }}
-                                    </label>
-                                    <br />
-                                    <input id="identification" name="identification" required
-                                      formControlName="identification"
-                                      placeholder="{{ 'EDIT-PROFILE.IDENTIFICATION' | translate }}" class="form-control"
-                                      type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="father"> {{ 'EDIT-PROFILE.FATHER' | translate }} </label>
-                                    <br />
-                                    <input class="form-control" type="text" id="father" name="father"
-                                      formControlName="father" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="created_at"> {{ 'EDIT-PROFILE.REGISTER_DATE' | translate }} </label>
-                                    <br />
-                                    <input id="created_at" placeholder="{{ 'EDIT-PROFILE.REGISTER_DATE' | translate }}"
-                                      class="form-control" name="created_at" type="text" formControlName="created_at" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="birthday">{{ 'EDIT-PROFILE.BIRTHDAY' | translate }}:</label>
-                                    <br />
-                                    <div class="form-group" *ngIf="!displayBirthday">
-                                      <input type="date" id="birthday" formControlName="birthday"
-                                        class="form-control" />
                                     </div>
-                                    <div *ngIf="displayBirthday">
-                                      <input title="country" type="text" class="form-control" [value]="displayBirthday"
-                                        readonly />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
-                                  <div class="form-group">
-                                    <h6>{{ 'EDIT-PROFILE.SECONDARY_DATA' | translate }}</h6>
-                                  </div>
-                                  <hr />
-                                  <div class="form-group">
-                                    <label for="name"> {{ 'EDIT-PROFILE.NAME' | translate }} </label>
-                                    <br />
-                                    <input id="name" placeholder="{{ 'EDIT-PROFILE.NAME' | translate }}"
-                                      class="form-control" name="name" type="text" formControlName="name" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="last_name"> {{ 'EDIT-PROFILE.LAST_NAME' | translate }}: </label>
-                                    <br />
-                                    <input id="last_name" placeholder="{{ 'EDIT-PROFILE.LAST_NAME' | translate }}"
-                                      class="form-control" name="last_name" type="text" formControlName="last_name" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="address"> {{ 'EDIT-PROFILE.ADDRESS' | translate }} </label>
-                                    <br />
-                                    <textarea id="address" formControlName="address"
-                                      placeholder="{{ 'EDIT-PROFILE.ADDRESS' | translate }}"
-                                      class="form-control"></textarea>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="phone"> {{ 'EDIT-PROFILE.PHONE' | translate }} </label>
-                                    <br />
-                                    <input id="phone" required placeholder="{{ 'EDIT-PROFILE.PHONE' | translate }}"
-                                      class="form-control" name="phone" type="text" formControlName="phone" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="zip_code"> {{ 'EDIT-PROFILE.ZIP_CODE' | translate }} </label>
-                                    <br />
-                                    <input id="zip_code" placeholder="{{ 'EDIT-PROFILE.ZIP_CODE' | translate }}"
-                                      class="form-control" formControlName="zip_code" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="country"> {{ 'EDIT-PROFILE.COUNTRY' | translate }} </label>
-                                    <br />
-                                    <select title="country" class="form-select form-control" [selected]="country"
-                                      formControlName="country">
-                                      <option value="" disabled selected>{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}
-                                      </option>
-                                      <option *ngFor="let country of listcountry" [value]="country.id">
-                                        {{ country.name }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
-                                  <div class="form-group">
-                                    <h6>{{ 'EDIT-PROFILE.ADDITIONAL_FIELDS' | translate }}</h6>
-                                  </div>
-                                  <hr />
-                                  <div class="form-group">
-                                    <label for="beneficiary_name">
-                                      {{ 'EDIT-PROFILE.BENEFICIARY_NAME' | translate }}
-                                    </label>
-                                    <br />
-                                    <input id="beneficiary_name"
-                                      placeholder=" {{ 'EDIT-PROFILE.BENEFICIARY_NAME' | translate }}"
-                                      class="form-control" type="text" formControlName="beneficiary_name" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="beneficiary_email">
-                                      {{ 'EDIT-PROFILE.BENEFICIARY_EMAIL' | translate }}
-                                    </label>
-                                    <br />
-                                    <input id="beneficiary_email"
-                                      placeholder="{{ 'EDIT-PROFILE.BENEFICIARY_EMAIL' | translate }}"
-                                      class="form-control" type="text" formControlName="beneficiary_email" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="beneficiary_phone">
-                                      {{ 'EDIT-PROFILE.BENEFICIARY_PHONE' | translate }}
-                                    </label>
-                                    <br />
-                                    <input id="beneficiary_phone"
-                                      placeholder=" {{ 'EDIT-PROFILE.BENEFICIARY_PHONE' | translate }}"
-                                      class="form-control" type="text" formControlName="beneficiary_phone" />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row mt-2">
-                                <div class="col-xl-2 col-lg-2 col-md-2 mb-2">
-                                  <input class="btn btn-primary" value="{{ 'EDIT-PROFILE.SAVE_CHANGES' | translate }}"
-                                    type="submit" />
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </li>
-                    <li [ngbNavItem]="2">
-                      <a ngbNavLink> {{ 'EDIT-PROFILE.TAB2' | translate }} </a>
-                      <ng-template ngbNavContent>
-                        <div class="card-body">
-                          <div class="row mt-2">
-                            <div class="col-sm-12">
-                              <ngb-alert [dismissible]="false" class="alert-has-icon" type="info">
-                                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
-                                <div class="alert-body">
-                                  <div class="alert-title">{{ 'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT' | translate }}</div>
-                    <li> {{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM1' | translate }}</li>
-                    <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM2' | translate }}</li>
-                    <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM3' | translate }}</li>
-                    <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM4' | translate }}</li>
-                    <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM5' | translate }}</li>
-                </div>
-                </ngb-alert>
-              </div>
-              <div class="row d-flex justify-content-center align-items-center" *ngIf="!user.card_id_authorization">
-                <div class="col-sm-6">
-                  <label for="imageProfile">
-                    {{ 'EDIT-PROFILE.UPLOAD_ID_IMAGE' | translate }}
-                    <span class="text-danger">*</span>
-                  </label>
-                  <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
-                    <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
-                    <ngx-dropzone-preview *ngFor="let f of files; let i = index" [removable]="true"
-                      (removed)="deleteFile(i)">
-                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                    </ngx-dropzone-preview>
-                  </ngx-dropzone>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="isCheckedAttribute == true">
-              <div class="fw-bold p-t-10 font-17 text-center">{{ 'EDIT-PROFILE.ADD_COMBINATION' | translate }}</div>
-              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                <label for="attribute_name">
-                  {{ 'EDIT-PROFILE.ATTRIBUTE' | translate }}
-                  <span class="text-danger">*</span></label>
-                <select class="form-select form-control" id="attribute_name" required="required"
-                  formControlName="attribute_name" (change)="getAttributesValues($event)" [ngClass]="{
-                                  'is-invalid': submittedAttribute && edit_product_attributes_controls.attribute_name.errors
-                                }">
-                  <option value="">{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}</option>
-                  <option value="{{ item.id }}" *ngFor="let item of attributesList">
-                    {{ item.name }}
-                  </option>
-                </select>
-
-                <div *ngIf="submittedAttribute && edit_product_attributes_controls.attribute_name.errors"
-                  class="invalid-feedback">
-                  <div *ngIf="edit_product_attributes_controls.attribute_name.errors.required">{{
-                    'EDIT-PROFILE.REQUIRED_ATTRIBUTE' | translate }}
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                <label for="attribute_value">
-                  {{ 'EDIT-PROFILE.VALUE' | translate }}
-                  <span class="text-danger">*</span></label>
-                <select class="form-select form-control" id="attribute_value" (change)="getNameValue($event)"
-                  placeholder="" formControlName="attribute_value">
-                  <option value="">{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}</option>
-                  <option value="{{ item.attributeValue }}" *ngFor="let item of attributesValuesList">
-                    {{ item.attributeValue }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                <label for="attribute_combination">
-                  {{ 'EDIT-PROFILE.COMBINATION' | translate }}
-                  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="attribute_combination"
-                  formControlName="attribute_combination" />
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                <label for="attribute_reference" placement="top" ngbTooltip="">
-                  {{ 'EDIT-PROFILE.REFERENCE' | translate }}
-                  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="attribute_reference" placeholder="Agregue una referencia"
-                  formControlName="attribute_reference" />
-              </div>
-            </div>
-            <div class="row mt-4" *ngIf="isCheckedAttribute == true">
-              <div class="col d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">{{ 'EDIT-PROFILE.SAVE' | translate }}</button>
-              </div>
-            </div>
-            <div class="row" *ngIf="isCheckedAttribute == true">
-              <div class="fw-bold p-t-10 font-17 text-center">{{ 'EDIT-PROFILE.COMBINATIONS_LIST' | translate }}</div>
-              <ngx-datatable #table class="material overflow-x-auto custom-height" [rows]="rowsCombinations"
-                [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_ATTRIBUTE' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.codeRef }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_REFERENCE' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_STOCK' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row }}
-                  </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_DELETE' | translate }}">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <div class="col-red" (click)="deleteSingleRowCombination(row.id)">
-                      <i class="bi bi-trash"></i>
-                    </div>
-                  </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
-            </div>
-          </div>
-          </ng-template>
-          </li>
-          </ul>
-          <div [ngbNavOutlet]="nav" class="mt-2"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-</section>
+                                    <div class="form-group">
+                                      <label for="email"> {{ 'EDIT-PROFILE.EMAIL' | translate }} </label>
+                                      <br />
+                                      <input id="email" class="form-control"
+                                        placeholder="{{ 'EDIT-PROFILE.EMAIL' | translate }}" name="email" type="text"
+                                        formControlName="email" />
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="identification"> {{ 'EDIT-PROFILE.IDENTIFICATION' | translate }}
+                                        </label>
+                                        <br />
+                                        <input id="identification" name="identification" required
+                                          formControlName="identification"
+                                          placeholder="{{ 'EDIT-PROFILE.IDENTIFICATION' | translate }}" class="form-control"
+                                          type="text" />
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="father"> {{ 'EDIT-PROFILE.FATHER' | translate }} </label>
+                                          <br />
+                                          <input class="form-control" type="text" id="father" name="father"
+                                            formControlName="father" />
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="created_at"> {{ 'EDIT-PROFILE.REGISTER_DATE' | translate }} </label>
+                                            <br />
+                                            <input id="created_at" placeholder="{{ 'EDIT-PROFILE.REGISTER_DATE' | translate }}"
+                                              class="form-control" name="created_at" type="text" formControlName="created_at" />
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="birthday">{{ 'EDIT-PROFILE.BIRTHDAY' | translate }}:</label>
+                                              <br />
+                                              @if (!displayBirthday) {
+                                                <div class="form-group">
+                                                  <input type="date" id="birthday" formControlName="birthday"
+                                                    class="form-control" />
+                                                  </div>
+                                                }
+                                                @if (displayBirthday) {
+                                                  <div>
+                                                    <input title="country" type="text" class="form-control" [value]="displayBirthday"
+                                                      readonly />
+                                                    </div>
+                                                  }
+                                                </div>
+                                              </div>
+                                              <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
+                                                <div class="form-group">
+                                                  <h6>{{ 'EDIT-PROFILE.SECONDARY_DATA' | translate }}</h6>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group">
+                                                  <label for="name"> {{ 'EDIT-PROFILE.NAME' | translate }} </label>
+                                                  <br />
+                                                  <input id="name" placeholder="{{ 'EDIT-PROFILE.NAME' | translate }}"
+                                                    class="form-control" name="name" type="text" formControlName="name" />
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="last_name"> {{ 'EDIT-PROFILE.LAST_NAME' | translate }}: </label>
+                                                    <br />
+                                                    <input id="last_name" placeholder="{{ 'EDIT-PROFILE.LAST_NAME' | translate }}"
+                                                      class="form-control" name="last_name" type="text" formControlName="last_name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <label for="address"> {{ 'EDIT-PROFILE.ADDRESS' | translate }} </label>
+                                                      <br />
+                                                      <textarea id="address" formControlName="address"
+                                                        placeholder="{{ 'EDIT-PROFILE.ADDRESS' | translate }}"
+                                                      class="form-control"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <label for="phone"> {{ 'EDIT-PROFILE.PHONE' | translate }} </label>
+                                                      <br />
+                                                      <input id="phone" required placeholder="{{ 'EDIT-PROFILE.PHONE' | translate }}"
+                                                        class="form-control" name="phone" type="text" formControlName="phone" />
+                                                      </div>
+                                                      <div class="form-group">
+                                                        <label for="zip_code"> {{ 'EDIT-PROFILE.ZIP_CODE' | translate }} </label>
+                                                        <br />
+                                                        <input id="zip_code" placeholder="{{ 'EDIT-PROFILE.ZIP_CODE' | translate }}"
+                                                          class="form-control" formControlName="zip_code" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                          <label for="country"> {{ 'EDIT-PROFILE.COUNTRY' | translate }} </label>
+                                                          <br />
+                                                          <select title="country" class="form-select form-control"
+                                                            formControlName="country">
+                                                            <option value="" disabled selected>{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}
+                                                            </option>
+                                                            @for (country of listcountry; track country) {
+                                                              <option [value]="country.id">
+                                                                {{ country.name }}
+                                                              </option>
+                                                            }
+                                                          </select>
+                                                        </div>
+                                                      </div>
+                                                      <div class="col-xl-4 col-lg-4 col-md-4 mb-2">
+                                                        <div class="form-group">
+                                                          <h6>{{ 'EDIT-PROFILE.ADDITIONAL_FIELDS' | translate }}</h6>
+                                                        </div>
+                                                        <hr />
+                                                        <div class="form-group">
+                                                          <label for="beneficiary_name">
+                                                            {{ 'EDIT-PROFILE.BENEFICIARY_NAME' | translate }}
+                                                          </label>
+                                                          <br />
+                                                          <input id="beneficiary_name"
+                                                            placeholder=" {{ 'EDIT-PROFILE.BENEFICIARY_NAME' | translate }}"
+                                                            class="form-control" type="text" formControlName="beneficiary_name" />
+                                                          </div>
+                                                          <div class="form-group">
+                                                            <label for="beneficiary_email">
+                                                              {{ 'EDIT-PROFILE.BENEFICIARY_EMAIL' | translate }}
+                                                            </label>
+                                                            <br />
+                                                            <input id="beneficiary_email"
+                                                              placeholder="{{ 'EDIT-PROFILE.BENEFICIARY_EMAIL' | translate }}"
+                                                              class="form-control" type="text" formControlName="beneficiary_email" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="beneficiary_phone">
+                                                                {{ 'EDIT-PROFILE.BENEFICIARY_PHONE' | translate }}
+                                                              </label>
+                                                              <br />
+                                                              <input id="beneficiary_phone"
+                                                                placeholder=" {{ 'EDIT-PROFILE.BENEFICIARY_PHONE' | translate }}"
+                                                                class="form-control" type="text" formControlName="beneficiary_phone" />
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="row mt-2">
+                                                            <div class="col-xl-2 col-lg-2 col-md-2 mb-2">
+                                                              <input class="btn btn-primary" value="{{ 'EDIT-PROFILE.SAVE_CHANGES' | translate }}"
+                                                                type="submit" />
+                                                              </div>
+                                                            </div>
+                                                          </form>
+                                                        </div>
+                                                      </div>
+                                                    </ng-template>
+                                                  </li>
+                                                  <li [ngbNavItem]="2">
+                                                    <a ngbNavLink> {{ 'EDIT-PROFILE.TAB2' | translate }} </a>
+                                                    <ng-template ngbNavContent>
+                                                      <div class="card-body">
+                                                        <div class="row mt-2">
+                                                          <div class="col-sm-12">
+                                                            <ngb-alert [dismissible]="false" class="alert-has-icon" type="info">
+                                                              <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                                                              <div class="alert-body">
+                                                                <div class="alert-title">{{ 'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT' | translate }}</div>
+                                                                <li> {{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM1' | translate }}</li>
+                                                                <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM2' | translate }}</li>
+                                                                <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM3' | translate }}</li>
+                                                                <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM4' | translate }}</li>
+                                                                <li>{{ 'EDIT-PROFILE.INFO_ALERT_LIST.ITEM5' | translate }}</li>
+                                                              </div>
+                                                            </ngb-alert>
+                                                          </div>
+                                                          @if (!user.card_id_authorization) {
+                                                            <div class="row d-flex justify-content-center align-items-center">
+                                                              <div class="col-sm-6">
+                                                                <label for="imageProfile">
+                                                                  {{ 'EDIT-PROFILE.UPLOAD_ID_IMAGE' | translate }}
+                                                                  <span class="text-danger">*</span>
+                                                                </label>
+                                                                <ngx-dropzone (change)="onFileSelected($event)" [accept]="'image/*'" [multiple]="true">
+                                                                  <ngx-dropzone-label>Drop it!</ngx-dropzone-label>
+                                                                  @for (f of files; track f; let i = $index) {
+                                                                    <ngx-dropzone-preview [removable]="true"
+                                                                      (removed)="deleteFile(i)">
+                                                                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                                                    </ngx-dropzone-preview>
+                                                                  }
+                                                                </ngx-dropzone>
+                                                              </div>
+                                                            </div>
+                                                          }
+                                                        </div>
+                                                                  </div>
+                                                                </ng-template>
+                                                              </li>
+                                                            </ul>
+                                                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </section>

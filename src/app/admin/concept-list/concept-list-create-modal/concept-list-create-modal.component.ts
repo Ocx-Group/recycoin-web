@@ -1,9 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   ViewChild,
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -19,12 +21,13 @@ import {ConceptList} from "../../../core/models/concept-model/concept-list.model
 import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
 import {ConceptService} from "../../../core/service/concept-service/concept.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-concept-list-create-modal',
   templateUrl: './concept-list-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -50,7 +53,8 @@ export class ConceptListCreateModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private paymentGroupService: PaymentGroupsService,
-    private conceptService: ConceptService
+    private conceptService: ConceptService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -92,12 +96,17 @@ export class ConceptListCreateModalComponent implements OnInit {
   fetchPayConcept() {
     this.conceptService.getPayConceptList().subscribe((resp) => {
       this.payConceptData = resp;
+      // Los tres desplegables del formulario se llenan desde ngOnInit, o sea
+      // antes de que el padre abra el modal, pero con respuestas que caen
+      // despues del primer pintado.
+      this.cdr.markForCheck();
     });
   }
 
   fetchCalculateConcept() {
     this.conceptService.getCalculateConceptList().subscribe((resp) => {
       this.calculateConceptData = resp;
+      this.cdr.markForCheck();
     });
   }
 
@@ -109,8 +118,7 @@ export class ConceptListCreateModalComponent implements OnInit {
           this.calculateGroup = [...paymentGroups];
         }
 
-        setTimeout(() => {
-        }, 500);
+        this.cdr.markForCheck();
       });
   }
 

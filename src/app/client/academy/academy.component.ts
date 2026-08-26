@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { Product } from '@app/core/models/product-model/product.model';
 import { CartService } from '@app/core/service/cart.service/cart.service';
 import { ProductService } from '@app/core/service/product-service/product.service';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-academy',
     templateUrl: './academy.component.html',
     styleUrls: ['./academy.component.scss'],
     standalone: true,
-    imports: [CommonModule, TranslateModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TranslatePipe]
 })
 export class AcademyComponent implements OnInit {
-  products: Product[] = [];
+  readonly products = signal<Product[]>([]);
 
   constructor(
     private productService: ProductService,
@@ -32,16 +33,16 @@ export class AcademyComponent implements OnInit {
   }
 
   showError(message: string) {
-    this.showError(message);
+    this.toast.error(message);
   }
 
   loadProduct() {
     this.productService.getAllTradingAcademy().subscribe({
       next: (value: Product[]) => {
-        this.products = value;
-        this.products.forEach((item: any) => {
+        value.forEach((item: any) => {
           Object.assign(item, { quantity: 1, total: item.salePrice });
         });
+        this.products.set(value);
       },
       error: err => {
         this.showError('Error');

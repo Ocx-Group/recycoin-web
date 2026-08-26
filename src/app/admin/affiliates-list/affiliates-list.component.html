@@ -31,239 +31,189 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                                  placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
                             }}"/>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'INDUCEMENTS-PAGE.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
+                            <i class="bi bi-clipboard-check"></i>
+                            {{ 'INDUCEMENTS-PAGE.BTN-COPY.TEXT' | translate }}
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="onPrint()">
-                          <i class="bi bi-printer"></i>
-                          {{ 'INDUCEMENTS-PAGE.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary" (click)="onPrint()">
+                            <i class="bi bi-printer"></i>
+                            {{ 'INDUCEMENTS-PAGE.BTN-PRINT.TEXT' | translate }}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
-                               [count]="totalElements" [offset]="currentPage - 1" [limit]="pageSize"
-                               [externalPaging]="true" (page)="onPage($event)"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                    [count]="totalElements" [offset]="currentPage - 1" [limit]="pageSize"
+                    [externalPaging]="true" (page)="onPage($event)"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-USER.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.user_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.user_name }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-STATUS.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div class="badge-outline" [ngClass]="row.status === 1 ? 'col-green' : 'col-red'">
-                        {{
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div class="badge-outline" [ngClass]="row.status === 1 ? 'col-green' : 'col-red'">
+                          {{
                           (row.status === 1
-                            ? 'AFFILIATES-LIST-PAGE.STATUS-ACTIVE.TEXT'
-                            : 'AFFILIATES-LIST-PAGE.STATUS-INACTIVE.TEXT'
+                          ? 'AFFILIATES-LIST-PAGE.STATUS-ACTIVE.TEXT'
+                          : 'AFFILIATES-LIST-PAGE.STATUS-INACTIVE.TEXT'
                           ) | translate
-                        }}
-                      </div>
-                      <small *ngIf="row.status_activation" class="d-block text-muted">
-                        {{ formatStatusActivation(row) }}
-                      </small>
-                    </ng-template>
-                  </ngx-datatable-column>
+                          }}
+                        </div>
+                        @if (row.status_activation) {
+                          <small class="d-block text-muted">
+                            {{ formatStatusActivation(row) }}
+                          </small>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-PHONE.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.phone }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.phone }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-EMAIL.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.email }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.email }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-DATE.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.created_at }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.created_at }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-FATHER.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.father_user_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.father_user_name }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-SPONSOR.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.sponsor_user_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.sponsor_user_name }}
+                      </ng-template>
+                    </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-BINARY-SPONSOR.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.binary_sponsor_user_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.binary_sponsor_user_name }}
+                      </ng-template>
+                    </ngx-datatable-column>
 
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-DETAILS.TEXT' | translate
                     }}" [sortable]=false>
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div ngbDropdown container="body">
+                          <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                            {{
                             'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
-                          }}
-                        </button>
-                        <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-activate-matrix" (click)="openMatrixActivationModal(row)">
-                            <i class="bi bi-grid-3x3-gap-fill"></i>
-                            <span class="ms-2">Activar Matriz</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-detail"
-                             (click)="detailModal(userDetailModal); modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                             (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                             (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">
-                            <i class="bi bi-file-earmark-plus-fill me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
-                              }}</span>
-                          </a>
+                            }}
+                          </button>
+                          <div ngbDropdownMenu>
+                            <a ngbDropdownItem id="btn-activate-matrix" (click)="openMatrixActivationModal(row)">
+                              <i class="bi bi-grid-3x3-gap-fill"></i>
+                              <span class="ms-2">Activar Matriz</span>
+                            </a>
                           <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['affiliateEditModal'],
                                 row
                               )
                             ">
-                            <i class="fas fa-edit me-2"></i>
-                            <span>{{
+                              <i class="fas fa-edit me-2"></i>
+                              <span>{{
                                 'AFFILIATES-LIST-PAGE.EDIT.TEXT' | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-unilevel-tree" (click)="onRouteUnilevelTree(row.id)">
-                            <i class="bi bi-diagram-3-fill me-2"></i>
-                            <span>
-                                  {{
+                            </a>
+                            <a ngbDropdownItem id="btn-unilevel-tree" (click)="onRouteUnilevelTree(row.id)">
+                              <i class="bi bi-diagram-3-fill me-2"></i>
+                              <span>
+                                {{
                                 'AFFILIATES-LIST-PAGE.UNILEVEL-FAMILY-TREE.TEXT'
-                                  | translate
+                                | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-force-tree" (click)="onRouteForceGenealogicalTree()">
-                            <i class="bi bi-diagram-3-fill me-2"></i>
-                            <span>{{
+                            </a>
+                            <a ngbDropdownItem id="btn-force-tree" (click)="onRouteForceGenealogicalTree()">
+                              <i class="bi bi-diagram-3-fill me-2"></i>
+                              <span>{{
                                 'AFFILIATES-LIST-PAGE.FORCED-GENEALOGICAL-TREE.TEXT'
-                                  | translate
+                                | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-binary-tree" (click)="onRouteBinaryGenealogicalTree(row.id)"
-                             (keydown)="onRouteBinaryGenealogicalTree(row.id)"
-                             (keyup)="onRouteBinaryGenealogicalTree(row.id)">
-                            <i class="bi bi-diagram-3-fill me-2"></i>
-                            <span>{{
+                            </a>
+                            <a ngbDropdownItem id="btn-binary-tree" (click)="onRouteBinaryGenealogicalTree(row.id)"
+                              (keydown)="onRouteBinaryGenealogicalTree(row.id)"
+                              (keyup)="onRouteBinaryGenealogicalTree(row.id)">
+                              <i class="bi bi-diagram-3-fill me-2"></i>
+                              <span>{{
                                 'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
-                                  | translate
+                                | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-wallet-balance" (click)="deleteSingleRow(row.id)">
-                            <i class="bi bi-wallet-fill me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-make-purchase"
-                             (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                             (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                             (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">
-                            <i class="bi bi-cart-check-fill me-2"></i>
-                            <span>{{
+                            </a>
+                            <a ngbDropdownItem id="btn-make-purchase"
+                              (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                              (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                              (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">
+                              <i class="bi bi-cart-check-fill me-2"></i>
+                              <span>{{
                                 'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
-                                  | translate
+                                | translate
                               }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-create-balance" (click)="confirmationCreateBalance(row)">
-                            <i class="bi bi-currency-dollar me-2"></i>
-                            <span>Acreditar Saldo</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-change-sponsor" (click)="deleteSingleRow(row.id)">
-                            <i class="bi bi-arrow-repeat me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-qualification-audit" (click)="deleteSingleRow(row.id)"
-                             (keydown)="deleteSingleRow(row.id)" (keyup)="deleteSingleRow(row.id)">
-                            <i class="bi bi-eye-fill me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-network-purchase" (click)="deleteSingleRow(row.id)">
-                            <i class="bi bi-database-fill-exclamation me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-tope-max" (click)="deleteSingleRow(row.id)">
-                            <i class="bi bi-currency-exchange me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                            <i class="fas fa-trash-alt me-2"></i>
-                            <span>{{
-                                'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-balance-info" (click)="openBalanceInformationModal(row)">
-                            <i class="fa fa-money me-2"></i>
-                            <span> Información de balances </span>
-                          </a>
+                            </a>
+                            <a ngbDropdownItem id="btn-create-balance" (click)="confirmationCreateBalance(row)">
+                              <i class="bi bi-currency-dollar me-2"></i>
+                              <span>Acreditar Saldo</span>
+                            </a>
+                            <a ngbDropdownItem id="btn-balance-info" (click)="openBalanceInformationModal(row)">
+                              <i class="fa fa-money me-2"></i>
+                              <span> Información de balances </span>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
-                <app-affiliates-list-edit-modal #modalChildEdit
-                                                (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                  <app-affiliates-list-edit-modal #modalChildEdit
+                  (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<app-make-purchase-modal #modalChildCreatePurchase></app-make-purchase-modal>
-<app-balance-information-modal></app-balance-information-modal>
-<app-matrix-activation-modal></app-matrix-activation-modal>
+  </section>
+  <app-make-purchase-modal #modalChildCreatePurchase></app-make-purchase-modal>
+  <app-balance-information-modal></app-balance-information-modal>
+  <app-matrix-activation-modal></app-matrix-activation-modal>

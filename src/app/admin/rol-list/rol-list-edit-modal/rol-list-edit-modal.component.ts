@@ -1,4 +1,4 @@
-import {EventEmitter} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import {Component, ViewChild, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -12,13 +12,14 @@ import {ToastrService} from 'ngx-toastr';
 import {RolService} from "../../../core/service/rol-service/rol.service";
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-rol-list-edit-modal',
   templateUrl: './rol-list-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -38,7 +39,8 @@ export class RolListEditModalComponent implements OnInit {
     private modalService: NgbModal,
     private rolService: RolService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -87,5 +89,21 @@ export class RolListEditModalComponent implements OnInit {
 
   closeModals() {
     this.modalService.dismissAll();
+  }
+
+  updateOpenModal(content, rol: Rol) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
+    this.rol = new Rol();
+    this.rolGlobal = rol;
+    this.updateRolForm.setValue({
+      rol_name: rol.name,
+      description: rol.description,
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

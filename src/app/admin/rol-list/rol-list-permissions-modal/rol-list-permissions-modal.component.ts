@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -22,6 +22,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './rol-list-permissions-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     IconsModule,
@@ -48,8 +49,10 @@ export class RolListPermissionsModalComponent implements OnInit {
   @ViewChild('permissionsCreateModal') permissionsCreateModal: NgbModal;
 
   constructor(
+    private modalService: NgbModal,
     private privilegeService: PrivilegeService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -78,8 +81,10 @@ export class RolListPermissionsModalComponent implements OnInit {
       next: (menuConfiguration: MenuConfiguration[]) => {
         this.temp = [...menuConfiguration];
         this.rows = menuConfiguration;
+        this.cdr.markForCheck();
         setTimeout(() => {
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }, 500);
       },
       error: (err) => {
@@ -95,7 +100,7 @@ export class RolListPermissionsModalComponent implements OnInit {
       this.rows = this.temp.filter((d) => {
         return d.name?.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.table.offset = 0;
+      this.table.offset.set(0);
     }
   }
 
@@ -129,6 +134,19 @@ export class RolListPermissionsModalComponent implements OnInit {
         },
       });
     }
+  }
+
+  permissionsOpenModal(content, rol: Rol) {
+    this.loadPermissionsList(rol.id);
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
+    this.title = rol.name;
+    this.idRole = rol.id;
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }
 

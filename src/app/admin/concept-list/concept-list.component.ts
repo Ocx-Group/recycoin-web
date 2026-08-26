@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 
@@ -20,7 +20,7 @@ import {
 import {
   ConceptListConfigurationModalComponent
 } from "./concept-list-configuration-modal/concept-list-configuration-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = [
   'Nombre del Concepto',
@@ -37,8 +37,8 @@ const header = [
   templateUrl: './concept-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -54,7 +54,7 @@ const header = [
     ConceptListDetailsModalComponent,
     ConceptListBinaryConfigurationModalComponent,
     ConceptListConfigurationModalComponent
-  ]
+]
 })
 export class ConceptListComponent implements OnInit {
   rows = [];
@@ -72,7 +72,8 @@ export class ConceptListComponent implements OnInit {
     private conceptService: ConceptService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -104,7 +105,7 @@ export class ConceptListComponent implements OnInit {
     // update the rows
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {
@@ -119,10 +120,12 @@ export class ConceptListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
 
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

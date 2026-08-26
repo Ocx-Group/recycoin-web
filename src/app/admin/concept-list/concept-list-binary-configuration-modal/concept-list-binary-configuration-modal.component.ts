@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from "@angular/forms";
 
@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './concept-list-binary-configuration-modal.component.html',
   styleUrls: ['./concept-list.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule
   ]

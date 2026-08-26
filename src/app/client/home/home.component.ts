@@ -5,6 +5,7 @@ import {
   NgZone,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
@@ -25,8 +26,8 @@ import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import { ShareModalComponent } from '@app/client/home/share-modal/share-modal.component';
@@ -42,20 +43,20 @@ import {
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     NgApexchartsModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     NgxEchartsModule,
     ShareModalComponent,
     RouterLink,
-    WorldMapChartComponent,
-  ],
+    WorldMapChartComponent
+],
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts'),
     }),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit {
@@ -368,6 +369,7 @@ export class HomeComponent implements OnInit {
         next: (value: BalanceInformation) => {
           console.log(value);
           this.balanceInformation = value;
+          this.cdr.markForCheck();
           resolve();
         },
         error: err => {
@@ -422,6 +424,7 @@ export class HomeComponent implements OnInit {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: value => {
         this.maps = value.data;
+        this.cdr.markForCheck();
       },
       error: err => {
         console.error('Error fetching locations:', err);
@@ -507,6 +510,7 @@ export class HomeComponent implements OnInit {
       .subscribe({
         next: value => {
           this.information = value;
+          this.cdr.markForCheck();
         },
         error: err => {
           console.error('Error fetching statistics information:', err);
@@ -531,6 +535,7 @@ export class HomeComponent implements OnInit {
             );
 
             this.recycoinInfo.bnbAddress = address.bnb_address;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

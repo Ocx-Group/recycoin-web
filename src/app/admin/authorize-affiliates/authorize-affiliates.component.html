@@ -44,258 +44,260 @@
                           placeholder="{{
                             'AUTHORIZE-AFFILIATES.SEARCH.TEXT' | translate
                           }}"
-                        />
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col-12">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          id="inlineRadio1"
+                          (click)="fillApprovedArray()"
+                          value="option1"
+                          />
+                          <label class="form-check-label" for="inlineRadio1">{{
+                            'AUTHORIZE-AFFILIATES.BTN-AUTHORIZE-ALL.TEXT'
+                            | translate
+                          }}</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio2"
+                            (click)="fillDisapprovedArray()"
+                            value="option2"
+                            />
+                            <label class="form-check-label" for="inlineRadio2">{{
+                              'AUTHORIZE-AFFILIATES.BTN-DELETE-ALL.TEXT' | translate
+                            }}</label>
+                          </div>
+                        </div>
+                      </div>
+                      @for (alert of alerts; track alert) {
+                        <p class="text-center">
+                          <ngb-alert [type]="alert.type" [dismissible]="false">
+                            {{ 'AUTHORIZE-AFFILIATES.MSJ.TEXT' | translate }}
+                          </ngb-alert>
+                        </p>
+                      }
+                      <div class="col align-self-end">
+                        <ul class="nav justify-content-end">
+                          <li class="nav-item m-2">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              (click)="clipBoardCopy()"
+                              >
+                              <i class="bi bi-clipboard-check"></i>
+                              {{ 'AUTHORIZE-AFFILIATES.BTN-COPY.TEXT' | translate }}
+                            </button>
+                          </li>
+
+                          <li class="nav-item m-2">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              (click)="onPrint()"
+                              >
+                              <i class="bi bi-printer"></i>
+                              {{ 'AUTHORIZE-AFFILIATES.BTN-PRINT.TEXT' | translate }}
+                            </button>
+                          </li>
+                          <li class="nav-item m-2">
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              for="flexSwitchCheckDefault"
+                              (click)="selectionProcess()"
+                              >
+                              <i class="bi bi-check2-circle"></i>
+                              {{
+                              'AUTHORIZE-AFFILIATES.BTN-PROCESS-SELECTION.TEXT'
+                              | translate
+                              }}
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <ngx-datatable
+                      id="table"
+                      #table
+                      class="material"
+                      [rows]="rows"
+                      [loadingIndicator]="loadingIndicator"
+                      columnMode="force"
+                      [headerHeight]="50"
+                      [footerHeight]="50"
+                      rowHeight="auto"
+                      [limit]="12"
+                      [scrollbarH]="scrollBarHorizontal"
+                      [reorderable]="reorderable"
+                      >
+                      <ngx-datatable-column
+                name="{{
+                  'AUTHORIZE-AFFILIATES.COL-AUTHORIZE.TEXT' | translate
+                }}"
+                        sortable="false"
+                        >
+                        <ng-template
+                          let-value="value"
+                          let-row="row"
+                          let-rowIndex="rowIndex"
+                          ngx-datatable-cell-template
+                          >
+                          <input
+                            class="form-check-input"
+                            name="{{ 'approved'+row.id }}"
+                            type="radio"
+                            id="{{ 'approved'+row.id }}"
+                            value="1"
+                            (click)="setApprovedArray(row.id)"
+                            [checked]="approvedSelectAll"
+                            />
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-DELETE.TEXT' | translate
+                  }}"
+                          sortable="false"
+                          >
+                          <ng-template
+                            let-value="value"
+                            let-row="row"
+                            let-rowIndex="rowIndex"
+                            ngx-datatable-cell-template
+                            >
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="{{ 'approved'+row.id }}"
+                              id="{{ 'approved'+row.id }}"
+                              value="0"
+                              (click)="setdisapprovedArray(row.id)"
+                              [checked]="disApprovedSelectAll"
+                              />
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                            name="{{ 'AUTHORIZE-AFFILIATES.COL-USER.TEXT' | translate }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.user_name }}
+                            </ng-template>
+                          </ngx-datatable-column>
+
+                          <ngx-datatable-column
+                            name="{{ 'AUTHORIZE-AFFILIATES.COL-EMAIL.TEXT' | translate }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.email }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-IDENTITY.TEXT' | translate
+                  }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.identification }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-REGISTER-DATE.TEXT' | translate
+                  }}"
+                            sortable="false"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.created_at }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-FATHER.TEXT' | translate
+                  }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.father }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-SPONSOR.TEXT' | translate
+                  }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.sponsor }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-BINARY-SPONSOR.TEXT' | translate
+                  }}"
+                            >
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{ row.binary_sponsor }}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column
+                  name="{{
+                    'AUTHORIZE-AFFILIATES.COL-DETAILS.TEXT' | translate
+                  }}"
+                            sortable="false"
+                            >
+                            <ng-template
+                              let-value="value"
+                              let-row="row"
+                              let-rowIndex="rowIndex"
+                              ngx-datatable-cell-template
+                              >
+                              <div ngbDropdown container="body">
+                                <button
+                                  type="button"
+                                  class="btn btn-outline-primary btn-sm"
+                                  ngbDropdownToggle
+                                  >
+                                  {{
+                                  'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
+                                  }}
+                                </button>
+                                <div ngbDropdownMenu>
+                                  <a
+                                    ngbDropdownItem
+                                    class="btn"
+                                    id="btn-edit"
+                        (click)="modalChildEdit.editOpenModal(
+                          modalChildEdit['authorizeAffiliateEditModal'],
+                          row)">
+                                    <i class="fas fa-edit"></i>
+                                    <span style="margin-left: 10px">{{
+                                      'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
+                                    }}</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </ngx-datatable-column>
+                        </ngx-datatable>
+                        <app-authorize-affiliates-edit-modal
+                          #modalChildEdit
+                          (loadAffiliateList)="loadAffiliateList()">
+                        </app-authorize-affiliates-edit-modal>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div class="row mt-4">
-                  <div class="col-12">
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
-                        (click)="fillApprovedArray()"
-                        value="option1"
-                      />
-                      <label class="form-check-label" for="inlineRadio1">{{
-                        'AUTHORIZE-AFFILIATES.BTN-AUTHORIZE-ALL.TEXT'
-                          | translate
-                      }}</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
-                        (click)="fillDisapprovedArray()"
-                        value="option2"
-                      />
-                      <label class="form-check-label" for="inlineRadio2">{{
-                        'AUTHORIZE-AFFILIATES.BTN-DELETE-ALL.TEXT' | translate
-                      }}</label>
-                    </div>
-                  </div>
-                </div>
-                <p *ngFor="let alert of alerts" class="text-center">
-                  <ngb-alert [type]="alert.type" [dismissible]="false">
-                    {{ 'AUTHORIZE-AFFILIATES.MSJ.TEXT' | translate }}
-                  </ngb-alert>
-                </p>
-                <div class="col align-self-end">
-                  <ul class="nav justify-content-end">
-                    <li class="nav-item m-2">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        (click)="clipBoardCopy()"
-                      >
-                        <i class="bi bi-clipboard-check"></i>
-                        {{ 'AUTHORIZE-AFFILIATES.BTN-COPY.TEXT' | translate }}
-                      </button>
-                    </li>
-
-                    <li class="nav-item m-2">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        (click)="onPrint()"
-                      >
-                        <i class="bi bi-printer"></i>
-                        {{ 'AUTHORIZE-AFFILIATES.BTN-PRINT.TEXT' | translate }}
-                      </button>
-                    </li>
-                    <li class="nav-item m-2">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        for="flexSwitchCheckDefault"
-                        (click)="selectionProcess()"
-                      >
-                        <i class="bi bi-check2-circle"></i>
-                        {{
-                          'AUTHORIZE-AFFILIATES.BTN-PROCESS-SELECTION.TEXT'
-                            | translate
-                        }}
-                      </button>
-                    </li>
-                  </ul>
-                </div>
               </div>
-              <ngx-datatable
-                id="table"
-                #table
-                class="material"
-                [rows]="rows"
-                [loadingIndicator]="loadingIndicator"
-                columnMode="force"
-                [headerHeight]="50"
-                [footerHeight]="50"
-                rowHeight="auto"
-                [limit]="12"
-                [scrollbarH]="scrollBarHorizontal"
-                [reorderable]="reorderable"
-              >
-                <ngx-datatable-column
-                name="{{
-                  'AUTHORIZE-AFFILIATES.COL-AUTHORIZE.TEXT' | translate
-                }}"
-                sortable="false"
-              >
-                <ng-template
-                  let-value="value"
-                  let-row="row"
-                  let-rowIndex="rowIndex"
-                  ngx-datatable-cell-template
-                >
-                  <input
-                    class="form-check-input"
-                    name="{{ 'approved'+row.id }}"
-                    type="radio"
-                    id="{{ 'approved'+row.id }}"
-                    value="1"
-                    (click)="setApprovedArray(row.id)"
-                    [checked]="approvedSelectAll"
-                  />
-                </ng-template>
-              </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-DELETE.TEXT' | translate
-                  }}"
-                  sortable="false"
-                >
-                  <ng-template
-                    let-value="value"
-                    let-row="row"
-                    let-rowIndex="rowIndex"
-                    ngx-datatable-cell-template
-                  >
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="{{ 'approved'+row.id }}"
-                      id="{{ 'approved'+row.id }}"
-                      value="0"
-                      (click)="setdisapprovedArray(row.id)"
-                      [checked]="disApprovedSelectAll"
-                    />
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{ 'AUTHORIZE-AFFILIATES.COL-USER.TEXT' | translate }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.user_name }}
-                  </ng-template>
-                </ngx-datatable-column>
-
-                <ngx-datatable-column
-                  name="{{ 'AUTHORIZE-AFFILIATES.COL-EMAIL.TEXT' | translate }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.email }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-IDENTITY.TEXT' | translate
-                  }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.identification }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-REGISTER-DATE.TEXT' | translate
-                  }}"
-                  sortable="false"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.created_at }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-FATHER.TEXT' | translate
-                  }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.father }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-SPONSOR.TEXT' | translate
-                  }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.sponsor }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-BINARY-SPONSOR.TEXT' | translate
-                  }}"
-                >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.binary_sponsor }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column
-                  name="{{
-                    'AUTHORIZE-AFFILIATES.COL-DETAILS.TEXT' | translate
-                  }}"
-                  sortable="false"
-                >
-                  <ng-template
-                  let-value="value"
-                  let-row="row"
-                  let-rowIndex="rowIndex"
-                  ngx-datatable-cell-template
-                >
-                  <div ngbDropdown container="body">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary btn-sm"
-                      ngbDropdownToggle
-                    >
-                      {{
-                        'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
-                      }}
-                    </button>
-                    <div ngbDropdownMenu>
-                      <a
-                        ngbDropdownItem
-                        class="btn"
-                        id="btn-edit"
-                        (click)="modalChildEdit.editOpenModal(
-                          modalChildEdit['authorizeAffiliateEditModal'],
-                          row)">
-                        <i class="fas fa-edit"></i>
-                        <span style="margin-left: 10px">{{
-                          'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
-                        }}</span>
-                      </a>
-                    </div>
-                  </div>
-                </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
-              <app-authorize-affiliates-edit-modal
-              #modalChildEdit
-              (loadAffiliateList)="loadAffiliateList()">
-            </app-authorize-affiliates-edit-modal>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+          </section>

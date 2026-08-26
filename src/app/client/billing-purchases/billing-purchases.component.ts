@@ -1,10 +1,12 @@
 import { WalletRequestRevertTransaction } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 import {
+  ChangeDetectorRef,
   Component,
   OnInit,
   AfterViewInit,
   ViewChild,
   TemplateRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import Swal from 'sweetalert2';
 
@@ -19,8 +21,8 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
 import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
 import { IconsModule } from '@app/shared';
 import { RouterLink } from '@angular/router';
@@ -35,14 +37,14 @@ import {
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
-    TranslateModule,
+    TranslatePipe,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,
-    ReusableDatatableComponent,
-  ],
+    ReusableDatatableComponent
+],
 })
 export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   private user: UserAffiliate = new UserAffiliate();
@@ -87,6 +89,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
     private readonly walletRequestService: WalletRequestService,
     private readonly configurationService: ConfigurationService,
     private readonly translateService: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -199,6 +202,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
         this.temp = [...invoices];
         this.rows = invoices;
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
         console.log(this.rows);
       },
       error: err => {

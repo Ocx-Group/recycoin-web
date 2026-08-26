@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   NgbModal,
   NgbNav,
@@ -24,6 +24,7 @@ import {
   selector: 'app-products-services-configurations',
   templateUrl: './products-services-configurations.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     TranslatePipe,
@@ -60,6 +61,7 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     private configurationService: ConfigurationService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -103,7 +105,7 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createCarrierOpenModal(content) {

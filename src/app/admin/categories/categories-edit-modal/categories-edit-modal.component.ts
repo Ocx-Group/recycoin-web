@@ -1,15 +1,16 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
 import {ProductCategory} from "../../../core/models/product-category-model/product-category.model";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-categories-edit-modal',
   templateUrl: './categories-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -33,7 +34,8 @@ export class CategoriesEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private productCategoryService: ProductCategoryService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -101,6 +103,26 @@ export class CategoriesEditModalComponent implements OnInit {
   categoryList() {
     this.productCategoryService.getAll().subscribe((resp) => {
       this.categoriesList = resp;
+      this.cdr.markForCheck();
     });
+  }
+
+  editOpenModal(content, row) {
+    this.category = row;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+
+    this.editCategorieForm.setValue({
+      categorie: this.category.category,
+      name: this.category.name,
+      description: this.category.description,
+      activate_big_banner: this.category.displayBigBanner,
+      activate_small_banner: this.category.displaySmallBanner,
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

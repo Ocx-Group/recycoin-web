@@ -17,28 +17,31 @@
     <div class="modal-body">
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-12 text-center">
-          <div *ngIf="currentImageUrl" class="image-preview-container">
-            <button class="btn-modern btn-remove-image" (click)="removeImage()">
-              <i class="bi bi-trash"></i>
-              {{ 'IMAGE-PROFILE-MODAL.BTN-REMOVE.TEXT' | translate }}
-            </button>
-            <div class="image-wrapper">
-              <img [src]="currentImageUrl" alt="Foto de perfil del usuario" class="profile-image-preview" />
+          @if (currentImageUrl) {
+            <div class="image-preview-container">
+              <button class="btn-modern btn-remove-image" (click)="removeImage()">
+                <i class="bi bi-trash"></i>
+                {{ 'IMAGE-PROFILE-MODAL.BTN-REMOVE.TEXT' | translate }}
+              </button>
+              <div class="image-wrapper">
+                <img [src]="currentImageUrl" alt="Foto de perfil del usuario" class="profile-image-preview" />
+              </div>
             </div>
-          </div>
+          }
 
-          <ngx-dropzone
-            *ngIf="!currentImageUrl"
-            (change)="onFileSelected($event)"
-            [accept]="'image/jpeg,image/jpg,image/png,image/gif,image/webp'"
-            [maxFileSize]="5 * 1024 * 1024"
-            [multiple]="false">
-            <ngx-dropzone-label>
-              <span class="dz-icon"><i class="bi bi-cloud-arrow-up-fill"></i></span>
-              <span class="dz-title">{{ 'IMAGE-PROFILE-MODAL.DROPZONE.TEXT' | translate }}</span>
-              <span class="dz-hint">{{ 'IMAGE-PROFILE-MODAL.FILE-HINT.TEXT' | translate }}</span>
-            </ngx-dropzone-label>
-          </ngx-dropzone>
+          @if (!currentImageUrl) {
+            <ngx-dropzone
+              (change)="onFileSelected($event)"
+              [accept]="'image/jpeg,image/jpg,image/png,image/gif,image/webp'"
+              [maxFileSize]="5 * 1024 * 1024"
+              [multiple]="false">
+              <ngx-dropzone-label>
+                <span class="dz-icon"><i class="bi bi-cloud-arrow-up-fill"></i></span>
+                <span class="dz-title">{{ 'IMAGE-PROFILE-MODAL.DROPZONE.TEXT' | translate }}</span>
+                <span class="dz-hint">{{ 'IMAGE-PROFILE-MODAL.FILE-HINT.TEXT' | translate }}</span>
+              </ngx-dropzone-label>
+            </ngx-dropzone>
+          }
         </div>
       </div>
     </div>

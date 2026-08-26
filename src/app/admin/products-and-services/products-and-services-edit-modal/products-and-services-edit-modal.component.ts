@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -6,8 +7,8 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
   FormGroup,
   FormBuilder,
@@ -43,8 +44,7 @@ import {
 } from "../../../core/service/product-attribute-value/product-attribute-value.service";
 import {ProductCombinationService} from "../../../core/service/product-combination-service/product-combination.service";
 import {ProductInventoryService} from "../../../core/service/product-inventory-service/product-inventory.service";
-import {NgClass, CommonModule} from "@angular/common";
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { NgClass, CommonModule } from "@angular/common";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ObjectStorageService} from "../../../core/service/object-storage-service/object-storage.service";
@@ -54,6 +54,7 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   selector: 'app-products-and-services-edit-modal',
   templateUrl: './products-and-services-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NgbNavItem,
@@ -66,7 +67,6 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
     DatatableComponent,
     DataTableColumnDirective,
     DataTableColumnCellDirective,
-    CKEditorModule,
     NgxDropzoneModule,
     TranslatePipe,
     NgbNavOutlet,
@@ -74,7 +74,6 @@ import {ObjectStorageService} from "../../../core/service/object-storage-service
   ]
 })
 export class ProductsAndServicesEditModalComponent implements OnInit {
-  public Editor = ClassicEditor;
   isCheckedAttribute: boolean = false;
   isCheckedInventory: boolean = false;
   editProductForm!: FormGroup;
@@ -126,7 +125,8 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     private productAttributeService: ProductAttributeService,
     private productCombinationService: ProductCombinationService,
     private productInventoryService: ProductInventoryService,
-    private objectStorageService: ObjectStorageService
+    private objectStorageService: ObjectStorageService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -213,6 +213,9 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     });
     this.isCheckedAttribute = this.product.activateCombinations;
     this.isCheckedInventory = this.product.inventory;
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   closeModals() {
@@ -507,6 +510,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
       .subscribe((resp: ProductAttribute[]) => {
         if (resp != null) {
           this.attributesList = resp;
+          this.cdr.markForCheck();
         }
       });
   }
@@ -538,6 +542,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
         .subscribe((resp: ProductAttributeValue[]) => {
           if (resp != null) {
             this.attributesValuesList = resp;
+            this.cdr.markForCheck();
           }
         });
     } else {
@@ -552,6 +557,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
         this.temp = [...resp];
         this.rows = resp;
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       });
   }
 
@@ -559,6 +565,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -566,6 +573,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
   loadCategoryList() {
     this.productCategoryService.getAll().subscribe((resp) => {
       this.categoriesList = resp;
+      this.cdr.markForCheck();
     });
   }
 
@@ -576,6 +584,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
         if (resp != null) {
           this.tempCombinations = [...resp];
           this.rowsCombinations = resp;
+          this.cdr.markForCheck();
         }
       });
   }
@@ -611,6 +620,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
             this.toastr.clear(toastReference.toastId);
             this.toastr.success('Image updated successfully');
             this.files = [];
+            this.cdr.markForCheck();
           },
           error: (err) => {
             console.error('Error updating product:', err);

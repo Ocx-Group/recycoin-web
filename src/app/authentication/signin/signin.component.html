@@ -1,5 +1,5 @@
 <main class="login-wrapper">
-  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex()] + ')'"
     [@backgroundFade]="'visible'">
   </div>
 
@@ -10,49 +10,61 @@
 
         <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
         <i class="bi bi-person"></i>
-        <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
-          {{ userNameErrorMessage }}
-        </div>
-        <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)">
-          {{ userNameIsRequerid }}
-        </div>
+        @if (Email.errors?.['email'] && (Email.dirty || Email.touched)) {
+          <div class="form-text text-danger fw-bold">
+            {{ userNameErrorMessage }}
+          </div>
+        }
+        @if (Email.errors?.['required'] && (Email.dirty || Email.touched)) {
+          <div class="form-text text-danger fw-bold">
+            {{ userNameIsRequerid }}
+          </div>
+        }
       </div>
       <div class="login-input-group">
         <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}"
           required="required" />
-        <i class="bi bi-key"></i>
+          <i class="bi bi-key"></i>
 
-        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
-          <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-        </button>
+          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+          </button>
 
-        <div class="form-text text-danger fw-bold"
-          *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
-          {{ passwordErrorMessage }}
+          @if (Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)) {
+            <div class="form-text text-danger fw-bold"
+              >
+              {{ passwordErrorMessage }}
+            </div>
+          }
+          @if (Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)) {
+            <div class="form-text text-danger fw-bold">
+              {{ passwordIsRequerid }}
+            </div>
+          }
         </div>
-        <div class="form-text text-danger fw-bold" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
-          {{ passwordIsRequerid }}
-        </div>
-      </div>
 
-      <div class="container-login-button">
-        <button class="login-button" type="submit" [disabled]="loading">
-          <output *ngIf="loading" class="spinner-border spinner-border-sm">
-            <span class="sr-only">Loading...</span>
-          </output>
-          {{ signin }}
-        </button>
-        <button class="login-button mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
-          <i class="bi bi-google"></i>
-          Google
-        </button>
+        <div class="container-login-button">
+          <button class="login-button" type="submit" [disabled]="loading()">
+            @if (loading()) {
+              <output class="spinner-border spinner-border-sm">
+                <span class="sr-only">Loading...</span>
+              </output>
+            }
+            {{ signin }}
+          </button>
+          <button class="login-button mt-2" type="button" [disabled]="loading()" (click)="googleLoginSubmitted()">
+            <i class="bi bi-google"></i>
+            Google
+          </button>
+        </div>
+        @if (error() !== '') {
+          <div class="alert alert-danger">
+            {{ error() }}
+          </div>
+        }
+      </form>
+      <div class="forgot-password">
+        <p>Cambiar <a routerLink="/forgot">Contraseña</a></p>
       </div>
-      <div *ngIf="error !== ''" class="alert alert-danger">
-        {{ error }}
-      </div>
-    </form>
-    <div class="forgot-password">
-      <p>Cambiar <a routerLink="/forgot">Contraseña</a></p>
     </div>
-  </div>
-</main>
+  </main>

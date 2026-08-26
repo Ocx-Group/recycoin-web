@@ -5,6 +5,7 @@ import {
   TemplateRef,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
@@ -20,6 +21,7 @@ import {CommonModule} from "@angular/common";
   },
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgbPopover,
     CommonModule

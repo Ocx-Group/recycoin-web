@@ -23,9 +23,9 @@
                   <div class="tab-pane">
                     <div class="row">
                       <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                                     columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
-                                     [limit]="10"
-                                     [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                        columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                        [limit]="10"
+                        [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                         <ngx-datatable-column name="Valor">
                           <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ row.attributeValue }}
@@ -41,7 +41,7 @@
                             <div
                               class="col-red"
                               (click)="deleteSingleRow(row.id)"
-                            >
+                              >
                               <i class="bi bi-trash"></i>
                             </div>
                           </ng-template>
@@ -60,90 +60,106 @@
                         <label for="attribute_group">
                           Grupo de atributo
                           <span class="text-danger">*</span></label>
-                        <select id="attribute_group" class="form-select form-control" formControlName="attribute_group"
+                          <select id="attribute_group" class="form-select form-control" formControlName="attribute_group"
                                 required="required" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.attribute_group.errors
                           }">
-                          <option value="">Seleccione una opción</option>
-                          <option value="{{item.id}}" *ngFor="let item of attributesList">{{ item.name }}</option>
-                        </select>
-                        <div *ngIf="
+                            <option value="">Seleccione una opción</option>
+                            @for (item of attributesList; track item) {
+                              <option value="{{item.id}}">{{ item.name }}</option>
+                            }
+                          </select>
+                          @if (
                             submitted &&
                             details_attributes_controls.attribute_group.errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              details_attributes_controls.attribute_group.errors
+                            ) {
+                            <div class="invalid-feedback">
+                              @if (
+                                details_attributes_controls.attribute_group.errors
                                 .required
-                            ">
-                            El grupo es requerido.
-                          </div>
+                                ) {
+                                <div>
+                                  El grupo es requerido.
+                                </div>
+                              }
+                            </div>
+                          }
                         </div>
-                      </div>
-                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                        <label for="value">
-                          Valor
-                          <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="value" required="required" id="value"
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                          <label for="value">
+                            Valor
+                            <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="value" required="required" id="value"
                                placeholder="Valor" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.value.errors
                           }"/>
-                        <div *ngIf="
-                            submitted &&
-                            details_attributes_controls.value.errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              details_attributes_controls.value.errors.required
-                            ">
-                            El valor es requerido.
+                              @if (
+                                submitted &&
+                                details_attributes_controls.value.errors
+                                ) {
+                                <div class="invalid-feedback">
+                                  @if (
+                                    details_attributes_controls.value.errors.required
+                                    ) {
+                                    <div>
+                                      El valor es requerido.
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                        <label for="position">
-                          Posición
-                          <span class="text-danger">*</span></label>
-                        <input type="number" min="0" class="form-control" formControlName="position" id="position"
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="position">
+                                Posición
+                                <span class="text-danger">*</span></label>
+                                <input type="number" min="0" class="form-control" formControlName="position" id="position"
                                required="required" placeholder="0" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.position.errors
                           }"/>
-                        <div *ngIf="
-                            submitted &&
-                            details_attributes_controls.position.errors
-                          " class="invalid-feedback">
-                          <div *ngIf="
-                              details_attributes_controls.position.errors
-                                .required
-                            ">
-                            El valor es requerido.
-                          </div>
-                        </div>
-                      </div>
+                                  @if (
+                                    submitted &&
+                                    details_attributes_controls.position.errors
+                                    ) {
+                                    <div class="invalid-feedback">
+                                      @if (
+                                        details_attributes_controls.position.errors
+                                        .required
+                                        ) {
+                                        <div>
+                                          El valor es requerido.
+                                        </div>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </li>
+                      </ul>
+                      <div [ngbNavOutlet]="nav" class="mt-2"></div>
                     </div>
                   </div>
-                </ng-template>
-              </li>
-            </ul>
-            <div [ngbNavOutlet]="nav" class="mt-2"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+                </div>
+              </div>
 
-    <div class="modal-footer">
-      <button *ngIf="active == 2" type="submit" class="btn btn-primary">
-        Guardar
-      </button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-        Cancelar
-      </button>
-    </div>
-  </form>
-</ng-template>
+              <div class="modal-footer">
+                @if (active == 2) {
+                  <button type="submit" class="btn btn-primary">
+                    Guardar
+                  </button>
+                }
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </ng-template>

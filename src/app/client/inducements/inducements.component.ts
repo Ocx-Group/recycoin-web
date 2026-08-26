@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-inducements',
     templateUrl: './inducements.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
+    imports: [NgxDatatableModule, TranslatePipe, IconsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class InducementsComponent implements OnInit {
@@ -62,7 +63,7 @@ export class InducementsComponent implements OnInit {
     // update the rows
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   ngOnInit(): void {}

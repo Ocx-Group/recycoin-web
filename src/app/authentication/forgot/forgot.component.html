@@ -17,25 +17,31 @@
                     'aurora-is-invalid': submitted && forgotPassword.get('email').errors,
                     'aurora-is-valid': forgotPassword.get('email').valid && forgotPassword.get('email').dirty
                   }" (input)="validateEmail()">
-                <div *ngIf="submitted && forgotPassword.get('email').errors" class="aurora-invalid-feedback">
-                  <div *ngIf="forgotPassword.get('email').errors.required">
-                    Ingrese un correo electrónico.
-                  </div>
-                  <div *ngIf="forgotPassword.get('email').errors.email">
-                    Ingrese un correo electrónico válido.
-                  </div>
+                  @if (submitted && forgotPassword.get('email').errors) {
+                    <div class="aurora-invalid-feedback">
+                      @if (forgotPassword.get('email').errors.required) {
+                        <div>
+                          Ingrese un correo electrónico.
+                        </div>
+                      }
+                      @if (forgotPassword.get('email').errors.email) {
+                        <div>
+                          Ingrese un correo electrónico válido.
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+                <div class="aurora-form-group">
+                  <button type="submit"
+                    class="aurora-btn aurora-btn-primary aurora-btn-lg aurora-btn-block aurora-neon-button">
+                    Enviar enlace
+                  </button>
                 </div>
               </div>
-              <div class="aurora-form-group">
-                <button type="submit"
-                  class="aurora-btn aurora-btn-primary aurora-btn-lg aurora-btn-block aurora-neon-button">
-                  Enviar enlace
-                </button>
-              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>

@@ -34,99 +34,103 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                                 placeholder="Búsqueda"/>
+                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                            placeholder="Búsqueda"/>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="header-buttons-left">
-                      <div class="tbl-btn-style">
+                    <div class="col-sm-1">
+                      <div class="header-buttons-left">
+                        <div class="tbl-btn-style">
                         <button (click)="
                             createOpenModal(
                               modalChildCreate['categoriesCreateModal']
                             )
                           " class="btn btn-icon icon-left btn-primary rounded-button">
-                          <i class="material-icons">add</i>
-                        </button>
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          Copiar
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary">
+                            <i class="bi bi-clipboard-check"></i>
+                            Copiar
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button type="button" (click)="onPrint()" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          Imprimir
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button type="button" (click)="onPrint()" class="btn btn-primary">
+                            <i class="bi bi-printer"></i>
+                            Imprimir
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="Nombre de Categoría">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Descripción" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.description }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Categoría Padre">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div class="row" *ngIf="row.category == 0">
-                        -----
-                      </div>
-                      <div class="row" *ngIf="row.category == 3">
-                        Productos y Servicios
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                  <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                    <ngx-datatable-column name="Nombre de Categoría">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.name }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Descripción" sortable="false">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.description }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Categoría Padre">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.category == 0) {
+                          <div class="row">
+                            -----
+                          </div>
+                        }
+                        @if (row.category == 3) {
+                          <div class="row">
+                            Productos y Servicios
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Acciones">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          Acciones
-                        </button>
-                        <div ngbDropdownMenu>
+                    <ngx-datatable-column name="Acciones">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div ngbDropdown container="body">
+                          <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                            Acciones
+                          </button>
+                          <div ngbDropdownMenu>
                           <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['categoriesEditModal'],row
                               )
                             ">
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">Editar</span>
-                          </a>
+                              <i class="fas fa-edit"></i>
+                              <span style="margin-left: 10px">Editar</span>
+                            </a>
 
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">Eliminar</span>
-                          </a>
+                            <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                              <i class="fas fa-trash-alt"></i>
+                              <span style="margin-left: 10px">Eliminar</span>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <app-categories-create-modal #modalChildCreate (loadCategoryList)="loadCategoryList()"></app-categories-create-modal>
-  <app-categories-edit-modal #modalChildEdit (loadCategoryList)="loadCategoryList()"></app-categories-edit-modal>
-</section>
+    <app-categories-create-modal #modalChildCreate (loadCategoryList)="loadCategoryList()"></app-categories-create-modal>
+    <app-categories-edit-modal #modalChildEdit (loadCategoryList)="loadCategoryList()"></app-categories-edit-modal>
+  </section>

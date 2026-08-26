@@ -1,9 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {NgbModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -14,8 +16,8 @@ import {
 } from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
-import {CommonModule} from "@angular/common";
-import {TranslateModule} from "@ngx-translate/core";
+
+import {TranslatePipe} from "@ngx-translate/core";
 import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
 import {Country} from "../../../core/models/country-model/country.model";
 import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
@@ -26,13 +28,13 @@ import {AffiliateService} from "../../../core/service/affiliate-service/affiliat
   styleUrls: ['./affiliates-list-edit-modal.component.scss'],
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModalModule,
-    TranslateModule,
-  ]
+    TranslatePipe
+]
 })
 export class AffiliatesListEditModalComponent implements OnInit {
   editAffiliateForm: FormGroup;
@@ -47,6 +49,7 @@ export class AffiliatesListEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -58,6 +61,9 @@ export class AffiliatesListEditModalComponent implements OnInit {
     this.affiliate = affiliate;
     this.fetchCountry();
     this.getUserInfo(this.affiliate.id);
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   setValues(affiliate: UserAffiliate) {
@@ -113,6 +119,7 @@ export class AffiliatesListEditModalComponent implements OnInit {
   private fetchCountry() {
     this.affiliateService.getCountries().subscribe(data => {
       this.listCountry = data;
+      this.cdr.markForCheck();
     });
   }
 

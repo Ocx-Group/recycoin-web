@@ -1,16 +1,14 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
   ViewChild,
   OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
@@ -23,7 +21,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './calculation-groups-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: [CommonModule]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
   editCalculationForm: FormGroup;
@@ -38,7 +37,8 @@ export class CalculationGroupsEditModalComponent implements OnInit {
     private paymentGroupService: PaymentGroupsService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -67,6 +67,9 @@ export class CalculationGroupsEditModalComponent implements OnInit {
       calculation_name: paymentGroup.name,
       description: paymentGroup.description,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   updateCalculationGroup() {

@@ -1,5 +1,5 @@
-import { RightSidebarService } from 'src/app/core/service/rightsidebar-service/rightsidebar.service';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { RightSidebarService } from '@app/core/service/rightsidebar-service/rightsidebar.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
@@ -10,10 +10,11 @@ import {
   AfterViewInit,
   OnDestroy,
   CUSTOM_ELEMENTS_SCHEMA,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ConfigService } from 'src/app/config/config.service';
-import { LanguageService } from 'src/app/core/service/language-service/language.service';
+import { ConfigService } from '@app/config/config.service';
+import { LanguageService } from '@app/core/service/language-service/language.service';
 import { map, Observable, Subscription } from 'rxjs';
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
@@ -22,7 +23,7 @@ import { CartService } from '@app/core/service/cart.service/cart.service';
 import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.service';
 import { TicketSummary } from '@app/core/models/ticket-model/ticket-summary.model';
 import { IconsModule } from '@app/shared';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigureWalletComponent } from '@app/client/configure-wallet/configure-wallet.component';
 
@@ -35,10 +36,11 @@ import { ConfigureWalletComponent } from '@app/client/configure-wallet/configure
     CommonModule,
     RouterLink,
     IconsModule,
-    TranslateModule,
+    TranslatePipe,
     NgbModule,
     ConfigureWalletComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {

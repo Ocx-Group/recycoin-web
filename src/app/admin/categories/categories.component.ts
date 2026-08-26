@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
@@ -11,7 +11,7 @@ import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {CategoriesCreateModalComponent} from "./categories-create-modal/categories-create-modal.component";
 import {CategoriesEditModalComponent} from "./categories-edit-modal/categories-edit-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
 
@@ -19,8 +19,8 @@ const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -33,7 +33,7 @@ const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
     NgbDropdownItem,
     CategoriesCreateModalComponent,
     CategoriesEditModalComponent
-  ]
+]
 })
 export class CategoriesComponent implements OnInit {
   rows = [];
@@ -49,7 +49,8 @@ export class CategoriesComponent implements OnInit {
     private modalService: NgbModal,
     private productCategoryService: ProductCategoryService,
     private toastr: ToastrService,
-    private printService: PrintService
+    private printService: PrintService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -75,7 +76,7 @@ export class CategoriesComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {
@@ -90,6 +91,7 @@ export class CategoriesComponent implements OnInit {
       this.temp = [...resp];
       this.rows = resp;
       this.loadingIndicator = false;
+      this.cdr.markForCheck();
     });
   }
 

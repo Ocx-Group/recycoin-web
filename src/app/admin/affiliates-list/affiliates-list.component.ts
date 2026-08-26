@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -41,6 +41,7 @@ const header = [
     templateUrl: './affiliates-list.component.html',
     providers: [ToastrService],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BalanceInformationModalComponent,
     MatrixActivationModalComponent,
@@ -56,9 +57,8 @@ const header = [
     NgbDropdown,
     DataTableColumnCellDirective,
     NgbDropdownToggle,
-    NgIf,
     NgClass
-  ]
+]
 })
 export class AffiliatesListComponent implements OnInit {
   rows = [];
@@ -86,6 +86,7 @@ export class AffiliatesListComponent implements OnInit {
     private walletService: WalletService,
     private walletModel1AService: WalletModel1AService,
     private walletModel1BService: WalletModel1BService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -94,13 +95,14 @@ export class AffiliatesListComponent implements OnInit {
       .subscribe(term => {
         this.searchTerm = term;
         this.currentPage = 1;
+        this.cdr.markForCheck();
         this.loadAffiliateList();
       });
 
     this.loadAffiliateList();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
@@ -140,6 +142,7 @@ export class AffiliatesListComponent implements OnInit {
       error: error => {
         console.error(error);
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
         this.showError('Error al cargar los datos');
       },
     });

@@ -1,10 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -18,13 +20,14 @@ import {UserService} from "../../../core/service/user-service/user.service";
 import {User} from "../../../core/models/user-model/user.model";
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 
 @Component({
   selector: 'app-users-list-edit-modal',
   templateUrl: './users-list-edit-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -36,7 +39,7 @@ export class UsersListEditModalComponent implements OnInit {
   editUserForm: FormGroup;
   submitted = false;
   user = new User();
-  @Input() selectRol: Rol = new Rol();
+  @Input() selectRol: Rol[] = [];
   @ViewChild('userEditModal') userEditModal: NgbModal;
   @Output('loadUserList') loadUserList: EventEmitter<any> = new EventEmitter();
 
@@ -44,7 +47,8 @@ export class UsersListEditModalComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -69,6 +73,9 @@ export class UsersListEditModalComponent implements OnInit {
       address: user.address,
       status: user.status,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   ngOnInit(): void {

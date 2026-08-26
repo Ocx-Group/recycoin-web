@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
 import {MatrixConfigurationService} from "../../../core/service/matrix-configuration/matrix-configuration.service";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../../shared";
@@ -10,6 +10,7 @@ import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "
   templateUrl: './matrix-list.component.html',
   styleUrls: ['./matrix-list.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     IconsModule,
@@ -23,8 +24,8 @@ import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "
   ]
 })
 export class MatrixListComponent implements OnInit {
-  loadingIndicator: boolean = true;
-  rows: [] = [];
+  readonly loadingIndicator = signal<boolean>(true);
+  readonly rows = signal<any[]>([]);
   temp = [];
   reorderable: boolean = true;
   scrollBarHorizontal = window.innerWidth < 1200;
@@ -42,9 +43,9 @@ export class MatrixListComponent implements OnInit {
   loadAllConfigurations() {
     this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
       next: (response) => {
-        this.rows = response;
+        this.rows.set(response);
         this.temp = [...response];
-        this.loadingIndicator = false;
+        this.loadingIndicator.set(false);
       },
       error: (err) => {
         console.error('Error loading configurations', err)

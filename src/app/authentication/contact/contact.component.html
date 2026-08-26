@@ -25,23 +25,23 @@
         </div>
         <div class="social-links">
           <a href="https://www.instagram.com/recycoinproject?igsh=eGY4d3BnOGFlamhk" target="_blank"
-             rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+            rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
             <i class="bi bi-instagram"></i>
           </a>
           <a href="https://x.com/recycoinproject" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"
-             aria-label="X (formerly Twitter)">
+            aria-label="X (formerly Twitter)">
             <i>𝕏</i>
           </a>
           <a href="https://t.me/+jQhYW1Gdb5oxMWRh" target="_blank" rel="noopener noreferrer" class="social-icon"
-             aria-label="Telegram">
+            aria-label="Telegram">
             <i class="bi bi-telegram"></i>
           </a>
           <a href="https://www.youtube.com/@Recycoinproject" target="_blank" rel="noopener noreferrer"
-             class="social-icon" aria-label="YouTube">
+            class="social-icon" aria-label="YouTube">
             <i class="bi bi-youtube"></i>
           </a>
           <a href="https://www.tiktok.com/@recycoinproject?_t=8pauwT4QaLG&_r=1" target="_blank"
-             rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
+            rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
             <i class="bi bi-tiktok"></i>
           </a>
         </div>
@@ -49,10 +49,12 @@
       <div class="form-panel">
         <h2>Envíanos un mensaje</h2>
 
-        <div *ngIf="success" class="success-alert">
-          <i class="bi bi-check-circle-fill"></i>
-          ¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.
-        </div>
+        @if (success) {
+          <div class="success-alert">
+            <i class="bi bi-check-circle-fill"></i>
+            ¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.
+          </div>
+        }
 
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
           <div class="form-group">
@@ -63,84 +65,92 @@
                 placeholder="Nombre Completo"
                 formControlName="fullName"
                 [ngClass]="{'is-invalid': submitted && contactForm.get('fullName')?.errors}"
-              >
-              <i class="bi bi-person-fill"></i>
-            </div>
-            <div *ngIf="submitted && contactForm.get('fullName')?.errors" class="error-message">
-              <i class="bi bi-exclamation-circle-fill"></i> Nombre es requerido
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <div class="input-wrapper">
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Correo Electrónico"
-                  formControlName="email"
-                  [ngClass]="{'is-invalid': submitted && contactForm.get('email')?.errors}"
                 >
-                <i class="bi bi-envelope-fill"></i>
+                <i class="bi bi-person-fill"></i>
               </div>
-              <div *ngIf="submitted && contactForm.get('email')?.errors" class="error-message">
-                <i class="bi bi-exclamation-circle-fill"></i> Email es requerido
-              </div>
+              @if (submitted && contactForm.get('fullName')?.errors) {
+                <div class="error-message">
+                  <i class="bi bi-exclamation-circle-fill"></i> Nombre es requerido
+                </div>
+              }
             </div>
 
-            <div class="form-group">
-              <div class="input-wrapper">
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  placeholder="Teléfono (Opcional)"
-                  formControlName="phoneNumber"
-                  [ngClass]="{'is-invalid': submitted && contactForm.get('phoneNumber')?.errors}"
-                >
-                <i class="bi bi-telephoneNumber-fill"></i>
+            <div class="form-row">
+              <div class="form-group">
+                <div class="input-wrapper">
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Correo Electrónico"
+                    formControlName="email"
+                    [ngClass]="{'is-invalid': submitted && contactForm.get('email')?.errors}"
+                    >
+                    <i class="bi bi-envelope-fill"></i>
+                  </div>
+                  @if (submitted && contactForm.get('email')?.errors) {
+                    <div class="error-message">
+                      <i class="bi bi-exclamation-circle-fill"></i> Email es requerido
+                    </div>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <div class="input-wrapper">
+                    <input
+                      type="tel"
+                      id="phoneNumber"
+                      placeholder="Teléfono (Opcional)"
+                      formControlName="phoneNumber"
+                      [ngClass]="{'is-invalid': submitted && contactForm.get('phoneNumber')?.errors}"
+                      >
+                      <i class="bi bi-telephoneNumber-fill"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="subject"
+                      placeholder="Asunto"
+                      formControlName="subject"
+                      [ngClass]="{'is-invalid': submitted && contactForm.get('subject')?.errors}"
+                      >
+                      <i class="bi bi-chat-left-text-fill"></i>
+                    </div>
+                    @if (submitted && contactForm.get('subject')?.errors) {
+                      <div class="error-message">
+                        <i class="bi bi-exclamation-circle-fill"></i> Asunto es requerido
+                      </div>
+                    }
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-wrapper">
+                      <textarea
+                        id="message"
+                        placeholder="Tu mensaje mínimo 10 palabras"
+                        formControlName="message"
+                        [ngClass]="{'is-invalid': submitted && contactForm.get('message')?.errors}"
+                      ></textarea>
+                      <i class="bi bi-pencil-fill"></i>
+                    </div>
+                    @if (submitted && contactForm.get('message')?.errors) {
+                      <div class="error-message">
+                        <i class="bi bi-exclamation-circle-fill"></i> Mensaje es requerido
+                      </div>
+                    }
+                  </div>
+
+                  <button type="submit" class="submit-button">
+                    <span class="button-content">
+                      <i class="bi bi-send-fill"></i>
+                      Enviar Mensaje
+                    </span>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
-
-          <div class="form-group">
-            <div class="input-wrapper">
-              <input
-                type="text"
-                id="subject"
-                placeholder="Asunto"
-                formControlName="subject"
-                [ngClass]="{'is-invalid': submitted && contactForm.get('subject')?.errors}"
-              >
-              <i class="bi bi-chat-left-text-fill"></i>
-            </div>
-            <div *ngIf="submitted && contactForm.get('subject')?.errors" class="error-message">
-              <i class="bi bi-exclamation-circle-fill"></i> Asunto es requerido
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-wrapper">
-              <textarea
-                id="message"
-                placeholder="Tu mensaje mínimo 10 palabras"
-                formControlName="message"
-                [ngClass]="{'is-invalid': submitted && contactForm.get('message')?.errors}"
-              ></textarea>
-              <i class="bi bi-pencil-fill"></i>
-            </div>
-            <div *ngIf="submitted && contactForm.get('message')?.errors" class="error-message">
-              <i class="bi bi-exclamation-circle-fill"></i> Mensaje es requerido
-            </div>
-          </div>
-
-          <button type="submit" class="submit-button">
-            <span class="button-content">
-              <i class="bi bi-send-fill"></i>
-              Enviar Mensaje
-            </span>
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+        </div>

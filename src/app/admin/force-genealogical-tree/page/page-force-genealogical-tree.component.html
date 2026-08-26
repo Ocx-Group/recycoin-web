@@ -30,29 +30,30 @@
               [nodeTemplate]="nodeTemplate"
               [data]="tree"
               #exampleChart="orgChart"
-            >
+              >
             </app-force-genealogical-tree>
             <ng-template #nodeTemplate let-node>
               <div class="chart-node">
                 <img alt="node" [src]="node?.image || 'assets/images/user.svg'"
-                     (error)="$any($event.target).src='assets/images/user.svg'"/>
-                <div class="name">{{ node?.name }}</div>
-                <div class="description">{{ node?.description }}</div>
-                <!-- An ugly button to fold/unfold -->
-                <button
-                      *ngIf="node.children.length"
+                  (error)="$any($event.target).src='assets/images/user.svg'"/>
+                  <div class="name">{{ node?.name }}</div>
+                  <div class="description">{{ node?.description }}</div>
+                  <!-- An ugly button to fold/unfold -->
+                  @if (node.children.length) {
+                    <button
                       (click)="node.hideChildren = !node.hideChildren"
                       class="tree-fold-btn"
                       type="button"
                       [attr.aria-label]="node.hideChildren ? 'Expand node' : 'Collapse node'"
-                    >
+                      >
                       {{ node.hideChildren ? '+' : '-' }}
                     </button>
-                  </div>
-                </ng-template>
-              </div>
+                  }
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>

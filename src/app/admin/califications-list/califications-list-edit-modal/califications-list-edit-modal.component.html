@@ -13,16 +13,16 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
   <form
     class="register-form"
     [formGroup]="editCalificationForm"
-    [autocomplete]="off"
+    autocomplete="off"
     (ngSubmit)="onAddRowSave()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="alert alert-info text-center">
@@ -34,523 +34,534 @@
           <label for="calification_name">
             Nombre de Calificación
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="calification_name"
-            autocomplete="new_calification_name"
-            formControlName="calification_name"
-            placeholder="Nombre"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="calification_name"
+              autocomplete="new_calification_name"
+              formControlName="calification_name"
+              placeholder="Nombre"
+              required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_calification_controls.calification_name.errors
             }"
-          />
-          <div
-            *ngIf="
-              submitted && edit_calification_controls.calification_name.errors
-            "
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="
-                edit_calification_controls.calification_name.errors.required
-              "
-            >
-              El nombre para la calificación es requerido.
+              />
+              @if (
+                submitted && edit_calification_controls.calification_name.errors
+                ) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (
+                    edit_calification_controls.calification_name.errors.required
+                    ) {
+                    <div
+                      >
+                      El nombre para la calificación es requerido.
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="description">
-            Descripción de la Calificación
-            <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            formControlName="description"
-            id="description"
-            placeholder="Descripción"
-            required="required"
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="description">
+                Descripción de la Calificación
+                <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  id="description"
+                  placeholder="Descripción"
+                  required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_calification_controls.description.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_calification_controls.description.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_calification_controls.description.errors.required">
-              La Descripción es requerido.
-            </div>
-          </div>
-        </div>
+                  />
+                  @if (submitted && edit_calification_controls.description.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (edit_calification_controls.description.errors.required) {
+                        <div>
+                          La Descripción es requerido.
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            formControlName="status"
-            id="status"
-          />
-          <label
-            class="form-check-label ms-2"
-            for="status"
-            placement="bottom"
-            ngbTooltip="Si esta seleccionado esta opción esta calificación contara para evaluar al usuario."
-          >
-            Estatus de Calificación</label
-          >
-        </div>
-      </div>
-      <hr />
-      <div class="row">
-        <div class="col">
-          <div class="padding-20">
-            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-              <li [ngbNavItem]="1">
-                <a ngbNavLink>Evaluación de Compras</a>
-                <ng-template ngbNavContent>
-                  <div class="tab-pane">
-                    <div class="row text-center">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="form-group col-md-3 col-10">
-                            <label>Compras Personales</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              value=""
-                              placeholder="0.00"
-                              formControlName="personal_shopping"
-                            />
-                          </div>
-                          <div class="form-group col-md-3 mt-5 col-2">
-                            <input
-                              class="form-check-input ms-2 me-2"
-                              type="checkbox"
-                              name="personal_purchases_exact"
-                              formControlName="personal_purchases_exact"
-                              id="personal_purchases_exact"
-                              value=""
-                            />
-                            <label
-                              for="personal_purchases_exact"
-                              placement="bottom"
-                              ngbTooltip="Nota: Si no marca la opción de Monto Exacto los monton serán mayor o igual (>=)."
-                            >
-                              Monto Exacto
-                              <span class="text-danger">*</span></label
-                            >
-                          </div>
-                          <div class="form-group col-md-3 col-10">
-                            <label>Compras de Red</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              value=""
-                              placeholder="0.00"
-                              formControlName="network_shopping"
-                            />
-                          </div>
-                          <div class="form-group col-md-3 mt-5 col-2">
-                            <input
-                              class="form-check-input ms-2 me-2"
-                              type="checkbox"
-                              name="full_period"
-                              id="full_period"
-                              formControlName="full_period"
-                              value=""
-                            />
-                            <label
-                              for="full_period"
-                              placement="bottom"
-                              ngbTooltip="Nota: Si no marca la opción 'Periodo Completo' se tomara como compras de red las compras realizadas despues de la fecha de activación del afiliado evaluado."
-                            >
-                              Periodo Completo
-                              <span class="text-danger">*</span></label
-                            >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="form-group col-md-3 col-10">
-                            <label>Nivel de alcance</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              value=""
-                              placeholder="0.00"
-                              formControlName="scope_level"
-                            />
-                          </div>
-                          <div class="form-group col-md-3 mt-5 col-2">
-                            <input
-                              class="form-check-input ms-2 me-2"
-                              type="checkbox"
-                              name="infinite"
-                              formControlName="infinite"
-                              id="infinite"
-                              value=""
-                            />
-                            <label for="infinite">
-                              Infinito
-                              <span class="text-danger">*</span></label
-                            >
-                          </div>
-                          <div class="form-group col-md-3 col-12">
-                            <label>Volumen Binario</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              value=""
-                              placeholder="0.00"
-                              formControlName="binary_volume"
-                            />
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="form-group col-md-6 col-12">
-                            <label>Puntos para calificar.</label>
-                            <input
-                              type="number"
-                              min="0"
-                              class="form-control"
-                              value=""
-                              placeholder="0"
-                              formControlName="calification_points"
-                            />
-                          </div>
-                          <div class="form-group col-md-6 col-12">
-                            <label>Puntos de red para calificar</label>
-                            <input
-                              type="number"
-                              class="form-control"
-                              min="0"
-                              value=""
-                              placeholder="0"
-                              formControlName="network_points_qualify"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    formControlName="status"
+                    id="status"
+                    />
+                    <label
+                      class="form-check-label ms-2"
+                      for="status"
+                      placement="bottom"
+                      ngbTooltip="Si esta seleccionado esta opción esta calificación contara para evaluar al usuario."
+                      >
+                      Estatus de Calificación</label
+                      >
                     </div>
                   </div>
-                </ng-template>
-              </li>
-              <li [ngbNavItem]="2">
-                <a ngbNavLink>Directos y Calificados</a>
-                <ng-template ngbNavContent>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Nº de Hijos Activos en Pierna Izquierda</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          min="0"
-                          value=""
-                          placeholder="0"
-                          formControlName="children_left_leg"
-                        />
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Nº de hijos activos en pierna derecha</label>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value=""
-                          placeholder="0"
-                          formControlName="children_right_leg"
-                        />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label for="">
-                          Tomar en cuenta los frontales calificados por
-                          <span class="text-danger">*</span></label
-                        >
-                      </div>
-                      <div class="form-group col-md-3 col-12">
-                        <input
-                          class="form-check-input ms-2 me-2"
-                          type="radio"
-                          name="front_by_matrix"
-                          id="front_by_matrix"
-                          formControlName="front_by_matrix"
-                          value="0"
-                        />
-                        <label for="unilevel_matrix"> Matriz Unilevel </label>
-                      </div>
-                      <div class="form-group col-md-3 col-12">
-                        <input
-                          class="form-check-input ms-2 me-2"
-                          type="radio"
-                          name="front_by_matrix"
-                          formControlName="front_by_matrix"
-                          id="front_by_matrix"
-                          value="1"
-                        />
-                        <label for="forced_matrix"> Matriz Forzada </label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Frontales Calificados 1</label>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          placeholder="0"
-                          value=""
-                          formControlName="qualified_fronts1"
-                        />
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Calificación de Frontales Calificados 1</label>
-                        <select
-                          name="qualification_qualified_fronts1"
-                          id="qualification_qualified_fronts1"
-                          class="form-select form-control"
-                          formControlName="qualification_qualified_fronts1"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of calificationList;"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Frontales Calificados 2</label>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          placeholder="0"
-                          value=""
-                          formControlName="qualified_fronts2"
-                        />
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Calificación de Frontales Calificados 2</label>
-                        <select
-                          name="qualification_qualified_fronts2"
-                          id="qualification_qualified_fronts2"
-                          class="form-select form-control"
-                          formControlName="qualification_qualified_fronts2"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of calificationList;"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Frontales Calificados 3</label>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          placeholder="0"
-                          value=""
-                          formControlName="qualified_fronts3"
-                        />
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Calificación de Frontales Calificados 3</label>
-                        <select
-                          name="qualification_qualified_fronts3"
-                          id="qualification_qualified_fronts3"
-                          class="form-select form-control"
-                          formControlName="qualification_qualified_fronts3"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of calificationList;"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <input
-                          class="form-check-input ms-2 me-2"
-                          type="checkbox"
-                          name="exact_front_ratings"
-                          id="exact_front_ratings"
-                          value=""
-                          formControlName="exact_front_ratings"
-                        />
-                        <label
-                          for="exact_front_ratings"
-                          placement="bottom"
-                          ngbTooltip="Nota: Si no marca la opción de calificación exacta las calificaciones serán mayor o igual para las tres calificaciones frontales."
-                        >
-                          Calificación Exacta (Frontales Calificados)
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </li>
-              <li [ngbNavItem]="3">
-                <a ngbNavLink>Productos y Afiliaciones</a>
-                <ng-template ngbNavContent>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Productos</label>
-                        <select
-                          name="products"
-                          id="products"
-                          class="form-select form-control"
-                          formControlName="products"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of productListData;"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Pago por Afiliación</label>
-                        <select
-                          name="affiliations"
-                          id="affiliations"
-                          class="form-select form-control"
-                          formControlName="affiliations"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of membershipData"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </li>
-              <li [ngbNavItem]="4">
-                <a ngbNavLink>Lideres en Red</a>
-                <ng-template ngbNavContent>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label for="">
-                          Tomar en cuenta los lideres en red por
-                          <span class="text-danger">*</span></label
-                        >
-                      </div>
-                      <div class="form-group col-md-3 col-12">
-                        <input
-                          class="form-check-input ms-2 me-2"
-                          type="radio"
-                          name="leader_by_matrix"
-                          id="leader_by_matrix"
-                          formControlName="leader_by_matrix"
-                          value="0"
-                        />
-                        <label for="leader_by_matrix"> Matriz Unilevel </label>
-                      </div>
-                      <div class="form-group col-md-3 col-12">
-                        <input
-                          class="form-check-input ms-2 me-2"
-                          type="radio"
-                          name="leader_by_matrix"
-                          formControlName="leader_by_matrix"
-                          id="leader_by_matrix"
-                          value="1"
-                        />
-                        <label for="leader_by_matrix"> Matriz Forzada </label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-8 col-10">
-                        <label>Nivel de Alcance</label>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value=""
-                          placeholder="0"
-                          formControlName="network_scope_level"
-                        />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>Lideres en Red</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          name="network_leaders"
-                          value=""
-                          placeholder="0"
-                          min="0"
-                          formControlName="network_leaders"
-                        />
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Calificación lideres</label>
-                        <select
-                          name="network_leaders_qualifier"
-                          id="network_leaders_qualifier"
-                          class="form-select form-control"
-                          formControlName="network_leaders_qualifier"
-                        >
-                          <option value="0">Seleccione una opción</option>
-                          <option
-                            value="{{ item.id }}"
-                            *ngFor="let item of calificationList;"
-                          >
-                            {{ item.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </li>
-            </ul>
-            <div [ngbNavOutlet]="nav" class="mt-2"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        Cancelar
-      </button>
-    </div>
-  </form>
-</ng-template>
+                  <hr />
+                  <div class="row">
+                    <div class="col">
+                      <div class="padding-20">
+                        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                          <li [ngbNavItem]="1">
+                            <a ngbNavLink>Evaluación de Compras</a>
+                            <ng-template ngbNavContent>
+                              <div class="tab-pane">
+                                <div class="row text-center">
+                                  <div class="card-body">
+                                    <div class="row">
+                                      <div class="form-group col-md-3 col-10">
+                                        <label>Compras Personales</label>
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          value=""
+                                          placeholder="0.00"
+                                          formControlName="personal_shopping"
+                                          />
+                                        </div>
+                                        <div class="form-group col-md-3 mt-5 col-2">
+                                          <input
+                                            class="form-check-input ms-2 me-2"
+                                            type="checkbox"
+                                            name="personal_purchases_exact"
+                                            formControlName="personal_purchases_exact"
+                                            id="personal_purchases_exact"
+                                            value=""
+                                            />
+                                            <label
+                                              for="personal_purchases_exact"
+                                              placement="bottom"
+                                              ngbTooltip="Nota: Si no marca la opción de Monto Exacto los monton serán mayor o igual (>=)."
+                                              >
+                                              Monto Exacto
+                                              <span class="text-danger">*</span></label
+                                              >
+                                            </div>
+                                            <div class="form-group col-md-3 col-10">
+                                              <label>Compras de Red</label>
+                                              <input
+                                                type="text"
+                                                class="form-control"
+                                                value=""
+                                                placeholder="0.00"
+                                                formControlName="network_shopping"
+                                                />
+                                              </div>
+                                              <div class="form-group col-md-3 mt-5 col-2">
+                                                <input
+                                                  class="form-check-input ms-2 me-2"
+                                                  type="checkbox"
+                                                  name="full_period"
+                                                  id="full_period"
+                                                  formControlName="full_period"
+                                                  value=""
+                                                  />
+                                                  <label
+                                                    for="full_period"
+                                                    placement="bottom"
+                                                    ngbTooltip="Nota: Si no marca la opción 'Periodo Completo' se tomara como compras de red las compras realizadas despues de la fecha de activación del afiliado evaluado."
+                                                    >
+                                                    Periodo Completo
+                                                    <span class="text-danger">*</span></label
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="form-group col-md-3 col-10">
+                                                    <label>Nivel de alcance</label>
+                                                    <input
+                                                      type="text"
+                                                      class="form-control"
+                                                      value=""
+                                                      placeholder="0.00"
+                                                      formControlName="scope_level"
+                                                      />
+                                                    </div>
+                                                    <div class="form-group col-md-3 mt-5 col-2">
+                                                      <input
+                                                        class="form-check-input ms-2 me-2"
+                                                        type="checkbox"
+                                                        name="infinite"
+                                                        formControlName="infinite"
+                                                        id="infinite"
+                                                        value=""
+                                                        />
+                                                        <label for="infinite">
+                                                          Infinito
+                                                          <span class="text-danger">*</span></label
+                                                          >
+                                                        </div>
+                                                        <div class="form-group col-md-3 col-12">
+                                                          <label>Volumen Binario</label>
+                                                          <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            value=""
+                                                            placeholder="0.00"
+                                                            formControlName="binary_volume"
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                        <div class="row">
+                                                          <div class="form-group col-md-6 col-12">
+                                                            <label>Puntos para calificar.</label>
+                                                            <input
+                                                              type="number"
+                                                              min="0"
+                                                              class="form-control"
+                                                              value=""
+                                                              placeholder="0"
+                                                              formControlName="calification_points"
+                                                              />
+                                                            </div>
+                                                            <div class="form-group col-md-6 col-12">
+                                                              <label>Puntos de red para calificar</label>
+                                                              <input
+                                                                type="number"
+                                                                class="form-control"
+                                                                min="0"
+                                                                value=""
+                                                                placeholder="0"
+                                                                formControlName="network_points_qualify"
+                                                                />
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </ng-template>
+                                                  </li>
+                                                  <li [ngbNavItem]="2">
+                                                    <a ngbNavLink>Directos y Calificados</a>
+                                                    <ng-template ngbNavContent>
+                                                      <div class="card-body">
+                                                        <div class="row">
+                                                          <div class="form-group col-md-6 col-12">
+                                                            <label>Nº de Hijos Activos en Pierna Izquierda</label>
+                                                            <input
+                                                              type="number"
+                                                              class="form-control"
+                                                              min="0"
+                                                              value=""
+                                                              placeholder="0"
+                                                              formControlName="children_left_leg"
+                                                              />
+                                                            </div>
+                                                            <div class="form-group col-md-6 col-12">
+                                                              <label>Nº de hijos activos en pierna derecha</label>
+                                                              <input
+                                                                type="number"
+                                                                min="0"
+                                                                class="form-control"
+                                                                value=""
+                                                                placeholder="0"
+                                                                formControlName="children_right_leg"
+                                                                />
+                                                              </div>
+                                                            </div>
+                                                            <div class="row">
+                                                              <div class="form-group col-md-6 col-12">
+                                                                <label for="">
+                                                                  Tomar en cuenta los frontales calificados por
+                                                                  <span class="text-danger">*</span></label
+                                                                  >
+                                                                </div>
+                                                                <div class="form-group col-md-3 col-12">
+                                                                  <input
+                                                                    class="form-check-input ms-2 me-2"
+                                                                    type="radio"
+                                                                    name="front_by_matrix"
+                                                                    id="front_by_matrix"
+                                                                    formControlName="front_by_matrix"
+                                                                    value="0"
+                                                                    />
+                                                                    <label for="unilevel_matrix"> Matriz Unilevel </label>
+                                                                  </div>
+                                                                  <div class="form-group col-md-3 col-12">
+                                                                    <input
+                                                                      class="form-check-input ms-2 me-2"
+                                                                      type="radio"
+                                                                      name="front_by_matrix"
+                                                                      formControlName="front_by_matrix"
+                                                                      id="front_by_matrix"
+                                                                      value="1"
+                                                                      />
+                                                                      <label for="forced_matrix"> Matriz Forzada </label>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="row">
+                                                                    <div class="form-group col-md-6 col-12">
+                                                                      <label>Frontales Calificados 1</label>
+                                                                      <input
+                                                                        type="number"
+                                                                        min="0"
+                                                                        class="form-control"
+                                                                        placeholder="0"
+                                                                        value=""
+                                                                        formControlName="qualified_fronts1"
+                                                                        />
+                                                                      </div>
+                                                                      <div class="form-group col-md-6 col-12">
+                                                                        <label>Calificación de Frontales Calificados 1</label>
+                                                                        <select
+                                                                          name="qualification_qualified_fronts1"
+                                                                          id="qualification_qualified_fronts1"
+                                                                          class="form-select form-control"
+                                                                          formControlName="qualification_qualified_fronts1"
+                                                                          >
+                                                                          <option value="0">Seleccione una opción</option>
+                                                                          @for (item of calificationList; track item) {
+                                                                            <option
+                                                                              value="{{ item.id }}"
+                                                                              >
+                                                                              {{ item.name }}
+                                                                            </option>
+                                                                          }
+                                                                        </select>
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                      <div class="form-group col-md-6 col-12">
+                                                                        <label>Frontales Calificados 2</label>
+                                                                        <input
+                                                                          type="number"
+                                                                          min="0"
+                                                                          class="form-control"
+                                                                          placeholder="0"
+                                                                          value=""
+                                                                          formControlName="qualified_fronts2"
+                                                                          />
+                                                                        </div>
+                                                                        <div class="form-group col-md-6 col-12">
+                                                                          <label>Calificación de Frontales Calificados 2</label>
+                                                                          <select
+                                                                            name="qualification_qualified_fronts2"
+                                                                            id="qualification_qualified_fronts2"
+                                                                            class="form-select form-control"
+                                                                            formControlName="qualification_qualified_fronts2"
+                                                                            >
+                                                                            <option value="0">Seleccione una opción</option>
+                                                                            @for (item of calificationList; track item) {
+                                                                              <option
+                                                                                value="{{ item.id }}"
+                                                                                >
+                                                                                {{ item.name }}
+                                                                              </option>
+                                                                            }
+                                                                          </select>
+                                                                        </div>
+                                                                      </div>
+                                                                      <div class="row">
+                                                                        <div class="form-group col-md-6 col-12">
+                                                                          <label>Frontales Calificados 3</label>
+                                                                          <input
+                                                                            type="number"
+                                                                            min="0"
+                                                                            class="form-control"
+                                                                            placeholder="0"
+                                                                            value=""
+                                                                            formControlName="qualified_fronts3"
+                                                                            />
+                                                                          </div>
+                                                                          <div class="form-group col-md-6 col-12">
+                                                                            <label>Calificación de Frontales Calificados 3</label>
+                                                                            <select
+                                                                              name="qualification_qualified_fronts3"
+                                                                              id="qualification_qualified_fronts3"
+                                                                              class="form-select form-control"
+                                                                              formControlName="qualification_qualified_fronts3"
+                                                                              >
+                                                                              <option value="0">Seleccione una opción</option>
+                                                                              @for (item of calificationList; track item) {
+                                                                                <option
+                                                                                  value="{{ item.id }}"
+                                                                                  >
+                                                                                  {{ item.name }}
+                                                                                </option>
+                                                                              }
+                                                                            </select>
+                                                                          </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                          <div class="form-group col-md-6 col-12">
+                                                                            <input
+                                                                              class="form-check-input ms-2 me-2"
+                                                                              type="checkbox"
+                                                                              name="exact_front_ratings"
+                                                                              id="exact_front_ratings"
+                                                                              value=""
+                                                                              formControlName="exact_front_ratings"
+                                                                              />
+                                                                              <label
+                                                                                for="exact_front_ratings"
+                                                                                placement="bottom"
+                                                                                ngbTooltip="Nota: Si no marca la opción de calificación exacta las calificaciones serán mayor o igual para las tres calificaciones frontales."
+                                                                                >
+                                                                                Calificación Exacta (Frontales Calificados)
+                                                                              </label>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </ng-template>
+                                                                    </li>
+                                                                    <li [ngbNavItem]="3">
+                                                                      <a ngbNavLink>Productos y Afiliaciones</a>
+                                                                      <ng-template ngbNavContent>
+                                                                        <div class="card-body">
+                                                                          <div class="row">
+                                                                            <div class="form-group col-md-6 col-12">
+                                                                              <label>Productos</label>
+                                                                              <select
+                                                                                name="products"
+                                                                                id="products"
+                                                                                class="form-select form-control"
+                                                                                formControlName="products"
+                                                                                >
+                                                                                <option value="0">Seleccione una opción</option>
+                                                                                @for (item of productListData; track item) {
+                                                                                  <option
+                                                                                    value="{{ item.id }}"
+                                                                                    >
+                                                                                    {{ item.name }}
+                                                                                  </option>
+                                                                                }
+                                                                              </select>
+                                                                            </div>
+                                                                            <div class="form-group col-md-6 col-12">
+                                                                              <label>Pago por Afiliación</label>
+                                                                              <select
+                                                                                name="affiliations"
+                                                                                id="affiliations"
+                                                                                class="form-select form-control"
+                                                                                formControlName="affiliations"
+                                                                                >
+                                                                                <option value="0">Seleccione una opción</option>
+                                                                                @for (item of membershipData; track item) {
+                                                                                  <option
+                                                                                    value="{{ item.id }}"
+                                                                                    >
+                                                                                    {{ item.name }}
+                                                                                  </option>
+                                                                                }
+                                                                              </select>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </ng-template>
+                                                                    </li>
+                                                                    <li [ngbNavItem]="4">
+                                                                      <a ngbNavLink>Lideres en Red</a>
+                                                                      <ng-template ngbNavContent>
+                                                                        <div class="card-body">
+                                                                          <div class="row">
+                                                                            <div class="form-group col-md-6 col-12">
+                                                                              <label for="">
+                                                                                Tomar en cuenta los lideres en red por
+                                                                                <span class="text-danger">*</span></label
+                                                                                >
+                                                                              </div>
+                                                                              <div class="form-group col-md-3 col-12">
+                                                                                <input
+                                                                                  class="form-check-input ms-2 me-2"
+                                                                                  type="radio"
+                                                                                  name="leader_by_matrix"
+                                                                                  id="leader_by_matrix"
+                                                                                  formControlName="leader_by_matrix"
+                                                                                  value="0"
+                                                                                  />
+                                                                                  <label for="leader_by_matrix"> Matriz Unilevel </label>
+                                                                                </div>
+                                                                                <div class="form-group col-md-3 col-12">
+                                                                                  <input
+                                                                                    class="form-check-input ms-2 me-2"
+                                                                                    type="radio"
+                                                                                    name="leader_by_matrix"
+                                                                                    formControlName="leader_by_matrix"
+                                                                                    id="leader_by_matrix"
+                                                                                    value="1"
+                                                                                    />
+                                                                                    <label for="leader_by_matrix"> Matriz Forzada </label>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                  <div class="form-group col-md-8 col-10">
+                                                                                    <label>Nivel de Alcance</label>
+                                                                                    <input
+                                                                                      type="number"
+                                                                                      min="0"
+                                                                                      class="form-control"
+                                                                                      value=""
+                                                                                      placeholder="0"
+                                                                                      formControlName="network_scope_level"
+                                                                                      />
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                    <div class="form-group col-md-6 col-12">
+                                                                                      <label>Lideres en Red</label>
+                                                                                      <input
+                                                                                        type="number"
+                                                                                        class="form-control"
+                                                                                        name="network_leaders"
+                                                                                        value=""
+                                                                                        placeholder="0"
+                                                                                        min="0"
+                                                                                        formControlName="network_leaders"
+                                                                                        />
+                                                                                      </div>
+                                                                                      <div class="form-group col-md-6 col-12">
+                                                                                        <label>Calificación lideres</label>
+                                                                                        <select
+                                                                                          name="network_leaders_qualifier"
+                                                                                          id="network_leaders_qualifier"
+                                                                                          class="form-select form-control"
+                                                                                          formControlName="network_leaders_qualifier"
+                                                                                          >
+                                                                                          <option value="0">Seleccione una opción</option>
+                                                                                          @for (item of calificationList; track item) {
+                                                                                            <option
+                                                                                              value="{{ item.id }}"
+                                                                                              >
+                                                                                              {{ item.name }}
+                                                                                            </option>
+                                                                                          }
+                                                                                        </select>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </ng-template>
+                                                                              </li>
+                                                                            </ul>
+                                                                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                      <button type="submit" class="btn btn-primary">Guardar</button>
+                                                                      <button
+                                                                        type="button"
+                                                                        class="btn btn-light"
+                                                                        (click)="modal.close('Close click')"
+                                                                        >
+                                                                        Cancelar
+                                                                      </button>
+                                                                    </div>
+                                                                  </form>
+                                                                </ng-template>

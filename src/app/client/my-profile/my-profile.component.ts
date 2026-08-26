@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   NgbDropdown,
   NgbDropdownItem,
@@ -20,7 +20,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 
 const header = ['Movimientos', 'IP', 'Fecha'];
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MyProfileEditPasswordModalComponent } from './my-profile-edit-password-modal/my-profile-edit-password-modal.component';
 import { MyProfileEditPersonalInfoModalComponent } from './my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component';
 import { EditSecurityPinModalComponent } from './edit-security-pin-modal/edit-security-pin-modal.component';
@@ -33,9 +33,10 @@ import { RouterLink } from '@angular/router';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     MyProfileEditPasswordModalComponent,
     MyProfileEditPersonalInfoModalComponent,
     EditSecurityPinModalComponent,
@@ -74,6 +75,7 @@ export class MyProfileComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly gradingService: GradingService,
     private readonly affiliateService: AffiliateService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +122,7 @@ export class MyProfileComponent implements OnInit {
       .subscribe(response => {
         if (response.success) {
           this.user = response.data;
+          this.cdr.markForCheck();
           this.getGradingInfo(this.user.external_grading_before_id);
           this.loadLoginMovements();
         }
@@ -130,6 +133,7 @@ export class MyProfileComponent implements OnInit {
     this.gradingService.getGradingById(id).subscribe(response => {
       if (response.success) {
         this.grading = response.data;
+        this.cdr.markForCheck();
       }
     });
   }

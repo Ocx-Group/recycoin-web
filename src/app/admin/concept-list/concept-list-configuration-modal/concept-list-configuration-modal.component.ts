@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {ToastrService} from 'ngx-toastr';
@@ -10,16 +10,16 @@ import {
   ConceptConfigurationService
 } from "../../../core/service/concept-configuration-service/concept-configuration.service";
 import {FormsModule} from "@angular/forms";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-concept-list-configuration-modal',
   templateUrl: './concept-list-configuration-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     FormsModule
-  ]
+]
 })
 export class ConceptListConfigurationModalComponent implements OnInit {
   // conceptConfigurationForm!: FormGroup;
@@ -27,14 +27,16 @@ export class ConceptListConfigurationModalComponent implements OnInit {
   dataObject: ConceptLevel[] = [];
   conceptLevel: ConceptLevel = new ConceptLevel();
   concept: ConceptList = new ConceptList();
-  calificationList!: [];
+  calificationList: any[] = [];
 
   @ViewChild('configurationModal') configurationModal: NgbModal;
 
   constructor(
+    private modalService: NgbModal,
     private gradingService: GradingService,
     private conceptConfigurationService: ConceptConfigurationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -76,6 +78,7 @@ export class ConceptListConfigurationModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -117,7 +120,27 @@ export class ConceptListConfigurationModalComponent implements OnInit {
       .subscribe((resp) => {
         if (resp !== null) {
           this.dataObject = resp;
+          this.cdr.markForCheck();
         }
       });
+  }
+
+  configurationOpenModal(content, value) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    this.concept = value;
+    this.conceptConfigurationService
+      .getConceptConfigurationByConceptId(this.concept.id)
+      .subscribe((resp) => {
+        if (resp !== null) {
+          this.dataObject = resp;
+          this.cdr.markForCheck();
+        }
+      });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

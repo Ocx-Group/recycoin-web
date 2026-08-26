@@ -41,206 +41,210 @@
                                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-2">
                                   <h5>Retiro de Saldo</h5>
                                   <hr>
-                                  <label for="name">
-                                    Monto mínimo
-                                    <span class="text-danger">*</span></label>
-                                  <div class="input-group">
-                                    <button class="input-group-text" type="button">
-                                      <div class="col-green">
-                                        <i class="bi bi-currency-dollar"></i>
-                                      </div>
-                                    </button>
-                                    <input type="text" class="form-control" placeholder=""
-                                           formControlName="minimum_amount"/>
-                                  </div>
-                                  <label for="description">
-                                    Monto máximo
-                                    <span class="text-danger">*</span></label>
-                                  <div class="input-group">
-                                    <button class="input-group-text" type="button">
-                                      <div class="col-green">
-                                        <i class="bi bi-currency-dollar"></i>
-                                      </div>
-                                    </button>
-                                    <input type="text" class="form-control" placeholder=""
-                                           formControlName="maximum_amount"/>
-                                  </div>
-                                  <label for="description">
-                                    Monto comisión
-                                    <span class="text-danger">*</span></label>
-                                  <div class="input-group">
-                                    <button class="input-group-text" type="button">
-                                      <div class="col-green">
-                                        <i class="bi bi-percent"></i>
-                                      </div>
-                                    </button>
-                                    <input type="text" class="form-control" placeholder=""
-                                           formControlName="commission_amount"/>
-                                  </div>
-                                  <input class="form-check-input mt-4" type="checkbox"
-                                         formControlName="activate_invoice_cancellation"
-                                         id="activate_invoice_cancellation"/>
-                                  <label class="form-check-label ms-2 mt-3" for="activate_invoice_cancellation"
-                                         placement="bottom"
-                                         ngbTooltip="Si esta marcado se permite la anulación de facturas.">
-                                    Activar anulación de facturas</label>
-                                </div>
-                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-0">
-                                  <h5>Periodos de Retiros</h5>
-                                  <hr>
-                                  <button class="btn btn-primary  mt-4 mb-3" (click)=" addPicker()">Nuevo
-                                    Periodo
-                                  </button>
-
-                                  <div class="row mt-4">
-                                    <div class="col-md-3 form-group" formArrayName="datePickers"
-                                         *ngFor="let item of datePickers.controls;let i=index">
-                                      <div [formGroupName]="i">
-                                        <div class="input-group">
-                                          <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-                                                    type="button"><i class="fa fa-calendar"
-                                                                     style="cursor: pointer;"></i></button>
+                                    <label for="name">
+                                      Monto mínimo
+                                      <span class="text-danger">*</span></label>
+                                      <div class="input-group">
+                                        <button class="input-group-text" type="button">
+                                          <div class="col-green">
+                                            <i class="bi bi-currency-dollar"></i>
                                           </div>
-                                          <input class="form-control" [attr.id]="'picker' + i" placeholder="yyyy-mm-dd"
-                                                 name="dp" formControlName="picker" ngbDatepicker #d="ngbDatepicker">
-                                          <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary calendar"
-                                                    (click)=" removeDatepicker(item.get('id').value)" type="button">
-                                              <div class="col-red"><i class="bi bi-trash" style="cursor: pointer;"></i>
+                                        </button>
+                                        <input type="text" class="form-control" placeholder=""
+                                          formControlName="minimum_amount"/>
+                                        </div>
+                                        <label for="description">
+                                          Monto máximo
+                                          <span class="text-danger">*</span></label>
+                                          <div class="input-group">
+                                            <button class="input-group-text" type="button">
+                                              <div class="col-green">
+                                                <i class="bi bi-currency-dollar"></i>
                                               </div>
                                             </button>
+                                            <input type="text" class="form-control" placeholder=""
+                                              formControlName="maximum_amount"/>
+                                            </div>
+                                            <label for="description">
+                                              Monto comisión
+                                              <span class="text-danger">*</span></label>
+                                              <div class="input-group">
+                                                <button class="input-group-text" type="button">
+                                                  <div class="col-green">
+                                                    <i class="bi bi-percent"></i>
+                                                  </div>
+                                                </button>
+                                                <input type="text" class="form-control" placeholder=""
+                                                  formControlName="commission_amount"/>
+                                                </div>
+                                                <input class="form-check-input mt-4" type="checkbox"
+                                                  formControlName="activate_invoice_cancellation"
+                                                  id="activate_invoice_cancellation"/>
+                                                  <label class="form-check-label ms-2 mt-3" for="activate_invoice_cancellation"
+                                                    placement="bottom"
+                                                    ngbTooltip="Si esta marcado se permite la anulación de facturas.">
+                                                  Activar anulación de facturas</label>
+                                                </div>
+                                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 mb-0">
+                                                  <h5>Periodos de Retiros</h5>
+                                                  <hr>
+                                                    <button class="btn btn-primary  mt-4 mb-3" (click)=" addPicker()">Nuevo
+                                                      Periodo
+                                                    </button>
+
+                                                    <div class="row mt-4">
+                                                      @for (item of datePickers.controls; track item; let i = $index) {
+                                                        <div class="col-md-3 form-group" formArrayName="datePickers"
+                                                          >
+                                                          <div [formGroupName]="i">
+                                                            <div class="input-group">
+                                                              <div class="input-group-append">
+                                                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                                                  type="button"><i class="fa fa-calendar"
+                                                                style="cursor: pointer;"></i></button>
+                                                              </div>
+                                                              <input class="form-control" [attr.id]="'picker' + i" placeholder="yyyy-mm-dd"
+                                                                name="dp" formControlName="picker" ngbDatepicker #d="ngbDatepicker">
+                                                                <div class="input-group-append">
+                                                                  <button class="btn btn-outline-secondary calendar"
+                                                                    (click)=" removeDatepicker(item.get('id').value)" type="button">
+                                                                    <div class="col-red"><i class="bi bi-trash" style="cursor: pointer;"></i>
+                                                                  </div>
+                                                                </button>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      }
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <h5>Rangos de retención</h5>
+                                                  <hr>
+                                                    <div class="col">
+                                                      <button class="btn btn-primary" (click)="addRangeRetention()">Agregar nuevo rango de
+                                                        retención
+                                                      </button>
+                                                    </div>
+                                                    <div class="row mt-4 align-items-center">
+                                                      @for (range of ranges.controls; track range; let i = $index) {
+                                                        <div class="col-lg-12" formArrayName="ranges"
+                                                          >
+                                                          <div [formGroupName]="i" class="row">
+                                                            <div class="col-lg-4 form-group">
+                                                              <label for="" class="col-form-label">Desde</label>
+                                                              <div class="input-group">
+                                                                <input type="text" [attr.id]="'from_date' + i" class="form-control"
+                                                                  placeholder="Desde" formControlName="from_date">
+                                                                  <button class="input-group-text" type="button">
+                                                                    <i class="bi bi-arrow-right"></i>
+                                                                  </button>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-lg-4 form-group">
+                                                                <label for="" class="col-form-label">Hasta</label>
+                                                                <div class="input-group">
+                                                                  <input type="text" [attr.id]="'to_date' + i" class="form-control"
+                                                                    placeholder="Hasta" formControlName="to_date">
+                                                                    <button class="input-group-text" type="button">
+                                                                      <i class="bi bi-arrow-left"></i>
+                                                                    </button>
+                                                                  </div>
+                                                                </div>
+                                                                <div class="col-lg-3 form-group">
+                                                                  <label for="" class="col-form-label">Porcentaje de retención</label>
+                                                                  <div class="input-group">
+                                                                    <input type="text" [attr.id]="'percentage_retention' + i" class="form-control"
+                                                                      placeholder="Porcentaje de retención"
+                                                                      formControlName="percentage_retention">
+                                                                      <button class="input-group-text" type="button">
+                                                                        <i class="bi bi-percent"></i>
+                                                                      </button>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="col-lg-1 form-group d-flex align-items-center mt-4 mb-3">
+                                                                    <button class="btn btn-danger" (click)=" removeRange(range.get('id').value)"><i
+                                                                    class="bi bi-trash"></i></button>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            }
+                                                          </div>
+
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                          <div class="col d-flex justify-content-end">
+                                                            <button type="submit" class="btn btn-primary" (click)="save()">
+                                                              Guardar configuración
+                                                            </button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                    </div>
+                                                  </form>
+                                                </ng-template>
+                                              </li>
+                                              <li [ngbNavItem]="2">
+                                                <a ngbNavLink>Parámetros adicionales</a>
+                                                <ng-template ngbNavContent>
+                                                  <form [formGroup]="additionalParameters">
+                                                    <div class="card-body">
+                                                      <div class="row">
+                                                        <div class="alert alert-info text-center">
+                                                          Nota: Con esta configuracion se establecerán los parámetros el cobro de retencion en
+                                                          caso
+                                                          de que un afiliado no cuente con una compra de un producto de tipo INICIO
+                                                        </div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                          <label for="name">
+                                                            Concepto de retiro en la billetera
+                                                            <span class="text-danger">*</span></label>
+                                                            <input type="text" class="form-control" placeholder="Aquí va el concepto por retiro"
+                                                              formControlName="concept_wallet_withdrawal"/>
+
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                              <label for="description">
+                                                                Minutos de vigencia del código
+                                                                <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="0"
+                                                                  formControlName="minutes_validity_code"/>
+                                                                </div>
+                                                              </div>
+                                                              <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
+                                                                  <input class="form-check-input" type="checkbox" value=""
+                                                                    id="activate_confirmation_mails" formControlName="activate_confirmation_mails"/>
+                                                                    <label class="form-check-label ms-2" for="inventory" placement="bottom" ngbTooltip="">
+                                                                    Activar envio de correos con código de confirmación</label>
+                                                                  </div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                  <div class="col d-flex justify-content-center">
+                                                                    <button type="submit" class="btn btn-primary" (click)="saveAdditionalParameters()">
+                                                                      Guardar configuración
+                                                                    </button>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </form>
+                                                          </ng-template>
+                                                        </li>
+                                                      </ul>
+                                                      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div>
 
-                                </div>
-                              </div>
-                              <div class="row">
-                                <h5>Rangos de retención</h5>
-                                <hr>
-                                <div class="col">
-                                  <button class="btn btn-primary" (click)="addRangeRetention()">Agregar nuevo rango de
-                                    retención
-                                  </button>
-                                </div>
-                                <div class="row mt-4 align-items-center">
-                                  <div class="col-lg-12" formArrayName="ranges"
-                                       *ngFor="let range of ranges.controls; let i=index">
-                                    <div [formGroupName]="i" class="row">
-                                      <div class="col-lg-4 form-group">
-                                        <label for="" class="col-form-label">Desde</label>
-                                        <div class="input-group">
-                                          <input type="text" [attr.id]="'from_date' + i" class="form-control"
-                                                 placeholder="Desde" formControlName="from_date">
-                                          <button class="input-group-text" type="button">
-                                            <i class="bi bi-arrow-right"></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <div class="col-lg-4 form-group">
-                                        <label for="" class="col-form-label">Hasta</label>
-                                        <div class="input-group">
-                                          <input type="text" [attr.id]="'to_date' + i" class="form-control"
-                                                 placeholder="Hasta" formControlName="to_date">
-                                          <button class="input-group-text" type="button">
-                                            <i class="bi bi-arrow-left"></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <div class="col-lg-3 form-group">
-                                        <label for="" class="col-form-label">Porcentaje de retención</label>
-                                        <div class="input-group">
-                                          <input type="text" [attr.id]="'percentage_retention' + i" class="form-control"
-                                                 placeholder="Porcentaje de retención"
-                                                 formControlName="percentage_retention">
-                                          <button class="input-group-text" type="button">
-                                            <i class="bi bi-percent"></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <div class="col-lg-1 form-group d-flex align-items-center mt-4 mb-3">
-                                        <button class="btn btn-danger" (click)=" removeRange(range.get('id').value)"><i
-                                          class="bi bi-trash"></i></button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                              </div>
-                              <div class="row mt-2">
-                                <div class="col d-flex justify-content-end">
-                                  <button type="submit" class="btn btn-primary" (click)="save()">
-                                    Guardar configuración
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-                        </form>
-                      </ng-template>
-                    </li>
-                    <li [ngbNavItem]="2">
-                      <a ngbNavLink>Parámetros adicionales</a>
-                      <ng-template ngbNavContent>
-                        <form [formGroup]="additionalParameters">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="alert alert-info text-center">
-                                Nota: Con esta configuracion se establecerán los parámetros el cobro de retencion en
-                                caso
-                                de que un afiliado no cuente con una compra de un producto de tipo INICIO
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                <label for="name">
-                                  Concepto de retiro en la billetera
-                                  <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" placeholder="Aquí va el concepto por retiro"
-                                       formControlName="concept_wallet_withdrawal"/>
-
-                              </div>
-                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                <label for="description">
-                                  Minutos de vigencia del código
-                                  <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" placeholder="0"
-                                       formControlName="minutes_validity_code"/>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 mt-4 ml-4">
-                                <input class="form-check-input" type="checkbox" value=""
-                                       id="activate_confirmation_mails" formControlName="activate_confirmation_mails"/>
-                                <label class="form-check-label ms-2" for="inventory" placement="bottom" ngbTooltip="">
-                                  Activar envio de correos con código de confirmación</label>
-                              </div>
-                            </div>
-                            <div class="row mt-2">
-                              <div class="col d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary" (click)="saveAdditionalParameters()">
-                                  Guardar configuración
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </ng-template>
-                    </li>
-                  </ul>
-                  <div [ngbNavOutlet]="nav" class="mt-2"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
+                                    </section>

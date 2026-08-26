@@ -24,9 +24,9 @@
               <i class="fas fa-user float-start"></i>
               <span>
                 {{
-                  (information.amountUsersDirectModel123 ?? 0) +
-                  ' ' +
-                  ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
+                (information.amountUsersDirectModel123 ?? 0) +
+                ' ' +
+                ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
@@ -37,9 +37,9 @@
               <i class="fas fa-users float-start"></i>
               <span>
                 {{
-                  (information.amountUsersNetworkModel123 ?? 0) +
-                  ' ' +
-                  ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
+                (information.amountUsersNetworkModel123 ?? 0) +
+                ' ' +
+                ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
@@ -59,7 +59,7 @@
               </div>
               <div class="col-xl-2 text-right">
                 <span class="btn btn-outline-primary btn-sm" (click)="isCollapsed = !isCollapsed"
-                      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                   <i class="bi bi-arrows-collapse"></i>
                 </span>
               </div>
@@ -76,209 +76,221 @@
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
                             <div role="button" class="input-group-text" title="Search"
-                                 (click)="getUserAffiliateByUserName()">
+                              (click)="getUserAffiliateByUserName()">
                               <i-feather name="search" style="color: #96a2b4"></i-feather>
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
+                            id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
                                  aria-label="Search box" placeholder="{{
                               'NETWORK-PAGE.SEARCH.TEXT' | translate
                             }}"/>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row" *ngIf="rowsGlobal && rowsGlobal.length > 0">
-                <ngx-datatable #tableRef class="material" [rows]="rowsGlobal"
-                               [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50"
-                               [footerHeight]="50"
-                               rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
-                               [reorderable]="reorderable">
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.user_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }} {{ row.last_name }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.activation_date != null" class="badge-outline col-green">
-                        {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.activation_date == null" class="badge-outline col-red">
-                        {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{
-                      'NETWORK-PAGE.ROW-QUALIFICATION.TEXT' | translate
-                    }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ getNameGrading(row.external_grading_before_id) }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
-                        </button>
-                        <div ngbDropdownMenu>
-                          <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
-                            <i class="bi bi-credit-card"></i>
-                            <span style="margin-left: 10px">{{
-                                'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT'
-                                  | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
-                            <i class="bi bi-currency-exchange me-1"></i>
-                            <span>{{
-                                'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
-                              }}</span>
-                          </a>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>
-              {{ 'NETWORK-PAGE.NETWORK-TITLE.TEXT' | translate }}
-            </h4>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <div class="table-search-area">
-                      <div>
-                        <div class="form-group">
-                          <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                              <div role="button" class="input-group-text" title="Search">
-                                <i-feather name="search" style="color: #96a2b4"></i-feather>
-                              </div>
-                            </div>
-                            <input style="background-color: white" type="text" class="form-control"
-                                   id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                                   placeholder="{{
-                                'NETWORK-PAGE.SEARCH.TEXT' | translate
-                              }}"/>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2" (click)="redirectToUnilevelTree()">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-diagram-3 ms-2"></i>
-                          {{ 'NETWORK-PAGE.VIEW-NETWORK.TEXT' | translate }}
-                        </button>
-                      </li>
-                      <li class="nav-item m-2" (click)="copyTableData()">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'NETWORK-PAGE.COPY.TEXT' | translate }}
-                        </button>
-                      </li>
-
-                      <li class="nav-item m-2" (click)="downloadPDF()">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          {{ 'NETWORK-PAGE.PDF.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
-                <ngx-datatable id="htmlTable" #tableRefGlobal class="material" [rows]="rows"
-                               [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50"
-                               [footerHeight]="50"
-                               rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
-                               [reorderable]="reorderable">
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.userName }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-LEVEL.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.level }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.fullName }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-PHONE.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.phone }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.activationDate != null" class="badge-outline col-green">
-                        {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
-                      </div>
-                      <div *ngIf="row.activationDate == null" class="badge-outline col-red">
-                        {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
+                @if (rowsGlobal && rowsGlobal.length > 0) {
+                  <div class="row">
+                    <ngx-datatable #tableRef class="material" [rows]="rowsGlobal"
+                      [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50"
+                      [footerHeight]="50"
+                      rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                      [reorderable]="reorderable">
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.user_name }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.name }} {{ row.last_name }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          @if (row.activation_date != null) {
+                            <div class="badge-outline col-green">
+                              {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
+                            </div>
+                          }
+                          @if (row.activation_date == null) {
+                            <div class="badge-outline col-red">
+                              {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
+                            </div>
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
                   <ngx-datatable-column name="{{
                       'NETWORK-PAGE.ROW-QUALIFICATION.TEXT' | translate
                     }}">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ getNameGrading(row.externalGradingIdBefore) }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
-                        </button>
-                        <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
-                            <i class="bi bi-currency-exchange me-1"></i>
-                            <span>{{
-                                'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
-                              }}</span>
-                          </a>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ getNameGrading(row.external_grading_before_id) }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <div ngbDropdown container="body">
+                            <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                              {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
+                            </button>
+                            <div ngbDropdownMenu>
+                              @if (isNewUser) {
+                                <a ngbDropdownItem (click)="createPagaditoTransaction(row)">
+                                  <i class="bi bi-credit-card"></i>
+                                  <span style="margin-left: 10px">{{
+                                    'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT'
+                                    | translate
+                                  }}</span>
+                                </a>
+                              }
+                              <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
+                                <i class="bi bi-currency-exchange me-1"></i>
+                                <span>{{
+                                  'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
+                                }}</span>
+                              </a>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                    </ngx-datatable>
+                  </div>
+                }
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<app-third-party-purchase #purchaseModal [recycoins]="recycoins$ | async"
-                          [isReachedWithdrawalLimit]="isReachedWithdrawalLimit">
-</app-third-party-purchase>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>
+                {{ 'NETWORK-PAGE.NETWORK-TITLE.TEXT' | translate }}
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="table-search-area">
+                        <div>
+                          <div class="form-group">
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div role="button" class="input-group-text" title="Search">
+                                  <i-feather name="search" style="color: #96a2b4"></i-feather>
+                                </div>
+                              </div>
+                              <input style="background-color: white" type="text" class="form-control"
+                                id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                   placeholder="{{
+                                'NETWORK-PAGE.SEARCH.TEXT' | translate
+                              }}"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col align-self-end">
+                        <ul class="nav justify-content-end">
+                          <li class="nav-item m-2" (click)="redirectToUnilevelTree()">
+                            <button type="button" class="btn btn-primary">
+                              <i class="bi bi-diagram-3 ms-2"></i>
+                              {{ 'NETWORK-PAGE.VIEW-NETWORK.TEXT' | translate }}
+                            </button>
+                          </li>
+                          <li class="nav-item m-2" (click)="copyTableData()">
+                            <button type="button" class="btn btn-primary">
+                              <i class="bi bi-clipboard-check"></i>
+                              {{ 'NETWORK-PAGE.COPY.TEXT' | translate }}
+                            </button>
+                          </li>
+
+                          <li class="nav-item m-2" (click)="downloadPDF()">
+                            <button type="button" class="btn btn-primary">
+                              <i class="bi bi-printer"></i>
+                              {{ 'NETWORK-PAGE.PDF.TEXT' | translate }}
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <ngx-datatable id="htmlTable" #tableRefGlobal class="material" [rows]="rows"
+                      [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50"
+                      [footerHeight]="50"
+                      rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                      [reorderable]="reorderable">
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.userName }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-LEVEL.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.level }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.fullName }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-PHONE.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ row.phone }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          @if (row.activationDate != null) {
+                            <div class="badge-outline col-green">
+                              {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
+                            </div>
+                          }
+                          @if (row.activationDate == null) {
+                            <div class="badge-outline col-red">
+                              {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
+                            </div>
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
+                  <ngx-datatable-column name="{{
+                      'NETWORK-PAGE.ROW-QUALIFICATION.TEXT' | translate
+                    }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{ getNameGrading(row.externalGradingIdBefore) }}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <div ngbDropdown container="body">
+                            <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                              {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
+                            </button>
+                            <div ngbDropdownMenu>
+                              <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
+                                <i class="bi bi-currency-exchange me-1"></i>
+                                <span>{{
+                                  'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
+                                }}</span>
+                              </a>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                    </ngx-datatable>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <app-third-party-purchase #purchaseModal [recycoins]="recycoins$ | async"
+      [isReachedWithdrawalLimit]="isReachedWithdrawalLimit">
+    </app-third-party-purchase>

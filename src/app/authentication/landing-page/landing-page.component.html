@@ -8,114 +8,122 @@
         <img data-brand-logo src="../../../assets/images/logo-yellow.png" alt="Logo" class="navbar-logo neon-effect">
       </picture>
 
-      <div *ngIf="user" class="user-container green-theme">
-        <button type="button" class="user-panel">
-          <div class="image">
-            <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
-              class="img-fluid img-circle" alt="User Profile" />
+      @if (user) {
+        <div class="user-container green-theme">
+          <button type="button" class="user-panel">
+            <div class="image">
+              <img [src]="user?.image_profile_url ? $safeNavigationMigration(user?.image_profile_url) : 'assets/images/user.png'"
+                class="img-fluid img-circle" alt="User Profile" />
+              </div>
+            </button>
+            <div class="profile-usertitle">
+              <div class="sidebar-userpic-name">{{this.user.name}} {{this.user.last_name}}</div>
+              <div class="profile-usertitle-job">{{this.user.user_name}}</div>
+              @if (this.user.phone) {
+                <div class="profile-usertitle-job">{{this.user.phone}}</div>
+              }
+            </div>
           </div>
-        </button>
-        <div class="profile-usertitle">
-          <div class="sidebar-userpic-name">{{this.user.name}} {{this.user.last_name}}</div>
-          <div class="profile-usertitle-job">{{this.user.user_name}}</div>
-          <div *ngIf="this.user.phone" class="profile-usertitle-job">{{this.user.phone}}</div>
-        </div>
+        }
       </div>
-    </div>
 
-    <button class="navbar-toggle" (click)="toggleNavbar()">
-      <span class="menu-label">Menú</span>
-      <span class="navbar-toggle-icon"></span>
-    </button>
+      <button class="navbar-toggle" (click)="toggleNavbar()">
+        <span class="menu-label">Menú</span>
+        <span class="navbar-toggle-icon"></span>
+      </button>
 
-    <div class="navbar-nav" [class.show]="isNavbarVisible">
-      <div class="language-selector">
-        <button title="Cambia el idioma" type="button" (click)="toggleLanguageDropdown($event)">
-          <img title="Bandera Spain" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
-            *ngIf="currentLang === 'es'">
-          <img title="Bandera USA" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
-            *ngIf="currentLang === 'en'">
-        </button>
-        <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
-          <a href="#" (click)="changeLanguage('es'); $event.preventDefault(); $event.stopPropagation()">
-            <img src="../../../assets/images/flags/spain.jpg" alt="español" class="flag-icon">
-          </a>
-          <a href="#" (click)="changeLanguage('en'); $event.preventDefault(); $event.stopPropagation()">
-            <img src="../../../assets/images/flags/us.jpg" alt="english" class="flag-icon">
-          </a>
+      <div class="navbar-nav" [class.show]="isNavbarVisible">
+        <div class="language-selector">
+          <button title="Cambia el idioma" type="button" (click)="toggleLanguageDropdown($event)">
+            @if (currentLang === 'es') {
+              <img title="Bandera Spain" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
+                >
+            }
+            @if (currentLang === 'en') {
+              <img title="Bandera USA" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
+                >
+            }
+          </button>
+          <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
+            <a href="#" (click)="changeLanguage('es'); $event.preventDefault(); $event.stopPropagation()">
+              <img src="../../../assets/images/flags/spain.jpg" alt="español" class="flag-icon">
+            </a>
+            <a href="#" (click)="changeLanguage('en'); $event.preventDefault(); $event.stopPropagation()">
+              <img src="../../../assets/images/flags/us.jpg" alt="english" class="flag-icon">
+            </a>
+          </div>
         </div>
-      </div>
-      <!-- <a class="nav-link hover-glow" href="#" (click)="showDocument('recycoinProject'); $event.preventDefault()">
+        <!-- <a class="nav-link hover-glow" href="#" (click)="showDocument('recycoinProject'); $event.preventDefault()">
         {{ 'LANDING-PAGE.NAVBAR.RECYCOIN_PROJECT' | translate }}
       </a> -->
       <!-- <a class="nav-link hover-glow" href="#" (click)="showDocument('whitePaper'); $event.preventDefault()">
-        {{ 'LANDING-PAGE.NAVBAR.WHITE_PAPER' | translate }}
-      </a> -->
-      <!-- <a class="nav-link hover-glow" href="#"
-        (click)="openNewTab('https://bscscan.com/address/0x7c482FF834dfb546A8E48C14f3C34652E9826723#code'); $event.preventDefault()">
-        {{ 'LANDING-PAGE.NAVBAR.BNB_SCANNER' | translate }}
-      </a> -->
-      <a class="nav-link hover-glow" href="#" routerLink="/products-preview">
-        {{ 'LANDING-PAGE.NAVBAR.PRODUCT' | translate }}
-      </a>
-      <button class="btn neon-button" routerLink="/signup/{{this.user?.user_name}}">
-        {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
-      </button>
-      <button class="btn neon-button" (click)="openNewTab('/signin')">
-        {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
-      </button>
-    </div>
-  </nav>
+      {{ 'LANDING-PAGE.NAVBAR.WHITE_PAPER' | translate }}
+    </a> -->
+    <!-- <a class="nav-link hover-glow" href="#"
+    (click)="openNewTab('https://bscscan.com/address/0x7c482FF834dfb546A8E48C14f3C34652E9826723#code'); $event.preventDefault()">
+    {{ 'LANDING-PAGE.NAVBAR.BNB_SCANNER' | translate }}
+  </a> -->
+  <a class="nav-link hover-glow" href="#" routerLink="/products-preview">
+    {{ 'LANDING-PAGE.NAVBAR.PRODUCT' | translate }}
+  </a>
+  <button class="btn neon-button" routerLink="/signup/{{this.user?.user_name}}">
+    {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
+  </button>
+  <button class="btn neon-button" (click)="openNewTab('/signin')">
+    {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
+  </button>
+</div>
+</nav>
 
-  <div class="main-content">
-    <div class="title-group">
-      <h5 class="title neon-text">{{ 'LANDING-PAGE.MAIN_TITLE.LINE1' | translate }}</h5>
-      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE2' | translate }}</h5>
-      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE3' | translate }}</h5>
-    </div>
-
-    <div class="crypto-animation">
-      <i class="bi bi-currency-bitcoin"></i>
-      <i class="bi bi-currency-ethereum"></i>
-      <i class="bi bi-currency-dollar"></i>
-    </div>
+<div class="main-content">
+  <div class="title-group">
+    <h5 class="title neon-text">{{ 'LANDING-PAGE.MAIN_TITLE.LINE1' | translate }}</h5>
+    <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE2' | translate }}</h5>
+    <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE3' | translate }}</h5>
   </div>
 
-  <div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
-    <div class="modal-overlay" (click)="closeVideo()" (keydown)="closeVideo()"></div>
-    <div class="modal-content">
-      <button class="close-button" (click)="closeVideo()">×</button>
-      <iframe title="reproductor" [src]="currentVideoUrl | safe" width="100%" height="100%"
-        allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
-    </div>
+  <div class="crypto-animation">
+    <i class="bi bi-currency-bitcoin"></i>
+    <i class="bi bi-currency-ethereum"></i>
+    <i class="bi bi-currency-dollar"></i>
   </div>
+</div>
 
-  <div class="feature-section">
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.SECURE_TRANSACTIONS' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.REAL_TIME_ANALYSIS' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.BIOMETRIC_SECURITY' | translate }}</p>
-    </div>
+<div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
+  <div class="modal-overlay" (click)="closeVideo()" (keydown)="closeVideo()"></div>
+  <div class="modal-content">
+    <button class="close-button" (click)="closeVideo()">×</button>
+    <iframe title="reproductor" [src]="currentVideoUrl | safe" width="100%" height="100%"
+      allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
   </div>
+</div>
 
-  <div class="cta-section">
-    <!-- <button class="btn neon-button" (click)="showDocument('legalDoc')">
-      {{ 'LANDING-PAGE.CTA.LEGAL_DOCS' | translate }}
-    </button> -->
-    <button class="btn neon-button" routerLink="/contact">
-      {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
-    </button>
-    <button class="btn neon-button" routerLink="/testimonials">
-      {{ 'LANDING-PAGE.CTA.TESTIMONIALS' | translate }}
-    </button>
+<div class="feature-section">
+  <div class="feature-item">
+    <p>{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</p>
   </div>
+  <div class="feature-item">
+    <p>{{ 'LANDING-PAGE.FEATURES.SECURE_TRANSACTIONS' | translate }}</p>
+  </div>
+  <div class="feature-item">
+    <p>{{ 'LANDING-PAGE.FEATURES.REAL_TIME_ANALYSIS' | translate }}</p>
+  </div>
+  <div class="feature-item">
+    <p>{{ 'LANDING-PAGE.FEATURES.BIOMETRIC_SECURITY' | translate }}</p>
+  </div>
+</div>
+
+<div class="cta-section">
+  <!-- <button class="btn neon-button" (click)="showDocument('legalDoc')">
+  {{ 'LANDING-PAGE.CTA.LEGAL_DOCS' | translate }}
+</button> -->
+<button class="btn neon-button" routerLink="/contact">
+  {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
+</button>
+<button class="btn neon-button" routerLink="/testimonials">
+  {{ 'LANDING-PAGE.CTA.TESTIMONIALS' | translate }}
+</button>
+</div>
 </main>
 <app-pdf-viewer></app-pdf-viewer>

@@ -13,7 +13,7 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
@@ -21,99 +21,101 @@
   <div class="modal-body">
     <button (click)="addForm()" class="btn btn-primary mb-5">Agregar nivel</button>
 
-    <div class="row" *ngFor="let data of dataObject; let i = index">
-      <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
-        <label for="">Nivel</label>
-        <input
-          type="number"
-          class="form-control"
-          min="0"
-          name="level"
-          id="level"
-          placeholder="0"
-          [(ngModel)]="data.level"
-
-        />
-      </div>
-      <div class="form-group col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
-        <label for="">Porcentaje</label>
-        <input
-          type="text"
-          class="form-control"
-          name="percentage"
-          id="percentage"
-          placeholder="0.00"
-          [(ngModel)]="data.percentage"
-
-        />
-      </div>
-      <div class="form-group col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
-        <label for="">Calificación</label>
-        <select
-          class="form-select form-control"
-          name="equalization"
-          id="equalization"
-          [(ngModel)]="data.equalization"
-        >
-          <option value="0">Seleccione una opción</option>
-          <option *ngFor="let item of calificationList" [value]="item.id">
-            {{ item.name }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-3">
-        <div class="">
-          <label class="form-check-label ms-2" for="status"> Estatus</label>
-        </div>
-        <div class="">
+    @for (data of dataObject; track data; let i = $index) {
+      <div class="row">
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <label for="">Nivel</label>
           <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            name="status"
-            id="status"
-            [(ngModel)]="data.status"
-          />
-        </div>
-      </div>
-      <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-3">
-        <div class="class">
-          <label class="form-check-label ms-2" for="compression">
-            Compresion</label
-          >
-        </div>
-        <div class="class">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            name="compression"
-            id="compression"
-            [(ngModel)]="data.compression"
-          />
-        </div>
-      </div>
-      <div
-        class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-4 ms-2"
-      >
-        <button class="btn btn-primary" (click)="onAddRowSave(data)">
-          <i class="bi bi-cloud-plus-fill"></i>
-        </button>
-      </div>
-      <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-4">
-        <button class="btn btn-danger" (click)="deleteSingleRow(data, i)">
-          <i class="bi bi-trash-fill"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-light"
-      (click)="modal.close('Close click')"
-    >
-      Cancelar
-    </button>
-  </div>
-</ng-template>
+            type="number"
+            class="form-control"
+            min="0"
+            name="level"
+            id="level"
+            placeholder="0"
+            [(ngModel)]="data.level"
+            />
+          </div>
+          <div class="form-group col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <label for="">Porcentaje</label>
+            <input
+              type="text"
+              class="form-control"
+              name="percentage"
+              id="percentage"
+              placeholder="0.00"
+              [(ngModel)]="data.percentage"
+              />
+            </div>
+            <div class="form-group col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="">Calificación</label>
+              <select
+                class="form-select form-control"
+                name="equalization"
+                id="equalization"
+                [(ngModel)]="data.equalization"
+                >
+                <option value="0">Seleccione una opción</option>
+                @for (item of calificationList; track item) {
+                  <option [value]="item.id">
+                    {{ item.name }}
+                  </option>
+                }
+              </select>
+            </div>
+            <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-3">
+              <div class="">
+                <label class="form-check-label ms-2" for="status"> Estatus</label>
+              </div>
+              <div class="">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  name="status"
+                  id="status"
+                  [(ngModel)]="data.status"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-3">
+                <div class="class">
+                  <label class="form-check-label ms-2" for="compression">
+                    Compresion</label
+                    >
+                  </div>
+                  <div class="class">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      name="compression"
+                      id="compression"
+                      [(ngModel)]="data.compression"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-4 ms-2"
+                    >
+                    <button class="btn btn-primary" (click)="onAddRowSave(data)">
+                      <i class="bi bi-cloud-plus-fill"></i>
+                    </button>
+                  </div>
+                  <div class="form-group col-xl-1 col-lg-6 col-md-12 col-sm-12 mb-2 mt-4">
+                    <button class="btn btn-danger" (click)="deleteSingleRow(data, i)">
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="modal.close('Close click')"
+                >
+                Cancelar
+              </button>
+            </div>
+          </ng-template>

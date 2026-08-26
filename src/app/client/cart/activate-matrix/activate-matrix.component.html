@@ -13,7 +13,7 @@
 
   <div class="section-body">
     <!-- Loading state más elegante -->
-    <ng-container *ngIf="loading">
+    @if (loading()) {
       <div class="loading-container">
         <div class="loading-content">
           <div class="spinner-grow text-primary" role="status"></div>
@@ -22,10 +22,10 @@
         </div>
         <p class="loading-text">{{ 'ACTIVATE_MATRIX.LOADING_MATRICES' | translate }}</p>
       </div>
-    </ng-container>
+    }
 
     <!-- Matrix configurations -->
-    <ng-container *ngIf="!loading && matrixConfigurations.length > 0">
+    @if (!loading() && matrixConfigurations().length > 0) {
       <div class="invoice">
         <div class="invoice-print">
           <div class="row">
@@ -52,118 +52,121 @@
               </div>
             </div>
           </div>
-
           <!-- Matrices grid mejorado -->
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="section-title">{{ 'ACTIVATE_MATRIX.AVAILABLE_MATRICES' | translate }}</div>
               <p class="section-subtitle text-muted mb-3">Selecciona la matriz que deseas activar</p>
-
               <div id="matrix-list" class="matrices-grid mt-3">
-                <div *ngFor="let config of matrixConfigurations; let i = index" class="matrix-item"
-                  [class.selected]="selectedMatrixConfig?.matrixType === config.matrixType"
-                  (click)="selectMatrixConfig(config)">
-                  <div class="matrix-card">
-                    <!-- Header de la card -->
-                    <div class="matrix-header">
-                      <div class="matrix-icon">
-                        <i class="fas fa-th-large"></i>
-                      </div>
-                      <div class="selection-indicator">
+                @for (config of matrixConfigurations(); track config; let i = $index) {
+                  <div class="matrix-item"
+                    [class.selected]="selectedMatrixConfig?.matrixType === config.matrixType"
+                    (click)="selectMatrixConfig(config)">
+                    <div class="matrix-card">
+                      <!-- Header de la card -->
+                      <div class="matrix-header">
+                        <div class="matrix-icon">
+                          <i class="fas fa-th-large"></i>
+                        </div>
+                        <div class="selection-indicator">
                         <i class="fas" [ngClass]="{
                             'fa-check-circle text-success': selectedMatrixConfig?.matrixType === config.matrixType,
                             'fa-circle text-muted': selectedMatrixConfig?.matrixType !== config.matrixType
                           }"></i>
-                      </div>
-                    </div>
-
-                    <!-- Contenido de la card -->
-                    <div class="matrix-content">
-                      <h6 class="matrix-name">{{ config.matrixName }}</h6>
-
-                      <div class="matrix-details">
-                        <div class="detail-item">
-                          <span class="detail-label">Tipo:</span>
-                          <span class="badge badge-type">{{ config.matrixType }}</span>
-                        </div>
-                        <div class="detail-item">
-                          <span class="detail-label">Costo:</span>
-                          <span class="detail-value">${{ config.feeAmount }}</span>
                         </div>
                       </div>
-                    </div>
-
-                    <!-- Status overlay -->
-                    <div class="status-overlay" *ngIf="selectedMatrixConfig?.matrixType === config.matrixType">
-                      <span class="status-text">{{ 'ACTIVATE_MATRIX.SELECTED' | translate }}</span>
+                      <!-- Contenido de la card -->
+                      <div class="matrix-content">
+                        <h6 class="matrix-name">{{ config.matrixName }}</h6>
+                        <div class="matrix-details">
+                          <div class="detail-item">
+                            <span class="detail-label">Tipo:</span>
+                            <span class="badge badge-type">{{ config.matrixType }}</span>
+                          </div>
+                          <div class="detail-item">
+                            <span class="detail-label">Costo:</span>
+                            <span class="detail-value">${{ config.feeAmount }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Status overlay -->
+                      @if (selectedMatrixConfig?.matrixType === config.matrixType) {
+                        <div class="status-overlay">
+                          <span class="status-text">{{ 'ACTIVATE_MATRIX.SELECTED' | translate }}</span>
+                        </div>
+                      }
                     </div>
                   </div>
-                </div>
+                }
               </div>
-
               <!-- Panel de confirmación -->
-              <div class="row mt-4" *ngIf="selectedMatrixConfig">
-                <div class="col-lg-8">
-                  <div class="selection-summary">
-                    <div class="d-flex align-items-center mb-3">
-                      <div class="summary-icon">
-                        <i class="fas fa-check-circle text-success"></i>
+              @if (selectedMatrixConfig) {
+                <div class="row mt-4">
+                  <div class="col-lg-8">
+                    <div class="selection-summary">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="summary-icon">
+                          <i class="fas fa-check-circle text-success"></i>
+                        </div>
+                        <div class="ms-3">
+                          <h6 class="mb-1">Matriz seleccionada: {{ selectedMatrixConfig.matrixName }}</h6>
+                          <small class="text-muted">Tipo: {{ selectedMatrixConfig.matrixType }}</small>
+                        </div>
                       </div>
-                      <div class="ms-3">
-                        <h6 class="mb-1">Matriz seleccionada: {{ selectedMatrixConfig.matrixName }}</h6>
-                        <small class="text-muted">Tipo: {{ selectedMatrixConfig.matrixType }}</small>
+                      <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        {{ 'ACTIVATE_MATRIX.ACTIVATION_WARNING' | translate }}
                       </div>
                     </div>
-                    <div class="alert alert-warning">
-                      <i class="fas fa-exclamation-triangle me-2"></i>
-                      {{ 'ACTIVATE_MATRIX.ACTIVATION_WARNING' | translate }}
+                  </div>
+                  <div class="col-lg-4 invoice-right-align">
+                    <div class="invoice-detail-item">
+                      <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.SELECTED_MATRIX' | translate }}</div>
+                      <div class="invoice-detail-value">{{ selectedMatrixConfig.matrixName }}</div>
+                    </div>
+                    <div class="invoice-detail-item">
+                      <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.MATRIX_TYPE' | translate }}</div>
+                      <div class="invoice-detail-value">{{ selectedMatrixConfig.matrixType }}</div>
+                    </div>
+                    <hr class="mt-2 mb-2" />
+                    <div class="invoice-detail-item">
+                      <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.TOTAL_COST' | translate }}</div>
+                      <div class="invoice-detail-value invoice-detail-value-lg">$ {{ selectedMatrixConfig.feeAmount }}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4 invoice-right-align">
-                  <div class="invoice-detail-item">
-                    <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.SELECTED_MATRIX' | translate }}</div>
-                    <div class="invoice-detail-value">{{ selectedMatrixConfig.matrixName }}</div>
-                  </div>
-                  <div class="invoice-detail-item">
-                    <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.MATRIX_TYPE' | translate }}</div>
-                    <div class="invoice-detail-value">{{ selectedMatrixConfig.matrixType }}</div>
-                  </div>
-                  <hr class="mt-2 mb-2" />
-                  <div class="invoice-detail-item">
-                    <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.TOTAL_COST' | translate }}</div>
-                    <div class="invoice-detail-value invoice-detail-value-lg">$ {{ selectedMatrixConfig.feeAmount }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              }
             </div>
           </div>
-
           <!-- Action buttons -->
-          <hr *ngIf="selectedMatrixConfig" />
-          <div class="row" *ngIf="selectedMatrixConfig">
-            <div class="container my-3">
-              <div class="d-flex flex-wrap justify-content-end">
-                <div class="btn-group-vertical mb-2 ms-2">
-                  <button (click)="showCoinPaymentConfirmation()" class="btn btn-success mb-2 btn-activate">
-                    <i class="fas fa-rocket me-2"></i>
-                    {{ 'ACTIVATE_MATRIX.ACTIVATE_WITH_BALANCE' | translate }}
-                  </button>
-                  <button (click)="selectedMatrixConfig = null" class="btn btn-secondary mb-2">
-                    <i class="fas fa-times me-2"></i>
-                    {{ 'ACTIVATE_MATRIX.CANCEL_SELECTION' | translate }}
-                  </button>
+          @if (selectedMatrixConfig) {
+            <hr />
+          }
+          @if (selectedMatrixConfig) {
+            <div class="row">
+              <div class="container my-3">
+                <div class="d-flex flex-wrap justify-content-end">
+                  <div class="btn-group-vertical mb-2 ms-2">
+                    <button (click)="showCoinPaymentConfirmation()" class="btn btn-success mb-2 btn-activate">
+                      <i class="fas fa-rocket me-2"></i>
+                      {{ 'ACTIVATE_MATRIX.ACTIVATE_WITH_BALANCE' | translate }}
+                    </button>
+                    <button (click)="selectedMatrixConfig = null" class="btn btn-secondary mb-2">
+                      <i class="fas fa-times me-2"></i>
+                      {{ 'ACTIVATE_MATRIX.CANCEL_SELECTION' | translate }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          }
         </div>
       </div>
-    </ng-container>
+    }
 
     <!-- Empty state -->
-    <ng-container *ngIf="!loading && matrixConfigurations.length === 0">
+    @if (!loading() && matrixConfigurations().length === 0) {
       <div class="invoice">
         <div class="invoice-print">
           <div class="empty-state">
@@ -179,6 +182,6 @@
           </div>
         </div>
       </div>
-    </ng-container>
+    }
   </div>
 </section>

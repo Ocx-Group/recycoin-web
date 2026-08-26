@@ -35,91 +35,99 @@
                           <input style="background-color: white" type="text" class="form-control"
                             id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                             placeholder="Búsqueda" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
-                          <i class="bi bi-clipboard-check"></i>
-                          Copiar
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
+                            <i class="bi bi-clipboard-check"></i>
+                            Copiar
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary" (click)="onPrint()">
-                          <i class="bi bi-printer"></i>
-                          Imprimir
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary" (click)="onPrint()">
+                            <i class="bi bi-printer"></i>
+                            Imprimir
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                  <ngx-datatable id="htmlTable" #table class="material" [rows]="rows()"
+                    [loadingIndicator]="loadingIndicator()" columnMode="force" [headerHeight]="50" [footerHeight]="50"
+                    rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                    <ngx-datatable-column name="Usuario Responsable">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.adminUserName }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Afiliado">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.affiliateUserName }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Crédito (USD)">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div class="col-green">
+                          {{ row.credit }}
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Debito (USD)">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div class="col-red">
+                          {{ row.debit }}
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Estado">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.status == true) {
+                          <div class="badge-outline col-green">
+                            Atendido
+                          </div>
+                        }
+                        @if (row.status == false) {
+                          <div class="badge-outline col-red">
+                            No atendido
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Concepto">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.concept }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Fecha">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.date }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'WALLET-PAGE.DETAILS-COLUMN.TEXT' | translate }}" sortable="false">
+                      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        @if (row.detail) {
+                          <a class="msr-2 h-auto" (click)="showDetail(row.detail)">
+                            <i class="bi bi-folder2-open">Ver detalles</i>
+                          </a>
+                        }
+                        @if (!row.detail) {
+                          <a class="msr-2 h-auto tblEditBtn">
+                            <i class="bi bi-folder2-open">{{ 'WALLET-PAGE.DETAILS-BTN.TEXT' | translate }}</i>
+                          </a>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
                 </div>
-                <ngx-datatable id="htmlTable" #table class="material" [rows]="rows"
-                  [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="Usuario Responsable">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.adminUserName }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Afiliado">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.affiliateUserName }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Crédito (USD)">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div class="col-green">
-                        {{ row.credit }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Debito (USD)">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div class="col-red">
-                        {{ row.debit }}
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Estado">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.status == true" class="badge-outline col-green">
-                        Atendido
-                      </div>
-                      <div *ngIf="row.status == false" class="badge-outline col-red">
-                        No atendido
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Concepto">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.concept }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Fecha">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.date }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'WALLET-PAGE.DETAILS-COLUMN.TEXT' | translate }}" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                      <a *ngIf="row.detail" class="msr-2 h-auto" (click)="showDetail(row.detail)">
-                        <i class="bi bi-folder2-open">Ver detalles</i>
-                      </a>
-                      <a *ngIf="!row.detail" class="msr-2 h-auto tblEditBtn">
-                        <i class="bi bi-folder2-open">{{ 'WALLET-PAGE.DETAILS-BTN.TEXT' | translate }}</i>
-                      </a>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

@@ -1,5 +1,5 @@
 import { UserService } from '@app/core/service/user-service/user.service';
-import { Component, ViewChild, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
   AbstractControl,
@@ -21,6 +21,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
   templateUrl: './my-profile-edit-personal-info-modal.component.html',
   styleUrls: ['./my-profile-edit-personal-info-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class MyProfileEditPersonalInfoModalComponent implements OnInit {
@@ -36,6 +37,7 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly toastr: ToastrService,
     private readonly userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,9 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
       backdrop: 'static',
     });
     this.onSetValuesPersonalInfo(user);
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   get edit_personal_info_controls(): { [key: string]: AbstractControl } {

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {map} from 'rxjs/operators';
@@ -10,15 +10,15 @@ import {RouterLink} from "@angular/router";
 import {IconsModule} from "../../shared";
 import {PassivePackDetailsComponent} from "./passive-pack-details/passive-pack-details/passive-pack-details.component";
 import {PassivePackRunPoolModalComponent} from "./passive-pack-run-pool-modal/passive-pack-run-pool-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 
 @Component({
   selector: 'app-passive-pack',
   templateUrl: './passive-pack.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
     NgbDropdownToggle,
     PassivePackDetailsComponent,
     PassivePackRunPoolModalComponent
-  ]
+]
 })
 export class PassivePackComponent implements OnInit {
   rows = [];
@@ -48,6 +48,7 @@ export class PassivePackComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private invoiceService: InvoiceService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -93,6 +94,7 @@ export class PassivePackComponent implements OnInit {
           this.temp = [...data];
           this.rows = data;
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }
       });
   }
@@ -106,7 +108,7 @@ export class PassivePackComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.invoiceId.toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   openModal(content: any, size: string = 'xl') {

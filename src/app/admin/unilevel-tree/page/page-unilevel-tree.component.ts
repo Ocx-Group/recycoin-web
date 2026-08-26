@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -6,20 +6,20 @@ import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
 import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {UnilevelTreeComponentComponent} from "../unilevel-tree-component/unilevel-tree-component.component";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
   selector: 'app-page-unilevel-tree',
   templateUrl: './page-unilevel-tree.component.html',
   styleUrls: ['./page-unilevel-tree.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     UnilevelTreeComponentComponent,
     NgxSpinnerComponent
-  ]
+]
 })
 export class PageUnilevelTreeComponent implements OnInit {
   userId: number;

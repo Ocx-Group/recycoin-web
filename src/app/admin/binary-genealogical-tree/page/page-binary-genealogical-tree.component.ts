@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -8,20 +8,20 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {
   BinaryGenealogicalTreeComponent
 } from "../binary-genealogical-tree-component/binary-genealogical-tree.component";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-page-binary-genealogical-tree',
   templateUrl: './page-binary-genealogical-tree.component.html',
   styleUrls: ['./page-binary-genealogical-tree.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    CommonModule,
     TranslatePipe,
     BinaryGenealogicalTreeComponent,
     RouterLink,
     NgxSpinnerComponent
-  ]
+]
 })
 export class PageBinaryGenealogicalTreeComponent implements OnInit {
 

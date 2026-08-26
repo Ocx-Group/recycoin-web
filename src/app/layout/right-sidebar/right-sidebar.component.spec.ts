@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RightSidebarComponent } from './right-sidebar.component';
+
+import { testProviders } from '@app/testing/testing';
 describe('RightSidebarComponent', () => {
   let component: RightSidebarComponent;
   let fixture: ComponentFixture<RightSidebarComponent>;
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RightSidebarComponent]
+      imports: [RightSidebarComponent],
+      providers: [...testProviders]
     }).compileComponents();
   }));
   beforeEach(() => {

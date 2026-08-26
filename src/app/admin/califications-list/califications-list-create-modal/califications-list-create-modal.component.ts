@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, OnInit, Output, EventEmitter, ChangeDetectionStrategy, signal} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,12 +17,13 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-califications-list-create-modal',
   templateUrl: './califications-list-create-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -39,9 +40,9 @@ export class CalificationsListCreateModalComponent implements OnInit {
   createCalificationForm!: FormGroup;
   submitted = false;
   active = 1;
-  productListData!: [];
-  membershipData!: [];
-  calificationList!: [];
+  readonly productListData = signal<any[]>([]);
+  readonly membershipData = signal<any[]>([]);
+  readonly calificationList = signal<any[]>([]);
   grading: Grading = new Grading();
 
   @ViewChild('calificationCreateModal') calificationCreateModal: NgbModal;
@@ -152,20 +153,20 @@ export class CalificationsListCreateModalComponent implements OnInit {
 
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
-      this.productListData = resp;
+      this.productListData.set(resp);
     });
   }
 
   fetchMembership() {
     this.gradingService.getMembership().subscribe((resp) => {
-      this.membershipData = resp;
+      this.membershipData.set(resp);
     });
   }
 
   fetchCalificationList() {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
-        this.calificationList = resp;
+        this.calificationList.set(resp);
       }
     });
   }

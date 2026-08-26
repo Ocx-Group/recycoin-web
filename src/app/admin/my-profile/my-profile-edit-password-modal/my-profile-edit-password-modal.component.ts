@@ -1,6 +1,6 @@
 import { UpdatePassword } from '../../../core/models/user-model/update.password.model';
 import { ToastrService } from 'ngx-toastr';
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewChild, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   AbstractControl,
@@ -18,6 +18,9 @@ import {UserService} from "../../../core/service/user-service/user.service";
 @Component({
     selector: 'app-my-profile-edit-password-modal',
     templateUrl: './my-profile-edit-password-modal.component.html',
+    // Sin changeDetection explicito Angular 22 ya lo trata como OnPush; se
+    // anota para que las auditorias de estrategia lo vean.
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ToastrService],
     standalone: true,
     imports: [
@@ -104,7 +107,7 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
     this.toastr.success(message, 'Success!');
   }
 
-  onSaveFormValues(user: User) {
+  onSaveFormValues() {
     this.submitted = true;
     if (this.updatePasswordForm.invalid) {
       return;

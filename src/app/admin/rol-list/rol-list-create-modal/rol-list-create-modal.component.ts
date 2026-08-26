@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -17,13 +18,14 @@ import {ToastrService} from 'ngx-toastr';
 import {Rol} from "../../../core/models/rol-model/rol.model";
 import {RolService} from "../../../core/service/rol-service/rol.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, CommonModule} from "@angular/common";
+import { NgClass, CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-rol-list-create-modal',
   templateUrl: './rol-list-create-modal.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,

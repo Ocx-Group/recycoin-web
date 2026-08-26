@@ -25,38 +25,41 @@
             </h4>
           </div>
           <div class="card-body media-list position-relative"
-               style="position: relative; max-width: 100% !important; overflow-y: auto;"
-          >
-            <div *ngIf="showDiv">
-              <app-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
-                                           (loadFamilyTree)="onloadFamilyTree($event)">
-              </app-unilevel-tree-component>
-
-              <ng-template #nodeTemplate let-node>
-                <div class="chart-node">
-                  <img alt="node"
-                       [src]="node?.imageProfileUrl || node?.image || 'assets/images/user.svg'"
-                       (error)="$any($event.target).src='assets/images/user.svg'"/>
-                  <div class="name">
-                    <span style="font-size: 11px;">
-                      {{ node?.userName || node?.user_name }}
-                    </span>
-                  </div>
-                  <div *ngIf="node?.children?.length" (click)="node.hideChildren = !node.hideChildren"
-                       class="tree-fold-btn">
-                    {{ node.hideChildren ? '+' : '-' }}
-                  </div>
+            style="position: relative; max-width: 100% !important; overflow-y: auto;"
+            >
+            @if (showDiv) {
+              <div>
+                <app-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
+                  (loadFamilyTree)="onloadFamilyTree($event)">
+                </app-unilevel-tree-component>
+                <ng-template #nodeTemplate let-node>
+                  <div class="chart-node">
+                    <img alt="node"
+                      [src]="node?.imageProfileUrl || node?.image || 'assets/images/user.svg'"
+                      (error)="$any($event.target).src='assets/images/user.svg'"/>
+                      <div class="name">
+                        <span style="font-size: 11px;">
+                          {{ node?.userName || node?.user_name }}
+                        </span>
+                      </div>
+                      @if (node?.children?.length) {
+                        <div (click)="node.hideChildren = !node.hideChildren"
+                          class="tree-fold-btn">
+                          {{ node.hideChildren ? '+' : '-' }}
+                        </div>
+                      }
+                    </div>
+                  </ng-template>
                 </div>
-              </ng-template>
+              }
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-  <p style="color: white">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white">
     Loading...</p>
-</ngx-spinner>
+  </ngx-spinner>

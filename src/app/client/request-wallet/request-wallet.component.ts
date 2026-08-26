@@ -1,9 +1,9 @@
-import {Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy} from '@angular/core';
 import {DatatableComponent, NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UntypedFormGroup, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {TranslateModule} from '@ngx-translate/core';
+
+import {TranslatePipe} from '@ngx-translate/core';
 import {IconsModule} from '@app/shared';
 import {RouterLink} from "@angular/router";
 
@@ -11,12 +11,8 @@ import {RouterLink} from "@angular/router";
   selector: 'app-request-wallet',
   templateUrl: './request-wallet.component.html',
   standalone: true,
-  imports: [CommonModule,
-    NgxDatatableModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    IconsModule,
-    RouterLink],
+  imports: [NgxDatatableModule, ReactiveFormsModule, TranslatePipe, IconsModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {
@@ -71,7 +67,7 @@ export class RequestWalletComponent {
     });
 
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   addRow(content) {

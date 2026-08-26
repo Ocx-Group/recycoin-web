@@ -12,67 +12,77 @@
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
-  <form class="register-form" [formGroup]="editCategorieForm" [autocomplete]="off" (ngSubmit)="onAddRowSave()">
+  <form class="register-form" [formGroup]="editCategorieForm" autocomplete="off" (ngSubmit)="onAddRowSave()">
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label>Categoría</label>
           <select id="categorie" class="form-select form-control" formControlName="categorie">
             <option value="0">Seleccione una opción</option>
-            <option value="{{item.id}}" *ngFor="let item of categoriesList">{{item.name}}</option>
+            @for (item of categoriesList; track item) {
+              <option value="{{item.id}}">{{item.name}}</option>
+            }
           </select>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="name">
             Nombre
             <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre"
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre"
             required="required" [ngClass]="{
               'is-invalid': submitted && edit_categorie_controls.name.errors
             }" />
-          <div *ngIf="submitted && edit_categorie_controls.name.errors" class="invalid-feedback">
-            <div *ngIf="edit_categorie_controls.name.errors.required">
-              El nombre es requerido.
+              @if (submitted && edit_categorie_controls.name.errors) {
+                <div class="invalid-feedback">
+                  @if (edit_categorie_controls.name.errors.required) {
+                    <div>
+                      El nombre es requerido.
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="description">
-            Descripción
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="description" id="description"
-            placeholder="Descripción" />
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
-          <input class="form-check-input" type="checkbox" value="" formControlName="activate_small_banner"
-            id="activate_small_banner" [ngModel]="(checkboxSmallBanner)" (change)="onChangeSmallBanner()" />
-          <label class="form-check-label ms-2" for="activate_small_banner">
-            Activar banner pequeño</label>
-          <div class="mb-3">
-            <input *ngIf="checkboxSmallBanner" (change)="onFileSelected($event)" class="form-control form-control-sm"
-              id="formFileSm" type="file" />
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
-          <input class="form-check-input" type="checkbox" value="" formControlName="activate_big_banner"
-            id="activate_big_banner" [ngModel]="(checkboxBigBanner)" (change)="onChangeBigBanner()" />
-          <label class="form-check-label ms-2" for="activate_big_banner">
-            Activar banner grande</label>
-          <div class="mb-3">
-            <input *ngIf="checkboxBigBanner" (change)="onFileSelected($event)" class="form-control form-control-sm"
-              id="formFileSm" type="file" />
-          </div>
-        </div>
-      </div>
-      <div class="row"></div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-        Cancelar
-      </button>
-    </div>
-  </form>
-</ng-template>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <label for="description">
+                Descripción
+                <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="description" id="description"
+                  placeholder="Descripción" />
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
+                  <input class="form-check-input" type="checkbox" value="" formControlName="activate_small_banner"
+                    id="activate_small_banner" [ngModel]="(checkboxSmallBanner)" (change)="onChangeSmallBanner()" />
+                    <label class="form-check-label ms-2" for="activate_small_banner">
+                    Activar banner pequeño</label>
+                    <div class="mb-3">
+                      @if (checkboxSmallBanner) {
+                        <input (change)="onFileSelected($event)" class="form-control form-control-sm"
+                          id="formFileSm" type="file" />
+                      }
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
+                    <input class="form-check-input" type="checkbox" value="" formControlName="activate_big_banner"
+                      id="activate_big_banner" [ngModel]="(checkboxBigBanner)" (change)="onChangeBigBanner()" />
+                      <label class="form-check-label ms-2" for="activate_big_banner">
+                      Activar banner grande</label>
+                      <div class="mb-3">
+                        @if (checkboxBigBanner) {
+                          <input (change)="onFileSelected($event)" class="form-control form-control-sm"
+                            id="formFileSm" type="file" />
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row"></div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </ng-template>

@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
@@ -19,7 +19,7 @@ import {UserAffiliate} from "../../core/models/user-affiliate-model/user.affilia
 import {
   AuthorizeAffiliatesEditModalComponent
 } from "./authorize-affiliates-edit-modal/authorize-affiliates-edit-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 
 interface Alert {
@@ -50,8 +50,8 @@ const header = [
   templateUrl: './authorize-affiliates.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -64,7 +64,7 @@ const header = [
     NgbDropdownMenu,
     NgbDropdownItem,
     AuthorizeAffiliatesEditModalComponent
-  ]
+]
 })
 export class AuthorizeAffiliatesComponent implements OnInit {
   alerts: Alert[];
@@ -88,6 +88,7 @@ export class AuthorizeAffiliatesComponent implements OnInit {
     private printService: PrintService,
     private affiliateService: AffiliateService,
     private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
   ) {
     this.alerts = Array.from(ALERTS);
   }
@@ -101,9 +102,11 @@ export class AuthorizeAffiliatesComponent implements OnInit {
       if (affiliates !== null) {
         this.temp = [...affiliates];
         this.rows = affiliates;
+        this.cdr.markForCheck();
       }
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }
@@ -196,6 +199,7 @@ export class AuthorizeAffiliatesComponent implements OnInit {
 
     req.onload = () => {
       cb(JSON.parse(req.response));
+      this.cdr.markForCheck();
     };
 
     req.send();
@@ -209,7 +213,7 @@ export class AuthorizeAffiliatesComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   close(alert: Alert) {

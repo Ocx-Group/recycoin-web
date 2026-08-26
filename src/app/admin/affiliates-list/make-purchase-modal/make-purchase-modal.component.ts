@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -9,17 +9,17 @@ import {ProductsRequests, WalletRequest} from "@app/core/models/wallet-model/wal
 import {WalletService} from "@app/core/service/wallet-service/wallet.service";
 import {ProductService} from "@app/core/service/product-service/product.service";
 import {Product} from "@app/core/models/product-model/product.model";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-make-purchase-modal',
   templateUrl: './make-purchase-modal.component.html',
   styleUrls: ['./make-purchase-modal.component.sass'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule
-  ]
+]
 })
 export class MakePurchaseModalComponent implements OnInit {
   makePurchaseForm: FormGroup;
@@ -33,7 +33,9 @@ export class MakePurchaseModalComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private walletService: WalletService,
               private toastr: ToastrService,
-              private productService: ProductService) {
+              private productService: ProductService,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit(): void {
@@ -58,6 +60,9 @@ export class MakePurchaseModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   processPayment(option: number) {
@@ -84,6 +89,7 @@ export class MakePurchaseModalComponent implements OnInit {
           this.showSuccess('Pago realizado correctamente');
           this.walletRequest.productsList = [];
           this.products = [];
+          this.cdr.markForCheck();
           this.modalService.dismissAll();
         } else {
           this.showError('Error: No se pudo realizar el pago.');
@@ -106,6 +112,7 @@ export class MakePurchaseModalComponent implements OnInit {
   loadAllEcoPooles() {
     this.productService.getAllRecyCoin().subscribe((ecopools: Product) => {
       this.productList = ecopools;
+      this.cdr.markForCheck();
       this.filterCategory = ecopools;
       this.productList.forEach((item: any) => {
         Object.assign(item, {quantity: 1, total: item.salePrice});

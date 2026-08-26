@@ -1,26 +1,30 @@
 <div class="products-section">
   <div class="row g-3">
-    <div class="col-12 col-sm-6 col-md-3" *ngFor="let item of productList">
-      <div class="product-card" *ngIf="!item.productType"
-           (mouseenter)="item.showButton = true"
-           (mouseleave)="item.showButton = false">
-        <div class="image-container">
-          <img [src]="item.image" class="card-img" alt="Semilla">
-          <div class="overlay" [class.show]="item.showButton">
-            <button class="add-button" (click)="addtocart(item)">
-              <i class="bi bi-plus-circle-fill me-2"></i>
-              Añadir al carrito
-            </button>
+    @for (item of productList; track item) {
+      <div class="col-12 col-sm-6 col-md-3">
+        @if (!item.productType) {
+          <div class="product-card"
+            (mouseenter)="item.showButton = true"
+            (mouseleave)="item.showButton = false">
+            <div class="image-container">
+              <img [src]="item.image" class="card-img" alt="Semilla">
+              <div class="overlay" [class.show]="item.showButton">
+                <button class="add-button" (click)="addtocart(item)">
+                  <i class="bi bi-plus-circle-fill me-2"></i>
+                  Añadir al carrito
+                </button>
+              </div>
+            </div>
+            <div class="card-footer">
+              <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
+              <div class="text-container">
+                <span class="product-name">{{ item.name }}</span>
+                <span class="product-price">${{ item.baseAmount }}</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card-footer">
-          <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
-          <div class="text-container">
-            <span class="product-name">{{ item.name }}</span>
-            <span class="product-price">${{ item.baseAmount }}</span>
-          </div>
-        </div>
+        }
       </div>
-    </div>
+    }
   </div>
 </div>

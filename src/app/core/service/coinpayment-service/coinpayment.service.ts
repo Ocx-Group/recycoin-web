@@ -8,6 +8,7 @@ import { Response } from '@app/core/models/response-model/response.model';
 import { WalletRequestRequest } from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
 import { CoinPaymentWithdrawalResponse } from '@app/core/models/coinpayment-model/coinpayment-withdrawal-response.model';
 import { CreatePayment } from '../../models/coinpayment-model/create-payment.model';
+import { ConpaymentTransaction } from '../../models/coinpayment-model/conpayment-transaction.model';
 
 const httpOptions = {
 
@@ -33,7 +34,7 @@ export class CoinpaymentService {
 
   createTransaction(transactionRequest: CreatePayment) {
     return this.http
-      .post(this.urlApi.concat('/conPayments/createPayment'), transactionRequest, httpOptions);
+      .post<ConpaymentTransaction>(this.urlApi.concat('/conPayments/createPayment'), transactionRequest, httpOptions);
   }
 
   getTransactionInfo(idTransaction: string, fullInfo: boolean) {

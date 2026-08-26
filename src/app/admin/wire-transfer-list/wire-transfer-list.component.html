@@ -35,86 +35,90 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                                  placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
                             }}"/>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col align-self-end">
-                    <ul class="nav justify-content-end">
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-clipboard-check"></i>
-                          {{ 'INDUCEMENTS-PAGE.BTN-COPY.TEXT' | translate }}
-                        </button>
-                      </li>
+                    <div class="col align-self-end">
+                      <ul class="nav justify-content-end">
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary">
+                            <i class="bi bi-clipboard-check"></i>
+                            {{ 'INDUCEMENTS-PAGE.BTN-COPY.TEXT' | translate }}
+                          </button>
+                        </li>
 
-                      <li class="nav-item m-2">
-                        <button type="button" class="btn btn-primary">
-                          <i class="bi bi-printer"></i>
-                          {{ 'INDUCEMENTS-PAGE.BTN-PRINT.TEXT' | translate }}
-                        </button>
-                      </li>
-                    </ul>
+                        <li class="nav-item m-2">
+                          <button type="button" class="btn btn-primary">
+                            <i class="bi bi-printer"></i>
+                            {{ 'INDUCEMENTS-PAGE.BTN-PRINT.TEXT' | translate }}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="Usuario">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.userName }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Referencia de Transacción">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.idTransaction }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Monto">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.amount }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Pagado">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div class="col-green" *ngIf="row.acredited ==true">
-                        Pagado
-                      </div>
-                      <div class="col-red" *ngIf="row.acredited ==false">
-                        Pendiente
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Fecha de la transferencia">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.createdAt }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
-                        </button>
-                        <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-paid" (click)="confirmPaymentTransaction(row)">
-                            <i class="fas fa-dollar-sign"></i>
-                            <span class="ms-2">Confirmar pago</span>
-                          </a>
+                  <ngx-datatable #table class="material" [rows]="rows()" [loadingIndicator]="loadingIndicator()"
+                    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                    [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                    <ngx-datatable-column name="Usuario">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.userName }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Referencia de Transacción">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.idTransaction }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Monto">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.amount }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Pagado">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        @if (row.acredited ==true) {
+                          <div class="col-green">
+                            Pagado
+                          </div>
+                        }
+                        @if (row.acredited ==false) {
+                          <div class="col-red">
+                            Pendiente
+                          </div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Fecha de la transferencia">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.createdAt }}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}" sortable="false">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div ngbDropdown container="body">
+                          <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                            {{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
+                          </button>
+                          <div ngbDropdownMenu>
+                            <a ngbDropdownItem id="btn-paid" (click)="confirmPaymentTransaction(row)">
+                              <i class="fas fa-dollar-sign"></i>
+                              <span class="ms-2">Confirmar pago</span>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>

@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -20,7 +20,7 @@ import {
 import {
   CalificationsListDetailsModalComponent
 } from "./califications-list-details-modal/califications-list-details-modal.component";
-import { CommonModule } from '@angular/common';
+
 
 const header = [
   'Nombre del Calificación',
@@ -34,8 +34,8 @@ const header = [
   templateUrl: './califications-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     RouterLink,
     IconsModule,
@@ -49,7 +49,7 @@ const header = [
     CalificationsListCreateModalComponent,
     CalificationsListEditModalComponent,
     CalificationsListDetailsModalComponent
-  ]
+]
 })
 export class CalificationsListComponent implements OnInit {
   rows = [];
@@ -66,7 +66,8 @@ export class CalificationsListComponent implements OnInit {
     private gradingService: GradingService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -98,7 +99,7 @@ export class CalificationsListComponent implements OnInit {
     // update the rows
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   createOpenModal(content) {
@@ -117,9 +118,11 @@ export class CalificationsListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

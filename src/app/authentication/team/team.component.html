@@ -7,33 +7,34 @@
     </div>
 
     <div class="row g-4 justify-content-center">
-      <div class="col-md-6" *ngFor="let member of teamMembers">
-        <div class="team-card">
-          <div class="text-center mb-4">
-            <div class="team-image-wrapper">
-              <img [src]="member.image" [alt]="member.name" class="team-image">
+      @for (member of teamMembers; track member) {
+        <div class="col-md-6">
+          <div class="team-card">
+            <div class="text-center mb-4">
+              <div class="team-image-wrapper">
+                <img [src]="member.image" [alt]="member.name" class="team-image">
+              </div>
             </div>
-          </div>
-
-          <div class="team-content text-center">
-            <h3 class="team-name">{{ member.name }}</h3>
-            <div class="team-roles mb-3">
-              <p class="mb-0">{{ member.role }}</p>
-              <p class="mb-0">{{ member.subRole }}</p>
+            <div class="team-content text-center">
+              <h3 class="team-name">{{ member.name }}</h3>
+              <div class="team-roles mb-3">
+                <p class="mb-0">{{ member.role }}</p>
+                <p class="mb-0">{{ member.subRole }}</p>
+              </div>
+              <p class="team-description">{{ member.description }}</p>
+              @if (member.linkedin) {
+                <a
+                  href="javascript:void(0)"
+                  (click)="openNewTab($event, member.linkedin)"
+                  class="linkedin-link">
+                  <i class="bi bi-linkedin me-2"></i>
+                  LinkedIn
+                </a>
+              }
             </div>
-
-            <p class="team-description">{{ member.description }}</p>
-
-            <a *ngIf="member.linkedin"
-               href="javascript:void(0)"
-               (click)="openNewTab($event, member.linkedin)"
-               class="linkedin-link">
-              <i class="bi bi-linkedin me-2"></i>
-              LinkedIn
-            </a>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 </section>

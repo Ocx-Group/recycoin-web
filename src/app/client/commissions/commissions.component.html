@@ -33,13 +33,13 @@
                 <select
                   id="slt-concept"
                   class="form-select form-control form-control-sm"
-                >
+                  >
                   <option>
                     {{ 'COMMISSIONS-PAGE.SLT-OPTION-BONO.TEXT' | translate }}
                   </option>
                   <option>
                     {{
-                      'COMMISSIONS-PAGE.SLT-OPTION-1ERLEVEL.TEXT' | translate
+                    'COMMISSIONS-PAGE.SLT-OPTION-1ERLEVEL.TEXT' | translate
                     }}
                   </option>
                   <option>
@@ -59,7 +59,7 @@
                 <select
                   id="slt-period"
                   class="form-select form-control form-control-sm"
-                >
+                  >
                   <option>
                     {{ 'COMMISSIONS-PAGE.SLT-OPTION-PERIOD.TEXT' | translate }}
                   </option>
@@ -77,16 +77,19 @@
               <div class="">
                 <div class="card-body">
                   <!-- <p *ngFor="let alert of alerts">
-                      <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
-                    </p> -->
-                  <p *ngFor="let alert of alerts" class="text-center">
-                    <ngb-alert
-                      [type]="alert.type"
-                      (closed)="close(alert)"
-                      *ngIf="show"
-                      >{{ alert.message }}</ngb-alert
-                    >
-                  </p>
+                  <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+                </p> -->
+                @for (alert of alerts; track alert) {
+                  <p class="text-center">
+                    @if (show) {
+                      <ngb-alert
+                        [type]="alert.type"
+                        (closed)="close(alert)"
+                        >{{ alert.message }}</ngb-alert
+                        >
+                      }
+                    </p>
+                  }
                 </div>
               </div>
             </div>

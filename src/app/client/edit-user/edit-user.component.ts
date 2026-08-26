@@ -1,6 +1,6 @@
 import { FaceApiService } from '@app/core/service/face-api-service/face-api.service';
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ChangeDetectorRef, Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,15 +12,16 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NgbAlert, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ObjectStorageService } from '@app/core/service/object-storage-service/object-storage.service';
 
 @Component({
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslateModule, NgbNavModule]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe, NgbNavModule, NgbAlert, NgxDatatableModule]
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();
@@ -47,7 +48,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private affiliateService: AffiliateService,
     private formBuilder: FormBuilder,
     private objectStorageService: ObjectStorageService,
-    private faceApiService: FaceApiService
+    private faceApiService: FaceApiService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -159,6 +161,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
       beneficiary_email: affiliate.beneficiary_email ?? '',
       beneficiary_phone: affiliate.beneficiary_phone ?? '',
     });
+
+    // Punto unico por el que pasan getUserInfo y onSaveUser: ambos llegan desde
+    // una respuesta HTTP. Ademas de los controles, aqui se escribe
+    // displayBirthday, que la plantilla pinta fuera del formulario.
+    this.cdr.markForCheck();
   }
 
   checkAndDisableInput() {}
@@ -177,6 +184,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   private fetchCountry() {
     this.affiliateService.getCountries().subscribe(data => {
       this.listcountry = data;
+      this.cdr.markForCheck();
     });
   }
 
@@ -298,6 +306,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       this.files = [];
       this.getUserInfo();
       this.isUploadCompleted = true;
+      this.cdr.markForCheck();
     }
   }
 
@@ -319,6 +328,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       next: () => {
         this.showSuccess('Image deleted successfully');
         this.files = [];
+        this.cdr.markForCheck();
       },
       error: () => {
         this.toastr.error('error');

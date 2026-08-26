@@ -14,305 +14,332 @@
       class="close"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
+      >
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
   <form
     class="register-form"
     [formGroup]="editConceptForm"
-    [autocomplete]="off"
+    autocomplete="off"
     (ngSubmit)="onAddRowSave()"
-  >
+    >
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label for="concept_name">
             {{ 'CONCEPT-LIST-EDIT-MODAL.LBL-CONCEPT-NAME.TEXT' | translate }}
             <span class="text-danger">*</span></label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="concept_name"
-            placeholder="Nombre del concepto"
-            autocomplete="concept_name"
-            formControlName="concept_name"
-            required="required"
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="concept_name"
+              placeholder="Nombre del concepto"
+              autocomplete="concept_name"
+              formControlName="concept_name"
+              required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.concept_name.errors
             }"
-          />
-          <div
-            *ngIf="submitted && edit_concept_controls.concept_name.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.concept_name.errors.required">
-              El nombre del concepto es requerido.
+              />
+              @if (submitted && edit_concept_controls.concept_name.errors) {
+                <div
+                  class="invalid-feedback"
+                  >
+                  @if (edit_concept_controls.concept_name.errors.required) {
+                    <div>
+                      El nombre del concepto es requerido.
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
-          <input
-            class="form-check-input ms-2 me-2"
-            type="checkbox"
-            name="compression"
-            formControlName="compression"
-            id="compression"
-            value=""
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
+              <input
+                class="form-check-input ms-2 me-2"
+                type="checkbox"
+                name="compression"
+                formControlName="compression"
+                id="compression"
+                value=""
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.compression.errors
             }"
-          />
-          <label
-            for="compression"
-            placement="bottom"
-            ngbTooltip="Si un usuario no esta activo o calificado para cobrar una comision el sistema busca al siguiente patrocinador que este activo."
-          >
-            {{ 'CONCEPT-LIST-EDIT-MODAL.CHECK-COMPRESSION.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <div
-            *ngIf="submitted && edit_concept_controls.compression.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.compression.errors.required">
-              Error
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="calculate_group">
-            {{ 'CONCEPT-LIST-EDIT-MODAL.SLT-CALCULATE-GROUP.TEXT' | translate }}
+                />
+                <label
+                  for="compression"
+                  placement="bottom"
+                  ngbTooltip="Si un usuario no esta activo o calificado para cobrar una comision el sistema busca al siguiente patrocinador que este activo."
+                  >
+                  {{ 'CONCEPT-LIST-EDIT-MODAL.CHECK-COMPRESSION.TEXT' | translate }}
+                  <span class="text-danger">*</span></label
+                  >
+                  @if (submitted && edit_concept_controls.compression.errors) {
+                    <div
+                      class="invalid-feedback"
+                      >
+                      @if (edit_concept_controls.compression.errors.required) {
+                        <div>
+                          Error
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <label for="calculate_group">
+                    {{ 'CONCEPT-LIST-EDIT-MODAL.SLT-CALCULATE-GROUP.TEXT' | translate }}
 
-            <span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select form-control"
-            id="calculate_group"
-            formControlName="calculate_group"
-            required="required"
+                    <span class="text-danger">*</span></label
+                    >
+                    <select
+                      class="form-select form-control"
+                      id="calculate_group"
+                      formControlName="calculate_group"
+                      required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.calculate_group.errors
             }"
-          >
-            <option value="">
-              {{
-                'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
-              }}
-            </option>
-            <option
-              *ngFor="let item of calculateGroup;"
-              value="{{ item.id }}"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-          <div
-            *ngIf="submitted && edit_concept_controls.calculate_group.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.calculate_group.errors.required">
-              El grupo de calculo es requerido.
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
-          <input
-            class="form-check-input ms-2 me-2"
-            type="checkbox"
-            name="equalization"
-            id="equalization"
-            formControlName="equalization"
-            value=""
+                      >
+                      <option value="">
+                        {{
+                        'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
+                        }}
+                      </option>
+                      @for (item of calculateGroup; track item) {
+                        <option
+                          value="{{ item.id }}"
+                          >
+                          {{ item.name }}
+                        </option>
+                      }
+                    </select>
+                    @if (submitted && edit_concept_controls.calculate_group.errors) {
+                      <div
+                        class="invalid-feedback"
+                        >
+                        @if (edit_concept_controls.calculate_group.errors.required) {
+                          <div>
+                            El grupo de calculo es requerido.
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
+                    <input
+                      class="form-check-input ms-2 me-2"
+                      type="checkbox"
+                      name="equalization"
+                      id="equalization"
+                      formControlName="equalization"
+                      value=""
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.equalization.errors
             }"
-          />
-          <label
-            for="equalization"
-            placement="bottom"
-            ngbTooltip="Este bono pagara en base a las comisiones del bono binario."
-          >
-            {{
-              'CONCEPT-LIST-EDIT-MODAL.CHECK-EQUALIZATION-BONO.TEXT' | translate
-            }}
-            <span class="text-danger">*</span></label
-          >
+                      />
+                      <label
+                        for="equalization"
+                        placement="bottom"
+                        ngbTooltip="Este bono pagara en base a las comisiones del bono binario."
+                        >
+                        {{
+                        'CONCEPT-LIST-EDIT-MODAL.CHECK-EQUALIZATION-BONO.TEXT' | translate
+                        }}
+                        <span class="text-danger">*</span></label
+                        >
 
-          <div
-            *ngIf="submitted && edit_concept_controls.equalization.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.equalization.errors.required">
-              Error
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="paid_concept">
-            {{ 'CONCEPT-LIST-EDIT-MODAL.SLT-PAID-CONCEPT.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select form-control"
-            id="paid_concept"
-            formControlName="paid_concept"
-            required="required"
+                        @if (submitted && edit_concept_controls.equalization.errors) {
+                          <div
+                            class="invalid-feedback"
+                            >
+                            @if (edit_concept_controls.equalization.errors.required) {
+                              <div>
+                                Error
+                              </div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <label for="paid_concept">
+                          {{ 'CONCEPT-LIST-EDIT-MODAL.SLT-PAID-CONCEPT.TEXT' | translate }}
+                          <span class="text-danger">*</span></label
+                          >
+                          <select
+                            class="form-select form-control"
+                            id="paid_concept"
+                            formControlName="paid_concept"
+                            required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.paid_concept.errors
             }"
-          >
-            <option value="">
-              {{
-                'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
-              }}
-            </option>
-            <option
-              *ngFor="let item of payConceptData;"
-              value="{{ item.id }}"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-          <div
-            *ngIf="submitted && edit_concept_controls.paid_concept.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.paid_concept.errors.required">
-              El pago de concepto es requerido.
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
-          <input
-            class="form-check-input ms-2 me-2"
-            type="checkbox"
-            name="ignore_activation"
-            formControlName="ignore_activation"
-            id="ignore_activation"
-            value=""
+                            >
+                            <option value="">
+                              {{
+                              'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
+                              }}
+                            </option>
+                            @for (item of payConceptData; track item) {
+                              <option
+                                value="{{ item.id }}"
+                                >
+                                {{ item.name }}
+                              </option>
+                            }
+                          </select>
+                          @if (submitted && edit_concept_controls.paid_concept.errors) {
+                            <div
+                              class="invalid-feedback"
+                              >
+                              @if (edit_concept_controls.paid_concept.errors.required) {
+                                <div>
+                                  El pago de concepto es requerido.
+                                </div>
+                              }
+                            </div>
+                          }
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
+                          <input
+                            class="form-check-input ms-2 me-2"
+                            type="checkbox"
+                            name="ignore_activation"
+                            formControlName="ignore_activation"
+                            id="ignore_activation"
+                            value=""
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.ignore_activation.errors
             }"
-          />
-          <label
-            for="ignore_activation"
-            placement="bottom"
-            ngbTooltip="Al activar esta opción el concepto ignora la fecha de activación del patrocinador."
-          >
-            {{ 'CONCEPT-LIST-EDIT-MODAL.CHECK-ACTIVE-DATE.TEXT' | translate }}
-            <span class="text-danger">*</span></label
-          >
+                            />
+                            <label
+                              for="ignore_activation"
+                              placement="bottom"
+                              ngbTooltip="Al activar esta opción el concepto ignora la fecha de activación del patrocinador."
+                              >
+                              {{ 'CONCEPT-LIST-EDIT-MODAL.CHECK-ACTIVE-DATE.TEXT' | translate }}
+                              <span class="text-danger">*</span></label
+                              >
 
-          <div
-            *ngIf="submitted && edit_concept_controls.ignore_activation.errors"
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="edit_concept_controls.ignore_activation.errors.required"
-            >
-              Error
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label for="calculate_concept">
-            {{
-              'CONCEPT-LIST-EDIT-MODAL.SLT-CALCULATE-CONCEPT.TEXT' | translate
-            }}
-            <span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select form-control"
-            id="calculate_concept"
-            formControlName="calculate_concept"
-            required="required"
+                              @if (submitted && edit_concept_controls.ignore_activation.errors) {
+                                <div
+                                  class="invalid-feedback"
+                                  >
+                                  @if (edit_concept_controls.ignore_activation.errors.required) {
+                                    <div
+                                      >
+                                      Error
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                              <label for="calculate_concept">
+                                {{
+                                'CONCEPT-LIST-EDIT-MODAL.SLT-CALCULATE-CONCEPT.TEXT' | translate
+                                }}
+                                <span class="text-danger">*</span></label
+                                >
+                                <select
+                                  class="form-select form-control"
+                                  id="calculate_concept"
+                                  formControlName="calculate_concept"
+                                  required="required"
             [ngClass]="{
               'is-invalid':
                 submitted && edit_concept_controls.calculate_concept.errors
             }"
-          >
-            <option value="">
-              {{
-                'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
-              }}
-            </option>
-            <option
-              *ngFor="let item of calculateConceptData;"
-              value="{{ item.id }}"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-          <div
-            *ngIf="submitted && edit_concept_controls.calculate_concept.errors"
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="edit_concept_controls.calculate_concept.errors.required"
-            >
-              {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
-            </div>
-            <div *ngIf="edit_concept_controls.calculate_concept.errors.email">
-              El calculo del concepto es requerido
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
-          <input
-            class="form-check-input ms-2 me-2"
-            type="checkbox"
-            name="active"
-            formControlName="active"
-            id="active"
-            value=""
+                                  >
+                                  <option value="">
+                                    {{
+                                    'CONCEPT-LIST-EDIT-MODAL.SLT-DEFAULT-OPTION.TEXT' | translate
+                                    }}
+                                  </option>
+                                  @for (item of calculateConceptData; track item) {
+                                    <option
+                                      value="{{ item.id }}"
+                                      >
+                                      {{ item.name }}
+                                    </option>
+                                  }
+                                </select>
+                                @if (submitted && edit_concept_controls.calculate_concept.errors) {
+                                  <div
+                                    class="invalid-feedback"
+                                    >
+                                    @if (edit_concept_controls.calculate_concept.errors.required) {
+                                      <div
+                                        >
+                                        {{ 'USERS-LIST-CREATE-MODAL.MSJ-ERROR-EMAIL.TEXT' | translate }}
+                                      </div>
+                                    }
+                                    @if (edit_concept_controls.calculate_concept.errors.email) {
+                                      <div>
+                                        El calculo del concepto es requerido
+                                      </div>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
+                                <input
+                                  class="form-check-input ms-2 me-2"
+                                  type="checkbox"
+                                  name="active"
+                                  formControlName="active"
+                                  id="active"
+                                  value=""
             [ngClass]="{
               'is-invalid': submitted && edit_concept_controls.active.errors
             }"
-          />
-          <label
-            placement="bottom"
-            ngbTooltip="Es para que el concepto este visible a la hora de calcular y que los afiliados lo puedan visualizar desde su BackOffi."
-          >
-            {{
-              'CONCEPT-LIST-EDIT-MODAL.CHECK-ACTIVE-CONCEPT.TEXT' | translate
-            }}
-            <span class="text-danger">*</span></label
-          >
+                                  />
+                                  <label
+                                    placement="bottom"
+                                    ngbTooltip="Es para que el concepto este visible a la hora de calcular y que los afiliados lo puedan visualizar desde su BackOffi."
+                                    >
+                                    {{
+                                    'CONCEPT-LIST-EDIT-MODAL.CHECK-ACTIVE-CONCEPT.TEXT' | translate
+                                    }}
+                                    <span class="text-danger">*</span></label
+                                    >
 
-          <div
-            *ngIf="submitted && edit_concept_controls.active.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="edit_concept_controls.active.errors">Error</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'CONCEPT-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="modal.close('Close click')"
-      >
-        {{ 'CONCEPT-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
-</ng-template>
+                                    @if (submitted && edit_concept_controls.active.errors) {
+                                      <div
+                                        class="invalid-feedback"
+                                        >
+                                        @if (edit_concept_controls.active.errors) {
+                                          <div>Error</div>
+                                        }
+                                      </div>
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                  {{ 'CONCEPT-LIST-EDIT-MODAL.BTN-SAVE.TEXT' | translate }}
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-light"
+                                  (click)="modal.close('Close click')"
+                                  >
+                                  {{ 'CONCEPT-LIST-EDIT-MODAL.BTN-CANCEL.TEXT' | translate }}
+                                </button>
+                              </div>
+                            </form>
+                          </ng-template>

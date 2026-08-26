@@ -14,7 +14,7 @@
       <span aria-hidden="true"><i class="material-icons">close</i></span>
     </button>
   </div>
-  <form class="register-form" [formGroup]="editSecurityPinForm" [autocomplete]="off"
+  <form class="register-form" [formGroup]="editSecurityPinForm" autocomplete="off"
     (ngSubmit)="onChangePasswordUpload()">
     <div class="modal-body">
       <div class="row">
@@ -24,82 +24,98 @@
             'ADMIN-EDIT-PASSWORD-MODAL.LBL-CURRENT-PASSWORD.TEXT' | translate
             }}
             <span class="text-danger">*</span></label>
-          <input type="password" class="form-control" id="currentPassword" autocomplete="new-password"
+            <input type="password" class="form-control" id="currentPassword" autocomplete="new-password"
             formControlName="currentPassword" required="required" [ngClass]="{
               'is-invalid':
                 submitted &&
                 edit_security_pin_controls.currentPassword.errors
             }" />
-          <div *ngIf="
-              submitted && edit_security_pin_controls.currentPassword.errors
-            " class="invalid-feedback">
-            <div *ngIf="
-            edit_security_pin_controls.currentPassword.errors.required
-              ">
-              {{
-              'ADMIN-EDIT-PASSWORD-MODAL.MSJ-ERROR-CURRENT-PASSWORD.TEXT'
-              | translate
-              }}
+              @if (
+                submitted && edit_security_pin_controls.currentPassword.errors
+                ) {
+                <div class="invalid-feedback">
+                  @if (
+                    edit_security_pin_controls.currentPassword.errors.required
+                    ) {
+                    <div>
+                      {{
+                      'ADMIN-EDIT-PASSWORD-MODAL.MSJ-ERROR-CURRENT-PASSWORD.TEXT'
+                      | translate
+                      }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <label for="pin">Pin de Seguridad<span class="text-danger">*</span></label>
-          <input type="password" class="form-control" formControlName="pin" autocomplete="new-password" id="pin"
+            <div class="col-12 mb-3">
+              <label for="pin">Pin de Seguridad<span class="text-danger">*</span></label>
+              <input type="password" class="form-control" formControlName="pin" autocomplete="new-password" id="pin"
             required="required" [ngClass]="{
               'is-invalid':
                 submitted &&
                 edit_security_pin_controls.pin.errors
             }" />
-          <div *ngIf="
-              submitted &&
-              edit_security_pin_controls.pin.errors
-            " class="invalid-feedback">
-            <div *ngIf="
-            edit_security_pin_controls.pin.errors
-                  .required
-              ">
-              El Pin de Seguridad es requerido
-            </div>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <label for="confirmPin">Repita Pin de Seguridad<span class="text-danger">*</span></label>
-          <input type="password" class="form-control" formControlName="confirmPin" autocomplete="new-password"
+                @if (
+                  submitted &&
+                  edit_security_pin_controls.pin.errors
+                  ) {
+                  <div class="invalid-feedback">
+                    @if (
+                      edit_security_pin_controls.pin.errors
+                      .required
+                      ) {
+                      <div>
+                        El Pin de Seguridad es requerido
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="col-12 mb-3">
+                <label for="confirmPin">Repita Pin de Seguridad<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="confirmPin" autocomplete="new-password"
             id="confirmPin" required="required" [ngClass]="{
               'is-invalid':
                 submitted &&
                 edit_security_pin_controls.confirmPin.errors
             }" />
-          <div *ngIf="
-              submitted &&
-              edit_security_pin_controls.confirmPin.errors
-            " class="invalid-feedback">
-            <div *ngIf="
-            edit_security_pin_controls.confirmPin.errors
-                  .required
-              ">
-              El Pin de Seguridad es requerido
+                  @if (
+                    submitted &&
+                    edit_security_pin_controls.confirmPin.errors
+                    ) {
+                    <div class="invalid-feedback">
+                      @if (
+                        edit_security_pin_controls.confirmPin.errors
+                        .required
+                        ) {
+                        <div>
+                          El Pin de Seguridad es requerido
+                        </div>
+                      }
+                    </div>
+                  }
+                  @if (submitted && editSecurityPinForm.hasError('passwordMismatch')) {
+                    <div class="invalid-feedback">
+                      @if (editSecurityPinForm.get('confirmPin').touched) {
+                        <div>
+                          {{
+                          'ADMIN-EDIT-PASSWORD-MODAL.MSJ-ERROR-CONFIRM-EQUALS-PASSWORD.TEXT'
+                          | translate
+                          }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
             </div>
-          </div>
-          <div *ngIf="submitted && editSecurityPinForm.hasError('passwordMismatch')" class="invalid-feedback">
-            <div *ngIf="editSecurityPinForm.get('confirmPin').touched">
-              {{
-              'ADMIN-EDIT-PASSWORD-MODAL.MSJ-ERROR-CONFIRM-EQUALS-PASSWORD.TEXT'
-              | translate
-              }}
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                {{ 'ADMIN-PASSWORD-UPLOAD-MODAL.BTN-SAVE.TEXT' | translate }}
+              </button>
+              <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+                {{ 'ADMIN-PASSWORD-UPLOAD-MODAL.BTN-CANCEL.TEXT' | translate }}
+              </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">
-        {{ 'ADMIN-PASSWORD-UPLOAD-MODAL.BTN-SAVE.TEXT' | translate }}
-      </button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
-        {{ 'ADMIN-PASSWORD-UPLOAD-MODAL.BTN-CANCEL.TEXT' | translate }}
-      </button>
-    </div>
-  </form>
-</ng-template>
+          </form>
+        </ng-template>

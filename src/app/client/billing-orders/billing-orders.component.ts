@@ -1,7 +1,7 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
 import { ReusableDatatableComponent, TableColumn, TableAction, TableConfig } from '@app/shared/components/reusable-datatable/reusable-datatable.component';
 
@@ -9,7 +9,8 @@ import { ReusableDatatableComponent, TableColumn, TableAction, TableConfig } fro
     selector: 'app-billing-orders',
     templateUrl: './billing-orders.component.html',
     standalone: true,
-    imports: [CommonModule, RouterModule, TranslateModule, IconsModule, ReusableDatatableComponent],
+    imports: [RouterModule, TranslatePipe, IconsModule, ReusableDatatableComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BillingOrdersComponent implements OnInit {

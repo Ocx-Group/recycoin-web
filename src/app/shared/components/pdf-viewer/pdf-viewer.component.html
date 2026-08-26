@@ -1,36 +1,36 @@
 <div class="modal-overlay" [class.show]="isVisible" (click)="closeModal($event)">
-  <div class="modal-content" (click)="$event.stopPropagation()" *ngIf="currentDocument">
-    <div class="modal-header">
-      <h2 class="modal-title">{{ currentDocument.title }}</h2>
-      <button class="close-button" (click)="close()">
-        x
-      </button>
-    </div>
-
-    <div class="pdf-container">
-      <div class="pdf-toolbar">
-        <button class="toolbar-button neon-button-sm" (click)="zoomIn()">
-          +
-        </button>
-        <button class="toolbar-button neon-button-sm" (click)="zoomOut()">
-          -
-        </button>
-        <button class="toolbar-button neon-button-sm" (click)="previousPage()" [disabled]="currentPage === 1">
-          ←
-        </button>
-        <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
-        <button class="toolbar-button neon-button-sm" (click)="nextPage()" [disabled]="currentPage === totalPages">
-          →
-        </button>
-        <button class="toolbar-button neon-button-sm" (click)="savePdf()">
-          💾
+  @if (currentDocument) {
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ currentDocument.title }}</h2>
+        <button class="close-button" (click)="close()">
+          x
         </button>
       </div>
-
-      <pdf-viewer [src]="currentDocument.url" [render-text]="true" [original-size]="false" [zoom]="zoom"
-        [show-all]="false" [(page)]="currentPage" (after-load-complete)="afterLoadComplete($event)"
-        (error)="onError($event)" [rotation]="0" [external-link-target]="'blank'"
+      <div class="pdf-container">
+        <div class="pdf-toolbar">
+          <button class="toolbar-button neon-button-sm" (click)="zoomIn()">
+            +
+          </button>
+          <button class="toolbar-button neon-button-sm" (click)="zoomOut()">
+            -
+          </button>
+          <button class="toolbar-button neon-button-sm" (click)="previousPage()" [disabled]="currentPage === 1">
+            ←
+          </button>
+          <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+          <button class="toolbar-button neon-button-sm" (click)="nextPage()" [disabled]="currentPage === totalPages">
+            →
+          </button>
+          <button class="toolbar-button neon-button-sm" (click)="savePdf()">
+            💾
+          </button>
+        </div>
+        <pdf-viewer [src]="currentDocument.url" [render-text]="true" [original-size]="false" [zoom]="zoom"
+          [show-all]="false" [(page)]="currentPage" (after-load-complete)="afterLoadComplete($event)"
+          (error)="onError($event)" [rotation]="0" [external-link-target]="'blank'"
         style="width: 100%; height: calc(100vh - 150px);"></pdf-viewer>
+      </div>
     </div>
-  </div>
+  }
 </div>

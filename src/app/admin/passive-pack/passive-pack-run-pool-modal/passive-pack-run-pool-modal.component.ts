@@ -1,6 +1,6 @@
 import {ProcessGradingService} from '../../../core/service/process-grading-service/process-grading.service';
 import {LevelEcoPoolRequest, PassivePack} from '../../../core/models/passive-pack-model/passive-pack.model';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {NgbAlert, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import {
   FormGroup, ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {DatePipe, NgClass, CommonModule} from '@angular/common';
+import { DatePipe, NgClass, CommonModule } from '@angular/common';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslatePipe} from "@ngx-translate/core";
@@ -21,6 +21,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-passive-pack-run-pool-modal',
   templateUrl: './passive-pack-run-pool-modal.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NgbAlert,
@@ -54,7 +55,8 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private processGradingService: ProcessGradingService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -317,6 +319,10 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
         if (resp) {
           this.setEcoPoolConfiguration(resp);
           this.configurationIsLoaded = true;
+          // setEcoPoolConfiguration rellena el FormArray de niveles, y la
+          // plantilla lo recorre con @for sobre levels.controls. Sin marcar,
+          // el modal se abre con la tabla de niveles vacia.
+          this.cdr.markForCheck();
         }
       }, error: (err) => {
         if (err instanceof EvalError) {
