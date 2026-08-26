@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PdfDocument } from '@app/core/interfaces/pdf-document.interface';
 import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
@@ -10,7 +10,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PdfViewerModule],
 })
 export class PdfViewerComponent implements OnInit, OnDestroy {
@@ -24,18 +24,26 @@ export class PdfViewerComponent implements OnInit, OnDestroy {
   protected pdfSrc: string;
   protected title: any;
 
-  constructor(private pdfViewerService: PdfViewerService) {}
+  constructor(
+    private pdfViewerService: PdfViewerService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.subscriptions.push(
-      this.pdfViewerService.isVisible$.subscribe(
-        isVisible => (this.isVisible = isVisible),
-      ),
+      this.pdfViewerService.isVisible$.subscribe(isVisible => {
+        this.isVisible = isVisible;
+        this.cdr.markForCheck();
+      }),
       this.pdfViewerService.currentDocument$.subscribe(document => {
         this.currentDocument = document;
         if (document) {
           this.resetViewer();
         }
+        // Quien abre el visor es otro componente llamando al servicio: el
+        // evento ensucia la vista de ESE, no la de este. Sin marcar, el visor
+        // no llega a abrirse nunca.
+        this.cdr.markForCheck();
       }),
     );
   }
