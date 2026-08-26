@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Invoice } from '../../../core/models/invoice-model/invoice.model';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-billing-purchases-detail-modal',
   templateUrl: './billing-purchases-detail-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
 })
 export class BillingPurchasesDetailModalComponent implements OnInit {
@@ -31,6 +31,7 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
     private readonly auth: AuthService,
     private readonly affiliateService: AffiliateService,
     private readonly toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +43,9 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
     this.affiliateService.getCountries().subscribe({
       next: resp => {
         this.countries = resp;
+        // La plantilla no nombra countries: llama a getCountryName(id), que lo
+        // lee por dentro. Buscar el campo en el HTML no lo encuentra.
+        this.cdr.markForCheck();
       },
       error: err => {
         this.toastr.error('Se produjo un error al cargar los países');
@@ -73,5 +77,8 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
       centered: true,
     });
     this.invoice = invoice;
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

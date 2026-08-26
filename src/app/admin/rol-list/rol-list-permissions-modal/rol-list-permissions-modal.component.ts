@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -22,7 +22,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './rol-list-permissions-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     IconsModule,
@@ -50,7 +50,8 @@ export class RolListPermissionsModalComponent implements OnInit {
 
   constructor(
     private privilegeService: PrivilegeService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -79,8 +80,10 @@ export class RolListPermissionsModalComponent implements OnInit {
       next: (menuConfiguration: MenuConfiguration[]) => {
         this.temp = [...menuConfiguration];
         this.rows = menuConfiguration;
+        this.cdr.markForCheck();
         setTimeout(() => {
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }, 500);
       },
       error: (err) => {

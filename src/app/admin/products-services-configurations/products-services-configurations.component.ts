@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   NgbModal,
   NgbNav,
@@ -24,7 +24,7 @@ import {
   selector: 'app-products-services-configurations',
   templateUrl: './products-services-configurations.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     TranslatePipe,
@@ -61,6 +61,7 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     private configurationService: ConfigurationService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 

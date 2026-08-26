@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -23,7 +23,7 @@ const header = ['Usuario', 'Rol', 'Nombre', 'Apellido', 'Correo'];
   templateUrl: './users-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -54,6 +54,7 @@ export class UsersListComponent implements OnInit {
     private clipboardService: ClipboardService,
     private printService: PrintService,
     private rolService: RolService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -82,8 +83,10 @@ export class UsersListComponent implements OnInit {
       next: (value: User[]) => {
         this.temp = [...value];
         this.rows = value;
+        this.cdr.markForCheck();
         setTimeout(() => {
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }, 500);
       },
       error: err => {

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -26,7 +26,7 @@ const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', '
   templateUrl: './incentives-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -57,7 +57,8 @@ export class IncentivesListComponent implements OnInit {
     private incentiveService: IncentiveService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -100,10 +101,12 @@ export class IncentivesListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
 
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

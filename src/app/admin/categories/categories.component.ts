@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
@@ -19,7 +19,7 @@ const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -49,7 +49,8 @@ export class CategoriesComponent implements OnInit {
     private modalService: NgbModal,
     private productCategoryService: ProductCategoryService,
     private toastr: ToastrService,
-    private printService: PrintService
+    private printService: PrintService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -90,6 +91,7 @@ export class CategoriesComponent implements OnInit {
       this.temp = [...resp];
       this.rows = resp;
       this.loadingIndicator = false;
+      this.cdr.markForCheck();
     });
   }
 

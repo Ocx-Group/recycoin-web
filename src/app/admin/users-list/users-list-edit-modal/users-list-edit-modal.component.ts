@@ -1,11 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -26,7 +27,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-users-list-edit-modal',
   templateUrl: './users-list-edit-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -46,7 +47,8 @@ export class UsersListEditModalComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -71,6 +73,9 @@ export class UsersListEditModalComponent implements OnInit {
       address: user.address,
       status: user.status,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 
 import {BalanceInformationModel1A} from '@app/core/models/wallet-model-1a/balance-information-1a.model';
@@ -17,7 +17,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   templateUrl: './balance-information-modal.component.html',
   styleUrls: ['./balance-information-modal.component.sass'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgbNavItem,
     ChartComponent,
@@ -44,7 +44,9 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
   constructor(private modalService: NgbModal,
               private walletModel1AService: WalletModel1AService,
               private walletModel1BService: WalletModel1BService,
-              private walletService: WalletService,) {
+              private walletService: WalletService,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
     this.walletService.getBalanceInformationByAffiliateId(id).subscribe({
       next: (value: BalanceInformation) => {
         this.balanceInformation = value;
+        this.cdr.markForCheck();
         this.initChartReport3();
       },
       error: (err) => {
@@ -81,6 +84,7 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
     this.walletModel1AService.getBalanceInformationByAffiliateId(id).subscribe({
       next: (value: BalanceInformationModel1A) => {
         this.balanceInformationModel1A = value;
+        this.cdr.markForCheck();
         this.initChartModel1A();
       },
       error: (err) => {
@@ -93,6 +97,7 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
     this.walletModel1BService.getBalanceInformationByAffiliateId(id).subscribe({
       next: (value: BalanceInformationModel1B) => {
         this.balanceInformationModel1B = value;
+        this.cdr.markForCheck();
         this.initChartModel1B();
       },
       error: (err) => {

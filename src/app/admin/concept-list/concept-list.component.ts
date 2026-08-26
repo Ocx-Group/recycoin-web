@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 
@@ -37,7 +37,7 @@ const header = [
   templateUrl: './concept-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -72,7 +72,8 @@ export class ConceptListComponent implements OnInit {
     private conceptService: ConceptService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -119,10 +120,12 @@ export class ConceptListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
 
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {ToastrService} from 'ngx-toastr';
@@ -16,7 +16,7 @@ import {FormsModule} from "@angular/forms";
   selector: 'app-concept-list-configuration-modal',
   templateUrl: './concept-list-configuration-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule
 ]
@@ -34,7 +34,8 @@ export class ConceptListConfigurationModalComponent implements OnInit {
   constructor(
     private gradingService: GradingService,
     private conceptConfigurationService: ConceptConfigurationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -76,6 +77,7 @@ export class ConceptListConfigurationModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -117,6 +119,7 @@ export class ConceptListConfigurationModalComponent implements OnInit {
       .subscribe((resp) => {
         if (resp !== null) {
           this.dataObject = resp;
+          this.cdr.markForCheck();
         }
       });
   }

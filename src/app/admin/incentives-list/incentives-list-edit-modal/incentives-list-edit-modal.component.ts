@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnInit,
   Output,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-incentives-list-edit-modal',
   templateUrl: './incentives-list-edit-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule]
 })
 export class IncentivesListEditModalComponent implements OnInit {
@@ -45,7 +46,8 @@ export class IncentivesListEditModalComponent implements OnInit {
     private gradingService: GradingService,
     private incentiveService: IncentiveService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -96,6 +98,9 @@ export class IncentivesListEditModalComponent implements OnInit {
       network_leaders_qualifier: incentive.network_leaders_qualifier,
       leader_by_matrix: incentive.leader_by_matrix.toString(),
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   showSuccess(message: string) {
@@ -109,12 +114,14 @@ export class IncentivesListEditModalComponent implements OnInit {
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
       this.productListData = resp;
+      this.cdr.markForCheck();
     });
   }
 
   fetchMembership() {
     this.gradingService.getMembership().subscribe((resp) => {
       this.membershipData = resp;
+      this.cdr.markForCheck();
     });
   }
 
@@ -122,6 +129,7 @@ export class IncentivesListEditModalComponent implements OnInit {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }

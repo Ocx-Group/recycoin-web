@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -10,7 +10,7 @@ import { NgClass, CommonModule } from "@angular/common";
   selector: 'app-categories-edit-modal',
   templateUrl: './categories-edit-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -34,7 +34,8 @@ export class CategoriesEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private productCategoryService: ProductCategoryService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -102,6 +103,7 @@ export class CategoriesEditModalComponent implements OnInit {
   categoryList() {
     this.productCategoryService.getAll().subscribe((resp) => {
       this.categoriesList = resp;
+      this.cdr.markForCheck();
     });
   }
 }

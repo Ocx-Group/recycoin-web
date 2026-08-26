@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,7 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-rol-list-summary-modal',
   templateUrl: './rol-list-summary-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     DatatableComponent,
@@ -34,7 +34,8 @@ export class RolListSummaryModalComponent {
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -48,6 +49,9 @@ export class RolListSummaryModalComponent {
     this.rolData.description = rol.description;
     user.rol_id = rol.id;
     this.getUsersByRolId(user);
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   getUsersByRolId(user: User) {
@@ -57,6 +61,7 @@ export class RolListSummaryModalComponent {
         this.rows = result;
         setTimeout(() => {
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }, 500);
       },
       error: (err) => {

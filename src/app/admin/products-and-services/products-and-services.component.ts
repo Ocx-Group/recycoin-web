@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -37,7 +37,7 @@ const header = [
   selector: 'app-products-and-services',
   templateUrl: './products-and-services.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -70,7 +70,8 @@ export class ProductsAndServicesComponent implements OnInit {
     private productService: ProductService,
     private printService: PrintService,
     private toastr: ToastrService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -93,6 +94,7 @@ export class ProductsAndServicesComponent implements OnInit {
       this.temp = [...resp];
       this.rows = resp;
       this.loadingIndicator = false;
+      this.cdr.markForCheck();
     });
   }
 
@@ -100,6 +102,7 @@ export class ProductsAndServicesComponent implements OnInit {
     this.configurationService.getProductConfiguration().subscribe((resp: ProductConfiguration) => {
       if (resp != null) {
         this.productConfiguration = resp;
+        this.cdr.markForCheck();
       }
     });
   }

@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   Inject,
   ElementRef,
@@ -13,7 +14,7 @@ import {
   Renderer2,
   HostListener,
   OnDestroy,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { ROUTES } from './sidebar-items';
@@ -32,7 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.sass'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterLink,
@@ -62,6 +63,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private readonly affiliateService: AffiliateService,
     private readonly gradingService: GradingService,
     private readonly router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.routerObj = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -168,6 +170,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.affiliateService.getAffiliateById(id).subscribe({
       next: value => {
         this.user = value.data;
+        this.cdr.markForCheck();
         this.getGradingInfo(this.user.external_grading_before_id);
       },
       error: () => {},
@@ -178,6 +181,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.gradingService.getGradingById(id).subscribe(response => {
       if (response.success) {
         this.grading = response.data;
+        this.cdr.markForCheck();
       }
     });
   }

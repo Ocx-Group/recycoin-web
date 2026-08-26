@@ -1,11 +1,12 @@
 import { WalletRequestRevertTransaction } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 import {
+  ChangeDetectorRef,
   Component,
   OnInit,
   AfterViewInit,
   ViewChild,
   TemplateRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import Swal from 'sweetalert2';
 
@@ -36,7 +37,7 @@ import {
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     BillingPurchasesDetailModalComponent,
@@ -88,6 +89,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
     private readonly walletRequestService: WalletRequestService,
     private readonly configurationService: ConfigurationService,
     private readonly translateService: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -200,6 +202,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
         this.temp = [...invoices];
         this.rows = invoices;
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
         console.log(this.rows);
       },
       error: err => {

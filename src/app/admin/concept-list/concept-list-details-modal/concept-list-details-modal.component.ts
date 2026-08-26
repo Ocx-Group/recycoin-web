@@ -1,11 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   ViewChild,
   Output,
   EventEmitter,
   HostListener,
   OnInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +23,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-concept-list-details-modal',
   templateUrl: './concept-list-details-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     DatatableComponent,
@@ -44,7 +45,8 @@ export class ConceptListDetailsModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private conceptConfigurationService: ConceptConfigurationService,
-    private gradingService: GradingService
+    private gradingService: GradingService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -81,14 +83,19 @@ export class ConceptListDetailsModalComponent implements OnInit {
           this.temp = [...resp];
           this.rows = resp;
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }
       });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   fetchCalificationList() {
     this.gradingService.getAll().subscribe((resp) => {
       if (resp !== null) {
         this.calificationList = resp;
+        this.cdr.markForCheck();
       }
     });
   }

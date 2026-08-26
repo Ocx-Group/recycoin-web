@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
@@ -23,7 +23,7 @@ const header = ['Id', 'Rol', 'Descripción', 'Usuarios Asociados', 'Permisos'];
   templateUrl: './rol-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -60,7 +60,8 @@ export class RolListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private clipboardService: ClipboardService,
-    private printService: PrintService
+    private printService: PrintService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -98,8 +99,10 @@ export class RolListComponent implements OnInit {
       next: (roles: Rol[]) => {
         this.temp = [...roles];
         this.rows = roles;
+        this.cdr.markForCheck();
         setTimeout(() => {
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         }, 500);
       },
       error: (err) => {

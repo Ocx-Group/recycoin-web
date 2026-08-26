@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 
@@ -13,7 +13,7 @@ import { CurrencyPipe, CommonModule } from "@angular/common";
   templateUrl: './matrix-activation-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     CurrencyPipe
@@ -33,7 +33,8 @@ export class MatrixActivationModalComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private matrixQualificationService: MatrixQualificationService,
-    private matrixConfigurationService: MatrixConfigurationService
+    private matrixConfigurationService: MatrixConfigurationService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -53,6 +54,7 @@ export class MatrixActivationModalComponent implements OnInit {
         console.error('Error loading matrix configurations:', error);
         this.toast.error('Error al cargar las configuraciones de matriz');
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -100,6 +102,7 @@ export class MatrixActivationModalComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
+        this.cdr.markForCheck();
         console.error('Error activating matrix:', error);
         this.toast.error('Error al activar la matriz');
       }

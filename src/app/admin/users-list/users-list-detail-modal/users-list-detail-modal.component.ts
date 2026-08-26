@@ -1,4 +1,4 @@
-import {Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ClipboardService} from 'ngx-clipboard';
 import {ToastrService} from 'ngx-toastr';
@@ -11,7 +11,7 @@ import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableCompone
   templateUrl: './users-list-detail-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     DatatableComponent,
@@ -31,7 +31,8 @@ export class UsersListDetailModalComponent {
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private clipboardService: ClipboardService
+    private clipboardService: ClipboardService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 

@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {InlineShareButtonsConfig, SharethisAngularModule} from 'sharethis-angular';
 
@@ -7,7 +7,7 @@ import {InlineShareButtonsConfig, SharethisAngularModule} from 'sharethis-angula
     selector: 'app-share-modal',
     templateUrl: './share-modal.component.html',
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SharethisAngularModule]
 })
 export class ShareModalComponent {
@@ -15,7 +15,9 @@ export class ShareModalComponent {
   @ViewChild('shareModal', { static: true }) private modalContent: TemplateRef<any>;
 
 
-  constructor(private modalService: NgbModal,) {
+  constructor(private modalService: NgbModal,
+    private cdr: ChangeDetectorRef
+  ) {
 
   }
 
@@ -27,6 +29,9 @@ export class ShareModalComponent {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   createShareConfig(url: string): InlineShareButtonsConfig {

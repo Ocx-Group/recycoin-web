@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ProductInventory} from "../../../core/models/product-inventory-model/product-inventory.model";
@@ -12,7 +12,7 @@ const header = ['Ingreso', 'Egreso', 'Soporte', 'Nota', 'Tipo', 'Fecha'];
   selector: 'app-products-and-services-movements-modal',
   templateUrl: './products-and-services-movements-modal.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatatableComponent,
     DataTableColumnDirective,
@@ -31,7 +31,8 @@ export class ProductsAndServicesMovementsModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private printService: PrintService,
-    private productInventoryService: ProductInventoryService
+    private productInventoryService: ProductInventoryService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 

@@ -1,11 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnInit,
   Output,
   TemplateRef,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +27,7 @@ import { User } from '@app/core/models/user-model/user.model';
   templateUrl: './image-profile-modal.component.html',
   styleUrls: ['./image-profile-modal.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgxDropzoneModule, TranslatePipe],
 })
 export class ImageProfileModalComponent implements OnInit {
@@ -62,6 +63,7 @@ export class ImageProfileModalComponent implements OnInit {
     private readonly userService: UserService,
     private readonly objectStorageService: ObjectStorageService,
     private readonly authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +87,9 @@ export class ImageProfileModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   closeModals(): void {
@@ -131,6 +136,9 @@ export class ImageProfileModalComponent implements OnInit {
               this.authService.setUserAffiliateValue(value);
               this.user.image_profile_url = null;
               this.file = null;
+              // La plantilla lee el getter currentImageUrl, no estos campos:
+              // por eso ninguna busqueda por nombre de campo lo encuentra.
+              this.cdr.markForCheck();
               this.getInfo.emit();
               this.showSuccess('Imagen eliminada correctamente');
             }
@@ -146,6 +154,7 @@ export class ImageProfileModalComponent implements OnInit {
           this.authService.setUserAdminValue(value);
           this.userAdmin.image_profile_url = null;
           this.file = null;
+          this.cdr.markForCheck();
           this.getInfo.emit();
           this.showSuccess('Imagen eliminada correctamente');
         }
@@ -167,6 +176,7 @@ export class ImageProfileModalComponent implements OnInit {
               this.authService.setUserAffiliateValue(value);
               this.user.image_profile_url = value.image_profile_url;
               this.getInfo.emit();
+              this.cdr.markForCheck();
               this.showSuccess('Imagen actualizada correctamente');
             }
           },
@@ -182,6 +192,7 @@ export class ImageProfileModalComponent implements OnInit {
           this.authService.setUserAdminValue(value);
           this.userAdmin.image_profile_url = value.image_profile_url;
           this.getInfo.emit();
+          this.cdr.markForCheck();
           this.showSuccess('Imagen actualizada correctamente');
         }
       },

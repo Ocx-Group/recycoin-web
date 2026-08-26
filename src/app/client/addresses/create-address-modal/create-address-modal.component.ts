@@ -1,5 +1,5 @@
 import { City } from './../../../core/models/cities-model/cities.model';
-import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     selector: 'app-create-address-modal',
     templateUrl: './create-address-modal.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, ReactiveFormsModule]
 })
 export class CreateAddressModalComponent implements OnInit {
@@ -22,7 +22,9 @@ export class CreateAddressModalComponent implements OnInit {
   submitted = false;
   @ViewChild('createAddressModal', { static: true }) private modalContent: TemplateRef<any>;
 
-  constructor(private modalService: NgbModal, private auth: AuthService) {
+  constructor(private modalService: NgbModal, private auth: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {
 
   }
 
@@ -41,6 +43,9 @@ export class CreateAddressModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   initCreateAddressGroup() {

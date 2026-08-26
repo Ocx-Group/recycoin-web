@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   NgbDropdown,
   NgbDropdownItem,
@@ -33,7 +33,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     TranslatePipe,
@@ -75,6 +75,7 @@ export class MyProfileComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly gradingService: GradingService,
     private readonly affiliateService: AffiliateService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +122,7 @@ export class MyProfileComponent implements OnInit {
       .subscribe(response => {
         if (response.success) {
           this.user = response.data;
+          this.cdr.markForCheck();
           this.getGradingInfo(this.user.external_grading_before_id);
           this.loadLoginMovements();
         }
@@ -131,6 +133,7 @@ export class MyProfileComponent implements OnInit {
     this.gradingService.getGradingById(id).subscribe(response => {
       if (response.success) {
         this.grading = response.data;
+        this.cdr.markForCheck();
       }
     });
   }

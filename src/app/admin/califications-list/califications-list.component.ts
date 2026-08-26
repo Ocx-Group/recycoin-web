@@ -1,4 +1,4 @@
-import {Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
@@ -34,7 +34,7 @@ const header = [
   templateUrl: './califications-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -66,7 +66,8 @@ export class CalificationsListComponent implements OnInit {
     private gradingService: GradingService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -117,9 +118,11 @@ export class CalificationsListComponent implements OnInit {
       if (resp !== null) {
         this.temp = [...resp];
         this.rows = resp;
+        this.cdr.markForCheck();
       }
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }

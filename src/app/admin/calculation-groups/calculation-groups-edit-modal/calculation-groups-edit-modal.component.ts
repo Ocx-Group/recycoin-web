@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
   ViewChild,
   OnInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './calculation-groups-edit-modal.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule]
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
@@ -40,7 +41,8 @@ export class CalculationGroupsEditModalComponent implements OnInit {
     private paymentGroupService: PaymentGroupsService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -69,6 +71,9 @@ export class CalculationGroupsEditModalComponent implements OnInit {
       calculation_name: paymentGroup.name,
       description: paymentGroup.description,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   updateCalculationGroup() {
