@@ -90,4 +90,20 @@ export class RolListEditModalComponent implements OnInit {
   closeModals() {
     this.modalService.dismissAll();
   }
+
+  updateOpenModal(content, rol: Rol) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
+    this.rol = new Rol();
+    this.rolGlobal = rol;
+    this.updateRolForm.setValue({
+      rol_name: rol.name,
+      description: rol.description,
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
+  }
 }

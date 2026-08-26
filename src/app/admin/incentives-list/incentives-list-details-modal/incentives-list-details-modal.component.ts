@@ -61,4 +61,15 @@ export class IncentivesListDetailsModalComponent implements OnInit {
       this.cdr.markForCheck();
     });
   }
+
+  detailsOpenModal(content, incentive: Incentive) {
+    this.incentive = incentive;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
+  }
 }

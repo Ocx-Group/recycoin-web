@@ -32,6 +32,7 @@ export class ConceptListConfigurationModalComponent implements OnInit {
   @ViewChild('configurationModal') configurationModal: NgbModal;
 
   constructor(
+    private modalService: NgbModal,
     private gradingService: GradingService,
     private conceptConfigurationService: ConceptConfigurationService,
     private toastr: ToastrService,
@@ -122,5 +123,24 @@ export class ConceptListConfigurationModalComponent implements OnInit {
           this.cdr.markForCheck();
         }
       });
+  }
+
+  configurationOpenModal(content, value) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    this.concept = value;
+    this.conceptConfigurationService
+      .getConceptConfigurationByConceptId(this.concept.id)
+      .subscribe((resp) => {
+        if (resp !== null) {
+          this.dataObject = resp;
+          this.cdr.markForCheck();
+        }
+      });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }

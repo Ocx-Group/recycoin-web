@@ -106,4 +106,23 @@ export class CategoriesEditModalComponent implements OnInit {
       this.cdr.markForCheck();
     });
   }
+
+  editOpenModal(content, row) {
+    this.category = row;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+
+    this.editCategorieForm.setValue({
+      categorie: this.category.category,
+      name: this.category.name,
+      description: this.category.description,
+      activate_big_banner: this.category.displayBigBanner,
+      activate_small_banner: this.category.displaySmallBanner,
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
+  }
 }

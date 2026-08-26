@@ -25,6 +25,7 @@ export class ProductsAndServicesMovementsModalComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
+  productInventory: ProductInventory = new ProductInventory();
 
   @ViewChild('tableMovements') tableMovements: DatatableComponent;
 
@@ -68,5 +69,30 @@ export class ProductsAndServicesMovementsModalComponent implements OnInit {
       'Lista de Movimientos del Producto',
       false
     );
+  }
+
+  movementsOpenModal(content, row) {
+    this.productInventory.idProduct = row.id;
+    this.loadMovementsList(this.productInventory.idProduct);
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
+  }
+
+  loadMovementsList(id: number) {
+    this.productInventoryService
+      .getProductsInventoryByProductId(id)
+      .subscribe((resp: ProductInventory[]) => {
+        if (resp != null) {
+          this.temp = [...resp];
+          this.rows = resp;
+          this.loadingIndicator = false;
+          this.cdr.markForCheck();
+        }
+      });
   }
 }

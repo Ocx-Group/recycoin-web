@@ -49,6 +49,7 @@ export class RolListPermissionsModalComponent implements OnInit {
   @ViewChild('permissionsCreateModal') permissionsCreateModal: NgbModal;
 
   constructor(
+    private modalService: NgbModal,
     private privilegeService: PrivilegeService,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef
@@ -133,6 +134,19 @@ export class RolListPermissionsModalComponent implements OnInit {
         },
       });
     }
+  }
+
+  permissionsOpenModal(content, rol: Rol) {
+    this.loadPermissionsList(rol.id);
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
+    this.title = rol.name;
+    this.idRole = rol.id;
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 }
 

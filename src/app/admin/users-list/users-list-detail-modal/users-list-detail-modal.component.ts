@@ -45,4 +45,15 @@ export class UsersListDetailModalComponent {
       this.toastr.success('Copied ' + this.temp.length + 'rows succesfully');
     }
   }
+
+  detailOpenModal(content, user: User) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'xl',
+    });
+    this.user = user;
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
+  }
 }
