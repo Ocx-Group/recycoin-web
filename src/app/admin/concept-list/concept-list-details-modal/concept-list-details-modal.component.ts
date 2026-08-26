@@ -40,7 +40,7 @@ export class ConceptListDetailsModalComponent implements OnInit {
   scrollBarHorizontal = window.innerWidth < 1200;
   conceptListModel: ConceptList = new ConceptList();
   conceptLevels: ConceptList = new ConceptList();
-  calificationList!: [];
+  calificationList: any[] = [];
 
   constructor(
     private modalService: NgbModal,

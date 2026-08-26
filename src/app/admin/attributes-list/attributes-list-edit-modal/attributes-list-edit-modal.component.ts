@@ -26,7 +26,7 @@ export class AttributesListEditModalComponent implements OnInit {
   editAttributeForm!: FormGroup;
   submitted = false;
   productAttribute: ProductAttribute = new ProductAttribute();
-  attributesType: [];
+  attributesType: any[] = [];
 
   @ViewChild('attributesEditModal') attributesEditModal: NgbModal;
   @Output('loadAttributesList') loadAttributesList: EventEmitter<any> =

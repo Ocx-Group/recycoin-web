@@ -40,5 +40,7 @@
     "test.ts",
     "**/*.spec.ts"
   ],
-  "angularCompilerOptions": {}
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }

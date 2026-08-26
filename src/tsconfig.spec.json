@@ -15,8 +15,5 @@
     "**/*.spec.ts",
     "**/*.d.ts"
   ],
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  },
   "exclude": []
 }

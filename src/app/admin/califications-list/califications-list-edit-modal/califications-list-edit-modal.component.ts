@@ -63,9 +63,9 @@ export class CalificationsListEditModalComponent implements OnInit {
   alerts: Alert[];
   show: Boolean = true;
   linkMsj: String = 'hide';
-  productListData!: [];
-  membershipData!: [];
-  calificationList!: [];
+  productListData: any[] = [];
+  membershipData: any[] = [];
+  calificationList: any[] = [];
   grading: Grading = new Grading();
 
   @ViewChild('calificationEditModal') calificationEditModal: NgbModal;

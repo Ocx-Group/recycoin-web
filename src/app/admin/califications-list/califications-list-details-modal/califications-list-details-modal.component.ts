@@ -14,9 +14,9 @@ import {GradingService} from "../../../core/service/grading-service/grading.serv
 export class CalificationsListDetailsModalComponent implements OnInit {
   active = 1;
   gradingData: Grading = new Grading();
-  calificationList!: [];
-  productListData!: [];
-  membershipData!: [];
+  calificationList: any[] = [];
+  productListData: any[] = [];
+  membershipData: any[] = [];
   @ViewChild('calificationDetailsModal') calificationDetailsModal: NgbModal;
 
   constructor(

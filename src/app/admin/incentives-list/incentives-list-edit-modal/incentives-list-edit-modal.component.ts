@@ -31,9 +31,9 @@ import { CommonModule } from '@angular/common';
 export class IncentivesListEditModalComponent implements OnInit {
   editIncentivesForm!: FormGroup;
   incentive: Incentive = new Incentive();
-  productListData!: [];
-  membershipData!: [];
-  calificationList!: [];
+  productListData: any[] = [];
+  membershipData: any[] = [];
+  calificationList: any[] = [];
   submitted = false;
   active = 1;
 
