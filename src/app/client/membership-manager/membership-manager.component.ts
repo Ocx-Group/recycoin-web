@@ -2,6 +2,8 @@ import { MembershipManagerService } from '../../core/service/membership-manager-
 import { BalanceInformation } from '../../core/models/wallet-model/balance-information.model';
 import { WalletService } from '../../core/service/wallet-service/wallet.service';
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -33,6 +35,9 @@ import { CoinpaymentsComponent } from './coinpayments/coinpayments.component';
     templateUrl: './membership-manager.component.html',
     styleUrls: ['./membership-manager-component.scss'],
     standalone: true,
+    // El fichero no llevaba changeDetection y en Angular 22 eso ya es OnPush.
+    // Se deja explicito para que las auditorias lo vean.
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, FormsModule, CoinpaymentsComponent]
 })
 export class MembershipManagerComponent implements OnInit, OnDestroy {
@@ -57,7 +62,8 @@ export class MembershipManagerComponent implements OnInit, OnDestroy {
     private affiliateService: AffiliateService,
     private router: Router,
     private membershipManagerService: MembershipManagerService,
-    private pagaditoService: PagaditoService
+    private pagaditoService: PagaditoService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +71,7 @@ export class MembershipManagerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((user) => {
         this.user = user;
+        this.cdr.markForCheck();
       });
 
     this.membershipManagerService.showModal$
@@ -97,6 +104,9 @@ export class MembershipManagerComponent implements OnInit, OnDestroy {
       next: (resp) => {
         this.memberships = resp;
         this.currentMembership = this.memberships[0];
+        // La tarjeta de membresia (nombre, precio, descripcion) sale entera de
+        // aqui: sin marcar, el modal se abre con el Product vacio.
+        this.cdr.markForCheck();
       },
       error: (err) => { },
     });
@@ -123,7 +133,10 @@ export class MembershipManagerComponent implements OnInit, OnDestroy {
   loadBalanceInformation() {
     this.walletService.getBalanceInformationByAffiliateId(this.user.id).subscribe({
       next: (value) => {
+        // Se muta la propiedad en vez de reasignar el objeto, asi que aqui no
+        // sirve una senal: hay que marcar la vista.
         this.balanceInformation.availableBalance = value.availableBalance;
+        this.cdr.markForCheck();
       },
       error: (err) => {
 
@@ -183,6 +196,7 @@ export class MembershipManagerComponent implements OnInit, OnDestroy {
       next: (value) => {
         this.user = value.data;
         this.auth.setUserAffiliateValue(value.data);
+        this.cdr.markForCheck();
       },
       error: (err) => {
 
