@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts';
@@ -17,7 +17,7 @@ export interface CountryData {
   styleUrls: ['./world-map-chart.component.scss'],
   standalone: true,
   imports: [NgxEchartsModule],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts')
@@ -25,6 +25,8 @@ export interface CountryData {
   ]
 })
 export class WorldMapChartComponent implements OnInit, OnChanges {
+  constructor(private cdr: ChangeDetectorRef) {}
+
   @Input() countries: CountryData[] = [];
   @Input() height: string = '400px';
   @Input() seriesName: string = 'Afiliados por País';
@@ -48,6 +50,8 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
       const worldJson = await fetch('assets/data/world.json').then(res => res.json());
       echarts.registerMap('world', worldJson);
       this.mapLoaded = true;
+      // Llega despues de un await fetch: con OnPush hay que marcar.
+      this.cdr.markForCheck();
     } catch (error) {
       console.error('Error loading world map:', error);
     }

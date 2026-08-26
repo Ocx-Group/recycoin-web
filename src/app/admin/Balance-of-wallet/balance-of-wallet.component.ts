@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy, signal} from '@angular/core';
 import {ClipboardService} from 'ngx-clipboard';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
@@ -16,7 +16,7 @@ import {IconsModule} from "../../shared";
   selector: 'app-balance-of-wallet',
   templateUrl: './balance-of-wallet.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -27,9 +27,9 @@ import {IconsModule} from "../../shared";
 ]
 })
 export class BalanceOfWalletComponent implements OnInit {
-  rows = [];
+  readonly rows = signal<any[]>([]);
   temp = [];
-  loadingIndicator = true;
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
@@ -58,8 +58,8 @@ export class BalanceOfWalletComponent implements OnInit {
     this.walletService.getAllWallets().subscribe(resp => {
       if (resp != null) {
         this.temp = [...resp];
-        this.rows = resp;
-        this.loadingIndicator = false;
+        this.rows.set(resp);
+        this.loadingIndicator.set(false);
       }
     });
   }
@@ -79,12 +79,12 @@ export class BalanceOfWalletComponent implements OnInit {
       'detail',
     ];
 
-    this.rows = this.temp.filter(d => {
+    this.rows.set(this.temp.filter(d => {
       return searchFields.some(field => {
         const fieldValue = d[field]?.toString().toLowerCase() || '';
         return fieldValue.includes(val);
       });
-    });
+    }));
     this.table.offset.set(0);
   }
 
