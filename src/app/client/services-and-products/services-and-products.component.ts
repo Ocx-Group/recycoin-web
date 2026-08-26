@@ -11,7 +11,7 @@ import {ProductsComponent} from "@app/client/products/products.component";
     templateUrl: './services-and-products.component.html',
     styleUrls: ['./services-and-products.component.sass'],
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslatePipe, NgbModule, RouterLink, ProductsComponent]
 })
 export class ServicesAndProductsComponent implements OnInit {

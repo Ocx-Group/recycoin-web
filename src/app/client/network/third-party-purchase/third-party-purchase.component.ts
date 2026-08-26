@@ -38,7 +38,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     templateUrl: './third-party-purchase.component.html',
     styleUrls: ['./third-party-purchase.component.scss'],
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, TranslatePipe, NgOptimizedImage]
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
@@ -268,6 +268,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
       .then(url => {
         this.zone.run(() => {
           this.qrCodeData = url;
+          this.cdr.markForCheck();
           this.cdr.detectChanges();
         });
       })
@@ -413,6 +414,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
       next: config => {
         this.matrixConfigurations = config;
+        this.cdr.markForCheck();
       },
       error: err => {
         console.error('Error', err);
