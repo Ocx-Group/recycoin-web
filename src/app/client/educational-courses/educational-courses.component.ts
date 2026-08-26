@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ProductsComponent } from '@app/client/products/products.component';
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +10,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./educational-courses.component.sass'],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [TranslatePipe, NgbNavModule]
+    imports: [TranslatePipe, NgbNavModule, ProductsComponent]
 })
 export class EducationalCoursesComponent implements OnInit {
   active;

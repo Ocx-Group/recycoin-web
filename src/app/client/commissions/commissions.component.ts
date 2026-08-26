@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 interface Alert {
   type: string;
   message: string;
@@ -25,7 +26,7 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './commissions.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [TranslatePipe, FormsModule]
+    imports: [TranslatePipe, FormsModule, NgbAlert]
 })
 export class CommissionsComponent implements OnInit {
   alerts: Alert[];

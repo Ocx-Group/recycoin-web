@@ -146,15 +146,6 @@
                               <i class="bi bi-grid-3x3-gap-fill"></i>
                               <span class="ms-2">Activar Matriz</span>
                             </a>
-                            <a ngbDropdownItem id="btn-detail"
-                              (click)="detailModal(userDetailModal); modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                              (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                              (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">
-                              <i class="bi bi-file-earmark-plus-fill me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
-                              }}</span>
-                            </a>
                           <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['affiliateEditModal'],
@@ -190,13 +181,6 @@
                                 | translate
                               }}</span>
                             </a>
-                            <a ngbDropdownItem id="btn-wallet-balance" (click)="deleteSingleRow(row.id)">
-                              <i class="bi bi-wallet-fill me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
-                                | translate
-                              }}</span>
-                            </a>
                             <a ngbDropdownItem id="btn-make-purchase"
                               (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
                               (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
@@ -210,42 +194,6 @@
                             <a ngbDropdownItem id="btn-create-balance" (click)="confirmationCreateBalance(row)">
                               <i class="bi bi-currency-dollar me-2"></i>
                               <span>Acreditar Saldo</span>
-                            </a>
-                            <a ngbDropdownItem id="btn-change-sponsor" (click)="deleteSingleRow(row.id)">
-                              <i class="bi bi-arrow-repeat me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
-                                | translate
-                              }}</span>
-                            </a>
-                            <a ngbDropdownItem id="btn-qualification-audit" (click)="deleteSingleRow(row.id)"
-                              (keydown)="deleteSingleRow(row.id)" (keyup)="deleteSingleRow(row.id)">
-                              <i class="bi bi-eye-fill me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
-                                | translate
-                              }}</span>
-                            </a>
-                            <a ngbDropdownItem id="btn-network-purchase" (click)="deleteSingleRow(row.id)">
-                              <i class="bi bi-database-fill-exclamation me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
-                                | translate
-                              }}</span>
-                            </a>
-                            <a ngbDropdownItem id="btn-tope-max" (click)="deleteSingleRow(row.id)">
-                              <i class="bi bi-currency-exchange me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
-                                | translate
-                              }}</span>
-                            </a>
-                            <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
-                              <i class="fas fa-trash-alt me-2"></i>
-                              <span>{{
-                                'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
-                                | translate
-                              }}</span>
                             </a>
                             <a ngbDropdownItem id="btn-balance-info" (click)="openBalanceInformationModal(row)">
                               <i class="fa fa-money me-2"></i>

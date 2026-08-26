@@ -107,7 +107,7 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
     this.toastr.success(message, 'Success!');
   }
 
-  onSaveFormValues(user: User) {
+  onSaveFormValues() {
     this.submitted = true;
     if (this.updatePasswordForm.invalid) {
       return;

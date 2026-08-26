@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   AbstractControl,
   FormGroup,
@@ -18,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     templateUrl: './edit-security-pin-modal.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, ReactiveFormsModule]
+    imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class EditSecurityPinModalComponent implements OnInit {
   editSecurityPinForm: FormGroup;

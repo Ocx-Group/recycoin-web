@@ -385,7 +385,7 @@
                                       <i class="fas fa-dollar-sign mr-1"></i>
                                       {{ getTotalToPay() | currency:'USD':'symbol':'1.2-2' }}
                                     </td>
-                                    <td colspan="{{ calculationMode === 'final' ? '2' : '1' }}"></td>
+                                    <td [attr.colspan]="calculationMode === 'final' ? '2' : '1'"></td>
                                   </tr>
                                 </tfoot>
                               </table>

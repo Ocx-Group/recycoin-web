@@ -10,10 +10,10 @@ import {PrintService} from "../../core/service/print-service/print.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {
   MyProfileEditPasswordModalComponent
-} from "../../client/my-profile/my-profile-edit-password-modal/my-profile-edit-password-modal.component";
+} from "./my-profile-edit-password-modal/my-profile-edit-password-modal.component";
 import {
   MyProfileEditPersonalInfoModalComponent
-} from "../../client/my-profile/my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component";
+} from "./my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component";
 import {
   MyProfileEditPasswordUploadModalComponent
 } from "./my-profile-edit-password-upload-modal/my-profile-edit-password-upload-modal.component";

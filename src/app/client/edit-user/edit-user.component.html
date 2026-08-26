@@ -122,7 +122,7 @@
                                                         <div class="form-group">
                                                           <label for="country"> {{ 'EDIT-PROFILE.COUNTRY' | translate }} </label>
                                                           <br />
-                                                          <select title="country" class="form-select form-control" [selected]="country"
+                                                          <select title="country" class="form-select form-control"
                                                             formControlName="country">
                                                             <option value="" disabled selected>{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}
                                                             </option>
@@ -217,103 +217,6 @@
                                                             </div>
                                                           }
                                                         </div>
-                                                        @if (isCheckedAttribute == true) {
-                                                          <div class="row">
-                                                            <div class="fw-bold p-t-10 font-17 text-center">{{ 'EDIT-PROFILE.ADD_COMBINATION' | translate }}</div>
-                                                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                                                              <label for="attribute_name">
-                                                                {{ 'EDIT-PROFILE.ATTRIBUTE' | translate }}
-                                                                <span class="text-danger">*</span></label>
-                                                                <select class="form-select form-control" id="attribute_name" required="required"
-                  formControlName="attribute_name" (change)="getAttributesValues($event)" [ngClass]="{
-                                  'is-invalid': submittedAttribute && edit_product_attributes_controls.attribute_name.errors
-                                }">
-                                                                  <option value="">{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}</option>
-                                                                  @for (item of attributesList; track item) {
-                                                                    <option value="{{ item.id }}">
-                                                                      {{ item.name }}
-                                                                    </option>
-                                                                  }
-                                                                </select>
-                                                                @if (submittedAttribute && edit_product_attributes_controls.attribute_name.errors) {
-                                                                  <div
-                                                                    class="invalid-feedback">
-                                                                    @if (edit_product_attributes_controls.attribute_name.errors.required) {
-                                                                      <div>{{
-                                                                        'EDIT-PROFILE.REQUIRED_ATTRIBUTE' | translate }}
-                                                                      </div>
-                                                                    }
-                                                                  </div>
-                                                                }
-                                                              </div>
-                                                              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                                                                <label for="attribute_value">
-                                                                  {{ 'EDIT-PROFILE.VALUE' | translate }}
-                                                                  <span class="text-danger">*</span></label>
-                                                                  <select class="form-select form-control" id="attribute_value" (change)="getNameValue($event)"
-                                                                    placeholder="" formControlName="attribute_value">
-                                                                    <option value="">{{ 'EDIT-PROFILE.SELECT_OPTION' | translate }}</option>
-                                                                    @for (item of attributesValuesList; track item) {
-                                                                      <option value="{{ item.attributeValue }}">
-                                                                        {{ item.attributeValue }}
-                                                                      </option>
-                                                                    }
-                                                                  </select>
-                                                                </div>
-                                                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                                                                  <label for="attribute_combination">
-                                                                    {{ 'EDIT-PROFILE.COMBINATION' | translate }}
-                                                                    <span class="text-danger">*</span></label>
-                                                                    <input type="text" class="form-control" id="attribute_combination"
-                                                                      formControlName="attribute_combination" />
-                                                                    </div>
-                                                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                                                                      <label for="attribute_reference" placement="top" ngbTooltip="">
-                                                                        {{ 'EDIT-PROFILE.REFERENCE' | translate }}
-                                                                        <span class="text-danger">*</span></label>
-                                                                        <input type="text" class="form-control" id="attribute_reference" placeholder="Agregue una referencia"
-                                                                          formControlName="attribute_reference" />
-                                                                        </div>
-                                                                      </div>
-                                                                    }
-                                                                    @if (isCheckedAttribute == true) {
-                                                                      <div class="row mt-4">
-                                                                        <div class="col d-flex justify-content-end">
-                                                                          <button type="submit" class="btn btn-primary">{{ 'EDIT-PROFILE.SAVE' | translate }}</button>
-                                                                        </div>
-                                                                      </div>
-                                                                    }
-                                                                    @if (isCheckedAttribute == true) {
-                                                                      <div class="row">
-                                                                        <div class="fw-bold p-t-10 font-17 text-center">{{ 'EDIT-PROFILE.COMBINATIONS_LIST' | translate }}</div>
-                                                                        <ngx-datatable #table class="material overflow-x-auto custom-height" [rows]="rowsCombinations"
-                                                                          [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                                                                          rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                                                                          <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_ATTRIBUTE' | translate }}">
-                                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                              {{ row.codeRef }}
-                                                                            </ng-template>
-                                                                          </ngx-datatable-column>
-                                                                          <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_REFERENCE' | translate }}">
-                                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                              {{ row }}
-                                                                            </ng-template>
-                                                                          </ngx-datatable-column>
-                                                                          <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_STOCK' | translate }}">
-                                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                              {{ row }}
-                                                                            </ng-template>
-                                                                          </ngx-datatable-column>
-                                                                          <ngx-datatable-column name="{{ 'EDIT-PROFILE.COLUMN_DELETE' | translate }}">
-                                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                              <div class="col-red" (click)="deleteSingleRowCombination(row.id)">
-                                                                                <i class="bi bi-trash"></i>
-                                                                              </div>
-                                                                            </ng-template>
-                                                                          </ngx-datatable-column>
-                                                                        </ngx-datatable>
-                                                                      </div>
-                                                                    }
                                                                   </div>
                                                                 </ng-template>
                                                               </li>

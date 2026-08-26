@@ -7,12 +7,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
@@ -26,7 +22,7 @@ import { CommonModule } from '@angular/common';
   providers: [ToastrService],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule]
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
   editCalculationForm: FormGroup;

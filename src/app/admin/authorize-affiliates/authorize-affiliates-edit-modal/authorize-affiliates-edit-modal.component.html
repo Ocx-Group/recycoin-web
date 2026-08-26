@@ -220,32 +220,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <ngx-datatable id="table" #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="12"
-                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                <ngx-datatable-column name="METODO DE PAGO">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.payment_method }}
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="BANCO">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.bank }}
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="FECHA PAGO" sortable="false">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.payment_date }}
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="SOPORTE">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{ row.support }}
-                    </ng-template>
-                </ngx-datatable-column>
-            </ngx-datatable>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">

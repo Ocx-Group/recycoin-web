@@ -61,14 +61,14 @@
                             </div>
                             <div class="mt-3">
                               <span class="float-end text-muted">
-                                @if (gradingData.status == true) {
+                                @if (gradingData.status == 1) {
                                   <div
                                     class="badge-outline col-green"
                                     >
                                     Activo
                                   </div>
                                 }
-                                @if (gradingData.status == false) {
+                                @if (gradingData.status == 0) {
                                   <div
                                     class="badge-outline col-red"
                                     >
@@ -157,14 +157,14 @@
                             </div>
                             <div class="mt-3">
                               <span class="float-end text-muted"
-                                >@if (gradingData.personal_purchases_exact == 1) {
+                                >@if (gradingData.personal_purchases_exact == true) {
                                 <div
                                   class="badge-outline col-green"
                                   >
                                   Activo
                                 </div>
                               }
-                              @if (gradingData.personal_purchases_exact == 0) {
+                              @if (gradingData.personal_purchases_exact == false) {
                                 <div
                                   class="badge-outline col-red"
                                   >

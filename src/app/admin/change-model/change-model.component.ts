@@ -68,7 +68,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSelect({selected}) {
+  onSelect({selected}: any) {
     this.selectedInvoices.splice(0, this.selectedInvoices.length);
     this.selectedInvoices.push(...selected);
   }

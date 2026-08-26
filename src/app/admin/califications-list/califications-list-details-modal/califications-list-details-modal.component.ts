@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {Grading} from "../../../core/models/grading-model/grading.model";
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 
@@ -9,7 +9,7 @@ import {GradingService} from "../../../core/service/grading-service/grading.serv
   templateUrl: './califications-list-details-modal.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: []
+  imports: [ NgbNavModule]
 })
 export class CalificationsListDetailsModalComponent implements OnInit {
   active = 1;

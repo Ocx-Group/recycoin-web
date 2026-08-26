@@ -7,13 +7,8 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {GradingService} from "../../../core/service/grading-service/grading.service";
 import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
@@ -26,7 +21,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './incentives-list-edit-modal.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule]
+  imports: [CommonModule, NgbNavModule, ReactiveFormsModule]
 })
 export class IncentivesListEditModalComponent implements OnInit {
   editIncentivesForm!: FormGroup;

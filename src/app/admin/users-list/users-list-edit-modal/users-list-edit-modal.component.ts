@@ -39,7 +39,7 @@ export class UsersListEditModalComponent implements OnInit {
   editUserForm: FormGroup;
   submitted = false;
   user = new User();
-  @Input() selectRol: Rol = new Rol();
+  @Input() selectRol: Rol[] = [];
   @ViewChild('userEditModal') userEditModal: NgbModal;
   @Output('loadUserList') loadUserList: EventEmitter<any> = new EventEmitter();
 

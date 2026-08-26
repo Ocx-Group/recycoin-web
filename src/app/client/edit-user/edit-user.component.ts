@@ -1,6 +1,6 @@
 import { FaceApiService } from '@app/core/service/face-api-service/face-api.service';
 import { ChangeDetectorRef, Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ObjectStorageService } from '@app/core/service/object-storage-service/object-storage.service';
 
 @Component({
@@ -21,7 +21,7 @@ import { ObjectStorageService } from '@app/core/service/object-storage-service/o
     templateUrl: './edit-user.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe, NgbNavModule]
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe, NgbNavModule, NgbAlert, NgxDatatableModule]
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();
