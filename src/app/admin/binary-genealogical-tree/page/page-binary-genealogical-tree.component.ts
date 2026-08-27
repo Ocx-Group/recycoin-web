@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -15,7 +15,7 @@ import {
   templateUrl: './page-binary-genealogical-tree.component.html',
   styleUrls: ['./page-binary-genealogical-tree.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     BinaryGenealogicalTreeComponent,
@@ -41,6 +41,7 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.typeSelected = 'cube-transition';
   }
@@ -66,9 +67,11 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
       next: (users: MyTreeNode) => {
         if (users !== null) {
           this.tree = this.initializeTreeNode(users);
+          this.cdr.markForCheck();
           setTimeout(() => {
             this.spinnerService.hide();
             this.showDiv = true;
+            this.cdr.markForCheck();
           }, 500);
         } else {
           console.error('El arbol binario llego vacio para el afiliado', id);

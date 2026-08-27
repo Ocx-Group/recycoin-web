@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
   },
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgbPopover, CommonModule],
 })
 export class ClientUnilevelTreeComponentComponent {

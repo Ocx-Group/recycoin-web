@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   AfterViewInit,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -6,7 +7,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {Subject} from 'rxjs';
@@ -31,7 +32,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   templateUrl: './tickets.component.html',
   standalone: true,
   imports: [CommonModule, NgxDatatableModule, TranslatePipe, RouterLink, NgbCarousel, CreateTicketModalComponent, NgbSlide],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -57,7 +58,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private ticketCategoryService: TicketCategoriesService,
     private router: Router,
     private modalService: NgbModal,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -115,6 +117,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.tickets = tickets;
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error al cargar tickets.');
@@ -128,6 +131,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe({
       next: (value) => {
         this.categories = value;
+        // La plantilla no nombra categories: interpola getCategoryName(id),
+        // que lo lee por dentro.
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error al cargar las categorías.');
@@ -189,6 +195,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.ticketHubService.deleteTickets(idsToDelete).then(() => {
             this.tickets = this.tickets.filter(ticket => !idsToDelete.includes(ticket.id));
             this.selectedTickets = [];
+            this.cdr.markForCheck();
             this.showSuccess('Tickets eliminados exitosamente');
           }).catch(() => {
             this.showError('Error eliminando tickets');
