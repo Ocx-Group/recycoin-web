@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {concatAll, from} from 'rxjs';
@@ -22,7 +22,7 @@ import {ObjectStorageService} from '@app/core/service/object-storage-service/obj
     templateUrl: './create-ticket-modal.component.html',
     styleUrls: ['./create-ticket-modal.component.scss'],
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe]
 })
 export class CreateTicketModalComponent implements OnInit {
@@ -41,7 +41,8 @@ export class CreateTicketModalComponent implements OnInit {
               private objectStorageService: ObjectStorageService,
               private authService: AuthService,
               private toast: ToastrService,
-              private ticketHubService: TicketHubService
+              private ticketHubService: TicketHubService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -72,6 +73,7 @@ export class CreateTicketModalComponent implements OnInit {
     this.ticketCategoriesService.getAll().subscribe({
       next: (value: TicketCategories[]) => {
         this.categories = value;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error al cargar las categorías.');
@@ -81,6 +83,9 @@ export class CreateTicketModalComponent implements OnInit {
 
   openModal() {
     this.modalService.open(this.createTicketModal, {size: 'lg', centered: true});
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   createTicket(): void {

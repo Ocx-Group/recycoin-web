@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -19,7 +19,7 @@ import {IconsModule} from "../../shared";
   templateUrl: './change-model.component.html',
   styleUrls: ['./change-model.component.css'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -42,7 +42,9 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
   selectedInvoices: InvoiceModelOneTwo[] = [];
   @ViewChild(SplitBalancesModalComponent) private splitBalanceModalComponent: SplitBalancesModalComponent;
 
-  constructor(private invoiceService: InvoiceService, private toastr: ToastrService) {
+  constructor(private invoiceService: InvoiceService, private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
@@ -163,6 +165,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
       next: (result: InvoiceModelOneTwo[]) => {
         this.temp = [...result];
         this.rows = result;
+        this.cdr.markForCheck();
       },
       error: (error: any) => {
         console.log(error);

@@ -9,7 +9,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './educational-courses.component.html',
     styleUrls: ['./educational-courses.component.sass'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe, NgbNavModule, ProductsComponent]
 })
 export class EducationalCoursesComponent implements OnInit {

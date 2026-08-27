@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, AfterViewInit, Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import {
   DataTableColumnCellDirective,
@@ -16,7 +16,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-results-ecopool',
   templateUrl: './results-ecopool.component.html',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
@@ -30,7 +30,9 @@ export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor(private resultsEcoPoolService: ResultsEcoPoolService) {
+  constructor(private resultsEcoPoolService: ResultsEcoPoolService,
+    private cdr: ChangeDetectorRef
+  ) {
 
   }
 
@@ -78,6 +80,7 @@ export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
         this.temp = [...value];
         this.rows = value;
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       },
       error: () => {
       },

@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -27,7 +27,7 @@ import { ClientUnilevelTreeComponentComponent } from '@app/client/unilevel-tree/
     NgbModule,
     ClientUnilevelTreeComponentComponent,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ViewUnilevelTreeComponent implements OnInit {
@@ -83,6 +83,7 @@ export class ViewUnilevelTreeComponent implements OnInit {
     private readonly matrixService: MatrixService,
     private readonly matrixQualificationService: MatrixQualificationService,
     private readonly toastrService: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -120,6 +121,7 @@ export class ViewUnilevelTreeComponent implements OnInit {
       next: config => {
         console.log('config:', config);
         this.matrixConfigurations = config;
+        this.cdr.markForCheck();
       },
       error: err => {
         console.error('Error', err);
@@ -165,9 +167,11 @@ export class ViewUnilevelTreeComponent implements OnInit {
       next: (users: MyTreeNodeClient) => {
         if (users !== null) {
           this.tree = this.initializeTreeNode(users);
+          this.cdr.markForCheck();
           setTimeout(() => {
             this.spinnerService.hide();
             this.showDiv = true;
+            this.cdr.markForCheck();
           }, 500);
         }
       },
@@ -218,10 +222,12 @@ export class ViewUnilevelTreeComponent implements OnInit {
         console.log('Matriz recibida:', users);
         if (users !== null) {
           this.tree = this.initializeTreeNode(users);
+          this.cdr.markForCheck();
           console.log('Árbol inicializado:', this.tree);
           setTimeout(() => {
             this.spinnerService.hide();
             this.showDiv = true;
+            this.cdr.markForCheck();
           }, 500);
         }
       },
@@ -257,6 +263,7 @@ export class ViewUnilevelTreeComponent implements OnInit {
               console.log('Respuesta de activación:', response);
               if (response) {
                 this.active = matrixType + 2;
+                this.cdr.markForCheck();
                 this.onloadFamilyTree(this.userId);
                 this.successMessage('Matriz activada con éxito.');
               } else {
@@ -280,6 +287,7 @@ export class ViewUnilevelTreeComponent implements OnInit {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

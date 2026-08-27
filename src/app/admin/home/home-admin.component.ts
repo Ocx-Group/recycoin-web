@@ -1,5 +1,5 @@
 import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {EChartsOption} from 'echarts';
 import {WalletService} from '@app/core/service/wallet-service/wallet.service';
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
@@ -119,7 +119,7 @@ export interface ChartOptions {
   styleUrls: ['./home-admin.component.scss'],
   standalone: true,
   imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink, WorldMapChartComponent],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts')
@@ -148,6 +148,7 @@ export class HomeAdminComponent implements OnInit {
     private toastr: ToastrService,
     private authService: AuthService,
     private invoiceService: InvoiceService,
+    private cdr: ChangeDetectorRef
   ) {
     this.pieChartOptions = {
       series: [],
@@ -185,6 +186,7 @@ export class HomeAdminComponent implements OnInit {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: (value) => {
         this.maps = value.data;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error fetching locations:', err);
@@ -341,6 +343,7 @@ export class HomeAdminComponent implements OnInit {
         this.commissionsPaid = value.data.commissionsPaid;
         this.walletProfit = value.data.walletProfit;
         this.totalReverseBalance = value.data.totalReverseBalance;
+        this.cdr.markForCheck();
         this.initChartReport3();
       },
       error: err => {
@@ -385,6 +388,7 @@ export class HomeAdminComponent implements OnInit {
     this.affiliateService.getLastRegisteredAffiliates().subscribe({
       next: value => {
         this.lastRegisteredUsers = value.data;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.showError('Error');

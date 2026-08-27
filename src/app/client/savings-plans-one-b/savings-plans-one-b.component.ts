@@ -9,7 +9,7 @@ import {RouterLink} from "@angular/router";
     templateUrl: './savings-plans-one-b.component.html',
     styleUrls: ['./savings-plans-one-b.component.sass'],
     standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     ProductsComponent,

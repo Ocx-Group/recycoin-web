@@ -10,7 +10,7 @@ import {RouterLink} from "@angular/router";
     styleUrls: ['./billing-purchase.component.scss'],
     standalone: true,
   imports: [TranslatePipe, ProductsComponent, RouterLink],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BillingPurchaseComponent implements OnInit {

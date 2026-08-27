@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -13,7 +13,7 @@ import {UnilevelTreeComponentComponent} from "../unilevel-tree-component/unileve
   templateUrl: './page-unilevel-tree.component.html',
   styleUrls: ['./page-unilevel-tree.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,
@@ -38,6 +38,7 @@ export class PageUnilevelTreeComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.typeSelected = 'cube-transition';
   }
@@ -62,9 +63,11 @@ export class PageUnilevelTreeComponent implements OnInit {
       next: (users: MyTreeNode) => {
         if (users !== null) {
           this.tree = this.initializeTreeNode(users);
+          this.cdr.markForCheck();
           setTimeout(() => {
             this.spinnerService.hide().then();
             this.showDiv = true;
+            this.cdr.markForCheck();
           }, 500);
         } else {
           console.error('El arbol unilevel llego vacio para el afiliado', id);

@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { ReusableDatatableComponent, TableColumn, TableAction, TableConfig } fro
     templateUrl: './billing-orders.component.html',
     standalone: true,
     imports: [RouterModule, TranslatePipe, IconsModule, ReusableDatatableComponent],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BillingOrdersComponent implements OnInit {
@@ -34,7 +34,7 @@ export class BillingOrdersComponent implements OnInit {
     reorderable: true
   };
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.initializeColumns();
     this.initializeActions();
     this.loadData();
@@ -94,6 +94,7 @@ export class BillingOrdersComponent implements OnInit {
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;
+        this.cdr.markForCheck();
       }, 500);
     });
   }
@@ -104,6 +105,7 @@ export class BillingOrdersComponent implements OnInit {
 
     req.onload = () => {
       cb(JSON.parse(req.response));
+      this.cdr.markForCheck();
     };
 
     req.send();

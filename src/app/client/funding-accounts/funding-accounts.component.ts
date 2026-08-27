@@ -9,7 +9,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './funding-accounts.component.html',
     styleUrls: ['./funding-accounts.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe, NgbNavModule, ProductsComponent]
 })
 export class FundingAccountsComponent implements OnInit {

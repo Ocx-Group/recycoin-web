@@ -6,13 +6,14 @@ import {
   trigger,
 } from '@angular/animations';
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnDestroy,
   OnInit,
   ViewEncapsulation,
   CUSTOM_ELEMENTS_SCHEMA,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -51,7 +52,7 @@ import { SafePipe } from '@app/shared/pipes/safe.pipe';
   providers: [ToastrService],
   standalone: true,
   imports: [CommonModule, RouterLink, TranslatePipe, SafePipe],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
@@ -94,6 +95,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private readonly activatedRoute: ActivatedRoute,
     private readonly affiliateService: AffiliateService,
     private readonly authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     translate.setFallbackLang('en');
     this.currentLang = translate.getCurrentLang() || 'en';
@@ -138,6 +140,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       .subscribe((user: UserAffiliate) => {
         if (user !== null) {
           this.user = user;
+          this.cdr.markForCheck();
         }
       });
   }

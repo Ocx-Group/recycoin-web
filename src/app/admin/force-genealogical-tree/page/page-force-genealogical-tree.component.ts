@@ -18,7 +18,7 @@ interface MyTreeNode extends TreeNode {
   templateUrl: './page-force-genealogical-tree.component.html',
   styleUrls: ['./page-force-genealogical-tree.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     RouterLink,

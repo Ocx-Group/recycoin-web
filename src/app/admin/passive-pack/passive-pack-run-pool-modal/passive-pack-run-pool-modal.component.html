@@ -209,7 +209,7 @@
 
       <div class="row" formArrayName="levels"
            style="position: relative; max-height: 250px !important; overflow-y: auto;">
-        <div class="d-flex" *ngFor=" let i = index" [formGroupName]="i">
+        <div class="d-flex" *ngFor="let item of levels.controls; let i = index" [formGroupName]="i">
           <div class="form-group col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
             <label for="">Nivel</label>
             <input type="number" class="form-control" min="0" name="level" id="level" placeholder="0"
