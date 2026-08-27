@@ -1,4 +1,6 @@
-@import "bootstrap-icons/font/bootstrap-icons.css";
+/* Los iconos bi-* no se importan aqui: el paquete bootstrap-icons no esta
+   instalado y llegan por assets/vendor/bootstrap-icons, que enlaza index.html.
+   Este @import era justo lo que impedia meter el fichero en el build. */
 /* Runtime branding values are populated by BrandingService. */
 :root {
   --brand-primary: #1e90ff;

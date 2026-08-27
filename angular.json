@@ -47,6 +47,7 @@
               "./node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/style.scss",
+              "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
@@ -119,6 +120,7 @@
               "./node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/style.scss",
+              "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [],
