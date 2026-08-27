@@ -8,21 +8,21 @@
     <form class="validate-form" [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
       <div class="login-input-group">
 
-        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
+        <input id="email" type="email" formControlName="email" placeholder="{{ 'SIGNIN.USER-NAME.TEXT' | translate }}" required="required" />
         <i class="bi bi-person"></i>
         @if (Email.errors?.['email'] && (Email.dirty || Email.touched)) {
           <div class="form-text text-danger fw-bold">
-            {{ userNameErrorMessage }}
+            {{ 'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT' | translate }}
           </div>
         }
         @if (Email.errors?.['required'] && (Email.dirty || Email.touched)) {
           <div class="form-text text-danger fw-bold">
-            {{ userNameIsRequerid }}
+            {{ 'SIGNIN.USER-NAME-IS-REQUIRED.TEXT' | translate }}
           </div>
         }
       </div>
       <div class="login-input-group">
-        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}"
+        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ 'SIGNIN.PASSWORD.TEXT' | translate }}"
           required="required" />
           <i class="bi bi-key"></i>
 
@@ -33,12 +33,12 @@
           @if (Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)) {
             <div class="form-text text-danger fw-bold"
               >
-              {{ passwordErrorMessage }}
+              {{ 'SIGNIN.PASS-MESSAGE-ERROR.TEXT' | translate }}
             </div>
           }
           @if (Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)) {
             <div class="form-text text-danger fw-bold">
-              {{ passwordIsRequerid }}
+              {{ 'SIGNIN.PASS-IS-REQUIRED.TEXT' | translate }}
             </div>
           }
         </div>
@@ -50,7 +50,7 @@
                 <span class="sr-only">Loading...</span>
               </output>
             }
-            {{ signin }}
+            {{ 'SIGNIN.TITLE.TEXT' | translate }}
           </button>
           <button class="login-button mt-2" type="button" [disabled]="loading()" (click)="googleLoginSubmitted()">
             <i class="bi bi-google"></i>
