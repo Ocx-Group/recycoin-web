@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
@@ -58,16 +58,6 @@ export class SigninComponent implements OnInit, OnDestroy {
   readonly loading = signal(false);
   hide = true;
   logoUrl: string;
-  username: string = 'Usuario';
-  password: string = 'Contraseña';
-  remember: string = 'Recordar';
-  forgot: string = 'Cambiar contraseña';
-  signin: string = 'Iniciar sesión';
-  passwordIsRequerid = 'La contraseña es requerida.';
-  userNameIsRequerid = 'El usuario es requerido.';
-  passwordErrorMessage =
-    'La contraseña debe tener al menos 6 y un máximo de 15 caracteres';
-  userNameErrorMessage = 'El nombre de usuario no es válido';
   backgroundImages: string[] = [
     '/assets/images/login-option-1.png',
     '/assets/images/login-option-2.png',
@@ -82,7 +72,6 @@ export class SigninComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly toastr: ToastrService,
     private readonly logoService: LogoService,
-    private readonly translate: TranslateService,
     private readonly deviceService: DeviceDetectorService,
   ) {}
 
@@ -99,8 +88,6 @@ export class SigninComponent implements OnInit, OnDestroy {
     }
 
     this.getTheme();
-    this.setLabels();
-    this.setErrorMessages();
     this.startBackgroundRotation();
   }
 
@@ -119,33 +106,6 @@ export class SigninComponent implements OnInit, OnDestroy {
       Validators.maxLength(15),
     ]),
   });
-
-  setLabels() {
-    if (this.translate.getCurrentLang() != undefined) {
-      this.username = this.translate.instant('SIGNIN.USER-NAME.TEXT');
-      this.password = this.translate.instant('SIGNIN.PASSWORD.TEXT');
-      this.remember = this.translate.instant('SIGNIN.REMEMBER-ME.TEXT');
-      this.forgot = this.translate.instant('SIGNIN.FORGOT-PASS.TEXT');
-      this.signin = this.translate.instant('SIGNIN.TITLE.TEXT');
-    }
-  }
-
-  setErrorMessages() {
-    if (this.translate.getCurrentLang() != undefined) {
-      this.passwordIsRequerid = this.translate.instant(
-        'SIGNIN.PASS-IS-REQUIRED.TEXT',
-      );
-      this.userNameIsRequerid = this.translate.instant(
-        'SIGNIN.USER-NAME-IS-REQUIRED.TEXT',
-      );
-      this.passwordErrorMessage = this.translate.instant(
-        'SIGNIN.PASS-MESSAGE-ERROR.TEXT',
-      );
-      this.userNameErrorMessage = this.translate.instant(
-        'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT',
-      );
-    }
-  }
 
   loginSubmitted() {
     let signin = new Signin();
